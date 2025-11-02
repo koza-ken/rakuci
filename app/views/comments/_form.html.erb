@@ -1,0 +1,19 @@
+<!-- ネストしたルーティングなのでmodelでcardも受け取る（card_comments_path(card)が生成される） -->
+<%= form_with model: [card, comment], class: "mt-4" do |f| %>
+  <!-- コメント投稿時のエラーメッセージ表示 -->
+  <% if comment.errors.any? %>
+    <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded">
+      <ul class="text-sm text-red-600">
+        <% comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.text_area :content,
+      placeholder: "コメントを入力（200字以内）",
+      rows: 3,
+      class: "form-text-field w-full" %>
+  <%= f.submit "投稿", class: "btn-main mt-2" %>
+<% end %>
