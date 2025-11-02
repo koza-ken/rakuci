@@ -10,7 +10,9 @@ class CardsController < ApplicationController
   end
 
   def show
+    # ? all.includesでいいのか?
     @categories = Category.all.includes(:spots).order(:display_order)
+    @comments = @card.comments.includes(:group_membership).order(:created_at) if @card.group_card?
   end
 
   def new

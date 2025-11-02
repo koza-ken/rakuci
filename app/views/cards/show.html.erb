@@ -12,6 +12,29 @@
       <%= render "spots/spots", spots: @card.spots, categories: @categories %>
     </div>
 
+    <!-- コメント欄（グループカードのみ） -->
+    <% if @card.group_card? %>
+      <div class="mb-6">
+        <h2 class="text-xl font-bold text-primary mb-4">コメント</h2>
+        <!-- コメント一覧 -->
+        <div id="comments_list">
+          <% if @comments.present? %>
+            <div class="space-y-3 mb-4">
+              <% @comments.each do |comment| %>
+                <%= render "comments/comment", comment: comment %>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="text-gray-500 text-sm mb-4">まだコメントがありません</p>
+          <% end %>
+        </div>
+        <!-- 新規コメント投稿フォーム -->
+        <div id="comment_form">
+          <%= render "comments/form", card: @card, comment: Comment.new %>
+        </div>
+      </div>
+    <% end %>
+
     <div class="">
       <%= form_with model: @card, class: "w-full max-w-md" do |f| %>
         <%= f.label :memo, "メモ", class: "block text-2xl font-bold text-primary mb-2" %>

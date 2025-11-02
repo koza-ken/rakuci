@@ -1,0 +1,11 @@
+<div class="p-4 bg-white rounded shadow-sm">
+  <div class="flex justify-between items-start mb-2">
+    <span class="text-sm font-semibold text-gray-700">
+      <%= comment.group_membership.group_nickname %>
+    </span>
+    <span class="text-xs text-gray-500">
+      <%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>
+    </span>
+  </div>
+  <p class="text-gray-800 whitespace-pre-wrap"><%= comment.content %></p>
+</div>

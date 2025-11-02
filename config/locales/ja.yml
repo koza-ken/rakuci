@@ -16,6 +16,8 @@ ja:
       unauthorized_create: "このカードにスポットを追加する権限がありません"
       guest_creation_not_allowed: "スポットを追加するにはログインするかグループに参加してください"
       guest_not_member: "スポットを追加するにはログインするかグループに参加してください"
+    comments:
+      unauthorized_access: "このカードにアクセスする権限がありません"
   notices:
     cards:
       created: "カードが作成されました"
@@ -26,6 +28,8 @@ ja:
       created: "スポットを追加しました"
       updated: "スポットを更新しました"
       destroyed: "スポットを削除しました"
+    comments:
+      created: "コメントを投稿しました"
   spots:
     form:
       name: "スポット名"
@@ -57,6 +61,7 @@ ja:
       spot: "スポット"
       card: "カード"
       category: "カテゴリ"
+      comment: "コメント"
     attributes:
       spot:
         name: "スポット名"
@@ -65,6 +70,8 @@ ja:
         website_url: "Webサイト"
         category_id: "カテゴリ"
         google_place_id: "施設"
+      comment:
+        content: "コメント"
     errors:
       models:
         spot:
