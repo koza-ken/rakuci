@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_01_085546) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_02_104955) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_01_085546) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["display_order"], name: "index_categories_on_display_order", unique: true
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.bigint "card_id", null: false
+    t.bigint "group_membership_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_id", "created_at"], name: "index_comments_on_card_id_and_created_at"
+    t.index ["card_id"], name: "index_comments_on_card_id"
+    t.index ["group_membership_id"], name: "index_comments_on_group_membership_id"
   end
 
   create_table "group_memberships", force: :cascade do |t|
@@ -97,6 +108,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_01_085546) do
 
   add_foreign_key "cards", "groups"
   add_foreign_key "cards", "users"
+  add_foreign_key "comments", "cards"
+  add_foreign_key "comments", "group_memberships"
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "users"
   add_foreign_key "groups", "users", column: "created_by_user_id"
