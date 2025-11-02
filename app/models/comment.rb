@@ -23,4 +23,6 @@
 class Comment < ApplicationRecord
   belongs_to :card
   belongs_to :group_membership
+
+  validates :content, presence: true, length: { maximum: 200}
 end
