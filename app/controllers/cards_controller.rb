@@ -10,6 +10,7 @@ class CardsController < ApplicationController
   end
 
   def show
+    # ? all.includesでいいのか?
     @categories = Category.all.includes(:spots).order(:display_order)
   end
 
