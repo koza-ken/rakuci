@@ -1,0 +1,16 @@
+<%# コメントが保存済みか %>
+<% if @comment.persisted? %>
+  <%# 成功時：コメントを追加 %>
+  <%= turbo_stream.append "comments_list" do %>
+    <%= render "comments/comment", comment: @comment %>
+  <% end %>
+  <%# フォームをクリア %>
+  <%= turbo_stream.replace "comment_form" do %>
+    <%= render "comments/form", card: @card, comment: Comment.new %>
+  <% end %>
+<% else %>
+  <%# エラー時：フォームをエラー付きで置き換え %>
+  <%= turbo_stream.replace "comment_form" do %>
+    <%= render "comments/form", card: @card, comment: @comment %>
+  <% end %>
+<% end %>
