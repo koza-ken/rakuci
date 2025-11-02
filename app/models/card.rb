@@ -22,6 +22,7 @@
 #
 class Card < ApplicationRecord
   has_many :spots, dependent: :destroy
+  has_many :comments, dependent: :destroy
   belongs_to :user, optional: true
   belongs_to :group, optional: true
   validates :name, presence: true, length: { maximum: 50 }
