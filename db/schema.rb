@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_02_104955) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_03_134215) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,6 +75,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_02_104955) do
     t.index ["start_date"], name: "index_groups_on_start_date"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "card_id", null: false
+    t.bigint "group_membership_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_id", "group_membership_id"], name: "index_likes_on_card_id_and_group_membership_id", unique: true
+    t.index ["card_id"], name: "index_likes_on_card_id"
+    t.index ["group_membership_id"], name: "index_likes_on_group_membership_id"
+  end
+
   create_table "spots", force: :cascade do |t|
     t.bigint "card_id", null: false
     t.string "name", limit: 50, null: false
@@ -113,6 +123,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_02_104955) do
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "users"
   add_foreign_key "groups", "users", column: "created_by_user_id"
+  add_foreign_key "likes", "cards"
+  add_foreign_key "likes", "group_memberships"
   add_foreign_key "spots", "cards"
   add_foreign_key "spots", "categories"
 end
