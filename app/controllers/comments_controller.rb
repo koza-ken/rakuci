@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_card
-  before_action :set_comment, only: [:destroy]
-  before_action :check_comment_owner, only: [:destroy]
+  before_action :set_comment, only: [ :destroy ]
+  before_action :check_comment_owner, only: [ :destroy ]
 
   def create
     @comment = @card.comments.build(comment_params)
