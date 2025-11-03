@@ -39,11 +39,6 @@ class CardsController < ApplicationController
     @card = Card.find(params[:id])
   end
 
-  # ログインしていればcurrent_user、していなければnilを返す（ログインの有無の条件分岐が不要になる）
-  def current_user_if_signed_in
-    user_signed_in? ? current_user : nil
-  end
-
   # リダイレクト先を決定
   def redirect_path_for(card)
     card.group_card? ? group_path(card.group_id) : cards_path

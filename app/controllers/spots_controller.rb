@@ -58,11 +58,6 @@ class SpotsController < ApplicationController
     @spot = Spot.find(params[:id])
   end
 
-  # ログインしていればcurrent_user、していなければnilを返す（ログインの有無の条件分岐が不要になる）
-  def current_user_if_signed_in
-    user_signed_in? ? current_user : nil
-  end
-
   # ゲストがグループ内でスポットを作成できるようにするフィルター
   def check_create_spots
     # ログインしていない場合（ログインしていたら個人カードのスポット作成）
