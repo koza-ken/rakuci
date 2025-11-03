@@ -2,6 +2,25 @@
 module GuestAuthentication
   extend ActiveSupport::Concern
 
+  included do
+    helper_method :current_user_if_signed_in, :guest_group_ids, :current_group_membership_for
+  end
+
+  # ログインしていればcurrent_user、していなければnilを返す
+  def current_user_if_signed_in
+    user_signed_in? ? current_user : nil
+  end
+
+  # 指定されたグループIDに対するGroupMembershipを取得
+  def current_group_membership_for(group_id)
+    if user_signed_in?
+      GroupMembership.find_by(user: current_user, group_id: group_id)
+    else
+      stored_token = guest_token_for(group_id)
+      GroupMembership.find_by(guest_token: stored_token, group_id: group_id)
+    end
+  end
+
   # cookieから全ゲストトークンを取得
   def guest_tokens
     return {} if cookies.encrypted[:guest_tokens].blank?
