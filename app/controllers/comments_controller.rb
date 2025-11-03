@@ -17,6 +17,11 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @comment.destroy
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to card_path(@card), notice: "コメントを削除しました" }
+    end
   end
 
   private
