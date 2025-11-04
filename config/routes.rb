@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :cards, only: %i[index show new create] do
     resources :spots, only: %i[show new create edit update destroy]
     resources :comments, only: %i[create destroy]
+    resource :likes, only: %i[create destroy]
   end
   resources :groups, only: %i[index show new create]
 
