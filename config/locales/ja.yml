@@ -19,6 +19,9 @@ ja:
     comments:
       unauthorized_access: "このカードにアクセスする権限がありません"
       unauthorized_delete: "このコメントを削除する権限がありません"
+    likes:
+      create_failed: "いいねに失敗しました"
+      unauthorized: "いいねする権限がありません"
   notices:
     cards:
       created: "カードが作成されました"
@@ -32,6 +35,9 @@ ja:
     comments:
       created: "コメントを投稿しました"
       destroyed: "コメントを削除しました"
+    likes:
+      created: "いいねしました"
+      destroyed: "いいねを取り消しました"
   spots:
     form:
       name: "スポット名"
