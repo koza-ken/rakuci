@@ -1,7 +1,8 @@
 <% @group.cards.each do |card| %>
   <%= link_to card_path(card) do %>
-    <div class="card-index mb-2">
+    <div class="card-index flex justify-between mb-2">
       <%= card.name %>
+      <%= render "likes/like_button", card: card, current_membership: current_group_membership_for(@group.id) %>
     </div>
   <% end %>
 <% end %>
