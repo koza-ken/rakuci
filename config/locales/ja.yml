@@ -18,6 +18,7 @@ ja:
       guest_not_member: "スポットを追加するにはログインするかグループに参加してください"
     comments:
       unauthorized_access: "このカードにアクセスする権限がありません"
+      unauthorized_delete: "このコメントを削除する権限がありません"
   notices:
     cards:
       created: "カードが作成されました"
@@ -30,6 +31,7 @@ ja:
       destroyed: "スポットを削除しました"
     comments:
       created: "コメントを投稿しました"
+      destroyed: "コメントを削除しました"
   spots:
     form:
       name: "スポット名"
@@ -52,6 +54,8 @@ ja:
       delete: "削除"
       confirm_delete: "削除してもよろしいですか？"
       back: "戻る"
+  comments:
+    confirm_delete: "コメントを削除しますか？"
   views:
     spots:
       new:
