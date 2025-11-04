@@ -76,6 +76,12 @@ class Card < ApplicationRecord
     group_id.present?
   end
 
+  # 指定されたメンバーシップがこのカードにいいねしているか
+  def liked_by?(group_membership)
+    return false unless group_membership
+    likes.exists?(group_membership: group_membership)
+  end
+
   private
 
   def must_belong_to_user_or_group
