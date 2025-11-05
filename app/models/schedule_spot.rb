@@ -18,7 +18,7 @@
 #  updated_at            :datetime         not null
 #  schedulable_id        :bigint           not null
 #  snapshot_category_id  :integer
-#  spot_id               :bigint           not null
+#  spot_id               :bigint
 #
 # Indexes
 #

@@ -3,7 +3,7 @@ class CreateScheduleSpots < ActiveRecord::Migration[7.2]
     create_table :schedule_spots do |t|
       t.string :schedulable_type, null: false
       t.bigint :schedulable_id, null: false
-      t.references :spot, null: false, foreign_key: true
+      t.references :spot, foreign_key: true
       t.integer :global_position, null: false
       t.integer :day_number, null: false
       t.time :start_time

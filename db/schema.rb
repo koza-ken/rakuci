@@ -88,7 +88,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_05_121303) do
   create_table "schedule_spots", force: :cascade do |t|
     t.string "schedulable_type", null: false
     t.bigint "schedulable_id", null: false
-    t.bigint "spot_id", null: false
+    t.bigint "spot_id"
     t.integer "global_position", null: false
     t.integer "day_number", null: false
     t.time "start_time"
