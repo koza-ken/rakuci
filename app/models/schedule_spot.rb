@@ -38,7 +38,7 @@ class ScheduleSpot < ApplicationRecord
   # バリデーション
   validates :global_position, presence: true,
             numericality: { only_integer: true, greater_than: 0 }, # 整数か、0より大きいか
-            uniqueness: { scope: [:schedulable_type, :schedulable_id] }
+            uniqueness: { scope: [ :schedulable_type, :schedulable_id ] }
   validates :day_number, presence: true,
             numericality: { only_integer: true, greater_than: 0 }
   validates :snapshot_name, length: { maximum: 50 }
