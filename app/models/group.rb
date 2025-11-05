@@ -26,10 +26,13 @@
 class Group < ApplicationRecord
   # コールバック（招待用のトークン設定）
   before_validation :generate_invite_token, on: :create
+
   belongs_to :creator, class_name: "User", foreign_key: "created_by_user_id", inverse_of: :created_groups
   has_many :cards, dependent: :destroy
   has_many :group_memberships, dependent: :destroy
   has_many :members, through: :group_memberships, source: :user
+  has_many :schedule_spots, as: :schedulable
+
   validates :created_by_user_id, presence: true
   validates :name, presence: true, length: { maximum: 30 }
   validates :invite_token, presence: true, length: { maximum: 64 }, uniqueness: true

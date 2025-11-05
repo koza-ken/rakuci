@@ -30,6 +30,8 @@ class User < ApplicationRecord
   has_many :cards, dependent: :destroy
   has_many :group_memberships, dependent: :destroy
   has_many :groups, through: :group_memberships
+  has_many :schedule_spots, as: :schedulable
+
   validates :display_name, length: { maximum: 20 }, allow_blank: true
   validates :provider, presence: true, if: -> { uid.present? }, length: { maximum: 64 }, allow_blank: true
   validates :uid, presence: true, if: -> { provider.present? }
