@@ -153,26 +153,42 @@ Table categories {
 
 }
 
-Table group_schedule_spots {
+Table schedule_spots {
   id int [pk, increment]
-  group_id int [not null, ref: > groups.id, note: "グループID"]
-  spot_id int [not null, ref: > spots.id, note: "スポットID"]
+  schedulable_type varchar(20) [not null, note: "'User' or 'Group'"]
+  schedulable_id int [not null, note: "user_id or group_id"]
+  spot_id int [null, ref: > spots.id, note: "スポットID（カスタム入力時はNULL）"]
   global_position int [not null, note: "全体での順番（1,2,3...全スポット通しの番号）"]
   day_number int [not null, note: "何日目（1日目,2日目...区切り線表示用）"]
-  start_time timestamp [note: "開始時刻（到着時刻）"]
-  end_time timestamp [note: "終了時刻（出発時刻）"]
+  start_time time [note: "開始時刻（到着時刻）"]
+  end_time time [note: "終了時刻（出発時刻）"]
+  is_custom_entry boolean [not null, default: false, note: "true: カスタム入力, false: Spotからの参照"]
+  snapshot_name varchar(50) [note: "スポット名のスナップショット"]
+  snapshot_category_id int [note: "カテゴリIDのスナップショット（外部キー制約なし）"]
+  snapshot_address varchar(255) [note: "住所のスナップショット"]
+  snapshot_phone_number varchar(20) [note: "電話番号のスナップショット"]
+  snapshot_website_url varchar(500) [note: "WebサイトURLのスナップショット"]
   memo text [note: "メモ"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
   Indexes {
-  (group_id, global_position) [unique, name: "index_gss_on_group_and_position"]
-  (group_id, day_number) [name: "index_gss_on_group_and_day"]
-  spot_id [name: "index_tss_on_spot_id"]
+    (schedulable_type, schedulable_id, global_position) [unique, name: "index_ss_on_schedulable_and_position"]
+    (schedulable_type, schedulable_id, day_number) [name: "index_ss_on_schedulable_and_day"]
+    spot_id [name: "index_schedule_spots_on_spot_id"]
   }
 
   Note: '''
-  グループのしおりに追加されたスポット。
+  個人用・グループ用のスケジュール（しおり）に追加されたスポット。
+  ポリモーフィック関連でUserまたはGroupに紐づく。
+
+  CHECK制約:
+  1. is_custom_entry = true  → spot_id IS NULL, snapshot_nameが直接入力される
+  2. is_custom_entry = false → spot_id IS NOT NULL, spotsから情報をスナップショットとして保存
+
+  スナップショットの目的:
+  - spotが削除されても、スケジュールの履歴は残る
+  - spot情報が変更されても、スケジュール作成時点の情報を保持
   '''
 
 }

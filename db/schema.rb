@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_03_134215) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_05_121303) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -85,6 +85,28 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_03_134215) do
     t.index ["group_membership_id"], name: "index_likes_on_group_membership_id"
   end
 
+  create_table "schedule_spots", force: :cascade do |t|
+    t.string "schedulable_type", null: false
+    t.bigint "schedulable_id", null: false
+    t.bigint "spot_id"
+    t.integer "global_position", null: false
+    t.integer "day_number", null: false
+    t.time "start_time"
+    t.time "end_time"
+    t.boolean "is_custom_entry", default: false, null: false
+    t.string "snapshot_name"
+    t.integer "snapshot_category_id"
+    t.string "snapshot_address"
+    t.string "snapshot_phone_number"
+    t.string "snapshot_website_url"
+    t.text "memo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["schedulable_type", "schedulable_id", "day_number"], name: "index_ss_on_schedulable_and_day"
+    t.index ["schedulable_type", "schedulable_id", "global_position"], name: "index_ss_on_schedulable_and_position", unique: true
+    t.index ["spot_id"], name: "index_schedule_spots_on_spot_id"
+  end
+
   create_table "spots", force: :cascade do |t|
     t.bigint "card_id", null: false
     t.string "name", limit: 50, null: false
@@ -125,6 +147,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_03_134215) do
   add_foreign_key "groups", "users", column: "created_by_user_id"
   add_foreign_key "likes", "cards"
   add_foreign_key "likes", "group_memberships"
+  add_foreign_key "schedule_spots", "spots"
   add_foreign_key "spots", "cards"
   add_foreign_key "spots", "categories"
 end
