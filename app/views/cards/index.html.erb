@@ -8,7 +8,7 @@
   </div>
 
   <!-- 右下の+ボタン（新規作成ページへのリンク） -->
-  <div class="fixed bottom-10 right-10 z-50" data-controller="modal">
+  <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
     <%= link_to new_card_path, data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId"}, class: "bg-main-button hover:opacity-80 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center relative" do %>
       <span class="block w-6 h-[3px] bg-bg rounded absolute rotate-45"></span>
       <span class="block w-6 h-[3px] bg-bg rounded absolute -rotate-45"></span>
