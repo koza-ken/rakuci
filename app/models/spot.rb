@@ -25,6 +25,7 @@
 #  fk_rails_...  (category_id => categories.id)
 #
 class Spot < ApplicationRecord
+  has_many :schedule_spots, dependent: :nullify
   belongs_to :card
   belongs_to :category
 
