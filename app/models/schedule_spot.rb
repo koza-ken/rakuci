@@ -8,7 +8,6 @@
 #  global_position       :integer          not null
 #  is_custom_entry       :boolean          default(FALSE), not null
 #  memo                  :text
-#  schedulable_type      :string           not null
 #  snapshot_address      :string
 #  snapshot_name         :string
 #  snapshot_phone_number :string
@@ -16,29 +15,30 @@
 #  start_time            :time
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  schedulable_id        :bigint           not null
+#  schedule_id           :bigint           not null
 #  snapshot_category_id  :integer
 #  spot_id               :bigint
 #
 # Indexes
 #
-#  index_schedule_spots_on_spot_id       (spot_id)
-#  index_ss_on_schedulable_and_day       (schedulable_type,schedulable_id,day_number)
-#  index_ss_on_schedulable_and_position  (schedulable_type,schedulable_id,global_position) UNIQUE
+#  index_schedule_spots_on_spot_id    (spot_id)
+#  index_ss_on_schedule_and_day       (schedule_id,day_number)
+#  index_ss_on_schedule_and_position  (schedule_id,global_position) UNIQUE
 #
 # Foreign Keys
 #
+#  fk_rails_...  (schedule_id => schedules.id)
 #  fk_rails_...  (spot_id => spots.id)
 #
 class ScheduleSpot < ApplicationRecord
   # アソシエーション
+  belongs_to :schedule
   belongs_to :spot, optional: true  # カスタム入力時はspot_id = NULL
-  belongs_to :schedulable, polymorphic: true
 
   # バリデーション
   validates :global_position, presence: true,
-            numericality: { only_integer: true, greater_than: 0 }, # 整数か、0より大きいか
-            uniqueness: { scope: [ :schedulable_type, :schedulable_id ] }
+            numericality: { only_integer: true, greater_than: 0 },
+            uniqueness: { scope: :schedule_id }
   validates :day_number, presence: true,
             numericality: { only_integer: true, greater_than: 0 }
   validates :snapshot_name, length: { maximum: 50 }
@@ -53,18 +53,6 @@ class ScheduleSpot < ApplicationRecord
   # スコープ
   scope :ordered, -> { order(:global_position) }
   scope :on_day, ->(day) { where(day_number: day) }
-  scope :for_user, ->(user) { where(schedulable_type: "User", schedulable_id: user.id) }
-  scope :for_group, ->(group) { where(schedulable_type: "Group", schedulable_id: group.id) }
-
-  # 個人用スケジュールかどうか
-  def personal_schdule?
-    schedulable_type == "User"
-  end
-
-  # グループ用スケジュールかどうか
-  def group_schedule?
-    schedulable_type == "Group"
-  end
 
   # 表示名を取得（スナップショット > Spot > デフォルト）
   def display_name

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_05_121303) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_06_062100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,15 +64,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_05_121303) do
     t.integer "created_by_user_id", null: false
     t.string "name", limit: 30, null: false
     t.string "invite_token", limit: 64, null: false
-    t.string "trip_name", limit: 50
-    t.date "start_date"
-    t.date "end_date"
-    t.text "trip_memo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["created_by_user_id"], name: "index_groups_on_created_by_user_id"
     t.index ["invite_token"], name: "index_groups_on_invite_token", unique: true
-    t.index ["start_date"], name: "index_groups_on_start_date"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -86,8 +81,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_05_121303) do
   end
 
   create_table "schedule_spots", force: :cascade do |t|
-    t.string "schedulable_type", null: false
-    t.bigint "schedulable_id", null: false
     t.bigint "spot_id"
     t.integer "global_position", null: false
     t.integer "day_number", null: false
@@ -102,9 +95,22 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_05_121303) do
     t.text "memo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["schedulable_type", "schedulable_id", "day_number"], name: "index_ss_on_schedulable_and_day"
-    t.index ["schedulable_type", "schedulable_id", "global_position"], name: "index_ss_on_schedulable_and_position", unique: true
+    t.bigint "schedule_id", null: false
+    t.index ["schedule_id", "day_number"], name: "index_ss_on_schedule_and_day"
+    t.index ["schedule_id", "global_position"], name: "index_ss_on_schedule_and_position", unique: true
     t.index ["spot_id"], name: "index_schedule_spots_on_spot_id"
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.string "schedulable_type", null: false
+    t.bigint "schedulable_id", null: false
+    t.string "name", null: false
+    t.date "start_date"
+    t.date "end_date"
+    t.text "memo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["schedulable_type", "schedulable_id"], name: "index_schedules_on_polymorphic", unique: true
   end
 
   create_table "spots", force: :cascade do |t|
@@ -147,6 +153,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_05_121303) do
   add_foreign_key "groups", "users", column: "created_by_user_id"
   add_foreign_key "likes", "cards"
   add_foreign_key "likes", "group_memberships"
+  add_foreign_key "schedule_spots", "schedules"
   add_foreign_key "schedule_spots", "spots"
   add_foreign_key "spots", "cards"
   add_foreign_key "spots", "categories"

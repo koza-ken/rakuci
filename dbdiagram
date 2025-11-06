@@ -28,23 +28,18 @@ Table groups {
   created_by_user_id int [not null, ref: > users.id, note: "グループ作成者"]
   name varchar(30) [not null]
   invite_token varchar(64) [not null, unique, note: "招待リンク用トークン"]
-  trip_name varchar(50) [note: "しおり名"]
-  start_date date [note: "旅行開始日"]
-  end_date date [note: "旅行終了日"]
-  trip_memo text [note: "しおり全体のメモ"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
   Indexes {
     invite_token [unique, name: "index_groups_on_invite_token"]
     created_by_user_id [name: "index_groups_on_created_by_id"]
-    start_date [name: "index_groups_on_start_date"]
   }
 
   Note: '''
   招待URLで共有するためのグループ。
   作成にはユーザー登録が必須。
-  1グループに1つのしおりをつくるので日程の情報も持たせる
+  グループの旅行計画（しおり）は Schedule テーブルで管理される。
   '''
 
 }
@@ -153,10 +148,31 @@ Table categories {
 
 }
 
+Table schedules {
+  id int [pk, increment]
+  schedulable_type varchar [not null, note: "'User' or 'Group'"]
+  schedulable_id int [not null, note: "user_id or group_id"]
+  name varchar(50) [not null, note: "しおりの名前"]
+  start_date date [note: "旅行開始日"]
+  end_date date [note: "旅行終了日"]
+  memo text [note: "しおり全体のメモ"]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+
+  Indexes {
+    (schedulable_type, schedulable_id) [unique, name: "index_schedules_on_polymorphic"]
+  }
+
+  Note: '''
+  ユーザーとグループの両方がしおり（旅行計画）を持つことができる。
+  - User：複数のスケジュール作成可能
+  - Group：1つのスケジュールのみ（バリデーションで制御）
+  '''
+}
+
 Table schedule_spots {
   id int [pk, increment]
-  schedulable_type varchar(20) [not null, note: "'User' or 'Group'"]
-  schedulable_id int [not null, note: "user_id or group_id"]
+  schedule_id int [not null, ref: > schedules.id, note: "しおりID"]
   spot_id int [null, ref: > spots.id, note: "スポットID（カスタム入力時はNULL）"]
   global_position int [not null, note: "全体での順番（1,2,3...全スポット通しの番号）"]
   day_number int [not null, note: "何日目（1日目,2日目...区切り線表示用）"]
@@ -173,22 +189,20 @@ Table schedule_spots {
   updated_at timestamp [not null]
 
   Indexes {
-    (schedulable_type, schedulable_id, global_position) [unique, name: "index_ss_on_schedulable_and_position"]
-    (schedulable_type, schedulable_id, day_number) [name: "index_ss_on_schedulable_and_day"]
+    (schedule_id, global_position) [unique, name: "index_ss_on_schedule_and_position"]
+    (schedule_id, day_number) [name: "index_ss_on_schedule_and_day"]
     spot_id [name: "index_schedule_spots_on_spot_id"]
+    schedule_id [name: "index_schedule_spots_on_schedule_id"]
   }
 
   Note: '''
   個人用・グループ用のスケジュール（しおり）に追加されたスポット。
-  ポリモーフィック関連でUserまたはGroupに紐づく。
+  スケジュール作成時点の情報をスナップショットとして保存することで、
+  後からスポット情報が変更・削除されても、当時のスケジュール情報は保持される。
 
   CHECK制約:
   1. is_custom_entry = true  → spot_id IS NULL, snapshot_nameが直接入力される
   2. is_custom_entry = false → spot_id IS NOT NULL, spotsから情報をスナップショットとして保存
-
-  スナップショットの目的:
-  - spotが削除されても、スケジュールの履歴は残る
-  - spot情報が変更されても、スケジュール作成時点の情報を保持
   '''
 
 }

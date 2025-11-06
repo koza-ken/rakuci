@@ -3,12 +3,8 @@
 # Table name: groups
 #
 #  id                 :bigint           not null, primary key
-#  end_date           :date
 #  invite_token       :string(64)       not null
 #  name               :string(30)       not null
-#  start_date         :date
-#  trip_memo          :text
-#  trip_name          :string(50)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  created_by_user_id :integer          not null
@@ -17,7 +13,6 @@
 #
 #  index_groups_on_created_by_user_id  (created_by_user_id)
 #  index_groups_on_invite_token        (invite_token) UNIQUE
-#  index_groups_on_start_date          (start_date)
 #
 # Foreign Keys
 #
@@ -31,25 +26,13 @@ class Group < ApplicationRecord
   has_many :cards, dependent: :destroy
   has_many :group_memberships, dependent: :destroy
   has_many :members, through: :group_memberships, source: :user
-  has_many :schedule_spots, as: :schedulable
+  has_many :schedules, as: :schedulable, dependent: :destroy
 
   validates :created_by_user_id, presence: true
   validates :name, presence: true, length: { maximum: 30 }
   validates :invite_token, presence: true, length: { maximum: 64 }, uniqueness: true
-  validates :trip_name, length: { maximum: 50 }, allow_blank: true
-
-  # 終了日が開始日より後になるように
-  validate :end_date_after_start_date
 
   private
-
-  def end_date_after_start_date
-    return if start_date.blank? || end_date.blank?
-
-    if end_date < start_date
-      errors.add(:end_date, "は開始日より後の日付を設定してください")
-    end
-  end
 
   # 招待用トークンの生成
   def generate_invite_token
