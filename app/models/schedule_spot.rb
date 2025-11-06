@@ -36,7 +36,6 @@ class ScheduleSpot < ApplicationRecord
   belongs_to :spot, optional: true  # カスタム入力時はspot_id = NULL
 
   # バリデーション
-  validates :schedule_id, presence: true
   validates :global_position, presence: true,
             numericality: { only_integer: true, greater_than: 0 },
             uniqueness: { scope: :schedule_id }

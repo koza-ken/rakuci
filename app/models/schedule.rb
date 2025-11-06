@@ -24,7 +24,6 @@ class Schedule < ApplicationRecord
   # バリデーション
   validates :name, presence: true, length: { maximum: 50 }
   validates :schedulable_type, presence: true
-  validates :schedulable_id, presence: true
 
   # カスタムバリデーション
   validate :end_date_after_start_date
