@@ -83,11 +83,69 @@ ja:
       delete_failed: グループの削除に失敗しました
       link_copied: 招待リンクをコピーしました
 
+  schedules:
+    index:
+      title: しおり一覧
+      new_schedule: 新規作成
+      no_schedules: まだしおりがありません
+
+    new:
+      title: 新しいしおりを作成
+
+    edit:
+      title: しおりを編集
+
+    show:
+      title: しおり詳細
+      edit: 編集
+      delete: 削除
+      back: もどる
+      group_name: グループ名
+      schedule_dates: 日程
+      memo: メモ
+      schedule_spots: スケジュール
+      no_spots: スポットはありません
+
+    form:
+      name: しおり名
+      name_placeholder: 例：沖縄旅行2025
+      start_date: 開始日
+      end_date: 終了日
+      memo: メモ
+      memo_placeholder: 旅行の詳細や行きたい場所を自由に書いてください
+      submit: 作成する
+      update: 更新する
+      cancel: キャンセル
+
+    messages:
+      created: しおりを作成しました
+      updated: しおりを更新しました
+      deleted: しおりを削除しました
+      create_failed: しおりの作成に失敗しました
+      update_failed: しおりの更新に失敗しました
+      delete_failed: しおりの削除に失敗しました
+
+  users:
+    schedules:
+      index:
+        title: しおり一覧
+        new_schedule: 新規作成
+        no_schedules: まだしおりがありません
+
+      show:
+        title: しおり詳細
+        detail: 詳細
+        edit: 編集
+        delete: 削除
+        back: もどる
+
   activerecord:
     models:
       card: カード
       group: グループ
       group_membership: グループメンバーシップ
+      schedule: しおり
+      schedule_spot: スケジュール
     attributes:
       card:
         name: カード名（目的地）
@@ -112,5 +170,21 @@ ja:
         guest_token: ゲストトークン
         user: ユーザー
         group: グループ
+        created_at: 作成日時
+        updated_at: 更新日時
+      schedule:
+        name: しおり名
+        start_date: 開始日
+        end_date: 終了日
+        memo: メモ
+        schedulable_type: 関連リソースタイプ
+        schedulable_id: 関連リソースID
+        created_at: 作成日時
+        updated_at: 更新日時
+      schedule_spot:
+        schedule: しおり
+        spot: スポット
+        day: 日目
+        note: メモ
         created_at: 作成日時
         updated_at: 更新日時

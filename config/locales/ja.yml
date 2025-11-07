@@ -22,6 +22,9 @@ ja:
     likes:
       create_failed: "いいねに失敗しました"
       unauthorized: "いいねする権限がありません"
+    schedules:
+      not_found: "しおりが見つかりません"
+      unauthorized_view: "このしおりを閲覧する権限がありません"
   notices:
     cards:
       created: "カードが作成されました"
@@ -38,6 +41,10 @@ ja:
     likes:
       created: "いいねしました"
       destroyed: "いいねを取り消しました"
+    schedules:
+      created: "しおりを作成しました"
+      updated: "しおりを更新しました"
+      destroyed: "しおりを削除しました"
   spots:
     form:
       name: "スポット名"
