@@ -7,7 +7,16 @@ Rails.application.routes.draw do
     resources :comments, only: %i[create destroy]
     resource :likes, only: %i[create destroy]
   end
-  resources :groups, only: %i[index show new create]
+
+  # group_idをURLに渡すためにネスト
+  resources :groups, only: %i[index show new create] do
+    resource :schedule, only: %i[show]
+  end
+
+  # URLは"/schedules"
+  scope module: "users" do
+    resources :schedules, only: %i[index show]
+  end
 
   # 招待リンクからの参加
   # asオプションで、/groups/join/:invite_tokenのURLを生成するヘルパーを定義
