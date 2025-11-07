@@ -1,0 +1,28 @@
+<main class="flex flex-col items-center justify-center px-8 py-12">
+  <h1 class="text-2xl text-primary font-bold mb-8"><%= t('users.schedules.index.title') %></h1>
+
+  <div class="w-full max-w-2xl">
+    <% if @schedules.any? %>
+      <div id="schedules_list" class="w-full text-center space-y-4">
+        <% @schedules.each do |schedule| %>
+          <div class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+            <h2 class="text-xl font-bold mb-2"><%= schedule.name %></h2>
+            <% if schedule.start_date.present? && schedule.end_date.present? %>
+              <p class="text-gray-600 mb-3">
+                <%= schedule.start_date %> ~ <%= schedule.end_date %>
+              </p>
+            <% end %>
+            <% if schedule.memo.present? %>
+              <p class="text-gray-500 mb-4 text-sm"><%= truncate(schedule.memo, length: 100) %></p>
+            <% end %>
+            <div class="flex gap-2 justify-center">
+              <%= link_to t('users.schedules.show.detail'), schedule_path(schedule), class: "px-4 py-2 btn-main text-white rounded hover:opacity-80" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500 text-center mt-8"><%= t('users.schedules.index.no_schedules') %></p>
+    <% end %>
+  </div>
+</main>
