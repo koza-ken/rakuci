@@ -13,7 +13,7 @@ class SchedulesController < ApplicationController
     @group = Group.find(params[:group_id])
   end
 
-   # グループに参加しているか確認するフィルター（showアクションのフィルター）
+  # グループに参加しているか確認するフィルター（showアクションのフィルター）
   def check_group_member
     authorized = if user_signed_in?
       current_user.member_of?(@group)
