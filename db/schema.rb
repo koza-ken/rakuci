@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_06_134114) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_08_125238) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -110,7 +110,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_06_134114) do
     t.text "memo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["schedulable_type", "schedulable_id"], name: "index_schedules_on_polymorphic", unique: true
+    t.index ["schedulable_type", "schedulable_id"], name: "index_schedules_on_polymorphic", unique: true, where: "((schedulable_type)::text = 'Group'::text)"
   end
 
   create_table "spots", force: :cascade do |t|
