@@ -1,3 +1,5 @@
+<%= turbo_frame_tag "add_new_schedule_spot", data: { controller: "modal" }  %>
+
 <turbo-frame id="spot-edit-modal">
   <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-bg rounded-md">
     <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
@@ -33,11 +35,27 @@
         </div>
       </div>
 
-      <div class="flex gap-3 mt-8">
+      <div class="flex gap-3 mt-8 mb-6">
         <%= link_to t('cards.form.edit'), edit_card_spot_path(@card, @spot), data: {turbo_frame: "spot-edit-modal"}, class: "btn-main flex-1 text-center" %>
         <%= link_to t('cards.form.delete'), card_spot_path(@card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-sub flex-1 text-center" %>
         <%= link_to t('cards.form.back'), card_path(@card), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
       </div>
-    </main>
+
+      <div>
+        <%# グループのカード か ユーザーのカード か判定 %>
+        <% if @card.group_id.present? %>
+          <%# グループのカード → 直接作成（postなのでbutton_to）  %>
+          <%= button_to "グループのしおりに追加",
+              card_spot_group_schedule_spot_path(@card, @spot),
+              method: :post, class: "btn-main w-full" %>
+        <% else %>
+          <%# ユーザーのカード → しおり選択ページへ（getなのでlink_to） %>
+          <%= link_to "ユーザーのしおりに追加",
+              new_card_spot_schedule_spot_path(@card, @spot),
+              data: {turbo_frame: "add_new_schedule_spot"},
+              class: "btn-main w-full block text-center" %>
+        <% end %>
+      </div>
+      </main>
   </div>
-</turbo_frame>
+</turbo-frame>
