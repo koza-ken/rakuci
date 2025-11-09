@@ -1,10 +1,10 @@
-class SchedulesController < ApplicationController
+class Groups::SchedulesController < ApplicationController
   before_action :set_group
   before_action :check_group_member
 
   def show
-    # groupには一つしかscheduleがないので1件目を取得
-    @schedule = @group.schedules.first
+    # groupには一つしかscheduleがない
+    @schedule = @group.schedule
   end
 
   private

@@ -3,19 +3,29 @@ Rails.application.routes.draw do
   root "static_pages#home"
 
   resources :cards, only: %i[index show new create] do
-    resources :spots, only: %i[show new create edit update destroy]
+    resources :spots, only: %i[show new create edit update destroy] do
+      # 個人用しおりのスポット追加
+      resources :schedule_spots, only: %i[new create], controller: "users/schedule_spots", path: "user_schedule_spot_path"
+      # グループ用しおりのスポット追加（作成ページなし）
+      post "/group_schedule_spots", to: "groups/schedule_spots#create", as: :group_schedule_spot
+    end
     resources :comments, only: %i[create destroy]
     resource :likes, only: %i[create destroy]
   end
 
   # group_idをURLに渡すためにネスト
   resources :groups, only: %i[index show new create] do
-    resource :schedule, only: %i[show]
+    resource :schedule, only: %i[show], controller: "groups/schedules" do
+      resources :schedule_spots, only: %i[show], controller: "groups/schedule_spots"
+    end
   end
 
-  # URLは"/schedules"
+  # URLは"/schedules"（個人用）
   scope module: "users" do
-    resources :schedules, only: %i[index show]
+    resources :schedules, only: %i[index show] do
+      # showはscheduleの詳細からアクセスする（追加のnew,createは/card/spotsから）
+      resources :schedule_spots, only: %i[show]
+    end
   end
 
   # 招待リンクからの参加

@@ -1,0 +1,66 @@
+<turbo-frame id="schedule-spot-modal">
+  <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-bg rounded-md">
+    <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
+      <h1 class="text-2xl font-bold text-primary mb-8"><%= @schedule_spot.display_name %></h1>
+
+      <div class="w-full max-w-md">
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-text mb-2">Category</label>
+          <div class="form-text-field bg-gray-100 cursor-not-allowed">
+            <%= Category.find_by(id: @schedule_spot.snapshot_category_id)&.name || "---" %>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-text mb-2">Address</label>
+          <div class="form-text-field bg-gray-100 cursor-not-allowed">
+            <%= @schedule_spot.snapshot_address %>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-text mb-2">Website</label>
+          <div class="form-text-field bg-gray-100 cursor-not-allowed">
+            <%= @schedule_spot.snapshot_website_url %>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-text mb-2">Phone</label>
+          <div class="form-text-field bg-gray-100 cursor-not-allowed">
+            <%= @schedule_spot.snapshot_phone_number %>
+          </div>
+        </div>
+
+        <% if @schedule_spot.start_time.present? || @schedule_spot.end_time.present? %>
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-text mb-2">Time</label>
+            <div class="form-text-field bg-gray-100 cursor-not-allowed">
+              <% if @schedule_spot.start_time.present? %>
+                <%= @schedule_spot.start_time.strftime('%H:%M') %>
+                <% if @schedule_spot.end_time.present? %>
+                  ~ <%= @schedule_spot.end_time.strftime('%H:%M') %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <% if @schedule_spot.memo.present? %>
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-text mb-2">Memo</label>
+            <div class="form-text-field bg-gray-100 cursor-not-allowed">
+              <%= @schedule_spot.memo %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="flex gap-3 mt-8">
+        <%= link_to "Edit", "#", class: "btn-main flex-1 text-center" %>
+        <%= link_to "Delete", "#", class: "btn-sub flex-1 text-center" %>
+        <%= link_to "Back", "#", data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
+      </div>
+    </main>
+  </div>
+</turbo-frame>

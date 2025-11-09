@@ -1,7 +1,7 @@
 class SpotsController < ApplicationController
-  before_action :set_card, only: [ :new, :create, :edit, :update, :destroy ]
+  before_action :set_card
   before_action :set_spot, only: [ :show, :edit, :update, :destroy ]
-  before_action :check_show_spot, only: [ :show, :new, :create, :edit, :update, :destroy ]
+  before_action :check_show_spot
   before_action :check_create_spots, only: [ :create ]
 
   def show
