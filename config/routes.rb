@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   root "static_pages#home"
 
   resources :cards, only: %i[index show new create] do
-    resources :spots, only: %i[show new create edit update destroy]
+    resources :spots, only: %i[show new create edit update destroy] do
+      # 個人用しおりのスポット追加
+      resources :schedule_spots, only: %i[new create], controller: 'users/schedule_spots', path: 'user_schedule_spot_path'
     resources :comments, only: %i[create destroy]
     resource :likes, only: %i[create destroy]
   end
@@ -15,8 +17,12 @@ Rails.application.routes.draw do
 
   # URLは"/schedules"
   scope module: "users" do
-    resources :schedules, only: %i[index show]
+    resources :schedules, only: %i[index show] do
+      # showはscheduleの詳細からアクセスする（追加のnew,createは/card/spotsから）
+      resources :schedule_spots, only: %i[show]
+    end
   end
+
 
   # 招待リンクからの参加
   # asオプションで、/groups/join/:invite_tokenのURLを生成するヘルパーを定義
