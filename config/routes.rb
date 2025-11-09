@@ -15,22 +15,16 @@ Rails.application.routes.draw do
 
   # group_idをURLに渡すためにネスト
   resources :groups, only: %i[index show new create] do
-    resource :schedule, only: %i[show]
+    resource :schedule, only: %i[show], controller: 'groups/schedules' do
+      resources :schedule_spots, only: %i[show], controller: 'groups/schedule_spots'
+    end
   end
 
-  # URLは"/schedules"
+  # URLは"/schedules"（個人用）
   scope module: "users" do
     resources :schedules, only: %i[index show] do
       # showはscheduleの詳細からアクセスする（追加のnew,createは/card/spotsから）
       resources :schedule_spots, only: %i[show]
-    end
-  end
-
-  # URLは"/schedules"
-  scope module: "groups" do
-    resources :schedules, only: %i[show] do
-      # showはscheduleの詳細からアクセスする（追加のnew,createは/card/spotsから）
-      resources :schedule_spots, only: %i[show],  as: 'group_schedule_spot', path: '/group_schedule_spots'
     end
   end
 
