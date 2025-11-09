@@ -59,6 +59,20 @@ class ScheduleSpot < ApplicationRecord
     snapshot_name.presence || spot&.name || "予定"
   end
 
+  def self.create_from_spot(schedule, spot, day_number: 1)
+      schedule.schedule_spots.build(
+        spot_id: spot.id,
+        day_number: day_number,
+        global_position: schedule.schedule_spots.count + 1,
+        is_custom_entry: false,
+        snapshot_name: spot.name,
+        snapshot_address: spot.address,
+        snapshot_phone_number: spot.phone_number,
+        snapshot_website_url: spot.website_url,
+        snapshot_category_id: spot.category_id
+      )
+    end
+
   private
 
   # spot_id と is_custom_entry の整合性をチェック
