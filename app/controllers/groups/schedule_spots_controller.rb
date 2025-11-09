@@ -45,5 +45,4 @@ class Groups::ScheduleSpotsController < ApplicationController
       redirect_to (user_signed_in? ? groups_path : root_path), alert: t("errors.groups.not_member")
     end
   end
-
 end
