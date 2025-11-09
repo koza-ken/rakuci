@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :cards, only: %i[index show new create] do
     resources :spots, only: %i[show new create edit update destroy] do
       # 個人用しおりのスポット追加
-      resources :schedule_spots, only: %i[new create], controller: 'users/schedule_spots', path: 'user_schedule_spot_path'
+      resources :schedule_spots, only: %i[new create], controller: "users/schedule_spots", path: "user_schedule_spot_path"
       # グループ用しおりのスポット追加（作成ページなし）
       post "/group_schedule_spots", to: "groups/schedule_spots#create", as: :group_schedule_spot
     end
@@ -15,8 +15,8 @@ Rails.application.routes.draw do
 
   # group_idをURLに渡すためにネスト
   resources :groups, only: %i[index show new create] do
-    resource :schedule, only: %i[show], controller: 'groups/schedules' do
-      resources :schedule_spots, only: %i[show], controller: 'groups/schedule_spots'
+    resource :schedule, only: %i[show], controller: "groups/schedules" do
+      resources :schedule_spots, only: %i[show], controller: "groups/schedule_spots"
     end
   end
 
