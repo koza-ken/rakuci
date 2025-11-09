@@ -27,9 +27,15 @@
       <div class="mt-4">
         <h2 class="text-xl text-primary font-bold mb-4"><%= t('schedules.show.schedule_spots') %></h2>
         <% if @schedule.schedule_spots.any? %>
-          <div class="space-y-4">
-            <%= render @schedule.schedule_spots %>
-          </div>
+          <% @schedule.schedule_spots.order(:day_number, :global_position).group_by(&:day_number).each do |day, schedule_spots| %>
+            <%# 日目の見出し %>
+            <h3 class="text-lg font-bold text-gray-700 mt-6 mb-4"><%= day %>日目</h3>
+            <div class="space-y-4">
+              <% schedule_spots.each do |schedule_spot| %>
+                <%= render schedule_spot %>
+              <% end %>
+            </div>
+          <% end %>
         <% else %>
           <p class="text-text"><%= t('schedules.show.no_spots') %></p>
         <% end %>
