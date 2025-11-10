@@ -3,10 +3,17 @@ Rails.application.routes.draw do
   root "static_pages#home"
 
   resources :cards, only: %i[index show new create] do
+    # 個人用しおり（チェックボックス）のスポット追加（spot_idがいらない）の新規作成new
+    get "schedule_spots/new", to: "users/schedule_spots#new", as: :new_schedule_spots
+    # 個人用しおり（チェックボックス）のスポット追加（spot_idがいらない）
+    post "schedule_spots", to: "users/schedule_spots#create", as: :spots_schedule_spots
+    # グループ用しおり（チェックボックス）のスポット追加（spot_idがいらない）
+    post "group_schedule_spots", to: "groups/schedule_spots#create", as: :spots_group_schedule_spots
+
     resources :spots, only: %i[show new create edit update destroy] do
-      # 個人用しおりのスポット追加
+      # 個人用しおりの個別スポット追加
       resources :schedule_spots, only: %i[new create], controller: "users/schedule_spots", path: "user_schedule_spot_path"
-      # グループ用しおりのスポット追加（作成ページなし）
+      # グループ用しおりの個別スポット追加（作成ページなし）
       post "/group_schedule_spots", to: "groups/schedule_spots#create", as: :group_schedule_spot
     end
     resources :comments, only: %i[create destroy]
