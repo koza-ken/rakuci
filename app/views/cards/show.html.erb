@@ -1,4 +1,5 @@
 <%= turbo_frame_tag "spot-create-modal", data: { controller: "modal" } %>
+<%= turbo_frame_tag "add_new_schedule_spot" %>
 
 <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-bg rounded-md">
   <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
@@ -9,7 +10,23 @@
       <% end %>
     </div>
     <div class="mb-4">
-      <%= render "spots/spots", spots: @card.spots, categories: @categories %>
+      <% if !@card.group_card? %>
+        <!-- 個人カード: チェックボックスフォーム -->
+        <%= form_with url: card_new_schedule_spots_path(@card), method: :get, data: { turbo_frame: "add_new_schedule_spot" } do |f| %>
+          <%= render "spots/spots", spots: @card.spots, categories: @categories %>
+          <div class="flex gap-2 mt-4">
+            <%= f.submit "選択したスポットをしおりに追加", class: "btn-main flex-1" %>
+          </div>
+        <% end %>
+      <% else %>
+        <!-- グループカード: チェックボックスフォーム -->
+        <%= form_with url: card_spots_group_schedule_spots_path(@card), method: :post, local: true do |f| %>
+          <%= render "spots/spots", spots: @card.spots, categories: @categories %>
+          <div class="flex gap-2 mt-4">
+            <%= f.submit "選択したスポットをグループのしおりに追加", class: "btn-main flex-1" %>
+          </div>
+        <% end %>
+      <% end %>
     </div>
 
     <!-- コメント欄（グループカードのみ） -->
