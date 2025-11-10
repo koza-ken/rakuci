@@ -23,7 +23,7 @@ class Users::ScheduleSpotsController < ApplicationController
     @card = current_user.cards.find(params[:card_id])
     @schedule = current_user.schedules.find(params[:schedule_id])
     # spot_ids（複数）か spot_id（個別）かを判定
-    spot_ids = params[:spot_ids].presence || [params[:spot_id]].compact
+    spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
     # 複数作成
     results = spot_ids.map do |spot_id|
       spot = Spot.find(spot_id)

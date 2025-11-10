@@ -11,7 +11,7 @@ class Groups::ScheduleSpotsController < ApplicationController
     @card = Card.find(params[:card_id])
     @schedule = @group.schedule
     # spot_ids（複数）か spot_id（個別）かを判定
-    spot_ids = params[:spot_ids].presence || [params[:spot_id]].compact
+    spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
     # 複数作成
     results = spot_ids.map do |spot_id|
       spot = Spot.find(spot_id)
