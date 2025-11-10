@@ -39,6 +39,15 @@ class Schedule < ApplicationRecord
     Group.find_by(id: schedulable_id) if schedulable_type == "Group"
   end
 
+  # しおりの詳細ページへのパスを返す
+  def show_path
+    if schedule_type == :personal
+      Rails.application.routes.url_helpers.schedule_path(self)
+    else
+      Rails.application.routes.url_helpers.group_schedule_path(group, self)
+    end
+  end
+
   private
 
   # 終了日が開始日より後になるように
