@@ -29,6 +29,16 @@ class Schedule < ApplicationRecord
   validate :end_date_after_start_date
   validate :only_one_schedule_per_group
 
+  # しおりのタイプを返す（個人 or グループ）
+  def schedule_type
+    schedulable_type == "User" ? :personal : :group
+  end
+
+  # グループしおりの場合、グループオブジェクトを返す
+  def group
+    Group.find_by(id: schedulable_id) if schedulable_type == "Group"
+  end
+
   private
 
   # 終了日が開始日より後になるように
