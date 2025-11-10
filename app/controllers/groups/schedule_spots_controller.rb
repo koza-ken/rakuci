@@ -9,14 +9,24 @@ class Groups::ScheduleSpotsController < ApplicationController
 
   def create
     @card = Card.find(params[:card_id])
-    @spot = Spot.find(params[:spot_id])
     @schedule = @group.schedule
-    @schedule_spot = ScheduleSpot.create_from_spot(@schedule, @spot)
-
-    if @schedule_spot.save
-      redirect_to card_spot_path(@card, @spot), notice: "スポットをグループのしおりに追加しました"
+    # spot_ids（複数）か spot_id（個別）かを判定
+    spot_ids = params[:spot_ids].presence || [params[:spot_id]].compact
+    # 複数作成
+    results = spot_ids.map do |spot_id|
+      spot = Spot.find(spot_id)
+      schedule_spot = ScheduleSpot.create_from_spot(@schedule, spot)
+      schedule_spot.save
+    end
+    # 成功・失敗を判定
+    if results.all?
+      redirect_to card_path(@card), notice: "#{results.size}件のスポットをグループのしおりに追加しました", turbo: false
+    elsif results.none?
+      redirect_to card_path(@card), alert: "スポット追加に失敗しました", turbo: false
     else
-      redirect_to card_spot_path(@card, @spot), alert: "追加に失敗しました"
+      added = results.count(true)
+      failed = results.count(false)
+      redirect_to card_path(@card), notice: "#{added}件追加しました。#{failed}件失敗しました", turbo: false
     end
   end
 
