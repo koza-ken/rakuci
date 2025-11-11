@@ -11,6 +11,7 @@ class GroupsController < ApplicationController
   end
 
   def show
+    @schedule = @group.schedule
   end
 
   def new
