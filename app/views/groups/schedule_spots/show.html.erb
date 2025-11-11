@@ -57,9 +57,9 @@
       </div>
 
       <div class="flex gap-3 mt-8">
-        <%= link_to "Edit", "#", class: "btn-main flex-1 text-center" %>
-        <%= link_to "Delete", "#", class: "btn-sub flex-1 text-center" %>
-        <%= link_to "Back", "#", data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
+        <%= link_to t('cards.form.edit'), "#", class: "btn-main flex-1 text-center" %>
+        <%= link_to t('cards.form.delete'), "#", class: "btn-sub flex-1 text-center" %>
+        <%= link_to t('cards.form.back'), group_schedule_path(@group), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
       </div>
     </main>
   </div>
