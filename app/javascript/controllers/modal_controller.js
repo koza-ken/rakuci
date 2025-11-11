@@ -2,6 +2,9 @@ import { Controller } from "@hotwired/stimulus"
 
 // モーダルの制御
 export default class extends Controller {
+  // float action button
+  static targets = [ "fab" ]
+
   // リンクをクリックしたときにgroup_idを保存
   setGroupId(event) {
     const groupId = event.currentTarget.dataset.groupId
@@ -9,6 +12,11 @@ export default class extends Controller {
       sessionStorage.setItem('cardGroupId', groupId)
     } else {
       sessionStorage.removeItem('cardGroupId')
+    }
+
+    // FABボタンに .active クラスを付ける
+    if (this.hasFabTarget) {
+      this.fabTarget.classList.add("active")
     }
   }
 
@@ -44,5 +52,11 @@ export default class extends Controller {
     // Turbo Frameの中身を空にしてモーダルを非表示
     // remove()だとTurbo Frameごと削除されて2回目以降表示されなくなる
     this.element.innerHTML = ""
+
+    // FABボタンの .active クラスを削除（全ページから探索）
+    const fabButton = document.querySelector('[data-modal-target="fab"]')
+    if (fabButton) {
+      fabButton.classList.remove("active")
+    }
   }
 }
