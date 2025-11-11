@@ -48,6 +48,16 @@ class Schedule < ApplicationRecord
     end
   end
 
+  # 指定された日目に対応する日付を返す（フォーマット付き）
+  def formatted_date_for_day(day_number)
+    return nil if start_date.blank?
+    date = start_date + (day_number - 1).days
+    # i18n から日付フォーマットと曜日を取得
+    date_format = I18n.t("date.formats.schedule_day")
+    wday = I18n.t("date.day_names")[date.wday]
+    date.strftime(date_format) + "（#{wday}）"
+  end
+
   private
 
   # 終了日が開始日より後になるように
