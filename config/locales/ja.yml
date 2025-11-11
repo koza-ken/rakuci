@@ -1,4 +1,15 @@
 ja:
+  date:
+    formats:
+      schedule_day: "%-m月%-d日"
+    day_names:
+      - 日
+      - 月
+      - 火
+      - 水
+      - 木
+      - 金
+      - 土
   errors:
     cards:
       unauthorized_view: "このカードを閲覧する権限がありません"
