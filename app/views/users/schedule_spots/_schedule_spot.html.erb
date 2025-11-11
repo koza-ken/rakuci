@@ -1,5 +1,19 @@
 <%= link_to schedule_schedule_spot_path(schedule_spot.schedule, schedule_spot) do %>
   <div class="bg-white rounded-lg shadow p-2 mb-2 border-l-4 border-primary">
+
+    <!-- 時間帯 -->
+    <% if schedule_spot.start_time.present? || schedule_spot.end_time.present? %>
+      <p class="text-sm text-gray-600">
+        <% if schedule_spot.start_time.present? && schedule_spot.end_time.present? %>
+          <%= schedule_spot.start_time.strftime("%H:%M") %> ~ <%= schedule_spot.end_time.strftime("%H:%M") %>
+        <% elsif schedule_spot.start_time.present? %>
+          <%= schedule_spot.start_time.strftime("%H:%M") %>から
+        <% elsif schedule_spot.end_time.present? %>
+          <%= schedule_spot.end_time.strftime("%H:%M") %>まで
+        <% end %>
+      </p>
+    <% end %>
+    <!-- スポット名 -->
     <h3 class="text-lg font-bold text-primary"><%= schedule_spot.display_name %></h3>
   </div>
 <% end %>
