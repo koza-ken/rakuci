@@ -30,28 +30,6 @@
                 class: "form-text-field" %>
           </div>
 
-          <!-- 開始日 -->
-          <div class="mb-6">
-            <%= f.label :start_date, t('groups.form.start_date'), class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.date_field :start_date,
-                class: "form-text-field" %>
-          </div>
-
-          <!-- 終了日 -->
-          <div class="mb-6">
-            <%= f.label :end_date, t('groups.form.end_date'), class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.date_field :end_date,
-                class: "form-text-field" %>
-          </div>
-
-          <!-- 旅行先 -->
-          <div class="mb-6">
-            <%= f.label :trip_name, t('groups.form.trip_name'), class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.text_field :trip_name,
-                placeholder: t('groups.form.trip_name_placeholder'),
-                class: "form-text-field" %>
-          </div>
-
           <!-- グループでの名前 -->
           <div class="mb-6">
             <%= f.label :group_nickname, t('groups.form.group_nickname'), class: "block text-sm font-medium text-text mb-2" %>
