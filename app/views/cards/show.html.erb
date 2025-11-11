@@ -4,7 +4,7 @@
 <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-bg rounded-md">
   <main class="flex flex-col px-8 py-12 bg-main-bg">
     <!-- カード名と編集アイコン -->
-    <div class="flex items-start gap-6 mb-8">
+    <div class="flex items-start gap-6 mb-4">
       <h1 class="text-2xl font-bold text-primary"><%= @card.name %></h1>
       <!-- 編集アイコン（サイズ固定） -->
       <button class="shrink-0 text-primary hover:opacity-70 transition pt-1">
@@ -13,8 +13,8 @@
     </div>
 
     <!-- スポット追加ボタン -->
-    <div class="mb-4" data-controller="modal">
-      <%= link_to new_card_spot_path(@card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, class: "btn-main text-sm px-4 py-2 w-auto" do %>
+    <div class="flex justify-end mb-2 w-auto" data-controller="modal">
+      <%= link_to new_card_spot_path(@card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, class: "btn-main px-4 py-2 w-auto" do %>
         スポット追加
       <% end %>
     </div>
