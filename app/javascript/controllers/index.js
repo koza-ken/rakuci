@@ -15,3 +15,6 @@ application.register("flash", FlashController);
 
 import AutocompleteController from "./autocomplete_controller";
 application.register("autocomplete", AutocompleteController);
+
+import CardEditController from "./card_edit_controller";
+application.register("card-edit", CardEditController);
