@@ -7,23 +7,15 @@
       <%# スケジュール日程 %>
       <div class="mb-2">
         <p class="text-text">
-          <span class="font-semibold"><%= t('schedules.show.schedule_dates') %>：</span>
+          <span class="font-semibold"><%= t('schedules.show.schedule_dates')%>：</span>
           <span class="font-semibold"><%= @schedule.start_date %></span>
           <span class="text-text">~</span>
           <span class="font-semibold"><%= @schedule.end_date %></span>
         </p>
       </div>
 
-      <%# メモ %>
-      <% if @schedule.memo.present? %>
-        <div class="mb-6 p-4 bg-gray-100 rounded">
-          <p class="text-text"><%= @schedule.memo %></p>
-        </div>
-      <% end %>
-
       <%# スポット %>
       <div class="mt-4">
-        <h2 class="text-xl text-primary font-bold mb-4"><%= t('schedules.show.schedule_spots') %></h2>
         <% if @schedule.schedule_spots.any? %>
           <% @schedule.schedule_spots.order(:day_number, :global_position).group_by(&:day_number).each do |day, schedule_spots| %>
             <%# 日目の見出し %>
@@ -54,5 +46,14 @@
     <div class="mt-8">
       <%= link_to t('users.schedules.show.back'), schedules_path, class: "btn-main text-main hover:opacity-70" %>
     </div>
+
+    <%# メモ %>
+    <% if @schedule.memo.present? %>
+      <h2 class="mt-10">メモ</h2>
+      <div class="mt-2 p-4 bg-white rounded">
+        <p class="text-text"><%= @schedule.memo %></p>
+      </div>
+    <% end %>
+
   </div>
 </main>
