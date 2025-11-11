@@ -38,14 +38,14 @@
                 placeholder: t('cards.form.memo_placeholder'),
                 class: "form-text-field resize-vertical" %>
           </div>
-          
+
           <!-- JavaScriptで動的に設定されるgroup_id -->
           <%= f.hidden_field :group_id %>
 
           <!-- ボタン -->
           <div class="flex gap-3">
             <%= f.submit t('cards.form.submit'), class: "btn-main flex-1" %>
-            <%= link_to t('cards.form.cancel'), cards_path, data: { action: "click->modal#close" }, class: "btn-sub flex-1 text-center" %>
+            <%= link_to t('cards.form.cancel'), :back, data: { action: "click->modal#close" }, class: "btn-sub flex-1 text-center" %>
           </div>
         <% end %>
       </main>
