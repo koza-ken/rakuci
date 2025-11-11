@@ -9,9 +9,6 @@ class GroupCreateForm
 
   # groupsモデル
   attribute :name, :string
-  attribute :trip_name, :string
-  attribute :start_date, :date
-  attribute :end_date, :date
   # group_membershipモデル
   attribute :group_nickname, :string
   attribute :role, :string
@@ -24,10 +21,7 @@ class GroupCreateForm
 
     ActiveRecord::Base.transaction do
       @group = user.created_groups.build(
-        name: name,
-        trip_name: trip_name,
-        start_date: start_date,
-        end_date: end_date
+        name: name
       )
       @group.group_memberships.build(
         user_id: user.id,
