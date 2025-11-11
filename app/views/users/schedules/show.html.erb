@@ -27,7 +27,14 @@
         <% if @schedule.schedule_spots.any? %>
           <% @schedule.schedule_spots.order(:day_number, :global_position).group_by(&:day_number).each do |day, schedule_spots| %>
             <%# 日目の見出し %>
-            <h3 class="text-lg font-bold text-gray-700 mt-6 mb-4"><%= day %>日目</h3>
+            <% formatted_date = @schedule.formatted_date_for_day(day) %>
+            <h3 class="text-lg font-bold text-gray-700 mt-4 mb-2">
+              <% if formatted_date %>
+                <%= formatted_date %>（<%= day %>日目）
+              <% else %>
+                <%= day %>日目
+              <% end %>
+            </h3>
             <div class="space-y-4">
               <% schedule_spots.each do |schedule_spot| %>
                 <%= render schedule_spot %>
