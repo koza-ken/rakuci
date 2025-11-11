@@ -1,4 +1,4 @@
-<turbo-frame id="group-create-modal">
+<turbo-frame id="group-create-modal" data-controller="modal">
   <!-- モーダルのラッパー -->
   <div role="dialog" tabindex="-1" class="fixed inset-0 z-60 flex items-center justify-center w-full h-screen p-2">
     <!-- 背景 -->
@@ -63,7 +63,7 @@
           <!-- ボタン -->
           <div class="flex gap-3 mt-12">
             <%= f.submit t('groups.form.submit'), class: "btn-main flex-1" %>
-            <%= link_to t('groups.form.cancel'), groups_path, class: "btn-sub flex-1 text-center" %>
+            <%= link_to t('groups.form.cancel'), groups_path, data: { action: "click->modal#close" }, class: "btn-sub flex-1 text-center" %>
           </div>
         <% end %>
 </main>
