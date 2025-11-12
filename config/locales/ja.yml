@@ -39,6 +39,8 @@ ja:
   notices:
     cards:
       created: "カードが作成されました"
+      updated: "カードが更新されました"
+      destroyed: "カードが削除されました"
     groups:
       created: "グループが作成されました"
       joined: "グループに参加しました"
@@ -78,6 +80,8 @@ ja:
       delete: "削除"
       confirm_delete: "削除してもよろしいですか？"
       back: "戻る"
+    delete_button: "カード削除"
+    delete_confirm: "このカードを削除してもよろしいですか？"
   comments:
     confirm_delete: "コメントを削除しますか？"
   views:
