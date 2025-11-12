@@ -4,6 +4,26 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["display", "form"]
 
+  connect() {
+    // 表示モードのテキストエリアの高さを調整
+    const displayTextarea = this.displayTarget.querySelector("textarea")
+    if (displayTextarea) {
+      this.autoResizeTextarea(displayTextarea)
+    }
+
+    // 編集モードのテキストエリアに自動高さ調整を設定
+    const textarea = this.formTarget.querySelector("textarea")
+    if (textarea) {
+      textarea.addEventListener("input", () => this.autoResizeTextarea(textarea))
+    }
+  }
+
+  // テキストエリアの高さを自動調整
+  autoResizeTextarea(textarea) {
+    textarea.style.height = "auto"
+    textarea.style.height = textarea.scrollHeight + "px"
+  }
+
   // 表示モードと編集モードを切り替える
   toggleForm() {
     // 表示モードのdisplay属性を確認
@@ -20,7 +40,10 @@ export default class extends Controller {
       this.displayTarget.classList.add("hidden")
       this.formTarget.classList.remove("hidden")
       // フォームのテキストエリアにフォーカス
-      this.formTarget.querySelector("textarea").focus()
+      const textarea = this.formTarget.querySelector("textarea")
+      textarea.focus()
+      // 初期表示時の高さを調整
+      this.autoResizeTextarea(textarea)
     }
   }
 }
