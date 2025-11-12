@@ -49,7 +49,8 @@ class CardsController < ApplicationController
 
   def destroy
     @card.destroy!
-    redirect_to cards_path, notice: t("notices.cards.destroyed")
+    redirect_path = @card.group_id.present? ? group_path(@card.group_id) : cards_path
+    redirect_to redirect_path, notice: t("notices.cards.destroyed")
   end
 
   private
