@@ -84,6 +84,17 @@ ja:
     delete_confirm: "このカードを削除してもよろしいですか？"
   comments:
     confirm_delete: "コメントを削除しますか？"
+  users:
+    schedules:
+      index:
+        title: "しおり一覧"
+        no_schedules: "しおりがまだ作成されていません"
+      new:
+        title: "しおりを作成"
+      form:
+        name_placeholder: "例：春休みの旅行"
+        submit: "作成"
+        cancel: "キャンセル"
   views:
     spots:
       new:
