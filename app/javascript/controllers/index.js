@@ -18,3 +18,6 @@ application.register("autocomplete", AutocompleteController);
 
 import CardEditController from "./card_edit_controller";
 application.register("card-edit", CardEditController);
+
+import MemoEditController from "./memo_edit_controller";
+application.register("memo-edit", MemoEditController);
