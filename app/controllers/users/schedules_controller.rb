@@ -12,4 +12,27 @@ class Users::SchedulesController < ApplicationController
     @user = current_user
     @schedule = @user.schedules.find(params[:id])
   end
+
+  def new
+    @schedule = current_user.schedules.build
+  end
+
+  def create
+    @schedule = current_user.schedules.build(schedule_params)
+
+    if @schedule.save
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to schedules_path, notice: t("notices.schedules.created") }
+      end
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def schedule_params
+    params.require(:schedule).permit(:name, :start_date, :end_date)
+  end
 end

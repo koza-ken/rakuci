@@ -1,41 +1,22 @@
+<%= turbo_frame_tag "schedule-create-modal", data: { controller: "modal" } %>
+
 <main class="flex flex-col items-center justify-center px-8 py-12">
   <h1 class="text-2xl text-primary font-bold mb-8"><%= t('users.schedules.index.title') %></h1>
+
+  <!-- FAB ボタン -->
+  <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
+    <%= link_to new_schedule_path, data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" },
+                class: "group bg-main-button hover:opacity-80 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
+      <!-- +アイコン -->
+      <span class="block w-6 h-[3px] bg-bg rounded absolute transition-all duration-300"></span>
+      <span class="block w-6 h-[3px] bg-bg rounded absolute rotate-90 transition-all duration-300"></span>
+    <% end %>
+  </div>
 
   <div class="w-full max-w-2xl">
     <% if @schedules.any? %>
       <div id="schedules_list" class="w-full space-y-4">
-        <% @schedules.each do |schedule| %>
-          <%# モデルでしおりが個人かグループを判定してパスを渡してくる %>
-          <%= link_to schedule.show_path, class: "block" do %>
-            <div class="bg-white hover:bg-[#fbfbfb] rounded-lg shadow p-6 transition-shadow cursor-pointer">
-              <div class="flex flex-col gap-3">
-                <!-- しおり名 -->
-                <h2 class="text-xl font-bold text-primary"><%= schedule.name %></h2>
-
-                <!-- 日付 -->
-                <% if schedule.start_date.present? && schedule.end_date.present? %>
-                  <div class="flex items-center text-gray-600 text-sm">
-                    <%= render "shared/icon/schedule_icon_date" %>
-                    <span><%= schedule.start_date %> ~ <%= schedule.end_date %></span>
-                  </div>
-                <% end %>
-
-                <!-- グループしおりの場合、グループ名と人数を表示 -->
-                <% if schedule.schedule_type == :group %>
-                  <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-600"><%= schedule.group.name %></span>
-                    <div class="flex items-center gap-1">
-                      <%= render "shared/icon/schedule_icon_member" %>
-                      <span class="text-sm text-gray-600"><%= schedule.group.members.count %>人</span>
-                    </div>
-                  </div>
-                <% else %>
-                  <span class="text-sm text-gray-600">not group</span>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
+        <%= render @schedules %>
       </div>
     <% else %>
       <p class="text-gray-500 text-center mt-8"><%= t('users.schedules.index.no_schedules') %></p>
