@@ -49,7 +49,7 @@
         <%= form_with url: card_spots_group_schedule_spots_path(@card), method: :post, local: true do |f| %>
           <%= render "spots/spots", spots: @card.spots, categories: @categories %>
           <div class="flex gap-2 mt-4">
-            <%= f.submit "選択したスポットをグループのしおりに追加", class: "btn-main flex-1" %>
+            <%= f.submit "選択したスポットをしおりに追加", class: "btn-main flex-1" %>
           </div>
         <% end %>
       <% end %>
