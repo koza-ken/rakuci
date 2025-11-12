@@ -95,6 +95,10 @@ ja:
         name_placeholder: "例：春休みの旅行"
         submit: "作成"
         cancel: "キャンセル"
+  groups:
+    schedules:
+      new:
+        title: "グループしおりを作成"
   views:
     spots:
       new:
