@@ -7,10 +7,31 @@ class Groups::SchedulesController < ApplicationController
     @schedule = @group.schedule
   end
 
+  def new
+    @schedule = @group.build_schedule
+  end
+
+  def create
+    @schedule = @group.build_schedule(schedule_params)
+
+    if @schedule.save
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to group_path(@group), notice: t("notices.schedules.created") }
+      end
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_group
     @group = Group.find(params[:group_id])
+  end
+
+  def schedule_params
+    params.require(:schedule).permit(:name, :start_date, :end_date)
   end
 
   # グループに参加しているか確認するフィルター（showアクションのフィルター）
