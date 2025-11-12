@@ -110,5 +110,12 @@
         <% end %>
       </div>
     </div>
+
+    <!-- 削除ボタン -->
+    <div class="mt-8 pt-6">
+      <%= button_to card_path(@card), method: :delete, data: { turbo_confirm: t("cards.delete_confirm") }, class: "btn-main" do %>
+        <%= t("cards.delete_button") %>
+      <% end %>
+    </div>
   </main>
 </div>
