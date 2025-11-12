@@ -1,0 +1,5 @@
+<!-- モーダルを閉じる（中身を空にする） -->
+<%= turbo_stream.update "schedule-create-modal" %>
+
+<!-- しおり一覧に作成したしおりを追加 -->
+<%= turbo_stream.prepend "schedules_list", partial: "schedule", locals: { schedule: @schedule } %>
