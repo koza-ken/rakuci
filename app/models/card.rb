@@ -27,7 +27,7 @@ class Card < ApplicationRecord
   has_many :liked_group_memberships, through: :likes, source: :group_membership
   belongs_to :user, optional: true
   belongs_to :group, optional: true
-  validates :name, presence: true, length: { maximum: 50 }
+  validates :name, presence: { message: '入力してください' }, length: { maximum: 50, message: '50文字以内で入力してください' }
 
   # カスタムバリデーション: user_idとgroup_idの排他制約
   validate :must_belong_to_user_or_group
