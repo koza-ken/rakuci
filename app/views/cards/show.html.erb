@@ -78,11 +78,37 @@
       </div>
     <% end %>
 
-    <div class="">
-      <%= form_with model: @card, class: "w-full max-w-md" do |f| %>
-        <%= f.label :memo, "メモ", class: "block text-2xl font-bold text-primary mb-2" %>
-        <%= f.text_area :memo, disabled: true, class: "form-text-field bg-gray-100" %>
-      <% end %>
+    <!-- メモセクション（表示/編集を切り替え） -->
+    <div id="memo-section" class="w-full max-w-md" data-controller="memo-edit">
+      <!-- 表示モード -->
+      <div id="memo-display" data-memo-edit-target="display">
+        <%= form_with model: @card, class: "w-full" do |f| %>
+          <%= f.label :memo, "メモ", class: "block text-2xl font-bold text-primary mb-2" %>
+          <%= f.text_area :memo, class: "form-text-field bg-gray-100 cursor-pointer", readonly: true, data: { action: "click->memo-edit#toggleForm" } %>
+        <% end %>
+      </div>
+
+      <!-- 編集モード（非表示） -->
+      <div id="memo-form" data-memo-edit-target="form" class="hidden">
+        <%= form_with model: @card, local: true, class: "w-full" do |f| %>
+          <%= f.label :memo, "メモ", class: "block text-2xl font-bold text-primary mb-2" %>
+          <%= f.text_area :memo, class: "form-text-field flex-1", placeholder: "メモを入力してください" %>
+          <div class="flex gap-2 mt-2">
+            <%= f.submit "保存", class: "btn-main px-4 py-2 w-auto" %>
+            <button type="button" class="btn-sub px-4 py-2 w-auto" data-action="click->memo-edit#toggleForm">
+              キャンセル
+            </button>
+          </div>
+          <!-- エラーメッセージ表示 -->
+          <% if @card.errors.any? %>
+            <div class="mt-2">
+              <% @card.errors.messages[:memo].each do |message| %>
+                <p class="text-red-600 text-sm"><%= message %></p>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
     </div>
   </main>
 </div>
