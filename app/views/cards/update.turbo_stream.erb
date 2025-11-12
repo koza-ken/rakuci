@@ -1,8 +1,9 @@
 <!-- カード名セクション全体を置き換える -->
+<!-- バリデーション失敗時は form-hidden クラスなし（表示状態）、成功時は class="hidden"（非表示） -->
 <%= turbo_stream.replace "card-name-section" do %>
   <div id="card-name-section" data-controller="card-edit">
-    <!-- 表示モード -->
-    <div id="card-name-display" class="flex items-start gap-6 mb-4" data-card-edit-target="display">
+    <!-- 表示モード：エラーがあれば非表示 -->
+    <div id="card-name-display" class="<%= 'hidden' if @card.errors.any? %> flex items-start gap-6 mb-4" data-card-edit-target="display">
       <h1 class="text-2xl font-bold text-primary"><%= @card.name %></h1>
       <!-- 編集アイコン（サイズ固定） -->
       <button class="shrink-0 text-primary hover:opacity-70 transition pt-1" data-action="click->card-edit#toggleForm">
@@ -10,16 +11,24 @@
       </button>
     </div>
 
-    <!-- 編集モード（非表示） -->
-    <div id="card-name-form" class="hidden mb-4" data-card-edit-target="form">
+    <!-- 編集モード：エラーがなければ hidden、あればを表示 -->
+    <div id="card-name-form" class="<%= 'hidden' unless @card.errors.any? %> mb-4" data-card-edit-target="form">
       <%= form_with model: @card, local: true do |f| %>
         <div class="flex items-center gap-2">
-          <%= f.text_field :name, class: "form-text-field flex-1", placeholder: t('cards.form.name_placeholder') %>
+          <%= f.text_field :name, class: "form-text-field flex-1" %>
           <%= f.submit "保存", class: "btn-main px-4 py-2 w-auto" %>
           <button type="button" class="btn-sub w-auto px-2 py-1" data-action="click->card-edit#toggleForm">
             <p class="text-2xl">×</p>
           </button>
         </div>
+        <!-- エラーメッセージ表示 -->
+        <% if @card.errors.any? %>
+          <div class="mt-2">
+            <% @card.errors.messages[:name].each do |message| %>
+              <p class="text-red-600 text-sm"><%= message %></p>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>
