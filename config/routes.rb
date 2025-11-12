@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   # group_idをURLに渡すためにネスト
   resources :groups, only: %i[index show new create] do
-    resource :schedule, only: %i[show], controller: "groups/schedules" do
+    resource :schedule, only: %i[show new create], controller: "groups/schedules" do
       resources :schedule_spots, only: %i[show], controller: "groups/schedule_spots"
     end
   end
