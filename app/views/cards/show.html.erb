@@ -2,10 +2,36 @@
 <%= turbo_frame_tag "add_new_schedule_spot" %>
 
 <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-bg rounded-md">
-  <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
-    <div class="flex justify-between h-auto mb-6" data-controller="modal">
-      <h1 class="text-2xl font-bold text-primary"><%= @card.name %></h1>
-      <%= link_to new_card_spot_path(@card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, class: "btn-main text-sm px-4 py-2 w-auto" do %>
+  <main class="flex flex-col px-8 py-12 bg-main-bg">
+
+    <!-- カード名セクション（表示/編集を切り替え） -->
+    <div id="card-name-section" data-controller="card-edit">
+      <!-- 表示モード -->
+      <div id="card-name-display" class="flex items-start gap-6 mb-4" data-card-edit-target="display">
+        <h1 class="text-2xl font-bold text-primary"><%= @card.name %></h1>
+        <!-- 編集アイコン（サイズ固定） -->
+        <button class="shrink-0 text-primary hover:opacity-70 transition pt-1" data-action="click->card-edit#toggleForm">
+          <%= render "shared/icon/form_icon_edit" %>
+        </button>
+      </div>
+
+      <!-- 編集モード（非表示） -->
+      <div id="card-name-form" class="hidden mb-4" data-card-edit-target="form">
+        <%= form_with model: @card, local: true do |f| %>
+          <div class="flex items-center gap-2">
+            <%= f.text_field :name, class: "form-text-field flex-1" %>
+            <%= f.submit "保存", class: "btn-main px-4 py-2 w-auto" %>
+            <button type="button" class="btn-sub w-auto px-2 py-1" data-action="click->card-edit#toggleForm">
+              <p class="text-2xl">×</p>
+            </button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- スポット追加ボタン -->
+    <div class="flex justify-end mb-2 w-auto" data-controller="modal">
+      <%= link_to new_card_spot_path(@card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, class: "btn-main px-4 py-2 w-auto" do %>
         スポット追加
       <% end %>
     </div>
@@ -52,10 +78,43 @@
       </div>
     <% end %>
 
-    <div class="">
-      <%= form_with model: @card, class: "w-full max-w-md" do |f| %>
-        <%= f.label :memo, "メモ", class: "block text-2xl font-bold text-primary mb-2" %>
-        <%= f.text_area :memo, disabled: true, class: "form-text-field bg-gray-100" %>
+    <!-- メモセクション（表示/編集を切り替え） -->
+    <div id="memo-section" class="w-full max-w-md" data-controller="memo-edit">
+      <!-- 表示モード -->
+      <div id="memo-display" data-memo-edit-target="display">
+        <%= form_with model: @card, class: "w-full" do |f| %>
+          <%= f.label :memo, "メモ", class: "block text-2xl font-bold text-primary mb-2" %>
+          <%= f.text_area :memo, class: "form-text-field bg-gray-100 cursor-pointer", readonly: true, data: { action: "click->memo-edit#toggleForm" } %>
+        <% end %>
+      </div>
+
+      <!-- 編集モード（非表示） -->
+      <div id="memo-form" data-memo-edit-target="form" class="hidden">
+        <%= form_with model: @card, local: true, class: "w-full" do |f| %>
+          <%= f.label :memo, "メモ", class: "block text-2xl font-bold text-primary mb-2" %>
+          <%= f.text_area :memo, class: "form-text-field flex-1 resize-none min-h-[100px]", placeholder: "メモを入力してください" %>
+          <div class="flex gap-2 mt-2">
+            <%= f.submit "保存", class: "btn-main px-4 py-2 w-auto" %>
+            <button type="button" class="btn-sub px-4 py-2 w-auto" data-action="click->memo-edit#toggleForm">
+              キャンセル
+            </button>
+          </div>
+          <!-- エラーメッセージ表示 -->
+          <% if @card.errors.any? %>
+            <div class="mt-2">
+              <% @card.errors.messages[:memo].each do |message| %>
+                <p class="text-red-600 text-sm"><%= message %></p>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- 削除ボタン -->
+    <div class="mt-8 pt-6">
+      <%= button_to card_path(@card), method: :delete, data: { turbo_confirm: t("cards.delete_confirm") }, class: "btn-main" do %>
+        <%= t("cards.delete_button") %>
       <% end %>
     </div>
   </main>

@@ -1,9 +1,9 @@
 class CardsController < ApplicationController
   # ゲストユーザーでもグループ内でカード作成ができるように
-  before_action :check_create_cards, only: [ :create ]
+  before_action :check_create_cards, only: %i[create]
   # 自分のカードか、参加しているグループのカードのみにアクセスできる
-  before_action :set_card, only: [ :show ]
-  before_action :check_show_card, only: [ :show ]
+  before_action :set_card, only: %i[show update destroy]
+  before_action :check_show_card, only: %i[show update destroy]
 
   def index
     @cards = current_user.cards.includes(:user, :group)
@@ -31,6 +31,25 @@ class CardsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def update
+    if @card.update(card_params)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to @card, notice: t("notices.cards.updated") }
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream { render :update, status: :unprocessable_entity }
+        format.html { render :show, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    @card.destroy!
+    redirect_to cards_path, notice: t("notices.cards.destroyed")
   end
 
   private

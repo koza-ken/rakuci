@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root "static_pages#home"
 
-  resources :cards, only: %i[index show new create] do
+  resources :cards, only: %i[index show new create update destroy] do
     # 個人用しおり（チェックボックス）のスポット追加（spot_idがいらない）の新規作成new
     get "schedule_spots/new", to: "users/schedule_spots#new", as: :new_schedule_spots
     # 個人用しおり（チェックボックス）のスポット追加（spot_idがいらない）
