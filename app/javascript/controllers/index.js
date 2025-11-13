@@ -21,3 +21,6 @@ application.register("card-edit", CardEditController);
 
 import MemoEditController from "./memo_edit_controller";
 application.register("memo-edit", MemoEditController);
+
+import MemberDeleteController from "./member_delete_controller";
+application.register("member-delete", MemberDeleteController);
