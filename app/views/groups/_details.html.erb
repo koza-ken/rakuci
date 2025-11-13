@@ -61,10 +61,14 @@
     <!-- 通常表示モード -->
     <div id="members-display" data-member-delete-target="display">
       <div class="flex items-center justify-between gap-2 mb-2">
-        <%= label_tag :member, "#{t('groups.show.members')}（#{@group.group_memberships.count.to_s}名）", class: "text-sm font-medium text-text" %>
+        <div id="member-display-count">
+          <%= label_tag :member, "#{t('groups.show.members')}（#{@group.group_memberships.count.to_s}名）", class: "text-sm font-medium text-text" %>
+        </div>
         <%= link_to "削除する", "#", class: "btn-main px-4 py-2 w-auto", data: { action: "click->member-delete#toggleDelete" } %>
       </div>
-      <%= text_area_tag :member, @group.group_memberships.map(&:group_nickname).join("\n"), disabled: true, class: "form-text-field bg-gray-100 resize-none min-h-[120px]" %>
+      <div id="member-textarea">
+        <%= text_area_tag :member, @group.group_memberships.map(&:group_nickname).join("\n"), disabled: true, class: "form-text-field bg-gray-100 resize-none min-h-[120px]" %>
+      </div>
     </div>
 
     <!-- 削除モード（非表示） -->
