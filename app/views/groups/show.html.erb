@@ -60,6 +60,7 @@
       <div id="group_details">
         <%= render "details", group: @group %>
       </div>
+
     </div>
 
     <div class="w-full max-w-md">
@@ -79,6 +80,12 @@
           <% end %>
         </div>
       </div>
+    </div>
+    <!-- グループ削除ボタン -->
+    <div class="mt-8 pt-6">
+      <%= button_to group_path(@group), method: :delete, form_class: "inline", class: "btn-main px-4 py-2 w-auto bg-red-600 hover:bg-red-700", data: { turbo_confirm: "このグループを削除しますか？" } do %>
+        グループを削除
+      <% end %>
     </div>
   </main>
 </div>
