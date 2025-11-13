@@ -1,10 +1,10 @@
 class GroupsController < ApplicationController
-  before_action :authenticate_user!, except: [ :show, :new_membership, :create_membership ]
-  before_action :set_group, only: [ :show ]
-  before_action :check_group_member, only: [ :show ]
-  before_action :set_group_by_invite_token, only: [ :new_membership, :create_membership ]
+  before_action :authenticate_user!, except: %i[ show new_membership create_membership ]
+  before_action :set_group, only: %i[ show update ]
+  before_action :check_group_member, only: %i[ show update ]
+  before_action :set_group_by_invite_token, only: %i[ new_membership create_membership ]
   # set_group_by_invite_tokenで招待トークンをもとに@groupがあるかないか
-  before_action :ensure_group_present!, only: [ :new_membership, :create_membership ]
+  before_action :ensure_group_present!, only: %i[ new_membership create_membership ]
 
   def index
     @groups = current_user.groups.includes(:group_memberships)
@@ -30,6 +30,20 @@ class GroupsController < ApplicationController
       end
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @group.update(group_params)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to group_path(@group), notice: t("notices.groups.updated") }
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream { render :update, status: :unprocessable_entity }
+        format.html { render :show, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -60,6 +74,10 @@ class GroupsController < ApplicationController
   # ストロングパラメータ
   def group_form_params
     params.require(:group_create_form).permit(:name, :group_nickname)
+  end
+
+  def group_params
+    params.require(:group).permit(:name)
   end
 
   def membership_params
