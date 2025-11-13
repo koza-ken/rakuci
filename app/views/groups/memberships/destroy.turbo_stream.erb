@@ -1,0 +1,20 @@
+<!-- 削除モードのメンバーリストのみ更新（削除モード継続） -->
+<%= turbo_stream.replace "members-list" do %>
+  <div id="members-list" class="space-y-2 mb-4 max-h-[200px] overflow-y-auto border border-gray-300 rounded p-2 bg-white">
+    <% @group.group_memberships.each do |membership| %>
+      <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
+        <span class="text-sm text-text"><%= membership.group_nickname %></span>
+        <%= button_to group_group_membership_path(@group, membership), method: :delete, form_class: "inline", class: "btn-sub px-3 py-1 text-sm", data: { turbo_confirm: "#{membership.group_nickname}を削除しますか？" } do %>
+          削除
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<!-- 参加者数を更新 -->
+<%= turbo_stream.update "members-count" do %>
+  <label class="block text-sm font-medium text-text mb-2">
+    <%= "#{t('groups.show.members')}（#{@group.group_memberships.count.to_s}名）" %>
+  </label>
+<% end %>

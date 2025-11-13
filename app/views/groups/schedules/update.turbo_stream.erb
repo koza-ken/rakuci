@@ -1,5 +1,5 @@
-<% if @schedule.present? %>
-  <!-- スケジュール詳細セクション（表示/編集を切り替え） -->
+<!-- スケジュール詳細セクションを更新 -->
+<%= turbo_stream.replace "schedule-details-section" do %>
   <div id="schedule-details-section" data-controller="memo-edit" class="w-full">
     <!-- 表示モード -->
     <div id="schedule-details-display" data-memo-edit-target="display" class="<%= 'hidden' if @schedule.errors.any? %>">
@@ -35,10 +35,10 @@
           </div>
         </div>
         <!-- ボタン -->
-        <div class="flex gap-2 mt-2 justify-end">
+        <div class="flex gap-2 mt-2">
           <%= f.submit "保存", class: "btn-main px-4 py-2 w-auto" %>
           <button type="button" class="btn-sub px-4 py-2 w-auto" data-action="click->memo-edit#toggleForm">
-            ×
+            キャンセル
           </button>
         </div>
         <!-- エラーメッセージ表示 -->
@@ -53,37 +53,6 @@
           </div>
         <% end %>
       <% end %>
-    </div>
-  </div>
-
-  <%# 参加者 %>
-  <div class="mb-6" id="members-section" data-controller="member-delete">
-    <!-- 通常表示モード -->
-    <div id="members-display" data-member-delete-target="display">
-      <div class="mb-6 cursor-pointer">
-        <div id="members-count">
-          <%= label_tag :member, "#{t('groups.show.members')}（#{@group.group_memberships.count.to_s}名）", class: "block text-sm font-medium text-text mb-2" %>
-        </div>
-        <%= text_area_tag :member, @group.group_memberships.map(&:group_nickname).join("\n"), id: "members-textarea-content", readonly: true, class: "form-text-field bg-gray-100 resize-none min-h-[90px] cursor-pointer", data: { action: "click->member-delete#toggleDelete" } %>
-      </div>
-    </div>
-
-    <!-- 削除モード（非表示） -->
-    <div id="members-delete-mode" data-member-delete-target="deleteMode" class="hidden">
-      <h3 class="block text-sm font-medium text-text mb-2">メンバーを削除</h3>
-      <div id="members-list" class="space-y-2 mb-4 max-h-[200px] overflow-y-auto border border-gray-300 rounded p-2 bg-white">
-        <% @group.group_memberships.each do |membership| %>
-          <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
-            <span class="text-sm text-text"><%= membership.group_nickname %></span>
-            <%= button_to group_group_membership_path(@group, membership), method: :delete, form_class: "inline", class: "btn-sub px-3 py-1 text-sm", data: { turbo_confirm: "#{membership.group_nickname}を削除しますか？" } do %>
-              削除
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-      <div class="flex justify-end gap-2">
-        <%= link_to "キャンセル", "#", class: "btn-sub px-4 py-2 w-auto", data: { action: "click->member-delete#cancelDelete" } %>
-      </div>
     </div>
   </div>
 <% end %>

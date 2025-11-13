@@ -24,6 +24,19 @@ class Groups::SchedulesController < ApplicationController
     end
   end
 
+  def update
+    @schedule = @group.schedule
+
+    if @schedule.update(schedule_params)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to group_path(@group), notice: t("notices.schedules.updated") }
+      end
+    else
+      render :show, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_group

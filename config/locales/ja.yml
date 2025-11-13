@@ -22,6 +22,9 @@ ja:
       user_not_found: "選択したユーザーが見つかりません"
       token_mismatch: "トークンが一致しません"
       membership_failed: "参加に失敗しました"
+    memberships:
+      cannot_delete_owner: "オーナーは削除できません"
+      not_authorized: "メンバーを削除する権限がありません"
     spots:
       unauthorized_view: "このスポットにアクセスする権限がありません"
       unauthorized_create: "このカードにスポットを追加する権限がありません"
@@ -43,7 +46,9 @@ ja:
       destroyed: "カードが削除されました"
     groups:
       created: "グループが作成されました"
+      updated: "グループ名が更新されました"
       joined: "グループに参加しました"
+      destroyed: "グループを削除しました"
     spots:
       created: "スポットを追加しました"
       updated: "スポットを更新しました"
@@ -58,6 +63,8 @@ ja:
       created: "しおりを作成しました"
       updated: "しおりを更新しました"
       destroyed: "しおりを削除しました"
+    memberships:
+      deleted: "メンバーを削除しました"
   spots:
     form:
       name: "スポット名"

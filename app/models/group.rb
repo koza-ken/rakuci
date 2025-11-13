@@ -29,7 +29,7 @@ class Group < ApplicationRecord
   has_one :schedule, as: :schedulable, dependent: :destroy
 
   validates :created_by_user_id, presence: true
-  validates :name, presence: true, length: { maximum: 30 }
+  validates :name, presence: { message: "入力してください" }, length: { maximum: 30, message: "30文字以内で入力してください" }
   validates :invite_token, presence: true, length: { maximum: 64 }, uniqueness: true
 
   private
