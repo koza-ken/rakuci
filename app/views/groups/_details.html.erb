@@ -62,9 +62,7 @@
     <div id="members-display" data-member-delete-target="display">
       <div class="flex items-center justify-between gap-2 mb-2">
         <%= label_tag :member, "#{t('groups.show.members')}（#{@group.group_memberships.count.to_s}名）", class: "text-sm font-medium text-text" %>
-        <button type="button" class="btn-main px-4 py-2 w-auto" data-action="click->member-delete#toggleDelete">
-          削除する
-        </button>
+        <%= link_to "削除する", "#", class: "btn-main px-4 py-2 w-auto", data: { action: "click->member-delete#toggleDelete" } %>
       </div>
       <%= text_area_tag :member, @group.group_memberships.map(&:group_nickname).join("\n"), disabled: true, class: "form-text-field bg-gray-100 resize-none min-h-[120px]" %>
     </div>
@@ -83,9 +81,7 @@
         <% end %>
       </div>
       <div class="flex gap-2">
-        <button type="button" class="btn-sub px-4 py-2 w-auto" data-action="click->member-delete#toggleDelete">
-          キャンセル
-        </button>
+        <%= link_to "キャンセル", "#", class: "btn-sub px-4 py-2 w-auto", data: { action: "click->member-delete#toggleDelete" } %>
       </div>
     </div>
   </div>
