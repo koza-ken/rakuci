@@ -3,7 +3,7 @@ class Users::ScheduleSpotsController < ApplicationController
 
   def show
     @schedule = current_user.schedules.find(params[:schedule_id])
-    @schedule_spot = @schedule.schedule_spots.find(params[:id])
+    @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
   end
 
   def new

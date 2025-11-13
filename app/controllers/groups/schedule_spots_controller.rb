@@ -4,7 +4,7 @@ class Groups::ScheduleSpotsController < ApplicationController
 
   def show
     @schedule = @group.schedule
-    @schedule_spot = @schedule.schedule_spots.find(params[:id])
+    @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
   end
 
   def create
