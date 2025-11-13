@@ -12,16 +12,9 @@
   </div>
 <% end %>
 
-<!-- 通常表示モードのメンバーカウント更新 -->
-<%= turbo_stream.replace "member-display-count" do %>
-  <div id="member-display-count">
-    <%= label_tag :member, "#{t('groups.show.members')}（#{@group.group_memberships.count.to_s}名）", class: "text-sm font-medium text-text" %>
-  </div>
-<% end %>
-
-<!-- 通常表示モードのテキストエリア更新 -->
-<%= turbo_stream.replace "member-textarea" do %>
-  <div id="member-textarea">
-    <%= text_area_tag :member, @group.group_memberships.map(&:group_nickname).join("\n"), disabled: true, class: "form-text-field bg-gray-100 resize-none min-h-[120px]" %>
-  </div>
+<!-- 参加者数を更新 -->
+<%= turbo_stream.update "members-count" do %>
+  <label class="block text-sm font-medium text-text mb-2">
+    <%= "#{t('groups.show.members')}（#{@group.group_memberships.count.to_s}名）" %>
+  </label>
 <% end %>

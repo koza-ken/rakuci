@@ -60,14 +60,11 @@
   <div class="mb-6" id="members-section" data-controller="member-delete">
     <!-- 通常表示モード -->
     <div id="members-display" data-member-delete-target="display">
-      <div class="flex items-center justify-between gap-2 mb-2">
-        <div id="member-display-count">
-          <%= label_tag :member, "#{t('groups.show.members')}（#{@group.group_memberships.count.to_s}名）", class: "text-sm font-medium text-text" %>
+      <div class="mb-6 cursor-pointer">
+        <div id="members-count">
+          <%= label_tag :member, "#{t('groups.show.members')}（#{@group.group_memberships.count.to_s}名）", class: "block text-sm font-medium text-text mb-2" %>
         </div>
-        <%= link_to "削除する", "#", class: "btn-main px-4 py-2 w-auto", data: { action: "click->member-delete#toggleDelete" } %>
-      </div>
-      <div id="member-textarea">
-        <%= text_area_tag :member, @group.group_memberships.map(&:group_nickname).join("\n"), disabled: true, class: "form-text-field bg-gray-100 resize-none min-h-[120px]" %>
+        <%= text_area_tag :member, @group.group_memberships.map(&:group_nickname).join("\n"), id: "members-textarea-content", readonly: true, class: "form-text-field bg-gray-100 resize-none min-h-[90px] cursor-pointer", data: { action: "click->member-delete#toggleDelete" } %>
       </div>
     </div>
 
@@ -85,7 +82,7 @@
         <% end %>
       </div>
       <div class="flex justify-end gap-2">
-        <%= link_to "キャンセル", "#", class: "btn-sub px-4 py-2 w-auto", data: { action: "click->member-delete#toggleDelete" } %>
+        <%= link_to "キャンセル", "#", class: "btn-sub px-4 py-2 w-auto", data: { action: "click->member-delete#cancelDelete" } %>
       </div>
     </div>
   </div>
