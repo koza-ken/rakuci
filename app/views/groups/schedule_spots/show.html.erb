@@ -4,56 +4,59 @@
       <h1 class="text-2xl font-bold text-primary mb-8"><%= @schedule_spot.display_name %></h1>
 
       <div class="w-full max-w-md">
-        <div class="mb-6">
-          <label class="block text-sm font-medium text-text mb-2">Category</label>
-          <div class="form-text-field bg-gray-100 cursor-not-allowed">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-text mb-2">カテゴリ</label>
+          <div class="form-text-field bg-gray-100">
             <%= Category.find_by(id: @schedule_spot.snapshot_category_id)&.name || "---" %>
           </div>
         </div>
 
-        <div class="mb-6">
-          <label class="block text-sm font-medium text-text mb-2">Address</label>
-          <div class="form-text-field bg-gray-100 cursor-not-allowed">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-text mb-2">住所</label>
+          <div class="form-text-field bg-gray-100 truncate">
             <%= @schedule_spot.snapshot_address %>
           </div>
         </div>
 
-        <div class="mb-6">
-          <label class="block text-sm font-medium text-text mb-2">Website</label>
-          <div class="form-text-field bg-gray-100 cursor-not-allowed">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-text mb-2">URL</label>
+          <div class="form-text-field bg-gray-100 truncate">
             <%= @schedule_spot.snapshot_website_url %>
           </div>
         </div>
 
-        <div class="mb-6">
-          <label class="block text-sm font-medium text-text mb-2">Phone</label>
-          <div class="form-text-field bg-gray-100 cursor-not-allowed">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-text mb-2">電話</label>
+          <div class="form-text-field bg-gray-100 truncate">
             <%= @schedule_spot.snapshot_phone_number %>
           </div>
         </div>
 
-        <% if @schedule_spot.start_time.present? || @schedule_spot.end_time.present? %>
-          <div class="mb-6">
-            <label class="block text-sm font-medium text-text mb-2">Time</label>
-            <div class="form-text-field bg-gray-100 cursor-not-allowed">
-              <% if @schedule_spot.start_time.present? %>
-                <%= @schedule_spot.start_time.strftime('%H:%M') %>
-                <% if @schedule_spot.end_time.present? %>
-                  ~ <%= @schedule_spot.end_time.strftime('%H:%M') %>
-                <% end %>
-              <% end %>
-            </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-text mb-2">予定時間</label>
+          <div class="form-text-field bg-gray-100 truncate">
+            <% if @schedule_spot.start_time.present? && @schedule_spot.end_time.present? %>
+              <%= @schedule_spot.start_time.strftime('%H:%M') %> ~ <%= @schedule_spot.end_time.strftime('%H:%M') %>
+            <% elsif @schedule_spot.start_time.present? %>
+              <%= @schedule_spot.start_time.strftime('%H:%M') %>
+            <% elsif @schedule_spot.end_time.present? %>
+              ~ <%= @schedule_spot.end_time.strftime('%H:%M') %>
+            <% else %>
+              ---
+            <% end %>
           </div>
-        <% end %>
+        </div>
 
-        <% if @schedule_spot.memo.present? %>
-          <div class="mb-6">
-            <label class="block text-sm font-medium text-text mb-2">Memo</label>
-            <div class="form-text-field bg-gray-100 cursor-not-allowed">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-text mb-2">メモ</label>
+          <div class="form-text-field bg-gray-100">
+            <% if @schedule_spot.memo.present? %>
               <%= @schedule_spot.memo %>
-            </div>
+            <% else %>
+              ---
+            <% end %>
           </div>
-        <% end %>
+        </div>
       </div>
 
       <div class="flex gap-3 mt-8">
