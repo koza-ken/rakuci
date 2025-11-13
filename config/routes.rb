@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resource :schedule, only: %i[show new create update], controller: "groups/schedules" do
       resources :schedule_spots, only: %i[show], controller: "groups/schedule_spots"
     end
+    resources :group_memberships, only: %i[destroy], controller: "groups/memberships"
   end
 
   # URLは"/schedules"（個人用）
