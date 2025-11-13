@@ -5,14 +5,35 @@
 <div class="min-h-screen bg-main-bg">
   <main class="flex flex-col items-center justify-center px-8 py-12">
     <div class="w-full max-w-md mb-10">
-      <div class="mb-4 flex justify-between items-center">
-        <h2 class="text-2xl font-bold text-text"><%= @group.name %></h2>
-        <div id="schedule-button">
-          <% if @group.schedule.present? %>
-            <%# グループにしおりがあればしおり詳細に遷移 %>
-            <%= link_to "しおり詳細", group_schedule_path(@group), class: "btn-main p-2 w-auto" %>
-          <% else %>
-            <%= link_to "しおり作成", new_group_schedule_path(@group), data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" }, class: "btn-main p-2 w-auto" %>
+      <!-- グループ名セクション（表示/編集を切り替え） -->
+      <div id="group-name-section" data-controller="card-edit" class="mb-4">
+        <!-- 表示モード -->
+        <div id="group-name-display" class="flex items-start gap-3" data-card-edit-target="display">
+          <h2 class="text-2xl font-bold text-text"><%= @group.name %></h2>
+          <!-- 編集アイコン（サイズ固定） -->
+          <button class="shrink-0 text-text hover:opacity-70 transition pt-1" data-action="click->card-edit#toggleForm">
+            <%= render "shared/icon/form_icon_edit" %>
+          </button>
+        </div>
+
+        <!-- 編集モード（非表示） -->
+        <div id="group-name-form" class="hidden mb-4" data-card-edit-target="form">
+          <%= form_with model: @group, local: true do |f| %>
+            <div class="flex items-center gap-2">
+              <%= f.text_field :name, class: "form-text-field flex-1" %>
+              <%= f.submit "保存", class: "btn-main px-4 py-2 w-auto" %>
+              <button type="button" class="btn-sub w-auto px-2 py-1" data-action="click->card-edit#toggleForm">
+                <p class="text-2xl">×</p>
+              </button>
+            </div>
+            <!-- バリデーションエラー表示 -->
+            <% if @group.errors.any? %>
+              <div class="mt-2">
+                <% @group.errors.messages[:name].each do |message| %>
+                  <p class="text-red-600 text-sm"><%= message %></p>
+                <% end %>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>
