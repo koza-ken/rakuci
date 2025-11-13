@@ -1,7 +1,14 @@
 <turbo-frame id="schedule-spot-modal">
   <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-bg rounded-md">
     <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
-      <h1 class="text-2xl font-bold text-primary mb-8"><%= @schedule_spot.display_name %></h1>
+      <div class="flex items-center gap-2 mb-8">
+        <h1 class="text-2xl font-bold text-primary"><%= @schedule_spot.display_name %></h1>
+        <% if @schedule_spot.spot.present? && @schedule_spot.spot.google_place_id.present? %>
+          <%= link_to "https://maps.google.com/maps?q=place_id:#{@schedule_spot.spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition" do %>
+            <%= render "shared/icon/map_icon_google" %>
+          <% end %>
+        <% end %>
+      </div>
 
       <div class="w-full max-w-md">
         <div class="mb-4">
@@ -14,21 +21,33 @@
         <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2">住所</label>
           <div class="form-text-field bg-gray-100 truncate">
-            <%= @schedule_spot.snapshot_address %>
+            <% if @schedule_spot.snapshot_address.present? %>
+              <%= @schedule_spot.snapshot_address %>
+            <% else %>
+              ---
+            <% end %>
           </div>
         </div>
 
         <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2">URL</label>
           <div class="form-text-field bg-gray-100 truncate">
-            <%= @schedule_spot.snapshot_website_url %>
+            <% if @schedule_spot.snapshot_website_url.present? %>
+              <%= @schedule_spot.snapshot_website_url %>
+            <% else %>
+              ---
+            <% end %>
           </div>
         </div>
 
         <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2">電話</label>
           <div class="form-text-field bg-gray-100 truncate">
-            <%= @schedule_spot.snapshot_phone_number %>
+            <% if @schedule_spot.snapshot_phone_number.present? %>
+              <%= @schedule_spot.snapshot_phone_number %>
+            <% else %>
+              ---
+            <% end %>
           </div>
         </div>
 
