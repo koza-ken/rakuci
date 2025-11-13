@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!, except: %i[ show new_membership create_membership ]
-  before_action :set_group, only: %i[ show update ]
+  before_action :set_group, only: %i[ show update destroy ]
   before_action :check_group_member, only: %i[ show update ]
   before_action :set_group_by_invite_token, only: %i[ new_membership create_membership ]
   # set_group_by_invite_tokenで招待トークンをもとに@groupがあるかないか
@@ -45,6 +45,11 @@ class GroupsController < ApplicationController
         format.html { render :show, status: :unprocessable_entity }
       end
     end
+  end
+
+  def destroy
+    @group.destroy
+    redirect_to groups_path, notice: t("notices.groups.destroyed")
   end
 
   # グループ招待ページ
