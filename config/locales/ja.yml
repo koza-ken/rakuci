@@ -43,6 +43,7 @@ ja:
       destroyed: "カードが削除されました"
     groups:
       created: "グループが作成されました"
+      updated: "グループ名が更新されました"
       joined: "グループに参加しました"
     spots:
       created: "スポットを追加しました"
