@@ -7,26 +7,27 @@ class Groups::ScheduleSpotsController < ApplicationController
     @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
   end
 
-  def create
-    @card = Card.find(params[:card_id])
+  def new
     @schedule = @group.schedule
-    # spot_ids（複数）か spot_id（個別）かを判定
-    spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
-    # 複数作成
-    results = spot_ids.map do |spot_id|
-      spot = Spot.find(spot_id)
-      schedule_spot = ScheduleSpot.create_from_spot(@schedule, spot)
-      schedule_spot.save
-    end
-    # 成功・失敗を判定
-    if results.all?
-      redirect_to card_path(@card), notice: "#{results.size}件のスポットをグループのしおりに追加しました", turbo: false
-    elsif results.none?
-      redirect_to card_path(@card), alert: "スポット追加に失敗しました", turbo: false
+    @schedule_spot = ScheduleSpot.new
+    @categories = Category.all
+  end
+
+  def create
+    @schedule = @group.schedule
+    @schedule_spot = @schedule.schedule_spots.build(schedule_spot_params)
+    @schedule_spot.is_custom_entry = true
+    @schedule_spot.day_number = 1
+    @schedule_spot.global_position = (@schedule.schedule_spots.maximum(:global_position) || 0) + 1
+
+    if @schedule_spot.save
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to group_schedule_path(@group), notice: "スポットを追加しました" }
+      end
     else
-      added = results.count(true)
-      failed = results.count(false)
-      redirect_to card_path(@card), notice: "#{added}件追加しました。#{failed}件失敗しました", turbo: false
+      @categories = Category.all
+      render :new, status: :unprocessable_entity
     end
   end
 
