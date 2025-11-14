@@ -79,7 +79,7 @@
       </div>
 
       <div class="flex gap-3 mt-8">
-        <%= link_to t('cards.form.edit'), "#", class: "btn-main flex-1 text-center" %>
+        <%= link_to t('cards.form.edit'), edit_group_schedule_schedule_spot_path(@group, @schedule_spot), class: "btn-main flex-1 text-center" %>
         <%# 削除後のページ遷移とturboの相性が悪いのでturboをfalseにして、確認ダイアログをJSで実装 %>
         <%= button_to t('cards.form.delete'), group_schedule_schedule_spot_path(@group, @schedule_spot), method: :delete, data: { turbo: false }, onclick: "return confirm('このスポットを削除しますか')", class: "btn-sub flex-1 text-center" %>
         <%= link_to t('cards.form.back'), group_schedule_path(@group), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
