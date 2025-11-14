@@ -30,6 +30,21 @@ class Groups::ScheduleSpotsController < ApplicationController
     end
   end
 
+  def edit
+    @schedule = @group.schedule
+    @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
+  end
+
+  def update
+    @schedule = @group.schedule
+    @schedule_spot = @schedule.schedule_spots.find(params[:id])
+    if @schedule_spot.update(schedule_spot_params)
+      redirect_to group_schedule_schedule_spot_path(@group, @schedule_spot), notice: "スポットを更新しました"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     @schedule_spot = ScheduleSpot.find(params[:id])
     if @schedule_spot.destroy
@@ -48,6 +63,10 @@ class Groups::ScheduleSpotsController < ApplicationController
       card = Card.find(params[:card_id])
       @group = card.group
     end
+  end
+
+  def schedule_spot_params
+    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_category_id, :snapshot_address, :snapshot_phone_number, :snapshot_website_url, :start_time, :end_time, :memo)
   end
 
   # グループに参加しているか確認するフィルター（showアクションのフィルター）

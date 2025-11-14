@@ -44,6 +44,27 @@ class Users::ScheduleSpotsController < ApplicationController
     end
   end
 
+  def edit
+    @schedule = current_user.schedules.find(params[:schedule_id])
+    @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
+  end
+
+  def update
+    @schedule = current_user.schedules.find(params[:schedule_id])
+    @schedule_spot = @schedule.schedule_spots.find(params[:id])
+    if @schedule_spot.update(schedule_spot_params)
+      redirect_to schedule_schedule_spot_path(@schedule, @schedule_spot), notice: "スポットを更新しました"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def schedule_spot_params
+    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_address, :snapshot_website_url, :snapshot_phone_number, :snapshot_category_id, :start_time, :end_time, :memo)
+  end
+
   def destroy
     @schedule_spot = ScheduleSpot.find(params[:id])
     if @schedule_spot.destroy
