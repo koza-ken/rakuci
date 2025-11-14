@@ -1,75 +1,89 @@
-<turbo-frame id="add_new_schedule_spot">
+<turbo-frame id="spot-create-modal">
   <!-- モーダルのラッパー -->
   <div role="dialog" tabindex="-1" class="fixed inset-0 z-60 flex items-center justify-center w-full h-screen p-2">
-    <!-- 背景 -->
-    <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-default bg-gray-900/30"></div>
-    <div class="relative z-20 w-full max-w-2xl h-[80vh] bg-bg rounded-md flex flex-col">
-      <main class="flex flex-col items-center px-8 py-6 flex-1 overflow-hidden">
-        <h1 class="text-2xl text-primary font-bold mb-8">しおりを選択</h1>
+    <!-- 背景（クリックでモーダルを閉じる） -->
+    <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-pointer bg-gray-900/30"></div>
+    <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-bg rounded-md">
+      <main class="flex flex-col items-center justify-center px-8 py-12">
+        <h1 class="text-2xl font-bold text-primary mb-8"><%= t('spots.new.title') %></h1>
 
-        <%# 追加するスポット情報 %>
-        <div class="w-full max-w-2xl mb-8">
-          <div class="bg-gray-100 rounded-lg p-4">
-            <p class="text-sm text-gray-600 mb-2">追加するスポット</p>
-             <% if @spot_ids.present? %>
-              <!-- 複数スポット -->
-              <p class="text-sm font-bold"><%= @spots.size %>件のスポットを追加します</p>
-              <div class="mt-2 max-h-24 overflow-y-auto">
-                <% @spots.each do |spot| %>
-                  <p class="text-sm text-gray-700">• <%= spot.name %></p>
+        <%= form_with model: @schedule_spot, url: schedule_schedule_spots_path(@schedule), class: "w-full max-w-md", data: { controller: "autocomplete" } do |f| %>
+          <!-- エラーメッセージ表示 -->
+          <% if @schedule_spot.errors.any? %>
+            <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <h2 class="text-sm font-semibold text-red-800 mb-2">
+                <%= t('errors.messages.not_saved', count: @schedule_spot.errors.count, resource: t('activerecord.models.schedule_spot')) %>
+              </h2>
+              <ul class="list-disc list-inside text-sm text-red-700">
+                <% @schedule_spot.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
                 <% end %>
-              </div>
-            <% else %>
-              <!-- 単一スポット -->
-              <h2 class="text-xl font-bold text-primary"><%= @spot.name %></h2>
-              <p class="text-sm text-gray-500"><%= @spot.category&.name %></p>
-            <% end %>
-          </div>
-        </div>
-
-        <%# しおり一覧 %>
-        <div class="w-full max-w-2xl flex-1 overflow-y-auto">
-          <% if @schedules.any? %>
-            <div class="space-y-4">
-              <% @schedules.each do |schedule| %>
-                <div class="bg-white rounded-lg shadow p-6">
-                  <h3 class="text-xl font-bold mb-2"><%= schedule.name %></h3>
-                  <% if schedule.start_date.present? && schedule.end_date.present? %>
-                    <p class="text-gray-600 mb-3">
-                      <%= schedule.start_date %> ~ <%= schedule.end_date %>
-                    </p>
-                  <% end %>
-                  <% if @spot_ids.present? %>
-                    <!-- 複数スポット用フォーム -->
-                    <%= form_with url: card_spots_schedule_spots_path(@card, schedule_id: schedule.id), method: :post do |f| %>
-                      <% @spot_ids.each do |spot_id| %>
-                        <%= f.hidden_field :spot_ids, multiple: true, value: spot_id %>
-                      <% end %>
-                      <%= f.submit "このしおりに追加", class: "btn-main w-full" %>
-                    <% end %>
-                  <% else %>
-                    <!-- 単一スポット用ボタン -->
-                    <%= button_to "このしおりに追加",
-                        card_spot_schedule_spots_path(@card, @spot, schedule_id: schedule.id),
-                        method: :post,
-                        class: "btn-main w-full" %>
-                    <% end %>
-                </div>
-              <% end %>
+              </ul>
             </div>
-          <% else %>
-            <p class="text-gray-500 text-center">まだしおりがありません</p>
           <% end %>
-        </div>
 
-        <%# 戻る %>
-        <div class="w-full max-w-2xl mt-6">
-          <% if @spot_ids.present? %>
-            <%= link_to "戻る", card_path(@card), class: "btn-sub w-full block text-center" %>
-          <% else %>
-            <%= link_to "戻る", card_spot_path(@card, @spot), class: "btn-sub w-full block text-center" %>
-          <% end %>
-        </div>
+          <!--- スポット名 -->
+          <div class="mb-6">
+            <%= f.label :snapshot_name, t('spots.form.name'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.text_field :snapshot_name,
+                data: { autocomplete_target: "nameField" },
+                placeholder: t('spots.form.name_placeholder'),
+                class: "form-text-field" %>
+
+            <!-- オートコンプリートは補助として表示 -->
+            <div class="mt-2 text-xs text-gray-600">
+              または下から施設を検索して選択：
+            </div>
+            <gmp-place-autocomplete
+              id="spot-auto-input"
+              data-autocomplete-target="autocomplete"
+              country="jp"
+              class="form-text-field p-0 mt-1">
+            </gmp-place-autocomplete>
+          </div>
+
+          <!-- カテゴリ -->
+          <div class="mb-6">
+            <%= f.label :snapshot_category_id, t('spots.form.category'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.collection_select :snapshot_category_id, @categories, :id, :name,
+                {include_blank: "--- 選択してください ---"},
+                {class: "form-text-field"} %>
+          </div>
+
+          <!-- 住所 -->
+          <div class="mb-6">
+            <%= f.label :snapshot_address, t('spots.form.address'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.text_field :snapshot_address,
+                data: { autocomplete_target: "addressField" },
+                placeholder: t('spots.form.address_placeholder'),
+                class: "form-text-field resize-vertical" %>
+          </div>
+
+          <!-- URL -->
+          <div class="mb-6">
+            <%= f.label :snapshot_website_url, t('spots.form.website_url'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.text_field :snapshot_website_url,
+                data: { autocomplete_target: "websiteField" },
+                placeholder: t('spots.form.web_site_url_placeholder'),
+                class: "form-text-field resize-vertical" %>
+          </div>
+
+          <!-- 電話番号--->
+          <div class="mb-6">
+            <%= f.label :snapshot_phone_number, t('spots.form.phone_number'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.text_field :snapshot_phone_number,
+                data: { autocomplete_target: "phoneField" },
+                placeholder: t('spots.form.phone_number_placeholder'),
+                class: "form-text-field resize-vertical" %>
+          </div>
+
+
+          <!-- ボタン -->
+          <div class="flex gap-3">
+            <%= f.submit t('schedule_spots.form.submit'), class: "btn-main flex-1" %>
+            <%= link_to t('schedule_spots.form.cancel'), schedule_path(@schedule), class: "btn-sub flex-1 text-center" %>
+          </div>
+        <% end %>
       </main>
     </div>
   </div>
