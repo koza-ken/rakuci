@@ -56,5 +56,10 @@
       </div>
     <% end %>
 
+    <div class="mt-8">
+      <%= button_to "しおりを削除", schedule_path(@schedule), method: :delete, data: { turbo: false }, onclick: "return confirm('このしおりを削除しますか？')", class: "btn-main flex-1 text-center" %>
+    </div>
+
+
   </div>
 </main>

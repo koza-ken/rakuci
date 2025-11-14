@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
   # URLは"/schedules"（個人用）
   scope module: "users" do
-    resources :schedules, only: %i[index show new create edit update] do
+    resources :schedules, only: %i[index show new create edit update destroy] do
       # showはscheduleの詳細からアクセスする（追加のnew,createは/card/spotsから）
       resources :schedule_spots, only: %i[show edit update destroy]
     end

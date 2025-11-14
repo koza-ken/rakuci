@@ -44,6 +44,13 @@ class Users::SchedulesController < ApplicationController
     end
   end
 
+  def destroy
+    @schedule = current_user.schedules.find(params[:id])
+    if @schedule.destroy
+      redirect_to schedules_path, notice: t("notices.schedules.destroyed"), turbo: false
+    end
+  end
+
   private
 
   def schedule_params
