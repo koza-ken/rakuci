@@ -43,4 +43,11 @@ class Users::ScheduleSpotsController < ApplicationController
       redirect_to card_path(@card), notice: "#{added}件追加しました。#{failed}件失敗しました"
     end
   end
+
+  def destroy
+    @schedule_spot = ScheduleSpot.find(params[:id])
+    if @schedule_spot.destroy
+      redirect_to schedule_path(current_user), notice: "スポットを削除しました", turbo: false
+    end
+  end
 end

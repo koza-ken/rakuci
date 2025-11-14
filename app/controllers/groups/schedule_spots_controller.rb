@@ -30,6 +30,13 @@ class Groups::ScheduleSpotsController < ApplicationController
     end
   end
 
+  def destroy
+    @schedule_spot = ScheduleSpot.find(params[:id])
+    if @schedule_spot.destroy
+      redirect_to group_schedule_path(@group), notice: "スポットを削除しました", turbo: false
+    end
+  end
+
   private
 
   def set_group
