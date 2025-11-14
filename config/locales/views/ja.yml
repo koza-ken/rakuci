@@ -125,6 +125,11 @@ ja:
       update_failed: しおりの更新に失敗しました
       delete_failed: しおりの削除に失敗しました
 
+  schedule_spots:
+    form:
+      submit: 追加する
+      cancel: キャンセル
+
   users:
     schedules:
       index:

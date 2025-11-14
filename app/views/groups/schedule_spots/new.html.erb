@@ -7,7 +7,7 @@
       <main class="flex flex-col items-center justify-center px-8 py-12">
         <h1 class="text-2xl font-bold text-primary mb-8"><%= t('spots.new.title') %></h1>
 
-        <%= form_with model: @schedule_spot, url: schedule_schedule_spots_path(@schedule), class: "w-full max-w-md", data: { controller: "autocomplete" } do |f| %>
+        <%= form_with model: @schedule_spot, url: group_schedule_schedule_spots_path(@group), class: "w-full max-w-md", data: { controller: "autocomplete" } do |f| %>
           <!-- エラーメッセージ表示 -->
           <% if @schedule_spot.errors.any? %>
             <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -81,7 +81,7 @@
           <!-- ボタン -->
           <div class="flex gap-3">
             <%= f.submit t('schedule_spots.form.submit'), class: "btn-main flex-1" %>
-            <%= link_to t('schedule_spots.form.cancel'), schedule_path(@schedule), class: "btn-sub flex-1 text-center" %>
+            <%= link_to t('schedule_spots.form.cancel'), group_schedule_path(@group), class: "btn-sub flex-1 text-center" %>
           </div>
         <% end %>
       </main>

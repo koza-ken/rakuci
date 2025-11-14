@@ -1,0 +1,5 @@
+<!-- モーダルを閉じる（中身を空にする） -->
+<%= turbo_stream.update "spot-create-modal", "" %>
+
+<!-- グループスケジュール詳細を更新 -->
+<%= turbo_stream.update "main", partial: "groups/schedules/show", locals: { group: @group, schedule: @schedule } %>

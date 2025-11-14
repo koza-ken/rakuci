@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   # group_idをURLに渡すためにネスト
   resources :groups, only: %i[index show new create update destroy] do
     resource :schedule, only: %i[show new create edit update], controller: "groups/schedules" do
-      resources :schedule_spots, only: %i[show edit update destroy], controller: "groups/schedule_spots"
+      resources :schedule_spots, only: %i[new create show edit update destroy], controller: "groups/schedule_spots"
     end
     resources :group_memberships, only: %i[destroy], controller: "groups/memberships"
   end
@@ -31,8 +31,8 @@ Rails.application.routes.draw do
   # URLは"/schedules"（個人用）
   scope module: "users" do
     resources :schedules, only: %i[index show new create edit update destroy] do
-      # showはscheduleの詳細からアクセスする（追加のnew,createは/card/spotsから）
-      resources :schedule_spots, only: %i[show edit update destroy]
+      # showはscheduleの詳細からアクセスする（追加のnew,createは/card/spotsから、またはscheduleから直接）
+      resources :schedule_spots, only: %i[new create show edit update destroy]
     end
   end
 
