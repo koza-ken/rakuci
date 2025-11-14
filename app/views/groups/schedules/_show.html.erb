@@ -1,0 +1,65 @@
+<div class="w-full max-w-2xl">
+  <% if schedule.present? %>
+    <%# しおり名 %>
+    <h1 class="text-3xl text-primary font-bold mb-4"><%= schedule.name %></h1>
+
+    <%# グループ名 %>
+    <p class="text-text mb-2"><%= t('schedules.show.group_name') %>：<%= group.name %></p>
+
+    <%# スケジュール日程 %>
+    <div class="mb-2">
+      <p class="text-text">
+        <span class="font-semibold"><%= t('schedules.show.schedule_dates') %>：</span>
+        <span class="font-semibold"><%= schedule.start_date %></span>
+        <span class="text-text">~</span>
+        <span class="font-semibold"><%= schedule.end_date %></span>
+      </p>
+    </div>
+
+    <%# スポット %>
+    <div class="mt-4">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-bold text-text">スポット</h2>
+        <%= link_to "スポットを追加", new_group_schedule_schedule_spot_path(group), data: { turbo_frame: "spot-create-modal" }, class: "btn-main text-sm px-4 py-2 w-auto" %>
+      </div>
+
+      <% if schedule.schedule_spots.any? %>
+        <% schedule.schedule_spots.order(:day_number, :global_position).group_by(&:day_number).each do |day, schedule_spots| %>
+          <%# 日目の見出し %>
+          <% formatted_date = schedule.formatted_date_for_day(day) %>
+          <h3 class="text-lg font-bold text-gray-700 mt-4 mb-2">
+            <% if formatted_date %>
+              <%= formatted_date %>（<%= day %>日目）
+            <% else %>
+              <%= day %>日目
+            <% end %>
+          </h3>
+          <div class="space-y-4">
+            <% schedule_spots.each do |schedule_spot| %>
+              <%= render 'groups/schedule_spots/schedule_spot', schedule_spot: schedule_spot %>
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="text-text"><%= t('schedules.show.no_spots') %></p>
+      <% end %>
+    </div>
+  <% else %>
+    <%# TODO i18n確認 %>
+    <p class="text-text text-center mt-8"><%= t('activerecord.models.schedule') %>はまだ作成されていません</p>
+  <% end %>
+
+  <%# 操作ボタン %>
+  <div class="mt-8 flex gap-3">
+    <%= link_to t('schedules.show.edit'), edit_group_schedule_path(group), class: "btn-main flex-1 text-center" %>
+    <%= link_to t('users.schedules.show.back'), group_path(group), class: "btn-sub flex-1 text-center" %>
+  </div>
+
+  <%# メモ %>
+  <% if schedule.memo.present? %>
+    <h2 class="mt-10">メモ</h2>
+    <div class="mt-2 p-4 bg-white rounded">
+      <p class="text-text"><%= schedule.memo %></p>
+    </div>
+  <% end %>
+</div>
