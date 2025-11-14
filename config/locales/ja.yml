@@ -98,14 +98,21 @@ ja:
         no_schedules: "しおりがまだ作成されていません"
       new:
         title: "しおりを作成"
+      edit:
+        title: "しおりを更新"
+      show:
+        back: "戻る"
       form:
         name_placeholder: "例：春休みの旅行"
         submit: "作成"
+        update: "更新"
         cancel: "キャンセル"
   groups:
     schedules:
       new:
         title: "グループしおりを作成"
+      edit:
+        title: "グループしおりを更新"
   views:
     spots:
       new:

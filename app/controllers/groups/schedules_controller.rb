@@ -24,14 +24,15 @@ class Groups::SchedulesController < ApplicationController
     end
   end
 
+  def edit
+    @schedule = @group.schedule
+  end
+
   def update
     @schedule = @group.schedule
 
     if @schedule.update(schedule_params)
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to group_path(@group), notice: t("notices.schedules.updated") }
-      end
+      redirect_to group_path(@group), notice: t("notices.schedules.updated")
     else
       render :show, status: :unprocessable_entity
     end
@@ -44,7 +45,7 @@ class Groups::SchedulesController < ApplicationController
   end
 
   def schedule_params
-    params.require(:schedule).permit(:name, :start_date, :end_date)
+    params.require(:schedule).permit(:name, :start_date, :end_date, :memo)
   end
 
   # グループに参加しているか確認するフィルター（showアクションのフィルター）

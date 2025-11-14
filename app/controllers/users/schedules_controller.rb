@@ -30,9 +30,23 @@ class Users::SchedulesController < ApplicationController
     end
   end
 
+  def edit
+    @schedule = current_user.schedules.find(params[:id])
+  end
+
+  def update
+    @schedule = current_user.schedules.find(params[:id])
+
+    if @schedule.update(schedule_params)
+      redirect_to schedule_path(@schedule), notice: t("notices.schedules.updated")
+    else
+      render :show, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def schedule_params
-    params.require(:schedule).permit(:name, :start_date, :end_date)
+    params.require(:schedule).permit(:name, :start_date, :end_date, :memo)
   end
 end
