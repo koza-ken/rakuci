@@ -16,25 +16,6 @@
           </button>
         </div>
 
-        <!-- ボタン列：招待する + しおり作成/詳細 -->
-        <div class="flex justify-between gap-2">
-          <button
-            data-controller="clipboard"
-            data-clipboard-text-value="<%= new_membership_url(@group.invite_token) %>"
-            data-action="click->clipboard#copy"
-            class="px-4 py-2 bg-white border-2 border-gray-300 text-text rounded-lg hover:bg-gray-50 transition w-auto">
-            招待する
-          </button>
-
-          <div id="schedule-button">
-            <% if @group.schedule.present? %>
-              <%# グループにしおりがあればしおり詳細に遷移 %>
-              <%= link_to "しおり詳細", group_schedule_path(@group), class: "btn-main px-4 py-2 text-center block border-2 w-auto" %>
-            <% else %>
-              <%= link_to "しおり作成", new_group_schedule_path(@group), data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" }, class: "btn-main px-4 py-2 text-center block border-2 w-auto" %>
-            <% end %>
-          </div>
-        </div>
         <!-- 編集モード（非表示） -->
         <div id="group-name-form" class="hidden mb-4" data-card-edit-target="form">
           <%= form_with model: @group, local: true do |f| %>
@@ -54,6 +35,25 @@
               </div>
             <% end %>
           <% end %>
+        </div>
+        <!-- ボタン列：招待する + しおり作成/詳細 -->
+        <div class="flex justify-between gap-2">
+          <button
+            data-controller="clipboard"
+            data-clipboard-text-value="<%= new_membership_url(@group.invite_token) %>"
+            data-action="click->clipboard#copy"
+            class="px-4 py-2 bg-white border-2 border-gray-300 text-text rounded-lg hover:bg-gray-50 transition w-auto">
+            招待する
+          </button>
+
+          <div id="schedule-button">
+            <% if @group.schedule.present? %>
+              <%# グループにしおりがあればしおり詳細に遷移 %>
+              <%= link_to "しおり詳細", group_schedule_path(@group), class: "btn-main px-4 py-2 text-center block border-2 w-auto" %>
+            <% else %>
+              <%= link_to "しおり作成", new_group_schedule_path(@group), data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" }, class: "btn-main px-4 py-2 text-center block border-2 w-auto" %>
+            <% end %>
+          </div>
         </div>
       </div>
 
