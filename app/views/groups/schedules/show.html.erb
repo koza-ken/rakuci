@@ -45,9 +45,10 @@
       <p class="text-text text-center mt-8"><%= t('activerecord.models.schedule') %>はまだ作成されていません</p>
     <% end %>
 
-    <%# グループ詳細にもどる %>
-    <div class="mt-8">
-      <%= link_to t('users.schedules.show.back'), group_path(@group), class: "btn-main text-main hover:opacity-70" %>
+    <%# 操作ボタン %>
+    <div class="mt-8 flex gap-3">
+      <%= link_to t('cards.form.edit'), edit_group_schedule_path(@group), class: "btn-main flex-1 text-center" %>
+      <%= link_to t('users.schedules.show.back'), group_path(@group), class: "btn-sub flex-1 text-center" %>
     </div>
 
     <%# メモ %>
