@@ -1,0 +1,65 @@
+<turbo-frame id="schedule-spot-modal">
+  <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-bg rounded-md">
+    <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
+      <div class="flex items-center gap-2 mb-8">
+        <h1 class="text-2xl font-bold text-primary"><%= @schedule_spot.display_name %></h1>
+        <% if @schedule_spot.spot.present? && @schedule_spot.spot.google_place_id.present? %>
+          <%= link_to "https://maps.google.com/maps?q=place_id:#{@schedule_spot.spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition" do %>
+            <%= render "shared/icon/map_icon_google" %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="w-full max-w-md">
+        <%= form_with model: [@schedule, @schedule_spot], local: true do |f| %>
+          <div class="mb-4">
+            <%= f.label :snapshot_name, "スポット名", class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.text_field :snapshot_name, class: "form-text-field w-full", placeholder: "スポット名を入力してください" %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :snapshot_category_id, "カテゴリ", class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.select :snapshot_category_id, options_from_collection_for_select(Category.all, :id, :name, @schedule_spot.snapshot_category_id), { include_blank: "---" }, class: "form-text-field w-full" %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :snapshot_address, "住所", class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.text_field :snapshot_address, class: "form-text-field w-full", placeholder: "住所を入力してください" %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :snapshot_website_url, "URL", class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.url_field :snapshot_website_url, class: "form-text-field w-full", placeholder: "URLを入力してください" %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :snapshot_phone_number, "電話", class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.telephone_field :snapshot_phone_number, class: "form-text-field w-full", placeholder: "電話番号を入力してください" %>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="flex-1">
+              <%= f.label :start_time, "到着時刻", class: "block text-sm font-medium text-text mb-2" %>
+              <%= f.time_field :start_time, class: "form-text-field w-full" %>
+            </div>
+
+            <div class="flex-1">
+              <%= f.label :end_time, "出発時刻", class: "block text-sm font-medium text-text mb-2" %>
+              <%= f.time_field :end_time, class: "form-text-field w-full" %>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :memo, "メモ", class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.text_area :memo, class: "form-text-field w-full resize-none min-h-[100px]", placeholder: "メモを入力してください" %>
+          </div>
+
+          <div class="flex gap-3 mt-8">
+            <%= f.submit "更新", class: "btn-main flex-1 text-center" %>
+            <%= link_to "キャンセル", schedule_schedule_spot_path(@schedule, @schedule_spot), class: "btn-sub flex-1 text-center" %>
+          </div>
+        <% end %>
+      </div>
+    </main>
+  </div>
+</turbo-frame>
