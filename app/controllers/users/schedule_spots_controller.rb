@@ -59,6 +59,14 @@ class Users::ScheduleSpotsController < ApplicationController
     end
   end
 
+  def destroy
+    @schedule = current_user.schedules.find(params[:schedule_id])
+    @schedule_spot = @schedule.schedule_spots.find(params[:id])
+    if @schedule_spot.destroy
+      redirect_to schedule_path(@schedule), notice: "スポットを削除しました", turbo: false
+    end
+  end
+
   private
 
   def schedule_spot_params
