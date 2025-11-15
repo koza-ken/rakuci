@@ -23,4 +23,10 @@ module ApplicationHelper
       render "shared/icon/flash_icon_info"
     end
   end
+
+  # ページタイトルの動的表示
+  def page_title(title = '')
+    base_title = 'RakuCi'
+    title.present? ? "#{title} | #{base_title}" : base_title
+  end
 end
