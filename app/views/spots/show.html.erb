@@ -1,7 +1,7 @@
 <%= turbo_frame_tag "add_new_schedule_spot", data: { controller: "modal" }  %>
 
 <turbo-frame id="spot-edit-modal">
-  <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-bg rounded-md">
+  <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
     <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
       <h1 class="text-2xl font-bold text-primary mb-8"><%= @spot.name %></h1>
 

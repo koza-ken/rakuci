@@ -1,31 +1,56 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #31C0B5;
-  --color-text: #505050;
-  --color-bg: #FCFCFC;
-  --color-main-bg: #F8FFFE;
-  --color-main-button: #239C94;
+  --color-primary: #FFF185;
+  --color-primary-hover: #ffeb53;
+  --color-secondary: #3fc0e7;
+  --color-text: #374151;
+  --color-text-light: #6B7280;
+  --color-main-bg: #fafcff;
+  --color-border: #E5E7EB;
+  --color-header-bg: #ffffff;
 }
+
+/* @themeではカラーピッカーが表示されないのでお試し用のスペース */
+test {
+  /* !ここを反映しただけではだめじゃぞ */
+  --color-primary: #FFF185;
+  --color-primary-hover: #ffeb53;
+  --color-secondary: #3fc0e7;
+  --color-text: #374151;
+  --color-text-light: #6B7280;
+
+  --color-main-bg: #fafcff;
+  --color-border: #E5E7EB;
+  --color-header-bg: #ffffff;
+}
+/* ------------------------ */
 
 body {
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
 }
 
+
 @layer components {
   .btn-main {
-    @apply w-full px-8 py-3 bg-main-button text-white font-semibold rounded-lg hover:opacity-80 transition cursor-pointer;
+    @apply w-full px-6 py-3 bg-primary text-text-light font-semibold rounded-lg hover:bg-primary-hover transition cursor-pointer shadow-[0_2px_2px_rgba(0,0,0,0.12)];
   }
   .btn-sub {
-    @apply px-8 py-3 bg-white border-2 border-gray-300 text-text font-semibold rounded-lg hover:bg-gray-50 transition
+    @apply px-6 py-3 bg-white border-1 border-border text-text-light font-semibold rounded-lg hover:bg-gray-50 transition shadow-[0_2px_2px_rgba(0,0,0,0.1)]
+  }
+  .btn-danger {
+    @apply w-full px-8 py-3 bg-[#ff8181] text-white font-semibold rounded-lg hover:opacity-80 transition cursor-pointer shadow-[0_2px_2px_rgba(0,0,0,0.12)];
   }
   .hamburger-to-close {
-    @apply block w-8 h-[3px] bg-primary rounded transition-all duration-300 ease-in-out origin-center
+    @apply block w-8 h-[3px] bg-secondary rounded transition-all duration-300 ease-in-out origin-center
   }
   .card-index {
-    @apply px-8 py-3 bg-white border-2 border-gray-300 text-text font-semibold rounded-lg hover:bg-gray-50 transition
+    @apply px-8 py-3 bg-white border-2 border-border text-text font-semibold rounded-lg hover:bg-gray-50 transition shadow-[0_1px_4px_rgba(0,0,0,0.12)]
   }
   .form-text-field {
-    @apply w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent
+    @apply w-full px-4 py-2 bg-white border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent
+  }
+  .icon-stroke {
+    stroke: var(--color-secondary);
   }
 }

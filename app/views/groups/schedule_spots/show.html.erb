@@ -1,9 +1,9 @@
 <turbo-frame id="schedule-spot-modal">
-  <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-bg rounded-md">
+  <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
     <%= render "shared/flash_messages", flash: flash %>
     <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
       <div class="flex items-center gap-2 mb-8">
-        <h1 class="text-2xl font-bold text-primary"><%= @schedule_spot.display_name %></h1>
+        <h1 class="text-2xl font-bold text-text"><%= @schedule_spot.display_name %></h1>
         <% if @schedule_spot.spot.present? && @schedule_spot.spot.google_place_id.present? %>
           <%= link_to "https://maps.google.com/maps?q=place_id:#{@schedule_spot.spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition" do %>
             <%= render "shared/icon/map_icon_google" %>
@@ -81,10 +81,10 @@
 
       <div class="flex gap-3 mt-8">
         <%= link_to t('cards.form.edit'), edit_group_schedule_schedule_spot_path(@group, @schedule_spot), class: "btn-main flex-1 text-center" %>
-        <%# 削除後のページ遷移とturboの相性が悪いのでturboをfalseにして、確認ダイアログをJSで実装 %>
-        <%= button_to t('cards.form.delete'), group_schedule_schedule_spot_path(@group, @schedule_spot), method: :delete, data: { turbo: false }, onclick: "return confirm('このスポットを削除しますか')", class: "btn-sub flex-1 text-center" %>
         <%= link_to t('cards.form.back'), group_schedule_path(@group), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
       </div>
+      <%# 削除後のページ遷移とturboの相性が悪いのでturboをfalseにして、確認ダイアログをJSで実装 %>
+      <%= button_to t('cards.form.delete'), group_schedule_schedule_spot_path(@group, @schedule_spot), method: :delete, data: { turbo: false }, onclick: "return confirm('このスポットを削除しますか')", class: "btn-danger mt-20 text-center" %>
     </main>
   </div>
 </turbo-frame>
