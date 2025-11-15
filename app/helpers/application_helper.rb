@@ -25,8 +25,8 @@ module ApplicationHelper
   end
 
   # ページタイトルの動的表示
-  def page_title(title = '')
-    base_title = 'RakuCi'
+  def page_title(title = "")
+    base_title = "RakuCi"
     title.present? ? "#{title} | #{base_title}" : base_title
   end
 end
