@@ -97,9 +97,9 @@ ja:
         title: "しおり一覧"
         no_schedules: "しおりがまだ作成されていません"
       new:
-        title: "しおりを作成"
+        title: "しおり作成"
       edit:
-        title: "しおりを更新"
+        title: "しおり編集"
       show:
         back: "戻る"
       form:
@@ -110,13 +110,13 @@ ja:
   groups:
     schedules:
       new:
-        title: "グループしおりを作成"
+        title: "グループしおり作成"
       edit:
-        title: "グループしおりを更新"
+        title: "グループしおり編集"
   views:
     spots:
       new:
-        title: "スポットを追加"
+        title: "スポット追加"
   activerecord:
     models:
       spot: "スポット"

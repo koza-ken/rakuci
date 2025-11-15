@@ -1,7 +1,7 @@
 <turbo-frame id="spot-edit-modal">
   <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
     <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
-      <h1 class="text-2xl font-bold text-primary mb-8"><%= t('spots.edit.title') %></h1>
+      <h1 class="text-2xl font-bold text-text mb-8"><%= t('spots.edit.title') %></h1>
 
       <%= form_with model: @spot, url: card_spot_path(@card, @spot), local: true, class: "w-full max-w-md" do |f| %>
         <% if @spot.errors.any? %>

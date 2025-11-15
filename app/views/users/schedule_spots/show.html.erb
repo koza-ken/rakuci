@@ -1,3 +1,4 @@
+<% content_for(:title, @schedule_spot.snapshot_name) %>
 <turbo-frame id="schedule-spot-modal">
   <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
     <%= render "shared/flash_messages", flash: flash %>
