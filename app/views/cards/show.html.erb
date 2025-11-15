@@ -1,3 +1,5 @@
+<% content_for(:title, @card.name) %>
+
 <%= turbo_frame_tag "spot-create-modal", data: { controller: "modal" } %>
 <%= turbo_frame_tag "add_new_schedule_spot" %>
 

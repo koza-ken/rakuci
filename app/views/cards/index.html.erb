@@ -1,3 +1,5 @@
+<% content_for(:title, t('.title')) %>
+
 <%# 作成モーダルの挿入 %>
 <%= turbo_frame_tag "card-create-modal", data: { controller: "modal" } %>
 

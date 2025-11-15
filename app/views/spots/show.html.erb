@@ -1,47 +1,66 @@
-<%= turbo_frame_tag "add_new_schedule_spot", data: { controller: "modal" }  %>
+<% content_for(:title, @spot.name) %>
 
 <turbo-frame id="spot-edit-modal">
   <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
+    <%= render "shared/flash_messages", flash: flash %>
     <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
-      <h1 class="text-2xl font-bold text-primary mb-8"><%= @spot.name %></h1>
+      <div class="flex items-center gap-2 mb-8">
+        <h1 class="text-2xl font-bold text-text"><%= @spot.name %></h1>
+        <% if @spot.google_place_id.present? %>
+          <%= link_to "https://maps.google.com/maps?q=place_id:#{@spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition" do %>
+            <%= render "shared/icon/map_icon_google" %>
+          <% end %>
+        <% end %>
+      </div>
 
       <div class="w-full max-w-md">
-        <div class="mb-6">
+        <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2"><%= t('spots.form.category') %></label>
-          <div class="form-text-field bg-gray-100 cursor-not-allowed">
+          <div class="form-text-field bg-gray-100">
             <%= @spot.category&.name || "---" %>
           </div>
         </div>
 
-        <div class="mb-6">
+        <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2"><%= t('spots.form.address') %></label>
-          <div class="form-text-field bg-gray-100 cursor-not-allowed">
-            <%= @spot.address %>
+          <div class="form-text-field bg-gray-100 truncate">
+            <% if @spot.address.present? %>
+              <%= @spot.address %>
+            <% else %>
+              ---
+            <% end %>
           </div>
         </div>
 
-        <div class="mb-6">
+        <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2"><%= t('spots.form.website_url') %></label>
-          <div class="form-text-field bg-gray-100 cursor-not-allowed">
-            <%= @spot.website_url %>
+          <div class="form-text-field bg-gray-100 truncate">
+            <% if @spot.website_url.present? %>
+              <%= @spot.website_url %>
+            <% else %>
+              ---
+            <% end %>
           </div>
         </div>
 
-        <div class="mb-6">
+        <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2"><%= t('spots.form.phone_number') %></label>
-          <div class="form-text-field bg-gray-100 cursor-not-allowed">
-            <%= @spot.phone_number %>
+          <div class="form-text-field bg-gray-100 truncate">
+            <% if @spot.phone_number.present? %>
+              <%= @spot.phone_number %>
+            <% else %>
+              ---
+            <% end %>
           </div>
         </div>
       </div>
 
-      <div class="flex gap-3 mt-8 mb-6">
+      <div class="flex gap-3 mt-8">
         <%= link_to t('cards.form.edit'), edit_card_spot_path(@card, @spot), data: {turbo_frame: "spot-edit-modal"}, class: "btn-main flex-1 text-center" %>
-        <%= link_to t('cards.form.delete'), card_spot_path(@card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-sub flex-1 text-center" %>
         <%= link_to t('cards.form.back'), card_path(@card), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
       </div>
 
-      <div>
+      <div class="mt-8">
         <%# グループのカード か ユーザーのカード か判定 %>
         <% if @card.group_id.present? %>
           <%# グループのカード → 直接作成（postなのでbutton_to）  %>
@@ -56,6 +75,9 @@
               class: "btn-main w-full block text-center" %>
         <% end %>
       </div>
-      </main>
+      <%= link_to t('cards.form.delete'), card_spot_path(@card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger flex-1 text-center mt-20" %>
+    </main>
   </div>
 </turbo-frame>
+
+<%= turbo_frame_tag "add_new_schedule_spot", data: { controller: "modal" }  %>

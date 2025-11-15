@@ -1,3 +1,5 @@
+<% content_for(:title, @schedule.name) %>
+
 <%= turbo_frame_tag "spot-create-modal", data: { controller: "modal" } %>
 
 <main id="main" class="flex flex-col items-center justify-center px-8 py-12">
