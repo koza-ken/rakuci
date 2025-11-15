@@ -3,9 +3,9 @@
   <div role="dialog" tabindex="-1" class="fixed inset-0 z-60 flex items-center justify-center w-full h-screen p-2">
     <!-- 背景（クリックでモーダルを閉じる） -->
     <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-pointer bg-gray-900/30"></div>
-    <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-bg rounded-md">
+    <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
       <main class="flex flex-col items-center justify-center px-8 py-12">
-        <h1 class="text-2xl font-bold text-primary mb-8"><%= t('spots.new.title') %></h1>
+        <h1 class="text-2xl font-bold text-text mb-8"><%= t('spots.new.title') %></h1>
 
         <%= form_with model: @schedule_spot, url: schedule_schedule_spots_path(@schedule), class: "w-full max-w-md", data: { controller: "autocomplete" } do |f| %>
           <!-- エラーメッセージ表示 -->
