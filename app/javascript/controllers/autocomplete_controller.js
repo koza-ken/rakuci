@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["autocomplete", "nameField", "addressField", "websiteField", "phoneField", "idField"]
+  static targets = ["autocomplete", "nameField", "addressField", "websiteField", "phoneField", "idField", "errorMessage"]
 
   // コントローラがHTMLに接続されたときに実行
   connect() {
@@ -22,36 +22,52 @@ export default class extends Controller {
     const autocompleteElement = this.autocompleteTarget
 
     // 場所が選択されたときの処理
-    autocompleteElement.addEventListener('gmp-select', async (event) => {
-      // event.Cg が PlacePrediction オブジェクト（Google Maps APIの内部実装）
-      const placePrediction = event.Cg
+    autocompleteElement.addEventListener('gmp-select', async ({ placePrediction }) => {
+      if (!placePrediction) {
+        this.showError()
+        return
+      }
 
-      // PlacePrediction を Place オブジェクトに変換
-      const place = await placePrediction.toPlace()
+      try {
+        // PlacePrediction を Place オブジェクトに変換
+        const place = await placePrediction.toPlace();
 
-      // place_id を使って詳細情報を取得
-      await place.fetchFields({
-        fields: ['displayName', 'formattedAddress', 'internationalPhoneNumber', 'websiteURI', 'id']
-      })
+        await place.fetchFields({
+          fields: [
+            "displayName",
+            "formattedAddress",
+            "internationalPhoneNumber",
+            "websiteURI",
+            "id",
+          ],
+        });
 
-      // 取得したデータを加工
-      const name = place.displayName || ''
-      const address = this.formatAddress(place.formattedAddress || '')
-      const phone = this.formatPhoneNumber(place.internationalPhoneNumber || '')
-      const website = place.websiteURI || ''
-      const google_place_id = place.id || '';
+        // 取得したデータを加工
+        const name = place.displayName || "";
+        const address = this.formatAddress(place.formattedAddress || "");
+        const phone = this.formatPhoneNumber(
+          place.internationalPhoneNumber || ""
+        );
+        const website = place.websiteURI || "";
+        const google_place_id = place.id || "";
 
-      // フォームに自動入力
-      this.nameFieldTarget.value = name
-      this.addressFieldTarget.value = address
-      this.phoneFieldTarget.value = phone
-      this.websiteFieldTarget.value = website
-      this.idFieldTarget.value = google_place_id
+        // フォームに自動入力
+        this.nameFieldTarget.value = name;
+        this.addressFieldTarget.value = address;
+        this.phoneFieldTarget.value = phone;
+        this.websiteFieldTarget.value = website;
+        this.idFieldTarget.value = google_place_id;
 
-      // オートコンプリート入力欄を施設名に更新
-      const inputElement = autocompleteElement.querySelector('input')
-      if (inputElement) {
-        inputElement.value = name
+        // オートコンプリート入力欄を施設名に更新
+        const inputElement = autocompleteElement.querySelector("input");
+        if (inputElement) {
+          inputElement.value = name;
+        }
+
+        // エラーメッセージを非表示
+        this.hideError()
+      } catch (error) {
+        this.showError()
       }
     })
   }
@@ -72,5 +88,15 @@ export default class extends Controller {
     // +81 を 0 に変換し、スペースを削除
     // 例: "+81 3-3433-5111" → "03-3433-5111"
     return phone.replace(/^\+81\s*/, '0').replace(/\s+/g, '')
+  }
+
+  // エラーメッセージを表示
+  showError() {
+    this.errorMessageTarget.classList.remove('hidden')
+  }
+
+  // エラーメッセージを非表示
+  hideError() {
+    this.errorMessageTarget.classList.add('hidden')
   }
 }
