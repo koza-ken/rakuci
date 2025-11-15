@@ -77,6 +77,9 @@
           class: "form-text-field resize-vertical" %>
     </div>
 
+    <!-- place_id -->
+    <%= f.hidden_field :google_place_id, data: { autocomplete_target: "idField" } %>
+
     <!-- ボタン -->
     <div class="flex gap-3">
       <%= f.submit t('schedule_spots.form.submit'), class: "btn-main flex-1" %>
