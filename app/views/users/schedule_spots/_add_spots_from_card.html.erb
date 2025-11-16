@@ -60,9 +60,9 @@
   <%# 戻る %>
   <div class="w-full mt-6">
     <% if @spot_ids.present? %>
-      <%= link_to "戻る", card_path(@card), class: "btn-sub w-full block text-center" %>
+      <%= link_to t('cards.back'), card_path(@card), class: "btn-sub w-full block text-center" %>
     <% else %>
-      <%= link_to "戻る", card_spot_path(@card, @spot), class: "btn-sub w-full block text-center" %>
+      <%= link_to t('cards.back'), card_spot_path(@card, @spot), class: "btn-sub w-full block text-center" %>
     <% end %>
   </div>
 </main>
