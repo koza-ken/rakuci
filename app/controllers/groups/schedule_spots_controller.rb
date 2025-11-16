@@ -56,7 +56,13 @@ class Groups::ScheduleSpotsController < ApplicationController
   private
 
   def set_group
-    @group = Group.find(params[:group_id])
+    if params[:group_id].present?
+      @group = Group.find(params[:group_id])
+    elsif params[:card_id].present?
+      # スポット詳細からの追加の場合、cardからgroupを取得
+      card = Card.find(params[:card_id])
+      @group = card.group
+    end
   end
 
   def schedule_spot_params
