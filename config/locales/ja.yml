@@ -81,12 +81,12 @@ ja:
       title: "スポット編集"
   cards:
     form:
-      submit: "保存"
+      submit: "更新"
       cancel: "キャンセル"
       edit: "編集"
       delete: "スポットを削除"
       confirm_delete: "削除してもよろしいですか？"
-      back: "戻る"
+      back: "もどる"
     delete_button: "カード削除"
     delete_confirm: "このカードを削除してもよろしいですか？"
   comments:
@@ -101,7 +101,7 @@ ja:
       edit:
         title: "しおり編集"
       show:
-        back: "戻る"
+        back: "もどる"
       form:
         name_placeholder: "例：春休みの旅行"
         submit: "作成"

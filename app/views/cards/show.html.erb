@@ -22,7 +22,7 @@
         <%= form_with model: @card, local: true do |f| %>
           <div class="flex items-center gap-2">
             <%= f.text_field :name, class: "form-text-field flex-1" %>
-            <%= f.submit "保存", class: "btn-main px-4 py-2 w-auto" %>
+            <%= f.submit t('cards.form.update'), class: "btn-main px-4 py-2 w-auto" %>
             <button type="button" class="btn-sub w-auto px-2 py-1" data-action="click->card-edit#toggleForm">
               <p class="text-2xl">×</p>
             </button>
@@ -34,7 +34,7 @@
     <!-- スポット追加ボタン -->
     <div class="flex justify-end mb-2 w-auto" data-controller="modal">
       <%= link_to new_card_spot_path(@card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, class: "btn-main px-4 py-2 w-auto" do %>
-        スポット追加
+        <%= t('cards.add_spot') %>
       <% end %>
     </div>
     <div class="mb-4">
@@ -43,7 +43,7 @@
         <%= form_with url: card_new_schedule_spots_path(@card), method: :get, data: { turbo_frame: "add_new_schedule_spot" } do |f| %>
           <%= render "spots/spots", spots: @card.spots, categories: @categories %>
           <div class="flex gap-2 mt-4">
-            <%= f.submit "選択したスポットをしおりに追加", class: "btn-main flex-1" %>
+            <%= f.submit t('cards.add_spots_to_schedule'), class: "btn-main flex-1" %>
           </div>
         <% end %>
       <% else %>
@@ -51,7 +51,7 @@
         <%= form_with url: card_spots_group_schedule_spots_path(@card), method: :post, local: true do |f| %>
           <%= render "spots/spots", spots: @card.spots, categories: @categories %>
           <div class="flex gap-2 mt-4">
-            <%= f.submit "選択したスポットをしおりに追加", class: "btn-main flex-1" %>
+            <%= f.submit t('cards.add_spots_to_schedule'), class: "btn-main flex-1" %>
           </div>
         <% end %>
       <% end %>
@@ -60,7 +60,7 @@
     <!-- コメント欄（グループカードのみ） -->
     <% if @card.group_card? %>
       <div class="mb-6">
-        <h2 class="text-xl font-bold text-text-light mb-4">コメント</h2>
+        <h2 class="text-xl font-bold text-text-light mb-4"><%= t('cards.comments') %></h2>
         <!-- コメント一覧 -->
         <div id="comments_list">
           <% if @comments.present? %>
@@ -85,7 +85,7 @@
       <!-- 表示モード -->
       <div id="memo-display" data-memo-edit-target="display">
         <%= form_with model: @card, class: "w-full" do |f| %>
-          <%= f.label :memo, "メモ", class: "block text-2xl font-bold text-text mb-2" %>
+          <%= f.label :memo, t('cards.form.memo'), class: "block text-2xl font-bold text-text mb-2" %>
           <%= f.text_area :memo, class: "form-text-field bg-gray-100 cursor-pointer", readonly: true, data: { action: "click->memo-edit#toggleForm" } %>
         <% end %>
       </div>
@@ -93,12 +93,12 @@
       <!-- 編集モード（非表示） -->
       <div id="memo-form" data-memo-edit-target="form" class="hidden">
         <%= form_with model: @card, local: true, class: "w-full" do |f| %>
-          <%= f.label :memo, "メモ", class: "block text-2xl font-bold text-primary mb-2" %>
+          <%= f.label :memo, t('cards.form.memo'), class: "block text-2xl font-bold text-primary mb-2" %>
           <%= f.text_area :memo, class: "form-text-field flex-1 resize-none min-h-[100px]", placeholder: "メモを入力してください" %>
           <div class="flex gap-2 mt-2">
-            <%= f.submit "保存", class: "btn-main px-4 py-2 w-auto" %>
+            <%= f.submit t('cards.form.update'), class: "btn-main px-4 py-2 w-auto" %>
             <button type="button" class="btn-sub px-4 py-2 w-auto" data-action="click->memo-edit#toggleForm">
-              キャンセル
+              <%= t('cards.form.cancel') %>
             </button>
           </div>
           <!-- エラーメッセージ表示 -->
