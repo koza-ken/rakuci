@@ -5,7 +5,7 @@
     <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-default bg-gray-900/30"></div>
     <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
       <main class="flex flex-col items-center justify-center px-8 py-12">
-        <h1 class="text-2xl font-bold text-primary mb-8"><%= t('.title') %></h1>
+        <h1 class="text-2xl font-bold text-text mb-8"><%= t('.title') %></h1>
 
         <%= form_with model: @form, url: groups_path, class: "w-full max-w-md" do |f| %>
           <!-- エラーメッセージ表示 -->

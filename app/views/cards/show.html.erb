@@ -93,7 +93,7 @@
       <!-- 編集モード（非表示） -->
       <div id="memo-form" data-memo-edit-target="form" class="hidden">
         <%= form_with model: @card, local: true, class: "w-full" do |f| %>
-          <%= f.label :memo, t('cards.form.memo'), class: "block text-2xl font-bold text-primary mb-2" %>
+          <%= f.label :memo, t('cards.form.memo'), class: "block text-2xl font-bold text-text mb-2" %>
           <%= f.text_area :memo, class: "form-text-field flex-1 resize-none min-h-[100px]", placeholder: "メモを入力してください" %>
           <div class="flex gap-2 mt-2">
             <%= f.submit t('cards.form.update'), class: "btn-main px-4 py-2 w-auto" %>
