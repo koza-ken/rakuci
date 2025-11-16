@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
     resources :spots, only: %i[show new create edit update destroy] do
       # 個人用しおりの個別スポット追加
-      resources :schedule_spots, only: %i[new create], controller: "users/schedule_spots", path: "user_schedule_spot_path"
+      resources :schedule_spots, only: %i[new create], controller: "users/schedule_spots"
       # グループ用しおりの個別スポット追加（作成ページなし）
       post "/group_schedule_spots", to: "groups/schedule_spots#create", as: :group_schedule_spot
     end

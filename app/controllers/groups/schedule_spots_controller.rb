@@ -15,10 +15,28 @@ class Groups::ScheduleSpotsController < ApplicationController
 
   def create
     @schedule = @group.schedule
-    @schedule_spot = @schedule.schedule_spots.build(schedule_spot_params)
-    @schedule_spot.is_custom_entry = true
-    @schedule_spot.day_number = 1
-    @schedule_spot.global_position = (@schedule.schedule_spots.maximum(:global_position) || 0) + 1
+
+    # スポット詳細からの追加の場合
+    if params[:spot_id].present?
+      spot = Spot.find(params[:spot_id])
+      @schedule_spot = @schedule.schedule_spots.build(
+        spot: spot,
+        snapshot_name: spot.name,
+        snapshot_category_id: spot.category_id,
+        snapshot_address: spot.address,
+        snapshot_phone_number: spot.phone_number,
+        snapshot_website_url: spot.website_url,
+        is_custom_entry: false,
+        day_number: 1,
+        global_position: (@schedule.schedule_spots.maximum(:global_position) || 0) + 1
+      )
+    else
+      # 直接入力での追加の場合
+      @schedule_spot = @schedule.schedule_spots.build(schedule_spot_params)
+      @schedule_spot.is_custom_entry = true
+      @schedule_spot.day_number = 1
+      @schedule_spot.global_position = (@schedule.schedule_spots.maximum(:global_position) || 0) + 1
+    end
 
     if @schedule_spot.save
       respond_to do |format|
@@ -56,7 +74,13 @@ class Groups::ScheduleSpotsController < ApplicationController
   private
 
   def set_group
-    @group = Group.find(params[:group_id])
+    if params[:group_id].present?
+      @group = Group.find(params[:group_id])
+    elsif params[:card_id].present?
+      # スポット詳細からの追加の場合、cardからgroupを取得
+      card = Card.find(params[:card_id])
+      @group = card.group
+    end
   end
 
   def schedule_spot_params
