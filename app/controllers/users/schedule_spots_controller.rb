@@ -22,7 +22,7 @@ class Users::ScheduleSpotsController < ApplicationController
         @spot_ids = Array(params[:spot_ids])
       else
         # 単一スポット（個別追加）
-        @spot = Spot.find(params[:id])
+        @spot = Spot.find(params[:spot_id])
       end
       @schedules = current_user.schedules
     end
