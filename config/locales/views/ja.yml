@@ -6,7 +6,7 @@ ja:
       no_cards: まだカードがありません
 
     new:
-      title: 新しいカードを作成
+      title: カードを作成
 
     edit:
       title: カードを編集
@@ -15,16 +15,21 @@ ja:
       title: カード詳細
       edit: 編集
       delete: 削除
-      back: 一覧に戻る
+      back: 一覧にもどる
 
     form:
-      name: タイトル（目的地）
-      name_placeholder: 例：北海道旅行
+      name: タイトル
+      name_placeholder: カードのタイトルを記入してください
       memo: メモ
-      memo_placeholder: 旅行のメモや行きたい場所を自由に書いてください
-      submit: 作成する
-      update: 更新する
+      memo_placeholder: グループ内で共有できます
+      submit: 作成
+      update: 更新
       cancel: キャンセル
+
+    add_spot: スポット追加
+    add_spots_to_schedule: 選択したスポットをしおりに追加
+    comments: コメント
+    back: もどる
 
     messages:
       created: カードを作成しました
@@ -43,7 +48,7 @@ ja:
       joined_groups: 参加しているグループ
 
     new:
-      title: 新しいグループを作成
+      title: グループを作成
 
     edit:
       title: グループを編集
@@ -52,7 +57,7 @@ ja:
       title: グループ詳細
       edit: 編集
       delete: 削除
-      back: 一覧に戻る
+      back: 一覧にもどる
       invite_link: 招待リンク
       copy_link: リンクをコピー
       members: メンバー
@@ -61,17 +66,17 @@ ja:
 
     form:
       name: グループ名
-      name_placeholder: 例：家族旅行
-      trip_name: 旅行名
-      trip_name_placeholder: 例：沖縄旅行2025
-      start_date: 開始日
-      end_date: 終了日
-      trip_memo: 旅行メモ
-      trip_memo_placeholder: 旅行の詳細や行きたい場所を自由に書いてください
-      group_nickname: グループ内での名前
-      group_nickname_placeholder: 例：太郎
-      submit: 作成する
-      update: 更新する
+      name_placeholder:
+      trip_name: 旅行先
+      trip_name_placeholder: 旅行先を入力してください
+      start_date: 旅行開始日
+      end_date: 旅行終了日
+      trip_memo: メモ
+      trip_memo_placeholder: グループ内で共有できます
+      group_nickname: グループ内に参加するときの名前
+      group_nickname_placeholder: グループのメンバーに表示されます
+      submit: 作成
+      update: 更新
       cancel: キャンセル
 
     messages:
@@ -90,10 +95,10 @@ ja:
       no_schedules: まだしおりがありません
 
     new:
-      title: 新しいしおりを作成
+      title: しおり作成
 
     edit:
-      title: しおりを編集
+      title: しおり編集
 
     show:
       title: しおり詳細
@@ -108,9 +113,9 @@ ja:
 
     form:
       name: しおり名
-      name_placeholder: 例：沖縄旅行2025
-      start_date: 開始日
-      end_date: 終了日
+      name_placeholder: しおりの名前を入力してください
+      start_date: 旅行開始日
+      end_date: 旅行終了日
       memo: メモ
       memo_placeholder: 旅行の詳細や行きたい場所を自由に書いてください
       submit: 作成する
@@ -125,9 +130,30 @@ ja:
       update_failed: しおりの更新に失敗しました
       delete_failed: しおりの削除に失敗しました
 
+  spots:
+    new:
+      title: スポットを追加
+
+    edit:
+      title: スポットを編集
+
+    form:
+      name: スポット名
+      name_placeholder: スポット名を入力してください
+      category: カテゴリ
+      address: 住所
+      address_placeholder: 住所を入力してください
+      website_url: URL
+      web_site_url_placeholder: URLを入力してください
+      phone_number: 電話番号
+      phone_number_placeholder: 電話番号を入力してください
+      submit: 追加
+      update: 更新
+      cancel: キャンセル
+
   schedule_spots:
     form:
-      submit: 追加する
+      submit: 追加
       cancel: キャンセル
 
   users:
@@ -153,7 +179,7 @@ ja:
       schedule_spot: スケジュール
     attributes:
       card:
-        name: カード名（目的地）
+        name: カード名
         memo: メモ
         user: ユーザー
         group: グループ
@@ -162,9 +188,9 @@ ja:
       group:
         name: グループ名
         trip_name: 旅行名
-        start_date: 開始日
-        end_date: 終了日
-        trip_memo: 旅行メモ
+        start_date: 旅行開始日
+        end_date: 旅行終了日
+        trip_memo: メモ
         invite_token: 招待トークン
         created_by_user_id: 作成者
         created_at: 作成日時
