@@ -70,7 +70,8 @@ class ScheduleSpot < ApplicationRecord
         snapshot_address: spot.address,
         snapshot_phone_number: spot.phone_number,
         snapshot_website_url: spot.website_url,
-        snapshot_category_id: spot.category_id
+        snapshot_category_id: spot.category_id,
+        google_place_id: spot.google_place_id
       )
     end
 

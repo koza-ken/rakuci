@@ -26,6 +26,7 @@ class Groups::ScheduleSpotsController < ApplicationController
         snapshot_address: spot.address,
         snapshot_phone_number: spot.phone_number,
         snapshot_website_url: spot.website_url,
+        google_place_id: spot.google_place_id,
         is_custom_entry: false,
         day_number: 1,
         global_position: (@schedule.schedule_spots.maximum(:global_position) || 0) + 1
