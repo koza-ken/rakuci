@@ -2,20 +2,20 @@
   <main class="flex flex-col items-center justify-center px-8 py-12">
     <div class="w-full max-w-md">
       <!-- タイトル -->
-      <h1 class="text-2xl font-bold text-text mb-2">グループに参加</h1>
-      <p class="text-sm text-gray-600 mb-8"><%= @group.name %>に招待されました。</p>
+      <h1 class="text-2xl font-bold text-text mb-2"><%= t('groups.new_membership.title') %></h1>
+      <p class="text-sm text-gray-600 mb-8"><%= @group.name %><%= t('groups.new_membership.invited_message') %></p>
 
       <!-- ユーザー登録済み -->
       <div class="mb-8">
-        <h2 class="text-sm font-semibold text-text mb-4">【ユーザー登録済みの方】</h2>
-        <p class="text-xs text-gray-500 mb-4">ログインしてからグループに参加してください。</p>
+        <h2 class="text-lg font-semibold text-text mb-4"><%= t('groups.new_membership.signed_up_users_title') %></h2>
+        <p class="text-sm text-gray-500 mb-4"><%= t('groups.new_membership.signed_up_users_text') %></p>
         <div class="text-center">
-          <%= link_to t('.sign_in'), new_user_session_path, class: "inline-block btn-main" %>
+          <%= link_to t('groups.new_membership.sign_in'), new_user_session_path, class: "inline-block btn-main" %>
         </div>
         <!-- 新規登録リンク（未ログイン時のみ） -->
         <% unless user_signed_in? %>
           <div class="text-center pt-4 mb-6">
-            <p class="text-sm text-gray-600 mb-3">新規ユーザー登録は<%= link_to "こちら", new_user_registration_path, class: "text-primary font-semibold hover:underline" %></p>
+            <p class="text-sm text-gray-600 mb-3"><%= t('groups.new_membership.new_user_text') %><%= link_to t('groups.new_membership.new_user_link'), new_user_registration_path, class: "text-secondary font-semibold hover:underline" %></p>
           </div>
         <% end %>
       </div>
@@ -23,31 +23,29 @@
 
       <!-- 過去に参加したことがある -->
       <div class="mb-8">
-        <h2 class="text-sm font-semibold text-text mb-4">【過去に「<%= @group.name %>」に参加したことがある方】</h2>
-        <p class="text-xs text-gray-500 mb-4">前回参加したユーザー名を選択してください。</p>
+        <h2 class="text-lg font-semibold text-text mb-4"><%= t('groups.new_membership.past_users_title') %><%= @group.name %><%= t('groups.new_membership.past_users_title_suffix') %></h2>
+        <p class="text-sm text-gray-500 mb-4"><%= t('groups.new_membership.past_users_text') %></p>
 
         <%= form_with url: create_membership_path(@group.invite_token), method: :post, local: true do |f| %>
           <%= f.select :group_nickname,
-              options_for_select([["ゲストユーザーから選択してください", ""]] + @member_nicknames.map { |nickname| [nickname, nickname] }),
+              options_for_select([[t('groups.new_membership.select_placeholder'), ""]] + @member_nicknames.map { |nickname| [nickname, nickname] }),
               {},
               class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" %>
           <%= f.hidden_field :membership_source, value: "dropdown" %>
-          <%= f.submit "参加する", class: "btn-main w-full mt-4" %>
+          <%= f.submit t('groups.new_membership.submit'), class: "btn-main w-full mt-4" %>
         <% end %>
       </div>
 
       <!-- はじめて参加する -->
       <div class="mb-8">
-        <h2 class="text-sm font-semibold text-text mb-4">【はじめて「<%= @group.name %>」に参加する方】</h2>
-        <p class="text-xs text-gray-500 mb-4">ユーザー名を入力してください。</p>
+        <h2 class="text-lg font-semibold text-text mb-4"><%= t('groups.new_membership.first_time_title') %><%= @group.name %><%= t('groups.new_membership.first_time_title_suffix') %></h2>
+        <p class="text-sm text-gray-500 mb-4"><%= t('groups.new_membership.first_time_text') %></p>
 
         <%= form_with url: create_membership_path(@group.invite_token), method: :post, local: true do |f| %>
-          <%= f.text_field :group_nickname,
-              placeholder: "ユーザー名",
-              class: "form-text-field" %>
-          <p class="text-xs text-gray-400 mt-2">ユーザー名は参加するグループ「<%= @group.name %>」でのみ有効です</p>
+          <%= f.text_field :group_nickname, class: "form-text-field" %>
+          <p class="text-xs text-gray-400 mt-2"><%= t('groups.new_membership.note') %><%= @group.name %><%= t('groups.new_membership.note_suffix') %></p>
           <%= f.hidden_field :membership_source, value: "text_input" %>
-          <%= f.submit "参加する", class: "btn-main w-full mt-4" %>
+          <%= f.submit t('groups.new_membership.submit'), class: "btn-main w-full mt-4" %>
         <% end %>
       </div>
 
