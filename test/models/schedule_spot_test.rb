@@ -15,6 +15,7 @@
 #  start_time            :time
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
+#  google_place_id       :string
 #  schedule_id           :bigint           not null
 #  snapshot_category_id  :integer
 #  spot_id               :bigint
