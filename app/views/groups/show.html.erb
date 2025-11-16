@@ -38,24 +38,24 @@
             <% end %>
           <% end %>
         </div>
-        <!-- ボタン列：招待する + しおり作成/詳細 -->
-        <div class="flex item-center justify-between gap-2">
-          <button
-            data-controller="clipboard"
-            data-clipboard-text-value="<%= new_membership_url(@group.invite_token) %>"
-            data-action="click->clipboard#copy"
-            class="btn-main w-auto">
-            招待する
-          </button>
+      </div>
+      <!-- ボタン列：招待する + しおり作成/詳細 -->
+      <div class="flex item-center justify-between gap-2 mb-8">
+        <button
+          data-controller="clipboard"
+          data-clipboard-text-value="<%= new_membership_url(@group.invite_token) %>"
+          data-action="click->clipboard#copy"
+          class="btn-main w-auto">
+          招待する
+        </button>
 
-          <div id="schedule-button" class="">
-            <% if @group.schedule.present? %>
-              <%# グループにしおりがあればしおり詳細に遷移 %>
-              <%= link_to "しおり詳細", group_schedule_path(@group), class: "btn-main block text-center w-auto" %>
-            <% else %>
-              <%= link_to "しおり作成", new_group_schedule_path(@group), data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" }, class: "btn-main block text-center w-auto" %>
-            <% end %>
-          </div>
+        <div id="schedule-button" class="">
+          <% if @group.schedule.present? %>
+            <%# グループにしおりがあればしおり詳細に遷移 %>
+            <%= link_to "しおり詳細", group_schedule_path(@group), class: "btn-main block text-center w-auto" %>
+          <% else %>
+            <%= link_to "しおり作成", new_group_schedule_path(@group), data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" }, class: "btn-main block text-center w-auto" %>
+          <% end %>
         </div>
       </div>
 
