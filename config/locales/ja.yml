@@ -68,14 +68,14 @@ ja:
   spots:
     form:
       name: "スポット名"
-      name_placeholder: "例：〇〇レストラン"
+      name_placeholder: "スポット名を入力してください"
       category: "カテゴリ"
       address: "住所"
-      address_placeholder: "例：東京都渋谷区..."
-      website_url: "Webサイト"
-      web_site_url_placeholder: "例：https://example.com"
+      address_placeholder: "住所を入力してください"
+      website_url: "URL"
+      web_site_url_placeholder: "URLを入力してください"
       phone_number: "電話番号"
-      phone_number_placeholder: "例：03-1234-5678"
+      phone_number_placeholder: "電話番号を入力してください"
       update: "更新"
     edit:
       title: "スポット編集"

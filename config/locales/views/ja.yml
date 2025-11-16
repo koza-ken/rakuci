@@ -64,9 +64,33 @@ ja:
       travel_candidates: 旅行先候補
       no_cards: まだ旅行先候補がありません
 
+    new_membership:
+      title: グループに参加
+      invited_message: に招待されました。
+      signed_up_users_title: ユーザー登録済みの方
+      signed_up_users_text: ログインしてからグループに参加してください。
+      sign_in: ログイン
+      new_user_text: 新規ユーザー登録は
+      new_user_link: こちら
+      past_users_title: 過去に
+      past_users_title_suffix: に参加したことがある方
+      past_users_text: 前回参加したユーザー名を選択してください。
+      select_placeholder: ゲストユーザーから選択してください
+      first_time_title: はじめて
+      first_time_title_suffix: に参加する方
+      first_time_text: ユーザー名を入力してください。
+      note: ユーザー名は参加するグループ「
+      note_suffix: 」でのみ有効です
+      submit: 参加する
+
+    details:
+      delete_member_title: メンバーを削除
+      delete_confirm: を削除しますか？
+      delete_button: 削除
+
     form:
       name: グループ名
-      name_placeholder:
+      name_placeholder: グループ名を入力してください
       trip_name: 旅行先
       trip_name_placeholder: 旅行先を入力してください
       start_date: 旅行開始日
@@ -117,7 +141,7 @@ ja:
       start_date: 旅行開始日
       end_date: 旅行終了日
       memo: メモ
-      memo_placeholder: 旅行の詳細や行きたい場所を自由に書いてください
+      memo_placeholder: メモを入力してください
       submit: 作成する
       update: 更新する
       cancel: キャンセル
@@ -205,8 +229,8 @@ ja:
         updated_at: 更新日時
       schedule:
         name: しおり名
-        start_date: 開始日
-        end_date: 終了日
+        start_date: 旅行開始日
+        end_date: 旅行終了日
         memo: メモ
         schedulable_type: 関連リソースタイプ
         schedulable_id: 関連リソースID
