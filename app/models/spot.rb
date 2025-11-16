@@ -31,5 +31,5 @@ class Spot < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :phone_number, length: { maximum: 20 }, allow_blank: true
-  validates :google_place_id, uniqueness: { scope: :card_id }, allow_nil: true
+  validates :google_place_id, uniqueness: { scope: :card_id }, allow_blank: true
 end
