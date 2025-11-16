@@ -26,6 +26,7 @@ class Groups::ScheduleSpotsController < ApplicationController
         snapshot_address: spot.address,
         snapshot_phone_number: spot.phone_number,
         snapshot_website_url: spot.website_url,
+        google_place_id: spot.google_place_id,
         is_custom_entry: false,
         day_number: 1,
         global_position: (@schedule.schedule_spots.maximum(:global_position) || 0) + 1
@@ -84,7 +85,7 @@ class Groups::ScheduleSpotsController < ApplicationController
   end
 
   def schedule_spot_params
-    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_category_id, :snapshot_address, :snapshot_phone_number, :snapshot_website_url, :start_time, :end_time, :memo)
+    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_category_id, :snapshot_address, :snapshot_phone_number, :snapshot_website_url, :google_place_id, :start_time, :end_time, :memo)
   end
 
   # グループに参加しているか確認するフィルター（showアクションのフィルター）

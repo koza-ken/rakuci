@@ -5,8 +5,8 @@
     <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
       <div class="flex items-center gap-2 mb-8">
         <h1 class="text-2xl font-bold text-text"><%= @schedule_spot.display_name %></h1>
-        <% if @schedule_spot.spot.present? && @schedule_spot.spot.google_place_id.present? %>
-          <%= link_to "https://maps.google.com/maps?q=place_id:#{@schedule_spot.spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition" do %>
+        <% if @schedule_spot.present? && @schedule_spot.google_place_id.present? %>
+          <%= link_to "https://maps.google.com/maps?q=place_id:#{@schedule_spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition" do %>
             <%= render "shared/icon/map_icon_google" %>
           <% end %>
         <% end %>
