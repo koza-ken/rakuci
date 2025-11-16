@@ -5,11 +5,11 @@
     <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-pointer bg-gray-900/30"></div>
     <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
       <main class="flex flex-col px-8 py-12 bg-main-bg">
-        <h2 class="text-2xl font-bold text-primary mb-6"><%= t('groups.schedules.new.title') %></h2>
+        <h2 class="text-2xl font-bold text-text mb-6"><%= t('groups.schedules.new.title') %></h2>
 
         <%= form_with model: [@group, @schedule], url: group_schedule_path(@group), local: true do |f| %>
           <div class="mb-4">
-            <%= f.label :name, class: "block text-sm font-bold text-primary mb-2" %>
+            <%= f.label :name, class: "block text-sm font-bold text-text mb-2" %>
             <%= f.text_field :name, class: "form-text-field w-full", placeholder: t('users.schedules.form.name_placeholder') %>
             <% if @schedule.errors.any? %>
               <div class="mt-2">
@@ -21,18 +21,18 @@
           </div>
 
           <div class="mb-4">
-            <%= f.label :start_date, class: "block text-sm font-bold text-primary mb-2" %>
+            <%= f.label :start_date, class: "block text-sm font-bold text-text mb-2" %>
             <%= f.date_field :start_date, class: "form-text-field w-full" %>
           </div>
 
           <div class="mb-6">
-            <%= f.label :end_date, class: "block text-sm font-bold text-primary mb-2" %>
+            <%= f.label :end_date, class: "block text-sm font-bold text-text mb-2" %>
             <%= f.date_field :end_date, class: "form-text-field w-full" %>
           </div>
 
           <div class="flex gap-2">
             <%= f.submit t('users.schedules.form.submit'), class: "btn-main px-4 py-2 flex-1" %>
-            <button type="button" class="btn-sub px-4 py-2 w-auto" data-action="click->modal#close">
+            <button type="button" class="btn-sub px-4 py-2 w-auto flex-1" data-action="click->modal#close">
               <%= t('users.schedules.form.cancel') %>
             </button>
           </div>
