@@ -16,7 +16,7 @@
     <%# スポット %>
     <div class="mt-4">
       <div class="flex items-center justify-end mb-4">
-        <%= link_to "スポットを追加", new_schedule_schedule_spot_path(schedule), data: { turbo_frame: "spot-create-modal" }, class: "btn-main w-auto" %>
+        <%= link_to t('schedules.show.add_spot_button'), new_schedule_schedule_spot_path(schedule), data: { turbo_frame: "spot-create-modal" }, class: "btn-main w-auto" %>
       </div>
 
       <% if schedule.schedule_spots.any? %>
@@ -25,9 +25,9 @@
           <% formatted_date = schedule.formatted_date_for_day(day) %>
           <h3 class="text-lg font-bold text-text mt-4 mb-2">
             <% if formatted_date %>
-              <%= formatted_date %>（<%= day %>日目）
+              <%= formatted_date %>（<%= day %><%= t('users.schedules.show.day_label') %>）
             <% else %>
-              <%= day %>日目
+              <%= day %><%= t('users.schedules.show.day_label') %>
             <% end %>
           </h3>
           <div class="space-y-4">
@@ -41,8 +41,7 @@
       <% end %>
     </div>
   <% else %>
-    <%# TODO i18n確認 %>
-    <p class="text-text text-center mt-8"><%= t('activerecord.models.schedule') %>はまだ作成されていません</p>
+    <p class="text-text text-center mt-8"><%= t('activerecord.models.schedule') %><%= t('schedules.show.no_schedule_message') %></p>
   <% end %>
 
   <%# 操作ボタン %>
@@ -53,13 +52,13 @@
 
   <%# メモ %>
   <% if schedule.memo.present? %>
-    <h2 class="mt-10">メモ</h2>
+    <h2 class="mt-10"><%= t('schedules.show.memo') %></h2>
     <div class="mt-2 p-4 bg-white rounded">
       <p class="text-text"><%= schedule.memo %></p>
     </div>
   <% end %>
 
   <div class="mt-20">
-    <%= button_to "しおりを削除", schedule_path(schedule), method: :delete, data: { turbo: false }, onclick: "return confirm('このしおりを削除しますか？')", class: "btn-danger flex-1 text-center" %>
+    <%= button_to t('schedules.show.delete_schedule'), schedule_path(schedule), method: :delete, data: { turbo: false }, onclick: "return confirm('#{t('schedules.show.delete_confirm')}')", class: "btn-danger flex-1 text-center" %>
   </div>
 </div>
