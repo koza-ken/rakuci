@@ -4,16 +4,6 @@
       <h1 class="text-2xl font-bold text-text mb-8"><%= t('spots.edit.title') %></h1>
 
       <%= form_with model: @spot, url: card_spot_path(@card, @spot), local: true, class: "w-full max-w-md" do |f| %>
-        <% if @spot.errors.any? %>
-          <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <ul class="list-disc list-inside text-sm text-red-700">
-              <% @spot.errors.full_messages.each do |message| %>
-                <li class="list-none"><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
         <div class="mb-6">
           <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
             <%= t('spots.form.name') %>
@@ -22,6 +12,13 @@
           <%= f.text_field :name,
               placeholder: t('spots.form.name_placeholder'),
               class: "form-text-field" %>
+          <% if @spot.errors.any? %>
+            <div class="ml-2">
+              <% @spot.errors.messages[:name].each do |message| %>
+                <p class="text-red-600 text-xs"><%= t('activerecord.attributes.spot.name') %><%= message %></p>
+              <% end %>
+            </div>
+          <% end %>
         </div>
 
         <div class="mb-6">
@@ -32,6 +29,13 @@
           <%= f.collection_select :category_id, @categories, :id, :name,
               {include_blank: "--- 選択してください ---"},
               {class: "form-text-field"} %>
+          <% if @spot.errors.any? %>
+            <div class="ml-2">
+              <% @spot.errors.messages[:category_id].each do |message| %>
+                <p class="text-red-600 text-xs"><%= t('activerecord.attributes.spot.category_id') %><%= message %></p>
+              <% end %>
+            </div>
+          <% end %>
         </div>
 
         <div class="mb-6">
