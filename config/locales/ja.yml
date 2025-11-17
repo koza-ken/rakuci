@@ -40,6 +40,8 @@ ja:
     schedules:
       not_found: しおりが見つかりません
       unauthorized_view: このしおりを閲覧する権限がありません
+    messages:
+      not_saved: "%{count}件のエラーが発生しました"
 
   notices:
     cards:
@@ -94,10 +96,12 @@ ja:
       delete: スポットを削除
       back: もどる
       cancel: キャンセル
+      confirm_delete: このスポットを削除しますか
 
     add_spot: スポット追加
     add_spots_to_schedule: 選択したスポットをしおりに追加
     comments: コメント
+    back: もどる
     delete_button: カード削除
     delete_confirm: このカードを削除してもよろしいですか
     no_comments: まだコメントがありません
@@ -222,6 +226,7 @@ ja:
       no_spots: スポットはありません
       add_spot_button: スポットを追加
       no_schedule_message: はまだ作成されていません
+      edit: 編集
       delete_schedule: しおりを削除
       delete_confirm: このしおりを削除しますか
 
@@ -276,6 +281,7 @@ ja:
       website_url: URL
       phone_number: 電話
       start_time: 予定時間
+      memo: メモ
     edit:
       title: スポット編集
       arrival_time: 到着時刻
@@ -302,6 +308,7 @@ ja:
       spot_count_message: 件のスポットを追加します
       add_to_schedule: このしおりに追加
       no_schedules_message: まだしおりがありません
+      not_group: not group
       index:
         title: しおり一覧
         new_schedule: 新規作成
@@ -321,6 +328,7 @@ ja:
         detail: 詳細
         delete_schedule: しおりを削除
         delete_confirm: このしおりを削除しますか
+        back: もどる
 
       form:
         name_placeholder: しおり名を入力してください
