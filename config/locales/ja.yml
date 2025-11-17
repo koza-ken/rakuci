@@ -179,7 +179,7 @@ ja:
       end_date: 旅行終了日
       trip_memo: メモ
       trip_memo_placeholder: グループ内で共有できます
-      group_nickname: グループ内に参加するときの名前
+      group_nickname: グループでの名前
       group_nickname_placeholder: グループのメンバーに表示されます
       submit: 作成
       update: 更新

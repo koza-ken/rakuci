@@ -13,7 +13,8 @@ class GroupCreateForm
   attribute :group_nickname, :string
   attribute :role, :string
   # attr_accessor :user  # current_user をセットするため
-  validates :name, :group_nickname, presence: true
+  validates :name, presence: true, length: { maximum: 30 }
+  validates :group_nickname, presence: true, length: { maximum: 20 }
 
   # フォーム内容を保存する処理
   def save

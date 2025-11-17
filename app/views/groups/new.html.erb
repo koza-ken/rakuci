@@ -8,34 +8,40 @@
         <h1 class="text-2xl font-bold text-text mb-8"><%= t('.title') %></h1>
 
         <%= form_with model: @form, url: groups_path, class: "w-full max-w-md" do |f| %>
-          <!-- エラーメッセージ表示 -->
-          <% if @form.errors.any? %>
-            <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <h2 class="text-sm font-semibold text-red-800 mb-2">
-                <%= t('errors.messages.not_saved', count: @form.errors.count, resource: t('activerecord.models.group')) %>
-              </h2>
-              <ul class="list-disc list-inside text-sm text-red-700">
-                <% @form.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-
-          <!-- カード名 -->
+          <!-- グループ名 -->
           <div class="mb-6">
-            <%= f.label :name, t('groups.form.name'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
+              <%= t('groups.form.name') %>
+              <span class="text-red-600 font-bold ml-1">*</span>
+            <% end %>
             <%= f.text_field :name,
                 placeholder: t('groups.form.name_placeholder'),
                 class: "form-text-field" %>
+            <% if @form.errors.any? %>
+              <div class="ml-2">
+                <% @form.errors.messages[:name].each do |message| %>
+                  <p class="text-red-600 text-xs"><%= t('activerecord.attributes.group.name') %><%= message %></p>
+                <% end %>
+              </div>
+            <% end %>
           </div>
 
           <!-- グループでの名前 -->
           <div class="mb-6">
-            <%= f.label :group_nickname, t('groups.form.group_nickname'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.label :group_nickname, class: "block text-sm font-medium text-text mb-2" do %>
+              <%= t('groups.form.group_nickname') %>
+              <span class="text-red-600 font-bold ml-1">*</span>
+            <% end %>
             <%= f.text_field :group_nickname,
                 placeholder: t('groups.form.group_nickname_placeholder'),
                 class: "form-text-field" %>
+            <% if @form.errors.any? %>
+              <div class="ml-2">
+                <% @form.errors.messages[:group_nickname].each do |message| %>
+                  <p class="text-red-600 text-xs"><%= t('activerecord.attributes.group_membership.group_nickname') %><%= message %></p>
+                <% end %>
+              </div>
+            <% end %>
           </div>
 
           <!-- ボタン -->
