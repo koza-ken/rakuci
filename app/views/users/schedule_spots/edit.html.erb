@@ -8,50 +8,50 @@
       <div class="w-full max-w-md">
         <%= form_with model: [@schedule, @schedule_spot], local: true do |f| %>
           <div class="mb-4">
-            <%= f.label :snapshot_name, "スポット名", class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.text_field :snapshot_name, class: "form-text-field w-full", placeholder: "スポット名を入力してください" %>
+            <%= f.label :snapshot_name, t('schedule_spots.form.spot_name'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.text_field :snapshot_name, class: "form-text-field w-full", placeholder: t('schedule_spots.form.spot_name') %>
           </div>
 
           <div class="mb-4">
-            <%= f.label :snapshot_category_id, "カテゴリ", class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.select :snapshot_category_id, options_from_collection_for_select(Category.all, :id, :name, @schedule_spot.snapshot_category_id), { include_blank: "---" }, class: "form-text-field w-full" %>
+            <%= f.label :snapshot_category_id, t('schedule_spots.form.category'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.select :snapshot_category_id, options_from_collection_for_select(Category.all, :id, :name, @schedule_spot.snapshot_category_id), { include_blank: t('schedule_spots.category_placeholder') }, class: "form-text-field w-full" %>
           </div>
 
           <div class="mb-4">
-            <%= f.label :snapshot_address, "住所", class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.text_field :snapshot_address, class: "form-text-field w-full", placeholder: "住所を入力してください" %>
+            <%= f.label :snapshot_address, t('schedule_spots.form.address'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.text_field :snapshot_address, class: "form-text-field w-full", placeholder: t('schedule_spots.form.address') %>
           </div>
 
           <div class="mb-4">
-            <%= f.label :snapshot_website_url, "URL", class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.url_field :snapshot_website_url, class: "form-text-field w-full", placeholder: "URLを入力してください" %>
+            <%= f.label :snapshot_website_url, t('schedule_spots.form.website_url'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.url_field :snapshot_website_url, class: "form-text-field w-full", placeholder: t('schedule_spots.form.website_url') %>
           </div>
 
           <div class="mb-4">
-            <%= f.label :snapshot_phone_number, "電話", class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.telephone_field :snapshot_phone_number, class: "form-text-field w-full", placeholder: "電話番号を入力してください" %>
+            <%= f.label :snapshot_phone_number, t('schedule_spots.form.phone_number'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.telephone_field :snapshot_phone_number, class: "form-text-field w-full", placeholder: t('schedule_spots.form.phone_number') %>
           </div>
 
           <div class="flex gap-4">
             <div class="flex-1">
-              <%= f.label :start_time, "到着時刻", class: "block text-sm font-medium text-text mb-2" %>
+              <%= f.label :start_time, t('schedule_spots.edit.arrival_time'), class: "block text-sm font-medium text-text mb-2" %>
               <%= f.time_field :start_time, class: "form-text-field w-full" %>
             </div>
 
             <div class="flex-1">
-              <%= f.label :end_time, "出発時刻", class: "block text-sm font-medium text-text mb-2" %>
+              <%= f.label :end_time, t('schedule_spots.edit.departure_time'), class: "block text-sm font-medium text-text mb-2" %>
               <%= f.time_field :end_time, class: "form-text-field w-full" %>
             </div>
           </div>
 
           <div class="mb-4">
-            <%= f.label :memo, "メモ", class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.text_area :memo, class: "form-text-field w-full resize-none min-h-[100px]", placeholder: "メモを入力してください" %>
+            <%= f.label :memo, t('schedule_spots.form.memo'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.text_area :memo, class: "form-text-field w-full resize-none min-h-[100px]", placeholder: t('schedule_spots.form.memo') %>
           </div>
 
           <div class="flex gap-3 mt-8">
-            <%= f.submit "更新", class: "btn-main flex-1 text-center" %>
-            <%= link_to "キャンセル", schedule_schedule_spot_path(@schedule, @schedule_spot), class: "btn-sub flex-1 text-center" %>
+            <%= f.submit t('schedule_spots.form.update'), class: "btn-main flex-1 text-center" %>
+            <%= link_to t('schedule_spots.form.cancel'), schedule_schedule_spot_path(@schedule, @schedule_spot), class: "btn-sub flex-1 text-center" %>
           </div>
         <% end %>
       </div>

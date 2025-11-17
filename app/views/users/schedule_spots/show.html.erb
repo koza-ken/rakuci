@@ -14,14 +14,14 @@
 
       <div class="w-full max-w-md">
         <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2">カテゴリ</label>
+          <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.category') %></label>
           <div class="form-text-field bg-gray-100">
             <%= Category.find_by(id: @schedule_spot.snapshot_category_id)&.name || "---" %>
           </div>
         </div>
 
         <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2">住所</label>
+          <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.address') %></label>
           <div class="form-text-field bg-gray-100 truncate">
             <% if @schedule_spot.snapshot_address.present? %>
               <%= @schedule_spot.snapshot_address %>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2">URL</label>
+          <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.website_url') %></label>
           <div class="form-text-field bg-gray-100 truncate">
             <% if @schedule_spot.snapshot_website_url.present? %>
               <%= @schedule_spot.snapshot_website_url %>
@@ -43,7 +43,7 @@
         </div>
 
         <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2">電話</label>
+          <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.phone_number') %></label>
           <div class="form-text-field bg-gray-100 truncate">
             <% if @schedule_spot.snapshot_phone_number.present? %>
               <%= @schedule_spot.snapshot_phone_number %>
@@ -54,7 +54,7 @@
         </div>
 
         <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2">予定時間</label>
+          <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.start_time') %></label>
           <div class="form-text-field bg-gray-100 truncate">
             <% if @schedule_spot.start_time.present? && @schedule_spot.end_time.present? %>
               <%= @schedule_spot.start_time.strftime('%H:%M') %> ~ <%= @schedule_spot.end_time.strftime('%H:%M') %>
@@ -69,7 +69,7 @@
         </div>
 
         <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2">メモ</label>
+          <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.memo') %></label>
           <div class="form-text-field bg-gray-100">
             <% if @schedule_spot.memo.present? %>
               <%= @schedule_spot.memo %>
@@ -85,7 +85,7 @@
         <%# 削除後のページ遷移とturboの相性が悪いのでturboをfalseにして、確認ダイアログをJSで実装 %>
         <%= link_to t('cards.form.back'), schedule_path(@schedule), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
       </div>
-      <%= button_to t('cards.form.delete'), schedule_schedule_spot_path(@schedule, @schedule_spot), method: :delete, data: { turbo: false }, onclick: "return confirm('このスポットを削除しますか')", class: "btn-danger flex-1 text-center mt-20" %>
+      <%= button_to t('cards.form.delete'), schedule_schedule_spot_path(@schedule, @schedule_spot), method: :delete, data: { turbo: false }, onclick: "return confirm('#{t('schedule_spots.delete_confirm')}')", class: "btn-danger flex-1 text-center mt-20" %>
     </main>
   </div>
 </turbo-frame>

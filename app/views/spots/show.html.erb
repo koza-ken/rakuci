@@ -64,12 +64,12 @@
         <%# グループのカード か ユーザーのカード か判定 %>
         <% if @card.group_id.present? %>
           <%# グループのカード → 直接作成（postなのでbutton_to）  %>
-          <%= button_to "グループのしおりに追加",
+          <%= button_to t('spots.show.add_to_group_schedule'),
               card_spot_group_schedule_spot_path(@card, @spot),
               method: :post, class: "btn-main w-full" %>
         <% else %>
           <%# ユーザーのカード → しおり選択ページへ（getなのでlink_to） %>
-          <%= link_to "ユーザーのしおりに追加",
+          <%= link_to t('spots.show.add_to_user_schedule'),
               new_card_spot_schedule_spot_path(@card, @spot),
               data: {turbo_frame: "add_new_schedule_spot"},
               class: "btn-main w-full block text-center" %>
