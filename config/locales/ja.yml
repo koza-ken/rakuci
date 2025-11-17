@@ -363,10 +363,11 @@ ja:
     attributes:
       spot:
         name: スポット名
+        category: カテゴリ
+        category_id: カテゴリ
         address: 住所
         phone_number: 電話番号
         website_url: Webサイト
-        category_id: カテゴリ
         google_place_id: 施設
 
       card:
@@ -419,10 +420,13 @@ ja:
         updated_at: 更新日時
 
     errors:
+      messages:
+        blank: を入力してください
+        too_long: は%{count}文字以内で入力してください
       models:
         spot:
           attributes:
             google_place_id:
               taken: この施設は既にこのカードに登録されています
             name:
-              blank: スポット名を入力してください
+              blank: を入力してください
