@@ -1,32 +1,39 @@
 ja:
   devise:
-    sessions:
-      new:
-        title: "ログイン"
-        email: "メールアドレス"
-        password: "パスワード"
-        remember_me: "ログイン状態を保持する"
-        forgot_password: "パスワードを忘れた方は"
-        forgot_password_link: "こちら"
-        sign_in: "ログイン"
-        google_login: "Googleでログイン"
-        sign_up: "新規登録は"
-        sign_up_link: "こちら"
-
-    registrations:
-      new:
-        title: "新規登録"
-        email: "メールアドレス"
-        password: "パスワード"
-        password_confirmation: "パスワード（確認）"
-        password_hint: "半角英数字%{count}文字以上"
-        terms_agreement: "に同意のうえ、ご登録をお願いします"
-        terms_of_service: "利用規約"
-        privacy_policy: "プライバシーポリシー"
-        sign_up: "登録する"
-        sign_in: "ログインページへ"
-
+    confirmations:
+      confirmed: "メールアドレスが確認されました。"
+      send_instructions: "アカウントの確認方法をメールでお送りしました。"
+      send_paranoid_instructions: "メールアドレスが見つかった場合、確認方法をメールでお送りします。"
+    failure:
+      already_authenticated: "既にログインしています。"
+      inactive: "アカウントがまだ有効化されていません。"
+      invalid: "メールアドレスまたはパスワードが正しくありません。"
+      locked: "アカウントがロックされています。"
+      last_attempt: "もう1回ログインに失敗するとアカウントがロックされます。"
+      not_found_in_database: "メールアドレスまたはパスワードが正しくありません。"
+      timeout: "セッションがタイムアウトしました。もう一度ログインしてください。"
+      unauthenticated: "ログインまたは登録してください。"
+      unconfirmed: "メールアドレスの確認が必要です。"
+    mailer:
+      confirmation_instructions:
+        subject: "確認方法について"
+      reset_password_instructions:
+        subject: "パスワードリセット方法について"
+      unlock_instructions:
+        subject: "アカウント解除方法について"
+      email_changed:
+        subject: "メールアドレスが変更されました"
+      password_change:
+        subject: "パスワードが変更されました"
+    omniauth_callbacks:
+      failure: "%{kind} アカウントで認証できませんでした。理由：\"%{reason}\""
+      success: "%{kind} アカウントで正常に認証されました。"
     passwords:
+      no_token: "このページにアクセスすることはできません。パスワード再設定メール内のリンクから選択してください。"
+      send_instructions: "パスワード再設定方法をメールでお送りしました。"
+      send_paranoid_instructions: "メールアドレスが見つかった場合、パスワード再設定方法をメールでお送りします。"
+      updated: "パスワードが正常に変更されました。ログインしています。"
+      updated_not_active: "パスワードが正常に変更されました。"
       new:
         title: "パスワード再設定"
         email: "メールアドレス"
@@ -39,3 +46,52 @@ ja:
         password_hint: "半角英数字%{count}文字以上"
         submit: "パスワードを変更"
         sign_in: "ログインページへ"
+    registrations:
+      destroyed: "アカウントを削除しました。またのご利用をお待ちしています。"
+      signed_up: "ようこそ！新規登録が完了しました。"
+      signed_up_but_inactive: "新規登録が完了しましたが、アカウントがまだ有効化されていないためログインできません。"
+      signed_up_but_locked: "新規登録が完了しましたが、アカウントがロックされているためログインできません。"
+      signed_up_but_unconfirmed: "確認メールをメールアドレスに送信しました。メール内のリンクをクリックしてアカウントを有効化してください。"
+      update_needs_confirmation: "アカウント情報が更新されました。新しいメールアドレスを確認するため、メールをご確認のうえ、リンクをクリックしてください。"
+      updated: "アカウント情報が正常に更新されました。"
+      updated_but_not_signed_in: "アカウント情報が更新されましたが、パスワードが変更されたため、もう一度ログインしてください。"
+      new:
+        title: "新規登録"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認）"
+        password_hint: "半角英数字%{count}文字以上"
+        terms_agreement: "に同意のうえ、ご登録をお願いします"
+        terms_of_service: "利用規約"
+        privacy_policy: "プライバシーポリシー"
+        sign_up: "登録する"
+        sign_in: "ログインページへ"
+    sessions:
+      new:
+        title: "ログイン"
+        email: "メールアドレス"
+        password: "パスワード"
+        remember_me: "ログイン状態を保持する"
+        forgot_password: "パスワードを忘れた方は"
+        forgot_password_link: "こちら"
+        sign_in: "ログイン"
+        google_login: "Googleでログイン"
+        sign_up: "新規登録は"
+        sign_up_link: "こちら"
+      signed_in: "ログインしました。"
+      signed_out: "ログアウトしました。"
+      already_signed_out: "ログアウトしました。"
+    unlocks:
+      send_instructions: "アカウント解除方法をメールでお送りしました。"
+      send_paranoid_instructions: "アカウントが見つかった場合、解除方法をメールでお送りします。"
+      unlocked: "アカウントが解除されました。ログインしてください。"
+  errors:
+    messages:
+      already_confirmed: "既に確認されています。ログインしてください。"
+      confirmation_period_expired: "%{period} 以内に確認が必要です。新しい確認メールをリクエストしてください。"
+      expired: "有効期限が切れています。新しくリクエストしてください。"
+      not_found: "見つかりません。"
+      not_locked: "ロックされていません。"
+      not_saved:
+        one: "1 件のエラーが発生し、この %{resource} は保存されませんでした："
+        other: "%{count} 件のエラーが発生し、この %{resource} は保存されませんでした："
