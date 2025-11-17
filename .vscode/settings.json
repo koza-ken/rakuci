@@ -1,0 +1,16 @@
+{
+  "i18n-ally.localesPaths": [
+    // i18n の翻訳ファイルがある場所を指定
+    "config/locales",
+    "config/locales/devise"
+  ],
+  "i18n-ally.sourceLanguage": "ja", // ソース言語を日本語に設定
+  "i18n-ally.keystyle": "nested", // 翻訳キーの表示形式を階層化。例：ja.cards.form.submit
+  "i18n-ally.sortKeys": true, //  翻訳キーを自動的にソート（並び順を整える）
+  "i18n-ally.keepFulfilled": true // 既に翻訳済みのキーを削除せずに保持
+  // "workbench.colorCustomizations": {
+  //   "i18nally.translated": "#ffd966",
+  //   "i18nally.missing": "#ff5c5c",
+  //   "i18nally.source": "#4fc3f7"
+  // }
+}

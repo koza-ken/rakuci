@@ -70,7 +70,7 @@
               <% end %>
             </div>
           <% else %>
-            <p class="text-gray-500 text-sm mb-4">まだコメントがありません</p>
+            <p class="text-gray-500 text-sm mb-4"><%= t('cards.no_comments') %></p>
           <% end %>
         </div>
         <!-- 新規コメント投稿フォーム -->
@@ -94,7 +94,7 @@
       <div id="memo-form" data-memo-edit-target="form" class="hidden">
         <%= form_with model: @card, local: true, class: "w-full" do |f| %>
           <%= f.label :memo, t('cards.form.memo'), class: "block text-2xl font-bold text-text mb-2" %>
-          <%= f.text_area :memo, class: "form-text-field flex-1 resize-none min-h-[100px]", placeholder: "メモを入力してください" %>
+          <%= f.text_area :memo, class: "form-text-field flex-1 resize-none min-h-[100px]", placeholder: t('cards.memo_input_placeholder') %>
           <div class="flex gap-2 mt-2">
             <%= f.submit t('cards.form.update'), class: "btn-main px-4 py-2 w-auto" %>
             <button type="button" class="btn-sub px-4 py-2 w-auto" data-action="click->memo-edit#toggleForm">
