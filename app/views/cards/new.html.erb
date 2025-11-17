@@ -8,26 +8,22 @@
         <h1 class="text-2xl font-bold text-text mb-8"><%= t('.title') %></h1>
 
         <%= form_with model: @card, class: "w-full max-w-md" do |f| %>
-          <!-- エラーメッセージ表示 -->
-          <% if @card.errors.any? %>
-            <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <h2 class="text-sm font-semibold text-red-800 mb-2">
-                <%= t('errors.messages.not_saved', count: @card.errors.count, resource: t('activerecord.models.card')) %>
-              </h2>
-              <ul class="list-disc list-inside text-sm text-red-700">
-                <% @card.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-
           <!-- カード名 -->
           <div class="mb-6">
-            <%= f.label :name, t('cards.form.name'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
+              <%= t('cards.form.name') %>
+              <span class="text-red-600 font-bold ml-1">*</span>
+            <% end %>
             <%= f.text_field :name,
                 placeholder: t('cards.form.name_placeholder'),
                 class: "form-text-field" %>
+            <% if @card.errors.any? %>
+              <div class="ml-2">
+                <% @card.errors.messages[:name].each do |message| %>
+                  <p class="text-red-600 text-xs"><%= t('activerecord.attributes.card.name') %><%= message %></p>
+                <% end %>
+              </div>
+            <% end %>
           </div>
 
           <!-- メモ -->
@@ -37,6 +33,13 @@
                 rows: 5,
                 placeholder: t('cards.form.memo_placeholder'),
                 class: "form-text-field resize-vertical" %>
+            <% if @card.errors.any? %>
+              <div class="ml-2">
+                <% @card.errors.messages[:memo].each do |message| %>
+                  <p class="text-red-600 text-xs"><%= t('activerecord.attributes.card.memo') %><%= message %></p>
+                <% end %>
+              </div>
+            <% end %>
           </div>
 
           <!-- JavaScriptで動的に設定されるgroup_id -->

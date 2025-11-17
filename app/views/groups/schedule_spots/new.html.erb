@@ -8,27 +8,23 @@
         <h1 class="text-2xl font-bold text-text mb-8"><%= t('spots.new.title') %></h1>
 
         <%= form_with model: @schedule_spot, url: group_schedule_schedule_spots_path(@group), class: "w-full max-w-md", data: { controller: "autocomplete" } do |f| %>
-          <!-- エラーメッセージ表示 -->
-          <% if @schedule_spot.errors.any? %>
-            <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <h2 class="text-sm font-semibold text-red-800 mb-2">
-                <%= t('errors.messages.not_saved', count: @schedule_spot.errors.count, resource: t('activerecord.models.schedule_spot')) %>
-              </h2>
-              <ul class="list-disc list-inside text-sm text-red-700">
-                <% @schedule_spot.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-
           <!--- スポット名 -->
           <div class="mb-6">
-            <%= f.label :snapshot_name, t('spots.form.name'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.label :snapshot_name, class: "block text-sm font-medium text-text mb-2" do %>
+              <%= t('spots.form.name') %>
+              <span class="text-red-600 font-bold ml-1">*</span>
+            <% end %>
             <%= f.text_field :snapshot_name,
                 data: { autocomplete_target: "nameField" },
                 placeholder: t('spots.form.name_placeholder'),
                 class: "form-text-field" %>
+            <% if @schedule_spot.errors.any? %>
+              <div class="ml-2">
+                <% @schedule_spot.errors.messages[:snapshot_name].each do |message| %>
+                  <p class="text-red-600 text-xs"><%= t('schedule_spots.form.spot_name') %><%= message %></p>
+                <% end %>
+              </div>
+            <% end %>
 
             <!-- オートコンプリートは補助として表示 -->
             <div class="mt-2 text-xs text-gray-600">
@@ -44,10 +40,20 @@
 
           <!-- カテゴリ -->
           <div class="mb-6">
-            <%= f.label :snapshot_category_id, t('spots.form.category'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.label :snapshot_category_id, class: "block text-sm font-medium text-text mb-2" do %>
+              <%= t('spots.form.category') %>
+              <span class="text-red-600 font-bold ml-1">*</span>
+            <% end %>
             <%= f.collection_select :snapshot_category_id, @categories, :id, :name,
                 {include_blank: "--- 選択してください ---"},
                 {class: "form-text-field"} %>
+            <% if @schedule_spot.errors.any? %>
+              <div class="ml-2">
+                <% @schedule_spot.errors.messages[:snapshot_category_id].each do |message| %>
+                  <p class="text-red-600 text-xs"><%= t('schedule_spots.form.category') %><%= message %></p>
+                <% end %>
+              </div>
+            <% end %>
           </div>
 
           <!-- 住所 -->

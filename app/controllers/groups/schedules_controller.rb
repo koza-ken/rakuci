@@ -30,11 +30,16 @@ class Groups::SchedulesController < ApplicationController
 
   def update
     @schedule = @group.schedule
+    from_page = params[:schedule][:from_page]
 
     if @schedule.update(schedule_params)
       redirect_to group_path(@group), notice: t("notices.schedules.updated")
     else
-      render :show, status: :unprocessable_entity
+      if from_page == "edit"
+        render :edit, status: :unprocessable_entity
+      else
+        render template: "groups/show", layout: "application", status: :unprocessable_entity, locals: { group: @group, schedule: @schedule }
+      end
     end
   end
 

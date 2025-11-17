@@ -2,25 +2,17 @@
   <div class="w-full max-w-2xl">
     <h1 class="text-3xl text-text font-bold mb-8"><%= t('users.schedules.edit.title') %></h1>
 
-    <% if @schedule.errors.any? %>
-      <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded">
-        <h2 class="text-red-600 font-bold mb-2">エラーが発生しました</h2>
-        <ul class="text-red-600 text-sm">
-          <% @schedule.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
     <%= form_with model: @schedule, local: true, scope: :schedule do |f| %>
       <div class="mb-6">
-        <%= f.label :name, class: "block text-sm font-bold text-text mb-2" %>
+        <%= f.label :name, class: "block text-sm font-bold text-text mb-2" do %>
+          <%= t('activerecord.attributes.schedule.name') %>
+          <span class="text-red-600 font-bold ml-1">*</span>
+        <% end %>
         <%= f.text_field :name, class: "form-text-field w-full", placeholder: t('users.schedules.form.name_placeholder') %>
         <% if @schedule.errors.any? %>
-          <div class="mt-2">
+          <div class="ml-2">
             <% @schedule.errors.messages[:name].each do |message| %>
-              <p class="text-red-600 text-sm"><%= message %></p>
+              <p class="text-red-600 text-xs"><%= t('activerecord.attributes.schedule.name') %><%= message %></p>
             <% end %>
           </div>
         <% end %>

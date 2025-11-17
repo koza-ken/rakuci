@@ -40,7 +40,7 @@ class Users::SchedulesController < ApplicationController
     if @schedule.update(schedule_params)
       redirect_to schedule_path(@schedule), notice: t("notices.schedules.updated")
     else
-      render :show, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
