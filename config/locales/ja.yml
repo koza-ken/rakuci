@@ -13,60 +13,60 @@ ja:
 
   errors:
     cards:
-      unauthorized_view: "このカードを閲覧する権限がありません"
-      guest_creation_not_allowed: "カードを作成するにはログインするかグループに参加してください"
-      guest_not_member: "カードを作成するにはログインするかグループに参加してください"
+      unauthorized_view: このカードを閲覧する権限がありません
+      guest_creation_not_allowed: カードを作成するにはログインするかグループに参加してください
+      guest_not_member: カードを作成するにはログインするかグループに参加してください
     groups:
-      not_member: "このグループには参加していません"
-      invalid_link: "無効なリンクです"
-      invalid_operation: "無効な操作です"
-      user_not_found: "選択したユーザーが見つかりません"
-      token_mismatch: "トークンが一致しません"
-      membership_failed: "参加に失敗しました"
+      not_member: このグループには参加していません
+      invalid_link: 無効なリンクです
+      invalid_operation: 無効な操作です
+      user_not_found: 選択したユーザーが見つかりません
+      token_mismatch: トークンが一致しません
+      membership_failed: 参加に失敗しました
     memberships:
-      cannot_delete_owner: "オーナーは削除できません"
-      not_authorized: "メンバーを削除する権限がありません"
+      cannot_delete_owner: オーナーは削除できません
+      not_authorized: メンバーを削除する権限がありません
     spots:
-      unauthorized_view: "このスポットにアクセスする権限がありません"
-      unauthorized_create: "このカードにスポットを追加する権限がありません"
-      guest_creation_not_allowed: "スポットを追加するにはログインするかグループに参加してください"
-      guest_not_member: "スポットを追加するにはログインするかグループに参加してください"
+      unauthorized_view: このスポットにアクセスする権限がありません
+      unauthorized_create: このカードにスポットを追加する権限がありません
+      guest_creation_not_allowed: スポットを追加するにはログインするかグループに参加してください
+      guest_not_member: スポットを追加するにはログインするかグループに参加してください
     comments:
-      unauthorized_access: "このカードにアクセスする権限がありません"
-      unauthorized_delete: "このコメントを削除する権限がありません"
+      unauthorized_access: このカードにアクセスする権限がありません
+      unauthorized_delete: このコメントを削除する権限がありません
     likes:
-      create_failed: "いいねに失敗しました"
-      unauthorized: "いいねする権限がありません"
+      create_failed: いいねに失敗しました
+      unauthorized: いいねする権限がありません
     schedules:
-      not_found: "しおりが見つかりません"
-      unauthorized_view: "このしおりを閲覧する権限がありません"
+      not_found: しおりが見つかりません
+      unauthorized_view: このしおりを閲覧する権限がありません
 
   notices:
     cards:
-      created: "カードが作成されました"
-      updated: "カードが更新されました"
-      destroyed: "カードが削除されました"
+      created: カードが作成されました
+      updated: カードが更新されました
+      destroyed: カードが削除されました
     groups:
-      created: "グループが作成されました"
-      updated: "グループ名が更新されました"
-      joined: "グループに参加しました"
-      destroyed: "グループを削除しました"
+      created: グループが作成されました
+      updated: グループ名が更新されました
+      joined: グループに参加しました
+      destroyed: グループを削除しました
     spots:
-      created: "スポットを追加しました"
-      updated: "スポットを更新しました"
-      destroyed: "スポットを削除しました"
+      created: スポットを追加しました
+      updated: スポットを更新しました
+      destroyed: スポットを削除しました
     comments:
-      created: "コメントを投稿しました"
-      destroyed: "コメントを削除しました"
+      created: コメントを投稿しました
+      destroyed: コメントを削除しました
     likes:
-      created: "いいねしました"
-      destroyed: "いいねを取り消しました"
+      created: いいねしました
+      destroyed: いいねを取り消しました
     schedules:
-      created: "しおりを作成しました"
-      updated: "しおりを更新しました"
-      destroyed: "しおりを削除しました"
+      created: しおりを作成しました
+      updated: しおりを更新しました
+      destroyed: しおりを削除しました
     memberships:
-      deleted: "メンバーを削除しました"
+      deleted: メンバーを削除しました
 
   cards:
     index:
@@ -75,16 +75,13 @@ ja:
       no_cards: まだカードがありません
 
     new:
-      title: カードを作成
+      title: カード作成
 
     edit:
-      title: カードを編集
+      title: カード編集
 
     show:
       title: カード詳細
-      edit: 編集
-      delete: 削除
-      back: もどる
 
     form:
       name: タイトル
@@ -101,7 +98,6 @@ ja:
     add_spot: スポット追加
     add_spots_to_schedule: 選択したスポットをしおりに追加
     comments: コメント
-    back: もどる
     delete_button: カード削除
     delete_confirm: このカードを削除してもよろしいですか
     no_comments: まだコメントがありません
@@ -124,16 +120,16 @@ ja:
       joined_groups: 参加しているグループ
 
     new:
-      title: グループを作成
+      title: グループ作成
 
     edit:
-      title: グループを編集
+      title: グループ編集
 
     show:
       title: グループ詳細
       edit: 編集
       delete: 削除
-      back: 一覧にもどる
+      back: もどる
       invite_link: 招待リンク
       copy_link: リンクをコピー
       members: メンバー
@@ -144,30 +140,30 @@ ja:
       schedule_create: しおり作成
       add_card: カードを追加する
       delete_group: グループを削除
-      delete_confirm: このグループを削除しますか？
+      delete_confirm: このグループを削除しますか
 
     new_membership:
       title: グループに参加
       invited_message: に招待されました。
       signed_up_users_title: ユーザー登録済みの方
-      signed_up_users_text: ログインしてからグループに参加してください。
+      signed_up_users_text: ログインしてからグループに参加してください
       sign_in: ログイン
       new_user_text: 新規ユーザー登録は
       new_user_link: こちら
       past_users_title: 過去に
       past_users_title_suffix: に参加したことがある方
-      past_users_text: 前回参加したユーザー名を選択してください。
+      past_users_text: 前回参加したユーザー名を選択してください
       select_placeholder: ゲストユーザーから選択してください
       first_time_title: はじめて
       first_time_title_suffix: に参加する方
-      first_time_text: ユーザー名を入力してください。
+      first_time_text: ユーザー名を入力してください
       note: ユーザー名は参加するグループ「
       note_suffix: 」でのみ有効です
       submit: 参加する
 
     details:
       delete_member_title: メンバーを削除
-      delete_confirm: を削除しますか？
+      delete_confirm: を削除しますか
       delete_button: 削除
 
     form:
@@ -219,9 +215,6 @@ ja:
 
     show:
       title: しおり詳細
-      edit: 編集
-      delete: 削除
-      back: もどる
       group_name: グループ名
       schedule_dates: 日程
       memo: メモ
@@ -230,7 +223,7 @@ ja:
       add_spot_button: スポットを追加
       no_schedule_message: はまだ作成されていません
       delete_schedule: しおりを削除
-      delete_confirm: このしおりを削除しますか？
+      delete_confirm: このしおりを削除しますか
 
     form:
       name: しおり名
@@ -239,8 +232,8 @@ ja:
       end_date: 旅行終了日
       memo: メモ
       memo_placeholder: メモを入力してください
-      submit: 作成する
-      update: 更新する
+      submit: 作成
+      update: 更新
       cancel: キャンセル
 
     messages:
@@ -283,21 +276,20 @@ ja:
       website_url: URL
       phone_number: 電話
       start_time: 予定時間
-      memo: メモ
     edit:
       title: スポット編集
       arrival_time: 到着時刻
       departure_time: 出発時刻
     form:
-      submit: 追加
-      update: 更新
-      cancel: キャンセル
       spot_name: スポット名
       category: カテゴリ
       address: 住所
       website_url: URL
       phone_number: 電話
       memo: メモ
+      submit: 追加
+      update: 更新
+      cancel: キャンセル
     delete_confirm: このスポットを削除しますか
     add_spot_select_message: または下から施設を検索して選択：
     autocomplete_error: 施設情報の自動入力に失敗しました。下記のフィールドに手動で入力してください。
@@ -327,17 +319,11 @@ ja:
         day_label: 日目
         memo: メモ
         detail: 詳細
-        edit: 編集
-        delete: 削除
-        back: もどる
         delete_schedule: しおりを削除
-        delete_confirm: このしおりを削除しますか？
+        delete_confirm: このしおりを削除しますか
 
       form:
-        name_placeholder: 例：春休みの旅行
-        submit: 作成
-        update: 更新
-        cancel: キャンセル
+        name_placeholder: しおり名を入力してください
         spot_name: スポット名
         category: カテゴリ
         address: 住所
@@ -345,12 +331,15 @@ ja:
         phone_number: 電話
         memo: メモ
         category_placeholder: "---"
+        submit: 作成
+        update: 更新
+        cancel: キャンセル
 
   comments:
     form:
       placeholder: コメントを入力（200字以内）
       submit: 投稿
-    confirm_delete: コメントを削除しますか？
+    confirm_delete: コメントを削除しますか
 
   activerecord:
     models:
