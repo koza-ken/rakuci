@@ -86,8 +86,8 @@ ja:
       title: カード詳細
 
     form:
-      name: タイトル
-      name_placeholder: カードのタイトルを記入してください
+      name: カード名
+      name_placeholder: カード名を記入してください
       memo: メモ
       memo_placeholder: グループ内で共有できます
       submit: 作成
