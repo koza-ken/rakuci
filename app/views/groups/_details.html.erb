@@ -35,6 +35,17 @@
             <%= f.date_field :end_date, class: "form-text-field w-full" %>
           </div>
         </div>
+        <!-- エラーメッセージ表示 -->
+        <% if @schedule.errors.any? %>
+          <div class="">
+            <% @schedule.errors.messages[:start_date]&.each do |message| %>
+              <p class="text-red-600 text-xs"><%= t('activerecord.attributes.schedule.start_date') %><%= message %></p>
+            <% end %>
+            <% @schedule.errors.messages[:end_date]&.each do |message| %>
+              <p class="text-red-600 text-xs"><%= t('activerecord.attributes.schedule.end_date') %><%= message %></p>
+            <% end %>
+          </div>
+        <% end %>
         <!-- ボタン -->
         <div class="flex gap-2 mt-2 justify-end">
           <%= f.submit t('groups.form.update'), class: "btn-main px-4 py-2 w-auto" %>
@@ -42,17 +53,6 @@
             ×
           </button>
         </div>
-        <!-- エラーメッセージ表示 -->
-        <% if @schedule.errors.any? %>
-          <div class="mt-2">
-            <% @schedule.errors.messages[:start_date]&.each do |message| %>
-              <p class="text-red-600 text-sm"><%= message %></p>
-            <% end %>
-            <% @schedule.errors.messages[:end_date]&.each do |message| %>
-              <p class="text-red-600 text-sm"><%= message %></p>
-            <% end %>
-          </div>
-        <% end %>
       <% end %>
     </div>
   </div>
