@@ -14,6 +14,7 @@
     <% end %>
 
     <%= form_with model: [@group, @schedule], url: group_schedule_path(@group), local: true do |f| %>
+      <%= f.hidden_field :from_page, value: "edit" %>
       <div class="mb-6">
         <%= f.label :name, class: "block text-sm font-bold text-text mb-2" %>
         <%= f.text_field :name, class: "form-text-field w-full", placeholder: t('users.schedules.form.name_placeholder') %>

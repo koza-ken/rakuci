@@ -22,6 +22,7 @@
     <!-- 編集モード（非表示） -->
     <div id="schedule-details-form" data-memo-edit-target="form" class="<%= 'hidden' unless @schedule.errors.any? %>">
       <%= form_with model: [@group, @schedule], local: true do |f| %>
+        <%= f.hidden_field :from_page, value: "show" %>
         <div class="flex gap-6">
           <%# 開始日 %>
           <div class="flex-1">
