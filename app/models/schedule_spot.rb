@@ -100,7 +100,7 @@ class ScheduleSpot < ApplicationRecord
     return if start_time.blank? || end_time.blank?
 
     if end_time <= start_time
-      errors.add(:end_time, "は開始時刻より後の時刻を指定してください")
+      errors.add(:end_time, "は到着時刻より後の時刻を指定してください")
     end
   end
 end

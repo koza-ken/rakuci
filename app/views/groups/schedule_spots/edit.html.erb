@@ -9,13 +9,33 @@
         <%# ルーティングがネストしているとURLが上手く作られないかもしれないのでURLを指定 %>
         <%= form_with model: @schedule_spot, url: group_schedule_schedule_spot_path(@group, @schedule_spot), method: :patch, local: true do |f| %>
           <div class="mb-4">
-            <%= f.label :snapshot_name, t('schedule_spots.form.spot_name'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.label :snapshot_name, class: "block text-sm font-medium text-text mb-2" do %>
+              <%= t('schedule_spots.form.spot_name') %>
+              <span class="text-red-600 font-bold ml-1">*</span>
+            <% end %>
             <%= f.text_field :snapshot_name, class: "form-text-field w-full", placeholder: t('schedule_spots.form.spot_name') %>
+            <% if @schedule_spot.errors.any? %>
+              <div class="ml-2">
+                <% @schedule_spot.errors.messages[:snapshot_name].each do |message| %>
+                  <p class="text-red-600 text-xs"><%= t('schedule_spots.form.spot_name') %><%= message %></p>
+                <% end %>
+              </div>
+            <% end %>
           </div>
 
           <div class="mb-4">
-            <%= f.label :snapshot_category_id, t('schedule_spots.form.category'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.label :snapshot_category_id, class: "block text-sm font-medium text-text mb-2" do %>
+              <%= t('schedule_spots.form.category') %>
+              <span class="text-red-600 font-bold ml-1">*</span>
+            <% end %>
             <%= f.select :snapshot_category_id, options_from_collection_for_select(Category.all, :id, :name, @schedule_spot.snapshot_category_id), { include_blank: t('schedule_spots.category_placeholder') }, class: "form-text-field w-full" %>
+            <% if @schedule_spot.errors.any? %>
+              <div class="ml-2">
+                <% @schedule_spot.errors.messages[:snapshot_category_id].each do |message| %>
+                  <p class="text-red-600 text-xs"><%= t('schedule_spots.form.category') %><%= message %></p>
+                <% end %>
+              </div>
+            <% end %>
           </div>
 
           <div class="mb-4">
@@ -42,6 +62,13 @@
             <div class="flex-1">
               <%= f.label :end_time, t('schedule_spots.edit.departure_time'), class: "block text-sm font-medium text-text mb-2" %>
               <%= f.time_field :end_time, class: "form-text-field w-full" %>
+              <% if @schedule_spot.errors.any? %>
+                <div class="ml-2">
+                  <% @schedule_spot.errors.messages[:end_time].each do |message| %>
+                    <p class="text-red-600 text-xs"><%= message %></p>
+                  <% end %>
+                </div>
+              <% end %>
             </div>
           </div>
 
