@@ -13,7 +13,7 @@
             <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
               <ul class="list-disc list-inside text-sm text-red-700">
                 <% @spot.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
+                  <li class="list-none"><%= message %></li>
                 <% end %>
               </ul>
             </div>

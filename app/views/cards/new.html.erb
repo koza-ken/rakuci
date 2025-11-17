@@ -14,7 +14,7 @@
 
               <ul class="list-disc list-inside text-sm text-red-700">
                 <% @card.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
+                  <li class="list-none"><%= message %></li>
                 <% end %>
               </ul>
             </div>
