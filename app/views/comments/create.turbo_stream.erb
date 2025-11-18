@@ -1,5 +1,8 @@
 <%# コメントが保存済みか %>
 <% if @comment.persisted? %>
+  <%# フラッシュメッセージを表示 %>
+  <%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
+
   <%# 成功時：コメントを追加 %>
   <%= turbo_stream.append "comments_list" do %>
     <%= render "comments/comment", comment: @comment %>

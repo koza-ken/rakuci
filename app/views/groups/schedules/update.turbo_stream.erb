@@ -1,3 +1,6 @@
+<!-- フラッシュメッセージを表示 -->
+<%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
+
 <!-- スケジュール詳細セクションを更新 -->
 <%= turbo_stream.replace "schedule-details-section" do %>
   <div id="schedule-details-section" data-controller="memo-edit" class="w-full">

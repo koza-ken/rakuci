@@ -1,3 +1,6 @@
+<!-- フラッシュメッセージを表示 -->
+<%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
+
 <!-- 削除モードのメンバーリストのみ更新（削除モード継続） -->
 <%= turbo_stream.replace "members-list" do %>
   <div id="members-list" class="space-y-2 mb-4 max-h-[200px] overflow-y-auto border border-gray-300 rounded p-2 bg-white">

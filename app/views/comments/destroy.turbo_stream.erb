@@ -1,1 +1,5 @@
+<!-- フラッシュメッセージを表示 -->
+<%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
+
+<!-- コメントを削除 -->
 <%= turbo_stream.remove "comment_#{@comment.id}" %>

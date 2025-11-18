@@ -1,3 +1,7 @@
+<!-- フラッシュメッセージを表示 -->
+<%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
+
+<!-- いいねボタンを更新 -->
 <%= turbo_stream.replace "like_area_#{@card.id}" do %>
   <%= render "likes/like_button", card: @card %>
 <% end %>
