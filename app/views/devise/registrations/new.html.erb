@@ -23,7 +23,7 @@
           <%= f.password_field :password, autocomplete: "new-password",
               class: "w-full px-4 py-2 bg-white  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" %>
           <% if @minimum_password_length %>
-            <span class="text-xs text-gray-400"><%= t('.password_hint', count: @minimum_password_length) %></span>
+            <span class="text-xs text-gray-400 ml-1"><%= t('.password_hint', count: @minimum_password_length) %></span>
           <% end %>
           <% if resource.errors[:password].any? %>
             <% resource.errors[:password]&.each do |message| %>
