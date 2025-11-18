@@ -416,6 +416,11 @@ ja:
         created_at: 作成日時
         updated_at: 更新日時
 
+      user:
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認）
+
       schedule:
         name: しおり名
         start_date: 旅行開始日
