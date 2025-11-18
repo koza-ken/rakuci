@@ -27,7 +27,9 @@
     <%= render "shared/header" %>
 
     <div class="relative min-h-screen bg-main-bg overflow-hidden">
-      <%= yield %>
+      <div class="max-w-[640px] mx-auto">
+        <%= yield %>
+      </div>
       <%= render "shared/hamburger_menu" %>
       <div id="flash-container">
         <%= render "shared/flash_messages", flash: flash %>
