@@ -116,4 +116,3 @@ class Users::ScheduleSpotsController < ApplicationController
     params.require(:schedule_spot).permit(:snapshot_name, :snapshot_address, :snapshot_website_url, :snapshot_phone_number, :snapshot_category_id, :google_place_id, :start_time, :end_time, :memo)
   end
 end
-
