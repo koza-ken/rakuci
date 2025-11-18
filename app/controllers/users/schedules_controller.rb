@@ -22,7 +22,7 @@ class Users::SchedulesController < ApplicationController
 
     if @schedule.save
       respond_to do |format|
-        format.turbo_stream
+        format.turbo_stream { flash.now[:notice] = t("notices.schedules.created") }
         format.html { redirect_to schedules_path, notice: t("notices.schedules.created") }
       end
     else

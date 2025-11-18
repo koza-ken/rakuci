@@ -44,15 +44,24 @@ class Users::ScheduleSpotsController < ApplicationController
       end
       # 成功・失敗を判定
       if results.all?
-        redirect_to card_path(@card), notice: "#{results.size}件のスポットを追加しました"
+        respond_to do |format|
+          format.turbo_stream { flash.now[:notice] = t("notices.user_schedule_spots.created_multiple", count: results.size) }
+          format.html { redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_multiple", count: results.size) }
+        end
       elsif results.none?
         # 全て失敗
-        redirect_to card_path(@card), alert: "スポット追加に失敗しました"
+        respond_to do |format|
+          format.turbo_stream { flash.now[:alert] = t("errors.user_schedule_spots.create_failed") }
+          format.html { redirect_to card_path(@card), alert: t("errors.user_schedule_spots.create_failed") }
+        end
       else
         # 一部成功
         added = results.count(true)
         failed = results.count(false)
-        redirect_to card_path(@card), notice: "#{added}件追加しました。#{failed}件失敗しました"
+        respond_to do |format|
+          format.turbo_stream { flash.now[:notice] = t("notices.user_schedule_spots.created_partial", added: added, failed: failed) }
+          format.html { redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_partial", added: added, failed: failed) }
+        end
       end
     else
       # しおり詳細から直接スポット追加
@@ -64,8 +73,8 @@ class Users::ScheduleSpotsController < ApplicationController
 
       if @schedule_spot.save
         respond_to do |format|
-          format.turbo_stream
-          format.html { redirect_to schedule_path(@schedule), notice: "スポットを追加しました" }
+          format.turbo_stream { flash.now[:notice] = t("notices.schedule_spots.created") }
+          format.html { redirect_to schedule_path(@schedule), notice: t("notices.schedule_spots.created") }
         end
       else
         @categories = Category.all
@@ -83,7 +92,7 @@ class Users::ScheduleSpotsController < ApplicationController
     @schedule = current_user.schedules.find(params[:schedule_id])
     @schedule_spot = @schedule.schedule_spots.find(params[:id])
     if @schedule_spot.update(schedule_spot_params)
-      redirect_to schedule_schedule_spot_path(@schedule, @schedule_spot), notice: "スポットを更新しました"
+      redirect_to schedule_schedule_spot_path(@schedule, @schedule_spot), notice: t("notices.schedule_spots.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -93,7 +102,7 @@ class Users::ScheduleSpotsController < ApplicationController
     @schedule = current_user.schedules.find(params[:schedule_id])
     @schedule_spot = @schedule.schedule_spots.find(params[:id])
     if @schedule_spot.destroy
-      redirect_to schedule_path(@schedule), notice: "スポットを削除しました", turbo: false
+      redirect_to schedule_path(@schedule), notice: t("notices.schedule_spots.destroyed"), turbo: false
     end
   end
 
@@ -103,3 +112,4 @@ class Users::ScheduleSpotsController < ApplicationController
     params.require(:schedule_spot).permit(:snapshot_name, :snapshot_address, :snapshot_website_url, :snapshot_phone_number, :snapshot_category_id, :google_place_id, :start_time, :end_time, :memo)
   end
 end
+

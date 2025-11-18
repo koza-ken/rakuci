@@ -25,7 +25,7 @@ class GroupsController < ApplicationController
     if @form.save
       @group = @form.group  # フォームオブジェクトから作成されたグループを取得
       respond_to do |format|
-        format.turbo_stream
+        format.turbo_stream { flash.now[:notice] = t("notices.groups.created") }
         format.html { redirect_to groups_path, notice: t("notices.groups.created") }
       end
     else
@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
   def update
     if @group.update(group_params)
       respond_to do |format|
-        format.turbo_stream
+        format.turbo_stream { flash.now[:notice] = t("notices.groups.updated") }
         format.html { redirect_to group_path(@group), notice: t("notices.groups.updated") }
       end
     else

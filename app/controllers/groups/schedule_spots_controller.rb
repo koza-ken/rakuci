@@ -41,8 +41,8 @@ class Groups::ScheduleSpotsController < ApplicationController
 
     if @schedule_spot.save
       respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to group_schedule_path(@group), notice: "スポットを追加しました" }
+        format.turbo_stream { flash.now[:notice] = t("notices.schedule_spots.created") }
+        format.html { redirect_to group_schedule_path(@group), notice: t("notices.schedule_spots.created") }
       end
     else
       @categories = Category.all
@@ -59,7 +59,7 @@ class Groups::ScheduleSpotsController < ApplicationController
     @schedule = @group.schedule
     @schedule_spot = @schedule.schedule_spots.find(params[:id])
     if @schedule_spot.update(schedule_spot_params)
-      redirect_to group_schedule_schedule_spot_path(@group, @schedule_spot), notice: "スポットを更新しました"
+      redirect_to group_schedule_schedule_spot_path(@group, @schedule_spot), notice: t("notices.schedule_spots.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -68,7 +68,7 @@ class Groups::ScheduleSpotsController < ApplicationController
   def destroy
     @schedule_spot = ScheduleSpot.find(params[:id])
     if @schedule_spot.destroy
-      redirect_to group_schedule_path(@group), notice: "スポットを削除しました", turbo: false
+      redirect_to group_schedule_path(@group), notice: t("notices.schedule_spots.destroyed"), turbo: false
     end
   end
 
