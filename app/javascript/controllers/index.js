@@ -24,3 +24,6 @@ application.register("memo-edit", MemoEditController);
 
 import MemberDeleteController from "./member_delete_controller";
 application.register("member-delete", MemberDeleteController);
+
+import TurboController from "./turbo_controller";
+application.register("turbo", TurboController);
