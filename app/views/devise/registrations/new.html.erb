@@ -1,6 +1,7 @@
 <div class="min-h-screen bg-main-bg">
   <main class="flex flex-col items-center justify-center px-8 py-12">
     <%# <div class="w-full max-w-md bg-white rounded-lg shadow-md p-8"> %>
+    <div class="w-full max-w-md">
       <h2 class="text-2xl font-bold text-text text-center mb-8"><%= t('.title') %></h2>
 
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -42,12 +43,18 @@
             <% end %>
           <% end %>
         </div>
-
+      </div>
+<%
+=begin
+%>
         <!-- 利用規約とプライバシーポリシーへの同意 -->
         <div class="mb-6 text-sm text-text text-center">
           <%= link_to t('.terms_of_service'), "#", class: "text-secondary font-bold underline hover:opacity-80" %>と<%= link_to t('.privacy_policy'), "#", class: "text-secondary font-bold underline hover:opacity-80" %><br>
           <%= t('.terms_agreement') %>
         </div>
+<%
+=end
+%>
 
         <!-- 登録ボタン -->
         <div class="mb-6">
