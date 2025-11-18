@@ -40,6 +40,8 @@ ja:
       unauthorized: いいねする権限がありません
     user_schedule_spots:
       create_failed: スポット追加に失敗しました
+    group_schedule_spots:
+      create_failed: スポット追加に失敗しました
     schedules:
       not_found: しおりが見つかりません
       unauthorized_view: このしおりを閲覧する権限がありません
@@ -75,6 +77,9 @@ ja:
       updated: スポットを更新しました
       destroyed: スポットを削除しました
     user_schedule_spots:
+      created_multiple: "%{count}件のスポットを追加しました"
+      created_partial: "%{added}件追加しました。%{failed}件失敗しました"
+    group_schedule_spots:
       created_multiple: "%{count}件のスポットを追加しました"
       created_partial: "%{added}件追加しました。%{failed}件失敗しました"
     memberships:
