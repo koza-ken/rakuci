@@ -110,6 +110,33 @@ class Users::ScheduleSpotsController < ApplicationController
     end
   end
 
+  # 並び替えacts_as_listのメソッド
+  def move_higher
+    @schedule = current_user.schedules.find(params[:schedule_id])
+    # スポットを取得
+    @schedule_spot = @schedule.schedule_spots.find(params[:id])
+    # acts_as_listのメソッドで移動
+    @schedule_spot.move_higher
+    # レスポンス(Turbo Stream)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to schedule_path(@schedule) }
+    end
+  end
+
+  def move_lower
+    @schedule = current_user.schedules.find(params[:schedule_id])
+    # スポットを取得
+    @schedule_spot = @schedule.schedule_spots.find(params[:id])
+    # acts_as_listのメソッドで移動
+    @schedule_spot.move_lower
+    # レスポンス(Turbo Stream)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to schedule_path(@schedule) }
+    end
+  end
+
   private
 
   def schedule_spot_params
