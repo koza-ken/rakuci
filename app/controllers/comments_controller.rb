@@ -8,13 +8,13 @@ class CommentsController < ApplicationController
     @comment.group_membership = current_group_membership_for(@card.group_id)
     if @comment.save
       respond_to do |format|
-        format.turbo_stream
+        format.turbo_stream { flash.now[:notice] = t("notices.comments.created") }
         format.html { redirect_to card_path(@card), notice: t("notices.comments.created") }
       end
     else
       respond_to do |format|
         format.turbo_stream { render :create, status: :unprocessable_entity }
-        format.html { redirect_to card_path(@card), alert: "コメントの投稿に失敗しました" }
+        format.html { redirect_to card_path(@card), alert: t("errors.comments.create_failed") }
       end
     end
   end
@@ -22,8 +22,8 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to card_path(@card), notice: "コメントを削除しました" }
+      format.turbo_stream { flash.now[:notice] = t("notices.comments.destroyed") }
+      format.html { redirect_to card_path(@card), notice: t("notices.comments.destroyed") }
     end
   end
 
@@ -42,9 +42,9 @@ class CommentsController < ApplicationController
     unless current_membership && current_membership.id == @comment.group_membership_id
       respond_to do |format|
         format.turbo_stream {
-          redirect_to card_path(@card), alert: "削除する権限がありません"
+          redirect_to card_path(@card), alert: t("errors.comments.unauthorized_delete")
         }
-        format.html { redirect_to card_path(@card), alert: "削除する権限がありません" }
+        format.html { redirect_to card_path(@card), alert: t("errors.comments.unauthorized_delete") }
       end
     end
   end

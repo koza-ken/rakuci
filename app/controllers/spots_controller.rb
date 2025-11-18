@@ -18,7 +18,7 @@ class SpotsController < ApplicationController
     @spot.google_place_id = nil if @spot.google_place_id.blank?
     if @spot.save
       respond_to do |format|
-        format.turbo_stream
+        format.turbo_stream { flash.now[:notice] = t("notices.spots.created") }
         format.html { redirect_to card_path(@card), notice: t("notices.spots.created") }
       end
     else

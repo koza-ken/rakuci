@@ -6,7 +6,7 @@ class LikesController < ApplicationController
     @like = @card.likes.build(group_membership: @group_membership)
     if @like.save
       respond_to do |format|
-        format.turbo_stream
+        format.turbo_stream { flash.now[:notice] = t("notices.likes.created") }
         format.html { redirect_to @card, notice: t("notices.likes.created") }
       end
     else
@@ -21,7 +21,7 @@ class LikesController < ApplicationController
     @like = @card.likes.find_by(group_membership: @group_membership)
     @like&.destroy
     respond_to do |format|
-      format.turbo_stream
+      format.turbo_stream { flash.now[:notice] = t("notices.likes.destroyed") }
       format.html { redirect_to @card, notice: t("notices.likes.destroyed") }
     end
   end

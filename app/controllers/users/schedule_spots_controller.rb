@@ -36,23 +36,36 @@ class Users::ScheduleSpotsController < ApplicationController
       @schedule = current_user.schedules.find(params[:schedule_id])
       # spot_ids（複数）か spot_id（個別）かを判定
       spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
+      # 現在の最大position取得
+      current_max_position = @schedule.schedule_spots.maximum(:global_position) || 0
       # 複数作成
-      results = spot_ids.map do |spot_id|
+      results = spot_ids.map.with_index do |spot_id, index|
         spot = Spot.find(spot_id)
         schedule_spot = ScheduleSpot.create_from_spot(@schedule, spot)
+        # global_positionを手動で上書き（連番になるように）
+        schedule_spot.global_position = current_max_position + index + 1
         schedule_spot.save
       end
       # 成功・失敗を判定
       if results.all?
-        redirect_to card_path(@card), notice: "#{results.size}件のスポットを追加しました"
+        respond_to do |format|
+          format.turbo_stream { flash.now[:notice] = t("notices.user_schedule_spots.created_multiple", count: results.size) }
+          format.html { redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_multiple", count: results.size) }
+        end
       elsif results.none?
         # 全て失敗
-        redirect_to card_path(@card), alert: "スポット追加に失敗しました"
+        respond_to do |format|
+          format.turbo_stream { flash.now[:alert] = t("errors.user_schedule_spots.create_failed") }
+          format.html { redirect_to card_path(@card), alert: t("errors.user_schedule_spots.create_failed") }
+        end
       else
         # 一部成功
         added = results.count(true)
         failed = results.count(false)
-        redirect_to card_path(@card), notice: "#{added}件追加しました。#{failed}件失敗しました"
+        respond_to do |format|
+          format.turbo_stream { flash.now[:notice] = t("notices.user_schedule_spots.created_partial", added: added, failed: failed) }
+          format.html { redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_partial", added: added, failed: failed) }
+        end
       end
     else
       # しおり詳細から直接スポット追加
@@ -64,8 +77,8 @@ class Users::ScheduleSpotsController < ApplicationController
 
       if @schedule_spot.save
         respond_to do |format|
-          format.turbo_stream
-          format.html { redirect_to schedule_path(@schedule), notice: "スポットを追加しました" }
+          format.turbo_stream { flash.now[:notice] = t("notices.schedule_spots.created") }
+          format.html { redirect_to schedule_path(@schedule), notice: t("notices.schedule_spots.created") }
         end
       else
         @categories = Category.all
@@ -83,7 +96,7 @@ class Users::ScheduleSpotsController < ApplicationController
     @schedule = current_user.schedules.find(params[:schedule_id])
     @schedule_spot = @schedule.schedule_spots.find(params[:id])
     if @schedule_spot.update(schedule_spot_params)
-      redirect_to schedule_schedule_spot_path(@schedule, @schedule_spot), notice: "スポットを更新しました"
+      redirect_to schedule_schedule_spot_path(@schedule, @schedule_spot), notice: t("notices.schedule_spots.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -93,7 +106,7 @@ class Users::ScheduleSpotsController < ApplicationController
     @schedule = current_user.schedules.find(params[:schedule_id])
     @schedule_spot = @schedule.schedule_spots.find(params[:id])
     if @schedule_spot.destroy
-      redirect_to schedule_path(@schedule), notice: "スポットを削除しました", turbo: false
+      redirect_to schedule_path(@schedule), notice: t("notices.schedule_spots.destroyed"), turbo: false
     end
   end
 

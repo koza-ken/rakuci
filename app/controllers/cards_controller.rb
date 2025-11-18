@@ -25,7 +25,7 @@ class CardsController < ApplicationController
 
     if @card.save
       respond_to do |format|
-        format.turbo_stream
+        format.turbo_stream { flash.now[:notice] = t("notices.cards.created") }
         format.html { redirect_to redirect_path_for(@card), notice: t("notices.cards.created") }
       end
     else
@@ -36,7 +36,7 @@ class CardsController < ApplicationController
   def update
     if @card.update(card_params)
       respond_to do |format|
-        format.turbo_stream
+        format.turbo_stream { flash.now[:notice] = t("notices.cards.updated") }
         format.html { redirect_to @card, notice: t("notices.cards.updated") }
       end
     else

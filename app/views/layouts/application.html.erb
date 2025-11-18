@@ -23,13 +23,15 @@
     </script>
   </head>
 
-  <body data-controller="hamburger">
+  <body data-controller="hamburger turbo">
     <%= render "shared/header" %>
 
     <div class="relative min-h-screen bg-main-bg overflow-hidden">
       <%= yield %>
       <%= render "shared/hamburger_menu" %>
-      <%= render "shared/flash_messages", flash: flash %>
+      <div id="flash-container">
+        <%= render "shared/flash_messages", flash: flash %>
+      </div>
     </div>
 
     <%= render "shared/footer" %>

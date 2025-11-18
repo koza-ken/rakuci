@@ -1,3 +1,6 @@
+<!-- フラッシュメッセージを表示 -->
+<%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
+
 <!-- グループ名セクション全体を更新 -->
 <%= turbo_stream.replace "group-name-section" do %>
   <!-- グループ名セクション（表示/編集を切り替え） -->
