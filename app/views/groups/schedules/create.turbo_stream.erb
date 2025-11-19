@@ -1,13 +1,13 @@
-<!-- フラッシュメッセージを表示 -->
+<%# フラッシュメッセージを表示 %>
 <%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
 
-<!-- モーダルを閉じる（中身を空にする） -->
+<%# モーダルを閉じる（中身を空にする） %>
 <%= turbo_stream.update "schedule-create-modal" %>
 
-<!-- グループ詳細情報を更新 -->
+<%# グループ詳細情報を更新 %>
 <%= turbo_stream.replace "group_details", partial: "groups/details", locals: { group: @group } %>
 
-<!-- ボタンのテキストを更新（"しおり作成" → "しおり詳細"） -->
+<%# ボタンのテキストを更新（"しおり作成" → "しおり詳細"） %>
 <%= turbo_stream.replace "schedule-button" do %>
   <%= link_to "しおり詳細", group_schedule_path(@group), class: "btn-main p-2 w-auto" %>
 <% end %>

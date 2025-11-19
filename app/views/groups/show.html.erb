@@ -7,18 +7,18 @@
 <div class="min-h-screen bg-main-bg">
   <main class="flex flex-col items-center justify-center px-8 py-12">
     <div class="w-full max-w-md mb-10">
-      <!-- グループ名セクション（表示/編集を切り替え） -->
+      <%# グループ名セクション（表示/編集を切り替え） %>
       <div id="group-name-section" data-controller="card-edit" class="mb-4">
-        <!-- 表示モード -->
+        <%# 表示モード %>
         <div id="group-name-display" class="flex items-start gap-3 mb-4" data-card-edit-target="display">
           <h2 class="text-2xl font-bold text-text"><%= @group.name %></h2>
-          <!-- 編集アイコン（サイズ固定） -->
+          <%# 編集アイコン（サイズ固定） %>
           <button class="shrink-0 text-text hover:opacity-70 transition pt-1" data-action="click->card-edit#toggleForm">
             <%= render "shared/icon/form_icon_edit" %>
           </button>
         </div>
 
-        <!-- 編集モード（非表示） -->
+        <%# 編集モード（非表示） %>
         <div id="group-name-form" class="hidden mb-4" data-card-edit-target="form">
           <%= form_with model: @group, local: true do |f| %>
             <div class="flex items-center gap-2">
@@ -28,7 +28,7 @@
                 <p class="text-2xl">×</p>
               </button>
             </div>
-            <!-- バリデーションエラー表示 -->
+            <%# バリデーションエラー表示 %>
             <% if @group.errors.any? %>
               <div class="mt-2">
                 <% @group.errors.messages[:name].each do |message| %>
@@ -39,7 +39,7 @@
           <% end %>
         </div>
       </div>
-      <!-- ボタン列：招待する + しおり作成/詳細 -->
+      <%# ボタン列：招待する + しおり作成/詳細 %>
       <div class="flex item-center justify-between gap-2 mb-8">
         <button
           data-controller="clipboard"
@@ -81,7 +81,7 @@
         </div>
       </div>
     </div>
-    <!-- グループ削除ボタン -->
+    <%# グループ削除ボタン %>
     <div class="mt-8 pt-6">
       <%= button_to group_path(@group), method: :delete, form_class: "inline", class: "btn-danger", data: { turbo_confirm: t('groups.show.delete_confirm') } do %>
         <%= t('groups.show.delete_group') %>

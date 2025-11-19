@@ -1,4 +1,4 @@
-<!-- カードからスポット選択してしおり選択 -->
+<%# カードからスポット選択してしおり選択 %>
 <main class="flex flex-col px-8 py-12 h-screen">
   <h1 class="text-2xl font-bold text-text mb-8">しおりを選択</h1>
 
@@ -7,7 +7,7 @@
     <div class="bg-gray-100 rounded-lg p-4">
       <p class="text-sm text-gray-600 mb-2">追加するスポット</p>
       <% if @spot_ids.present? %>
-        <!-- 複数スポット -->
+        <%# 複数スポット %>
         <p class="text-sm font-bold"><%= @spots.size %>件のスポットを追加します</p>
         <div class="mt-2 max-h-24 overflow-y-auto">
           <% @spots.each do |spot| %>
@@ -15,7 +15,7 @@
           <% end %>
         </div>
       <% else %>
-        <!-- 単一スポット -->
+        <%# 単一スポット %>
         <h2 class="text-xl font-bold text-text"><%= @spot.name %></h2>
         <p class="text-sm text-text-light"><%= @spot.category&.name %></p>
       <% end %>
@@ -35,7 +35,7 @@
               </p>
             <% end %>
             <% if @spot_ids.present? %>
-              <!-- 複数スポット用フォーム -->
+              <%# 複数スポット用フォーム %>
               <%= form_with url: card_spots_schedule_spots_path(@card, schedule_id: schedule.id), method: :post do |f| %>
                 <% @spot_ids.each do |spot_id| %>
                   <%= f.hidden_field :spot_ids, multiple: true, value: spot_id %>
@@ -43,7 +43,7 @@
                 <%= f.submit "このしおりに追加", class: "btn-main w-full" %>
               <% end %>
             <% else %>
-              <!-- 単一スポット用ボタン -->
+              <%# 単一スポット用ボタン %>
               <%= button_to "このしおりに追加",
                   card_spot_schedule_spots_path(@card, @spot, schedule_id: schedule.id),
                   method: :post,

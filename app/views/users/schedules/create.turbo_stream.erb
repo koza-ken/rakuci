@@ -1,8 +1,8 @@
-<!-- フラッシュメッセージを表示 -->
+<%# フラッシュメッセージを表示 %>
 <%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
 
-<!-- モーダルを閉じる（中身を空にする） -->
+<%# モーダルを閉じる（中身を空にする） %>
 <%= turbo_stream.update "schedule-create-modal" %>
 
-<!-- しおり一覧に作成したしおりを追加 -->
+<%# しおり一覧に作成したしおりを追加 %>
 <%= turbo_stream.prepend "schedules_list", partial: "schedule", locals: { schedule: @schedule } %>

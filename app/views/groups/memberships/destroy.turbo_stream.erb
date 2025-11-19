@@ -1,7 +1,7 @@
-<!-- フラッシュメッセージを表示 -->
+<%# フラッシュメッセージを表示 %>
 <%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
 
-<!-- 削除モードのメンバーリストのみ更新（削除モード継続） -->
+<%# 削除モードのメンバーリストのみ更新（削除モード継続） %>
 <%= turbo_stream.replace "members-list" do %>
   <div id="members-list" class="space-y-2 mb-4 max-h-[200px] overflow-y-auto border border-gray-300 rounded p-2 bg-white">
     <% @group.group_memberships.each do |membership| %>
@@ -15,7 +15,7 @@
   </div>
 <% end %>
 
-<!-- 参加者数を更新 -->
+<%# 参加者数を更新 %>
 <%= turbo_stream.update "members-count" do %>
   <label class="block text-sm font-medium text-text mb-2">
     <%= "#{t('groups.show.members')}（#{@group.group_memberships.count.to_s}名）" %>

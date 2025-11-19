@@ -1,5 +1,5 @@
 <div id="like_area_<%= card.id %>" class="flex gap-2 items-center">
-  <!-- メンバーっシップの取得（パーシャルに渡されたlocal_assignsかturbostreamならヘルパーメソッドで自ら取得する -->
+  <%# メンバーっシップの取得（パーシャルに渡されたlocal_assignsかturbostreamならヘルパーメソッドで自ら取得する %>
   <% current_membership = local_assigns[:current_membership] || current_group_membership_for(card.group_id) %>
 
   <% if card.liked_by?(current_membership) %>

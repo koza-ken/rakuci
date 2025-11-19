@@ -1,5 +1,5 @@
 <div class="flex gap-2 items-stretch mb-2">
-  <!-- 並び替えボタン -->
+  <%# 並び替えボタン %>
   <div class="flex gap-2 justify-center items-center w-16">
     <% if schedule_spot.first? %>
       <%# 位置をそろえるため透明の箱を設置 %>
@@ -24,10 +24,10 @@
     <% end %>
   </div>
 
-  <!-- スポット情報 -->
+  <%# スポット情報 %>
   <%= link_to group_schedule_schedule_spot_path(schedule_spot.schedule.schedulable, schedule_spot), class: "flex-1" do %>
     <div class="bg-white rounded-lg shadow p-2 border-l-4 border-secondary">
-      <!-- 時間帯 -->
+      <%# 時間帯 %>
       <% if schedule_spot.start_time.present? || schedule_spot.end_time.present? %>
         <p class="text-sm text-text-light">
           <% if schedule_spot.start_time.present? && schedule_spot.end_time.present? %>
@@ -39,7 +39,7 @@
           <% end %>
         </p>
       <% end %>
-      <!-- スポット名 -->
+      <%# スポット名 %>
       <h3 class="text-lg font-bold text-text"><%= schedule_spot.display_name %></h3>
     </div>
   <% end %>

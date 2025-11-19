@@ -1,6 +1,6 @@
-<!-- ネストしたルーティングなのでmodelでcardも受け取る（card_comments_path(card)が生成される） -->
+<%# ネストしたルーティングなのでmodelでcardも受け取る（card_comments_path(card)が生成される） %>
 <%= form_with model: [card, comment], class: "mt-4" do |f| %>
-  <!-- コメント投稿時のエラーメッセージ表示 -->
+  <%# コメント投稿時のエラーメッセージ表示 %>
   <% if comment.errors.any? %>
     <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded">
       <ul class="text-sm text-red-600">

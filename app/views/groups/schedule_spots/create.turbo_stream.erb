@@ -1,15 +1,15 @@
-<!-- フラッシュメッセージを表示 -->
+<%# フラッシュメッセージを表示 %>
 <%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
 
 <% if params[:spot_ids].present? || params[:spot_id].present? %>
-  <!-- Path 1: カードからしおりにスポット追加 -->
-  <!-- しおり選択モーダルを閉じる -->
+  <%# Path 1: カードからしおりにスポット追加 %>
+  <%# しおり選択モーダルを閉じる %>
   <%= turbo_stream.update "add_new_schedule_spot", "" %>
 <% else %>
-  <!-- Path 2: しおり詳細から直接スポット追加 -->
-  <!-- スポット作成モーダルを閉じる -->
+  <%# Path 2: しおり詳細から直接スポット追加 %>
+  <%# スポット作成モーダルを閉じる %>
   <%= turbo_stream.update "spot-create-modal", "" %>
 
-  <!-- グループスケジュール詳細を更新 -->
+  <%# グループスケジュール詳細を更新 %>
   <%= turbo_stream.update "main", partial: "groups/schedules/show", locals: { group: @group, schedule: @schedule } %>
 <% end %>
