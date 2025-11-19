@@ -247,7 +247,7 @@ ja:
 
     form:
       name: しおり名
-      name_placeholder: しおりの名前を入力してください
+      name_placeholder: しおり名を入力してください
       start_date: 旅行開始日
       end_date: 旅行終了日
       memo: メモ
@@ -346,6 +346,7 @@ ja:
         back: もどる
 
       form:
+        name_label: しおり名
         name_placeholder: しおり名を入力してください
         spot_name: スポット名
         category: カテゴリ
