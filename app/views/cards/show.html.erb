@@ -113,8 +113,13 @@
       </div>
     </div>
 
-    <%# 削除ボタン %>
-    <div class="mt-8 pt-6">
+    <%# 戻るボタンと削除ボタン %>
+    <div class="mt-8">
+      <%= link_to cards_path, class: "btn-sub block text-center" do %>
+        <%= t("cards.form.back") %>
+      <% end %>
+    </div>
+    <div class="mt-18"
       <%= button_to card_path(@card), method: :delete, data: { turbo_confirm: t("cards.delete_confirm") }, class: "btn-danger" do %>
         <%= t("cards.delete_button") %>
       <% end %>
