@@ -1,5 +1,30 @@
-<%= link_to group_path(group), id: dom_id(group), class: "card-index block" do %>
-  <div>
-    <%= group.name %>
+<%= link_to group_path(group), id: dom_id(group), class: "" do %>
+  <div class="bg-white rounded-lg shadow p-4 mb-4">
+    <%# グループ名 %>
+    <h2 class="text-xl font-bold text-text mb-3 text-left"><%= group.name %></h2>
+
+    <%# メンバー数 %>
+    <div class="flex items-center gap-2 mb-2">
+      <span class="text-text-light">メンバー : </span>
+      <span class="text-text-light"><%= group.group_memberships.count %>人</span>
+    </div>
+
+    <%# しおり期間 %>
+    <div class="flex items-center gap-2 mb-2">
+      <span class="text-text-light">しおり : </span>
+      <% if group.schedule.present? && group.schedule.start_date.present? && group.schedule.end_date.present? %>
+        <span class="text-text-light">
+          <%= group.schedule.start_date.strftime("%Y/%m/%d") %> 〜 <%= group.schedule.end_date.strftime("%Y/%m/%d") %>
+        </span>
+      <% else %>
+        <span class="text-text-light">なし</span>
+      <% end %>
+    </div>
+
+    <%# 作成日 %>
+    <div class="flex items-center gap-2 text-sm">
+      <span class="text-gray-500">グループ作成日 : </span>
+      <span class="text-gray-500"><%= group.created_at.strftime("%Y/%m/%d") %></span>
+    </div>
   </div>
 <% end %>
