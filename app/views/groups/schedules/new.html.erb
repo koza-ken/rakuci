@@ -10,7 +10,7 @@
         <%= form_with model: [@group, @schedule], url: group_schedule_path(@group), local: true do |f| %>
           <div class="mb-4">
             <%= f.label :name, class: "block text-sm font-bold text-text mb-2" do %>
-              <%= t('users.schedules.form.name_placeholder') %>
+              <%= t('users.schedules.form.name_label') %>
               <span class="text-red-600 font-bold ml-1">*</span>
             <% end %>
             <%= f.text_field :name, class: "form-text-field w-full", placeholder: t('users.schedules.form.name_placeholder') %>
