@@ -52,6 +52,15 @@
             <%= f.telephone_field :snapshot_phone_number, class: "form-text-field w-full", placeholder: t('schedule_spots.form.phone_number') %>
           </div>
 
+          <div class="mb-4">
+            <%= f.label :day_number, "日程", class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.select :day_number, (1..@schedule.days).map { |d|
+              formatted_date = @schedule.formatted_date_for_day(d)
+              label = formatted_date.present? ? "#{formatted_date}（#{d}日目）" : "#{d}日目"
+              [label, d]
+            }, {}, class: "form-text-field w-full" %>
+          </div>
+
           <div class="flex gap-4">
             <div class="flex-1">
               <%= f.label :start_time, t('schedule_spots.edit.arrival_time'), class: "block text-sm font-medium text-text mb-2" %>
