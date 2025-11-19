@@ -51,7 +51,7 @@ class ScheduleSpot < ApplicationRecord
   validate :end_time_after_start_time
 
   # 並び替えgem acts_as_list
-  acts_as_list column: :global_position, scope: [:schedule_id, :day_number]
+  acts_as_list column: :global_position, scope: [ :schedule_id, :day_number ]
 
   # スコープ
   scope :ordered, -> { order(:global_position) }
