@@ -26,7 +26,7 @@
 #
 class Spot < ApplicationRecord
   has_many :schedule_spots, dependent: :nullify
-  belongs_to :card
+  belongs_to :card, touch: true
   belongs_to :category
 
   validates :name, presence: true, length: { maximum: 50 }
