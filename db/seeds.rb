@@ -6,7 +6,7 @@
 puts "カテゴリの初期データを作成中..."
 
 categories = [
-  { name: "観光スポット", display_order: 1 },
+  { name: "観光地", display_order: 1 },
   { name: "グルメ", display_order: 2 },
   { name: "体験", display_order: 3 },
   { name: "買い物", display_order: 4 }

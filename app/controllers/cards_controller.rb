@@ -6,7 +6,7 @@ class CardsController < ApplicationController
   before_action :check_show_card, only: %i[show update destroy]
 
   def index
-    @cards = current_user.cards.includes(:user, :group)
+    @cards = current_user.cards.includes(:user, :group).order(updated_at: :desc)
   end
 
   def show
