@@ -38,8 +38,7 @@ class ScheduleSpot < ApplicationRecord
 
   # バリデーション
   validates :global_position, presence: true,
-            numericality: { only_integer: true, greater_than: 0 },
-            uniqueness: { scope: :schedule_id }
+            numericality: { only_integer: true, greater_than: 0 }
   validates :day_number, presence: true,
             numericality: { only_integer: true, greater_than: 0 }
   validates :snapshot_name, length: { maximum: 50 }
@@ -50,6 +49,9 @@ class ScheduleSpot < ApplicationRecord
   # カスタムバリデーション
   validate :spot_or_custom_entry_valid
   validate :end_time_after_start_time
+
+  # 並び替えgem acts_as_list
+  acts_as_list column: :global_position, scope: :schedule
 
   # スコープ
   scope :ordered, -> { order(:global_position) }

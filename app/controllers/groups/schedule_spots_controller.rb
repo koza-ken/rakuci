@@ -93,6 +93,33 @@ class Groups::ScheduleSpotsController < ApplicationController
     end
   end
 
+  # 並び替えacts_as_listのメソッド
+  def move_higher
+    @schedule = @group.schedule
+    # スポットを取得
+    @schedule_spot = @schedule.schedule_spots.find(params[:id])
+    # acts_as_listのメソッドで移動
+    @schedule_spot.move_higher
+    # レスポンス(Turbo Stream)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to group_schedule_path(@group) }
+    end
+  end
+
+  def move_lower
+    @schedule = @group.schedule
+    # スポットを取得
+    @schedule_spot = @schedule.schedule_spots.find(params[:id])
+    # acts_as_listのメソッドで移動
+    @schedule_spot.move_lower
+    # レスポンス(Turbo Stream)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to group_schedule_path(@group) }
+    end
+  end
+
   private
 
   def set_group
