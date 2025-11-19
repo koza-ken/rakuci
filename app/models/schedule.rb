@@ -48,6 +48,12 @@ class Schedule < ApplicationRecord
     end
   end
 
+  # しおりの日数を返す
+  def days
+    return 1 if start_date.blank? || end_date.blank?
+    (end_date - start_date).to_i + 1
+  end
+
   # 指定された日目に対応する日付を返す（フォーマット付き）
   def formatted_date_for_day(day_number)
     return nil if start_date.blank?
