@@ -6,6 +6,7 @@
   --color-secondary: #3fc0e7;
   --color-text: #374151;
   --color-text-light: #6B7280;
+  --color-card-title: #545964;
   --color-main-bg: #fafcff;
   --color-border: #E5E7EB;
   --color-header-bg: #ffffff;
@@ -19,7 +20,7 @@ test {
   --color-secondary: #3fc0e7;
   --color-text: #374151;
   --color-text-light: #6B7280;
-
+  --color-card-title: #545964;
   --color-main-bg: #fafcff;
   --color-border: #E5E7EB;
   --color-header-bg: #ffffff;
