@@ -1,25 +1,25 @@
-<div class="flex gap-2 items-stretch mb-2">
+<div class="flex gap-3 items-stretch mb-2">
   <%# 並び替えボタン %>
   <div class="flex gap-2 justify-center items-center w-16">
     <% if schedule_spot.first? %>
       <%# 位置をそろえるため透明の箱を設置 %>
-      <div class="text-base px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center opacity-0">↑</div>
+      <div class="text-base px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center opacity-0">▲</div>
     <% else %>
       <%= button_to move_higher_group_schedule_schedule_spot_path(schedule_spot.schedule.schedulable, schedule_spot),
           method: :patch,
-          class: "text-base px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center" do %>
-        ↑
+          class: "text-base text-[#ababab] px-2 py-1 bg-gray-100 rounded hover:bg-gray-300 flex items-center justify-center" do %>
+        ▲
       <% end %>
     <% end %>
 
     <% if schedule_spot.last? %>
       <%# 位置をそろえるため透明の箱を設置 %>
-      <div class="text-base px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center opacity-0">↓</div>
+      <div class="text-base px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center opacity-0">▼</div>
     <% else %>
       <%= button_to move_lower_group_schedule_schedule_spot_path(schedule_spot.schedule.schedulable, schedule_spot),
           method: :patch,
-          class: "text-base px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center" do %>
-        ↓
+          class: "text-base text-[#ababab] px-2 py-1 bg-gray-100 rounded hover:bg-gray-300 flex items-center justify-center" do %>
+        ▼
       <% end %>
     <% end %>
   </div>
