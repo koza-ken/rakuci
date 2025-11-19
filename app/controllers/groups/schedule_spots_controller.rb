@@ -133,7 +133,7 @@ class Groups::ScheduleSpotsController < ApplicationController
   end
 
   def schedule_spot_params
-    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_category_id, :snapshot_address, :snapshot_phone_number, :snapshot_website_url, :google_place_id, :start_time, :end_time, :memo)
+    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_category_id, :snapshot_address, :snapshot_phone_number, :snapshot_website_url, :google_place_id, :start_time, :end_time, :memo, :day_number)
   end
 
   # グループに参加しているか確認するフィルター（showアクションのフィルター）
