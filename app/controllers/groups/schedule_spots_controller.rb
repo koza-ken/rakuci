@@ -103,7 +103,7 @@ class Groups::ScheduleSpotsController < ApplicationController
     # レスポンス(Turbo Stream)
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to group_schedule_path(@group)}
+      format.html { redirect_to group_schedule_path(@group) }
     end
   end
 
