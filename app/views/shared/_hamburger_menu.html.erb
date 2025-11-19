@@ -1,11 +1,11 @@
-<!-- 背景オーバーレイ -->
+<%# 背景オーバーレイ %>
 <div class="absolute inset-0 bg-black/50 z-40 hidden" data-hamburger-target="overlay" data-action="click->hamburger#toggle"></div>
 
 
-<!-- メニューパネル（ログイン状態で判定） -->
+<%# メニューパネル（ログイン状態で判定） %>
 <nav class="absolute top-0 right-0 h-screen w-64 bg-white shadow-lg z-50 transition-transform duration-300 translate-x-full" data-hamburger-target="menu">
   <% if user_signed_in? %>
-    <!-- ログイン後のメニュー -->
+    <%# ログイン後のメニュー %>
     <div class="px-6 py-6">
       <p class="text-text text-sm">ようこそ、<%= current_user.display_name || current_user.email.split('@').first %>さん</p>
     </div>
@@ -89,7 +89,7 @@
       </li>
     </ul>
   <% else %>
-    <!-- ログイン前のメニュー -->
+    <%# ログイン前のメニュー %>
     <div class="px-6 py-6">
       <p class="text-text text-sm">ようこそ</p>
     </div>

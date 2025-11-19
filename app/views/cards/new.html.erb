@@ -1,14 +1,14 @@
 <turbo-frame id="card-create-modal" data-controller="modal">
-  <!-- モーダルのラッパー -->
+  <%# モーダルのラッパー %>
   <div role="dialog" tabindex="-1" class="fixed inset-0 z-60 flex items-center justify-center w-full h-screen p-2">
-    <!-- 背景（クリックでモーダルを閉じる） -->
+    <%# 背景（クリックでモーダルを閉じる） %>
     <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-pointer bg-gray-900/30"></div>
     <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
       <main class="flex flex-col items-center justify-center px-8 py-12">
         <h1 class="text-2xl font-bold text-text mb-8"><%= t('.title') %></h1>
 
         <%= form_with model: @card, class: "w-full max-w-md" do |f| %>
-          <!-- カード名 -->
+          <%# カード名 %>
           <div class="mb-6">
             <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
               <%= t('cards.form.name') %>
@@ -26,7 +26,7 @@
             <% end %>
           </div>
 
-          <!-- メモ -->
+          <%# メモ %>
           <div class="mb-6">
             <%= f.label :memo, t('cards.form.memo'), class: "block text-sm font-medium text-text mb-2" %>
             <%= f.text_area :memo,
@@ -42,10 +42,10 @@
             <% end %>
           </div>
 
-          <!-- JavaScriptで動的に設定されるgroup_id -->
+          <%# JavaScriptで動的に設定されるgroup_id %>
           <%= f.hidden_field :group_id %>
 
-          <!-- ボタン -->
+          <%# ボタン %>
           <div class="flex gap-3">
             <%= f.submit t('cards.form.submit'), class: "btn-main flex-1" %>
             <%= link_to t('cards.form.cancel'), :back, data: { action: "click->modal#close" }, class: "btn-sub flex-1 text-center" %>

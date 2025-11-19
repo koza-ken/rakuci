@@ -1,14 +1,14 @@
 <turbo-frame id="spot-create-modal">
-  <!-- モーダルのラッパー -->
+  <%# モーダルのラッパー %>
   <div role="dialog" tabindex="-1" class="fixed inset-0 z-60 flex items-center justify-center w-full h-screen p-2">
-    <!-- 背景（クリックでモーダルを閉じる） -->
+    <%# 背景（クリックでモーダルを閉じる） %>
     <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-pointer bg-gray-900/30"></div>
     <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
       <main class="flex flex-col items-center justify-center px-8 py-12">
         <h1 class="text-2xl font-bold text-text mb-8"><%= t('spots.new.title') %></h1>
 
         <%= form_with model: @schedule_spot, url: group_schedule_schedule_spots_path(@group), class: "w-full max-w-md", data: { controller: "autocomplete" } do |f| %>
-          <!--- スポット名 -->
+          <%# スポット名 %>
           <div class="mb-6">
             <%= f.label :snapshot_name, class: "block text-sm font-medium text-text mb-2" do %>
               <%= t('spots.form.name') %>
@@ -26,7 +26,7 @@
               </div>
             <% end %>
 
-            <!-- オートコンプリートは補助として表示 -->
+            <%# オートコンプリートは補助として表示 %>
             <div class="mt-2 text-xs text-gray-600">
               または下からスポットを検索して選択：
             </div>
@@ -38,7 +38,7 @@
             </gmp-place-autocomplete>
           </div>
 
-          <!-- カテゴリ -->
+          <%# カテゴリ %>
           <div class="mb-6">
             <%= f.label :snapshot_category_id, class: "block text-sm font-medium text-text mb-2" do %>
               <%= t('spots.form.category') %>
@@ -56,7 +56,7 @@
             <% end %>
           </div>
 
-          <!-- 住所 -->
+          <%# 住所 %>
           <div class="mb-6">
             <%= f.label :snapshot_address, t('spots.form.address'), class: "block text-sm font-medium text-text mb-2" %>
             <%= f.text_field :snapshot_address,
@@ -65,7 +65,7 @@
                 class: "form-text-field resize-vertical" %>
           </div>
 
-          <!-- URL -->
+          <%# URL %>
           <div class="mb-6">
             <%= f.label :snapshot_website_url, t('spots.form.website_url'), class: "block text-sm font-medium text-text mb-2" %>
             <%= f.text_field :snapshot_website_url,
@@ -74,7 +74,7 @@
                 class: "form-text-field resize-vertical" %>
           </div>
 
-          <!-- 電話番号--->
+          <%# 電話番号 %>
           <div class="mb-6">
             <%= f.label :snapshot_phone_number, t('spots.form.phone_number'), class: "block text-sm font-medium text-text mb-2" %>
             <%= f.text_field :snapshot_phone_number,
@@ -83,10 +83,10 @@
                 class: "form-text-field resize-vertical" %>
           </div>
 
-          <!-- place_id -->
+          <%# place_id %>
           <%= f.hidden_field :google_place_id, data: { autocomplete_target: "idField" } %>
 
-          <!-- ボタン -->
+          <%# ボタン %>
           <div class="flex gap-3">
             <%= f.submit t('schedule_spots.form.submit'), class: "btn-main flex-1" %>
             <%= link_to t('schedule_spots.form.cancel'), group_schedule_path(@group), class: "btn-sub flex-1 text-center" %>

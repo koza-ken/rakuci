@@ -1,7 +1,7 @@
 <turbo-frame id="<%= @schedule.present? ? 'spot-create-modal' : 'add_new_schedule_spot' %>">
-  <!-- モーダルのラッパー -->
+  <%# モーダルのラッパー %>
   <div role="dialog" tabindex="-1" class="fixed inset-0 z-60 flex items-center justify-center w-full h-screen p-2">
-    <!-- 背景（クリックでモーダルを閉じる） -->
+    <%# 背景（クリックでモーダルを閉じる） %>
     <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-pointer bg-gray-900/30"></div>
     <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
       <% if @schedule.present? %>

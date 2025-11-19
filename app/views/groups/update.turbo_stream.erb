@@ -1,20 +1,20 @@
-<!-- フラッシュメッセージを表示 -->
+<%# フラッシュメッセージを表示 %>
 <%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
 
-<!-- グループ名セクション全体を更新 -->
+<%# グループ名セクション全体を更新 %>
 <%= turbo_stream.replace "group-name-section" do %>
-  <!-- グループ名セクション（表示/編集を切り替え） -->
+  <%# グループ名セクション（表示/編集を切り替え） %>
   <div id="group-name-section" data-controller="card-edit" class="mb-4">
-    <!-- 表示モード：エラーがあれば非表示 -->
+    <%# 表示モード：エラーがあれば非表示 %>
     <div id="group-name-display" class="<%= 'hidden' if @group.errors.any? %> flex items-start gap-3" data-card-edit-target="display">
       <h2 class="text-2xl font-bold text-text"><%= @group.name %></h2>
-      <!-- 編集アイコン（サイズ固定） -->
+      <%# 編集アイコン（サイズ固定） %>
       <button class="shrink-0 text-text hover:opacity-70 transition pt-1" data-action="click->card-edit#toggleForm">
         <%= render "shared/icon/form_icon_edit" %>
       </button>
     </div>
 
-    <!-- 編集モード：エラーがなければ hidden、あればを表示 -->
+    <%# 編集モード：エラーがなければ hidden、あればを表示 %>
     <div id="group-name-form" class="<%= 'hidden' unless @group.errors.any? %> mb-4" data-card-edit-target="form">
       <%= form_with model: @group, local: true do |f| %>
         <div class="flex items-center gap-2">
@@ -24,7 +24,7 @@
             <p class="text-2xl">×</p>
           </button>
         </div>
-        <!-- バリデーションエラー表示 -->
+        <%# バリデーションエラー表示 %>
         <% if @group.errors.any? %>
           <div class="mt-2">
             <% @group.errors.messages[:name].each do |message| %>

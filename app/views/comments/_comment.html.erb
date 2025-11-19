@@ -9,9 +9,9 @@
   </div>
   <div class="flex justify-between items-start">
     <p class="text-gray-800 whitespace-pre-wrap"><%= comment.content %></p>
-    <!-- ユーザーの、このグループにおけるメンバーシップを取得 -->
+    <%# ユーザーの、このグループにおけるメンバーシップを取得 %>
     <% current_membership = current_group_membership_for(comment.card.group_id) %>
-    <!-- このユーザーが参加しているかと、その場合にメンバーシップidを比較し確認 -->
+    <%# このユーザーが参加しているかと、その場合にメンバーシップidを比較し確認 %>
     <% if current_membership && current_membership.id == comment.group_membership_id %>
       <%= button_to card_comment_path(comment.card, comment),
           method: :delete,

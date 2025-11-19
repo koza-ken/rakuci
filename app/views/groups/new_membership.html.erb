@@ -1,18 +1,18 @@
 <div class="min-h-screen bg-main-bg">
   <main class="flex flex-col items-center justify-center px-8 py-12">
     <div class="w-full max-w-md">
-      <!-- タイトル -->
+      <%# タイトル %>
       <h1 class="text-2xl font-bold text-text mb-2"><%= t('groups.new_membership.title') %></h1>
       <p class="text-sm text-gray-600 mb-8"><%= @group.name %><%= t('groups.new_membership.invited_message') %></p>
 
-      <!-- ユーザー登録済み -->
+      <%# ユーザー登録済み %>
       <div class="mb-8">
         <h2 class="text-lg font-semibold text-text mb-4"><%= t('groups.new_membership.signed_up_users_title') %></h2>
         <p class="text-sm text-gray-500 mb-4"><%= t('groups.new_membership.signed_up_users_text') %></p>
         <div class="text-center">
           <%= link_to t('groups.new_membership.sign_in'), new_user_session_path, class: "inline-block btn-main" %>
         </div>
-        <!-- 新規登録リンク（未ログイン時のみ） -->
+        <%# 新規登録リンク（未ログイン時のみ） %>
         <% unless user_signed_in? %>
           <div class="text-center pt-4 mb-6">
             <p class="text-sm text-gray-600 mb-3"><%= t('groups.new_membership.new_user_text') %><%= link_to t('groups.new_membership.new_user_link'), new_user_registration_path, class: "text-secondary font-semibold hover:underline" %></p>
@@ -21,7 +21,7 @@
       </div>
 
 
-      <!-- 過去に参加したことがある -->
+      <%# 過去に参加したことがある %>
       <div class="mb-8">
         <h2 class="text-lg font-semibold text-text mb-4"><%= t('groups.new_membership.past_users_title') %><%= @group.name %><%= t('groups.new_membership.past_users_title_suffix') %></h2>
         <p class="text-sm text-gray-500 mb-4"><%= t('groups.new_membership.past_users_text') %></p>
@@ -36,7 +36,7 @@
         <% end %>
       </div>
 
-      <!-- はじめて参加する -->
+      <%# はじめて参加する %>
       <div class="mb-8">
         <h2 class="text-lg font-semibold text-text mb-4"><%= t('groups.new_membership.first_time_title') %><%= @group.name %><%= t('groups.new_membership.first_time_title_suffix') %></h2>
         <p class="text-sm text-gray-500 mb-4"><%= t('groups.new_membership.first_time_text') %></p>
