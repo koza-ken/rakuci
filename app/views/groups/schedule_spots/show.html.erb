@@ -55,6 +55,17 @@
         </div>
 
         <div class="mb-4">
+          <label class="block text-sm font-medium text-text mb-2">日程</label>
+          <div class="form-text-field bg-gray-100">
+            <% if @schedule.formatted_date_for_day(@schedule_spot.day_number).present? %>
+              <%= @schedule.formatted_date_for_day(@schedule_spot.day_number) %>（<%= @schedule_spot.day_number %>日目）
+            <% else %>
+              <%= @schedule_spot.day_number %>日目
+            <% end %>
+          </div>
+        </div>
+
+        <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.start_time') %></label>
           <div class="form-text-field bg-gray-100 truncate">
             <% if @schedule_spot.start_time.present? && @schedule_spot.end_time.present? %>
