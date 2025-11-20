@@ -8,7 +8,7 @@
               after:opacity-40 after:brightness-70 after:mix-blend-multiply after:pointer-events-none">
 
     <%# 上部 %>
-    <div class="flex justify-between items-center pb-2 relative z-10">
+    <div class="flex justify-between items-center pb-1 relative z-10">
       <h2 class="font-bold text-card-title truncate text-xl ml-2">
         <%= card.name %>
       </h2>
@@ -32,10 +32,17 @@
       <% end %>
     </div>
 
-    <%# 作成日・最終更新日 %>
-    <div class="mt-2 ml-2 text-xs text-text-light  relative z-10 space-y-2">
-      <p>作成日 : <%= card.created_at.strftime("%Y/%m/%d") %></p>
-      <p>更新日 : <%= card.updated_at.strftime("%Y/%m/%d") %></p>
+    <%# 作成日・最終更新日・いいね %>
+    <div class="mt-2 mb-1 ml-2 text-xs text-text-light relative z-10 flex justify-between items-end">
+      <div class="space-y-1">
+        <p>作成日 : <%= card.created_at.strftime("%Y/%m/%d") %></p>
+        <p>更新日 : <%= card.updated_at.strftime("%Y/%m/%d") %></p>
+      </div>
     </div>
+    <% if card.group_card? %>
+      <div class="flex justify-end mr-2" onclick="event.stopPropagation(); event.preventDefault();">
+        <%= render "likes/like_button", card: card %>
+      </div>
+    <% end %>
   </div>
 <% end %>
