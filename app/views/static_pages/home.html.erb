@@ -1,22 +1,53 @@
 <div class="min-h-screen bg-main-bg">
   <div class="px-5">
     <%# メインコンテンツ %>
-    <div class="flex flex-col items-center justify-center px-4 py-8 space-y-8">
+    <div class="flex flex-col items-center justify-center px-4 py-16 space-y-8">
       <%# 説明文 %>
-      <div class="max-w-sm text-sm text-text leading-relaxed">
-        <p>
-          アプリの説明を書く予定アプリの説明を書く予定アプリの説明を書く予定アプリの説明を書く予定アプリの説明を書く予定アプリの説明を書く予定アプリの説明を書く予定アプリの説明を書く予定アプリの説明を書く予定アプリの説明を書く予定アプリの説明を書く予定アプリの説明を書く予定アプリの説明を書く予定アプリの説明を書く
-        </p>
+      <div class="max-w-sm text-text leading-relaxed mb-20">
+        <%# メインメッセージ %>
+        <div class="space-y-10 text-base">
+          <p class="text-center">
+            行きたい場所を『集める』ッ！<br>
+            仲間と『共有する』ッ！<br>
+            そして『しおり』を作り上げるッ！
+          </p>
+
+          <div class="space-y-8 mt-8 pl-3">
+            <div class="flex items-center gap-5">
+              <%= render "/shared/icon/top_icon_card" %>
+              <div>
+                <p class="font-bold mb-1">旅行先をカードで管理</p>
+                <p class="text-sm text-text-light">気になる場所をカードに保存</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-5">
+              <%= render "/shared/icon/top_icon_group" %>
+              <div>
+                <p class="font-bold mb-1">グループで共有</p>
+                <p class="text-sm text-text-light">仲間と一緒に旅行先を検討</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-5">
+              <%= render "/shared/icon/top_icon_schedule" %>
+              <div>
+                <p class="font-bold mb-1">しおりを作成</p>
+                <p class="text-sm text-text-light">日程に沿って予定を整理</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <%# ボタングループ %>
-      <div class="flex flex-col space-y-4 w-48">
-        <button class="btn-main">
+      <div class="flex flex-col w-64">
+        <%= link_to new_user_session_path, class: "btn-main text-center mb-8" do %>
           ログイン
-        </button>
-        <button class="btn-main">
+        <% end %>
+        <%= link_to new_user_registration_path, class: "btn-main text-center" do %>
           新規登録
-        </button>
+        <% end %>
       </div>
     </div>
   </div>
