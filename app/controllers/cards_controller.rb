@@ -1,4 +1,5 @@
 class CardsController < ApplicationController
+  before_action :authenticate_user!, only: %i[index]
   # ゲストユーザーでもグループ内でカード作成ができるように
   before_action :check_create_cards, only: %i[create]
   # 自分のカードか、参加しているグループのカードのみにアクセスできる
