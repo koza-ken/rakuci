@@ -45,6 +45,8 @@ ja:
     schedules:
       not_found: しおりが見つかりません
       unauthorized_view: このしおりを閲覧する権限がありません
+    not_group_card: この機能は無効です
+    not_group_member: このグループに参加していません
     messages:
       not_saved: "%{count}件のエラーが発生しました"
 
