@@ -119,7 +119,7 @@
         <%= t("cards.form.back") %>
       <% end %>
     </div>
-    <div class="mt-18"
+    <div class="flex justify-center mt-18">
       <%= button_to card_path(@card), method: :delete, data: { turbo_confirm: t("cards.delete_confirm") }, class: "btn-danger" do %>
         <%= t("cards.delete_button") %>
       <% end %>

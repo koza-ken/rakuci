@@ -96,7 +96,9 @@
         <%# 削除後のページ遷移とturboの相性が悪いのでturboをfalseにして、確認ダイアログをJSで実装 %>
         <%= link_to t('cards.form.back'), schedule_path(@schedule), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
       </div>
-      <%= button_to t('cards.form.delete'), schedule_schedule_spot_path(@schedule, @schedule_spot), method: :delete, data: { turbo: false }, onclick: "return confirm('#{t('schedule_spots.delete_confirm')}')", class: "btn-danger flex-1 text-center mt-20" %>
+      <div class="flex justify-center">
+        <%= button_to t('cards.form.delete'), schedule_schedule_spot_path(@schedule, @schedule_spot), method: :delete, data: { turbo: false }, onclick: "return confirm('#{t('schedule_spots.delete_confirm')}')", class: "btn-danger flex-1 text-center mt-20" %>
+      </div>
     </main>
   </div>
 </turbo-frame>
