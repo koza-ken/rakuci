@@ -82,7 +82,7 @@
       </div>
     </div>
     <%# グループ削除ボタン %>
-    <div class="mt-8 pt-6">
+    <div class="mt-12 pt-6">
       <%= button_to group_path(@group), method: :delete, form_class: "inline", class: "btn-danger", data: { turbo_confirm: t('groups.show.delete_confirm') } do %>
         <%= t('groups.show.delete_group') %>
       <% end %>

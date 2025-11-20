@@ -60,7 +60,7 @@
         <%= link_to t('cards.form.back'), card_path(@card), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
       </div>
 
-      <div class="mt-8">
+      <div class="mt-14">
         <%# グループのカード か ユーザーのカード か判定 %>
         <% if @card.group_id.present? %>
           <%# グループのカード → 直接作成（postなのでbutton_to）  %>
@@ -75,7 +75,9 @@
               class: "btn-main w-full block text-center" %>
         <% end %>
       </div>
-      <%= link_to t('cards.form.delete'), card_spot_path(@card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger flex-1 text-center mt-20" %>
+      <div class="flex justify-center">
+        <%= link_to t('cards.form.delete'), card_spot_path(@card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger text-center mt-20" %>
+      </div>
     </main>
   </div>
 </turbo-frame>

@@ -219,6 +219,7 @@ ja:
         day_label: 日目
         memo: メモ
         delete_schedule: しおりを削除
+        back_to_group: グループ詳細
 
   schedules:
     index:

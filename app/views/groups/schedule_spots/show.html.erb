@@ -97,7 +97,9 @@
         <%= link_to t('cards.form.back'), group_schedule_path(@group), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
       </div>
       <%# 削除後のページ遷移とturboの相性が悪いのでturboをfalseにして、確認ダイアログをJSで実装 %>
-      <%= button_to t('cards.form.delete'), group_schedule_schedule_spot_path(@group, @schedule_spot), method: :delete, data: { turbo: false }, onclick: "return confirm('#{t('schedule_spots.delete_confirm')}')", class: "btn-danger mt-20 text-center" %>
+      <div class="flex justify-center">
+        <%= button_to t('cards.form.delete'), group_schedule_schedule_spot_path(@group, @schedule_spot), method: :delete, data: { turbo: false }, onclick: "return confirm('#{t('schedule_spots.delete_confirm')}')", class: "btn-danger mt-20" %>
+      </div>
     </main>
   </div>
 </turbo-frame>

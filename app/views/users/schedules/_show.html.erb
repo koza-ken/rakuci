@@ -45,7 +45,7 @@
   <% end %>
 
   <%# 操作ボタン %>
-  <div class="mt-8 flex gap-3">
+  <div class="mt-16 flex gap-3">
     <%= link_to t('schedules.show.edit'), edit_schedule_path(schedule), class: "btn-main flex-1 text-center" %>
     <%= link_to t('users.schedules.show.back'), schedules_path, class: "btn-sub flex-1 text-center" %>
   </div>
@@ -58,7 +58,7 @@
     </div>
   <% end %>
 
-  <div class="mt-20">
-    <%= button_to t('schedules.show.delete_schedule'), schedule_path(schedule), method: :delete, data: { turbo: false }, onclick: "return confirm('#{t('schedules.show.delete_confirm')}')", class: "btn-danger flex-1 text-center" %>
+  <div class="flex justify-center mt-20">
+    <%= button_to t('schedules.show.delete_schedule'), schedule_path(schedule), method: :delete, data: { turbo: false }, onclick: "return confirm('#{t('schedules.show.delete_confirm')}')", class: "btn-danger text-center" %>
   </div>
 </div>
