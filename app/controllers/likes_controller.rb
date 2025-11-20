@@ -1,5 +1,6 @@
 class LikesController < ApplicationController
   before_action :set_card
+  before_action :check_group_card_access
   before_action :set_group_membership
 
   def create
@@ -34,5 +35,20 @@ class LikesController < ApplicationController
 
   def set_group_membership
     @group_membership = current_group_membership_for(@card.group_id)
+  end
+
+  def check_group_card_access
+    # グループカードかチェック
+    unless @card.group_card?
+      redirect_to cards_path, alert: t("errors.not_group_card")
+      return
+    end
+
+    # グループメンバーかチェック
+    membership = current_group_membership_for(@card.group_id)
+    unless membership
+      redirect_to (user_signed_in? ? cards_path : root_path),
+                  alert: t("errors.not_group_member")
+    end
   end
 end
