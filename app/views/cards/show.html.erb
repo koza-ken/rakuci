@@ -115,8 +115,14 @@
 
     <%# 戻るボタンと削除ボタン %>
     <div class="mt-8">
-      <%= link_to cards_path, class: "btn-sub block text-center" do %>
-        <%= t("cards.form.back") %>
+      <% if @card.group_card? %>
+        <%= link_to group_path(@card.group_id), class: "btn-sub block text-center" do %>
+          <%= t("cards.form.back") %>
+        <% end %>
+      <% else %>
+        <%= link_to cards_path, class: "btn-sub block text-center" do %>
+          <%= t("cards.form.back") %>
+        <% end %>
       <% end %>
     </div>
     <div class="flex justify-center mt-18">
