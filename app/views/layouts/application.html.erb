@@ -26,19 +26,19 @@
     </script>
   </head>
 
-  <body data-controller="hamburger turbo">
-    <%= render "shared/header" %>
+  <body data-controller="hamburger turbo" class="bg-main-bg">
+    <div class="max-w-[480px] mx-auto">
+      <%= render "shared/header" %>
 
-    <div class="relative min-h-screen bg-main-bg overflow-hidden">
-      <div class="max-w-[640px] mx-auto">
-        <%= yield %>
+      <div class="relative min-h-screen bg-main-bg overflow-hidden">
+          <%= yield %>
+        <%= render "shared/hamburger_menu" %>
+        <div id="flash-container">
+          <%= render "shared/flash_messages", flash: flash %>
+        </div>
       </div>
-      <%= render "shared/hamburger_menu" %>
-      <div id="flash-container">
-        <%= render "shared/flash_messages", flash: flash %>
-      </div>
+
+      <%= render "shared/footer" %>
     </div>
-
-    <%= render "shared/footer" %>
   </body>
 </html>
