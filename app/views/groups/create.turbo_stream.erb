@@ -3,5 +3,9 @@
 
 <%# モーダルを閉じる（中身を空にする） %>
 <%= turbo_stream.update "group-create-modal", "" %>
+
+<%# 「グループがありません」メッセージを削除 %>
+<%= turbo_stream.remove "no_groups_message" %>
+
 <%# 一覧に追加 %>
 <%= turbo_stream.append "groups_list", partial: "groups/group", locals: { group: @group } %>

@@ -16,12 +16,12 @@
   </div>
 
   <div class="w-full max-w-2xl">
-    <% if @schedules.any? %>
-      <div id="schedules_list" class="w-full space-y-4">
+    <div id="schedules_list" class="w-full space-y-4">
+      <% if @schedules.any? %>
         <%= render @schedules %>
-      </div>
-    <% else %>
-      <p class="text-gray-500 text-center mt-8"><%= t('users.schedules.index.no_schedules') %></p>
-    <% end %>
+      <% else %>
+        <p id="no_schedules_message" class="text-gray-500 text-center mt-8"><%= t('users.schedules.index.no_schedules') %></p>
+      <% end %>
+    </div>
   </div>
 </main>
