@@ -43,22 +43,10 @@
             <% end %>
           <% end %>
         </div>
-      </div>
-<%
-=begin
-%>
-        <%# 利用規約とプライバシーポリシーへの同意 %>
-        <div class="mb-6 text-sm text-text text-center">
-          <%= link_to t('.terms_of_service'), "#", class: "text-secondary font-bold underline hover:opacity-80" %>と<%= link_to t('.privacy_policy'), "#", class: "text-secondary font-bold underline hover:opacity-80" %><br>
-          <%= t('.terms_agreement') %>
-        </div>
-<%
-=end
-%>
 
         <%# 登録ボタン %>
         <div class="mb-10">
-          <%= f.submit t('.sign_up'), class: "btn-main", data: { turbo: false } %>
+          <%= f.submit t('.sign_up'), class: "btn-main" %>
         </div>
       <% end %>
 
@@ -66,6 +54,6 @@
       <div class="text-center">
         <%= link_to t('.sign_in'), new_session_path(resource_name), class: "inline-block btn-sub" %>
       </div>
-    <%# </div> %>
+    </div>
   </main>
 </div>
