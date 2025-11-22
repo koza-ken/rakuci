@@ -33,7 +33,7 @@ Table groups {
 
   Indexes {
     invite_token [unique, name: "index_groups_on_invite_token"]
-    created_by_user_id [name: "index_groups_on_created_by_id"]
+    created_by_user_id [name: "index_groups_on_created_by_user_id"]
   }
 
   Note: '''
@@ -48,24 +48,24 @@ Table group_memberships {
   id int [pk, increment]
   user_id int [null, ref: > users.id, note: "登録ユーザーのみ値あり"]
   group_id int [not null, ref: > groups.id, note: "所属グループ"]
-  group_nickname varchar(20) [not null, note: "グループ内での表示名"]
-  role int [not null, default: 0, note: "0: member, 1: owner"]
+  group_nickname varchar(20) [note: "グループ内での表示名"]
+  role varchar [not null, default: "member", note: "member or owner"]
   guest_token varchar(64) [note: "ゲスト認証用トークン（user_id=nullの場合のみ）"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
   Indexes {
-    (group_id, user_id) [unique, name: "index_gm_on_group_and_user"]
-    (group_id, group_nickname) [name: "index_gm_on_group_and_nickname"]
-    guest_token [name: "index_gm_on_guest_token"]
+    (user_id, group_id) [unique, name: "index_group_memberships_on_user_id_and_group_id"]
+    (group_id, group_nickname) [unique, name: "index_group_memberships_on_group_id_and_group_nickname"]
+    guest_token [name: "index_group_memberships_on_guest_token"]
+    user_id [name: "index_group_memberships_on_user_id"]
+    group_id [name: "index_group_memberships_on_group_id"]
   }
 
   Note: '''
-  CHECK制約:
-  (user_id IS NOT NULL AND is_guest = false AND guest_token IS NULL)
-  OR
-  (user_id IS NULL AND is_guest = true AND guest_token IS NOT NULL)
-  登録ユーザーとゲストの整合性を保証。
+  登録ユーザーとゲストの両方を管理。
+  - 登録ユーザー: user_id あり、guest_token なし
+  - ゲストユーザー: user_id なし、guest_token あり
   '''
 
 }
@@ -86,9 +86,9 @@ Table cards {
 
   Note: '''
   CHECK制約:
-  (user_id IS NOT NULL AND group_id IS NULL AND created_by_membership_id IS NULL)
+  (user_id IS NOT NULL AND group_id IS NULL)
   OR
-  (user_id IS NULL AND group_id IS NOT NULL AND created_by_membership_id IS NOT NULL)
+  (user_id IS NULL AND group_id IS NOT NULL)
 
   データ例:
   # 個人用カード
@@ -103,47 +103,47 @@ Table spots {
   id int [pk, increment]
   card_id int [not null, ref: > cards.id, note: "所属カード"]
   category_id int [not null, ref: > categories.id]
-  google_place_id varchar(255) [note: "Google側のID"]
+  google_place_id varchar(255) [note: "Google Place ID"]
   name varchar(50) [not null, note: "スポット名"]
-  address varchar(255) [note: "住所"]
+  address text [note: "住所"]
   phone_number varchar(20) [note: "電話番号"]
-  website_url varchar(500) [note: "公式サイトURL"]
-  area_id int [null, ref: > areas.id, note: "エリア（本リリースで使用）"]
+  website_url text [note: "公式サイトURL"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
   Indexes {
     card_id [name: "index_spots_on_card_id"]
     category_id [name: "index_spots_on_category_id"]
-    google_place_id [name: "index_spots_on_google_place_id"]
+    (card_id, google_place_id) [unique, name: "index_spots_on_card_id_and_google_place_id", note: "google_place_id IS NOT NULLの場合のみ"]
   }
 
   Note: '''
-  個人用カードのスポット: created_by_membership_id = NULL
-  グループ用カードのスポット: created_by_membership_id = メンバーID
-  画像はActiveStorage
+  カードに紐づくスポット情報。
+  spotsが更新されるとcards.updated_atも更新される（touch: true）。
   '''
 
 }
 
 Table categories {
   id int [pk, increment]
-  name varchar(20) [not null, unique, note: "カテゴリ名"]
-  icon varchar(50) [note: "アイコン名（Font Awesome等）"]
-  display_order int [not null, default: 0, note: "表示順"]
+  name varchar(20) [not null, note: "カテゴリ名"]
+  display_order int [not null, unique, note: "表示順"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
   Indexes {
-    display_order [name: "index_categories_on_display_order"]
+    display_order [unique, name: "index_categories_on_display_order"]
   }
 
   Note: '''
   全体共通の固定カテゴリ（シードデータで作成）:
-  1. 観光スポット (display_order: 1)
+  1. 観光地 (display_order: 1)
   2. グルメ (display_order: 2)
   3. 体験 (display_order: 3)
   4. 買い物 (display_order: 4)
+
+  各カテゴリには対応するSVGアイコンがある。
+  Category#icon_partialメソッドでアイコンパスを取得。
   '''
 
 }
@@ -152,7 +152,7 @@ Table schedules {
   id int [pk, increment]
   schedulable_type varchar [not null, note: "'User' or 'Group'"]
   schedulable_id int [not null, note: "user_id or group_id"]
-  name varchar(50) [not null, note: "しおりの名前"]
+  name varchar [not null, note: "しおりの名前"]
   start_date date [note: "旅行開始日"]
   end_date date [note: "旅行終了日"]
   memo text [note: "しおり全体のメモ"]
@@ -160,13 +160,13 @@ Table schedules {
   updated_at timestamp [not null]
 
   Indexes {
-    (schedulable_type, schedulable_id) [unique, name: "index_schedules_on_polymorphic"]
+    (schedulable_type, schedulable_id) [unique, name: "index_schedules_on_polymorphic", note: "schedulable_type='Group'の場合のみユニーク制約"]
   }
 
   Note: '''
   ユーザーとグループの両方がしおり（旅行計画）を持つことができる。
   - User：複数のスケジュール作成可能
-  - Group：1つのスケジュールのみ（バリデーションで制御）
+  - Group：1つのスケジュールのみ（DB制約とバリデーションで制御）
   '''
 }
 
@@ -174,7 +174,7 @@ Table schedule_spots {
   id int [pk, increment]
   schedule_id int [not null, ref: > schedules.id, note: "しおりID"]
   spot_id int [null, ref: > spots.id, note: "スポットID（カスタム入力時はNULL）"]
-  global_position int [not null, note: "全体での順番（1,2,3...全スポット通しの番号）"]
+  global_position int [not null, note: "全体での順番（acts_as_listで管理）"]
   day_number int [not null, note: "何日目（1日目,2日目...区切り線表示用）"]
   start_time time [note: "開始時刻（到着時刻）"]
   end_time time [note: "終了時刻（出発時刻）"]
@@ -184,15 +184,14 @@ Table schedule_spots {
   snapshot_address varchar(255) [note: "住所のスナップショット"]
   snapshot_phone_number varchar(20) [note: "電話番号のスナップショット"]
   snapshot_website_url varchar(500) [note: "WebサイトURLのスナップショット"]
+  google_place_id varchar(255) [note: "Google Place IDのスナップショット"]
   memo text [note: "メモ"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
   Indexes {
-    (schedule_id, global_position) [unique, name: "index_ss_on_schedule_and_position"]
     (schedule_id, day_number) [name: "index_ss_on_schedule_and_day"]
     spot_id [name: "index_schedule_spots_on_spot_id"]
-    schedule_id [name: "index_schedule_spots_on_schedule_id"]
   }
 
   Note: '''
@@ -200,17 +199,20 @@ Table schedule_spots {
   スケジュール作成時点の情報をスナップショットとして保存することで、
   後からスポット情報が変更・削除されても、当時のスケジュール情報は保持される。
 
-  CHECK制約:
-  1. is_custom_entry = true  → spot_id IS NULL, snapshot_nameが直接入力される
-  2. is_custom_entry = false → spot_id IS NOT NULL, spotsから情報をスナップショットとして保存
+  acts_as_listでglobal_positionを管理（スコープ: schedule_id）。
+  並び替え機能で順序変更可能。
+
+  is_custom_entry:
+  - true  → spot_id IS NULL, snapshot_nameが直接入力される
+  - false → spot_id IS NOT NULL, spotsから情報をスナップショットとして保存
   '''
 
 }
 
 Table comments {
   id int [pk, increment]
-  card_id int [not null, ref: > cards.id, note: "カード詳細ページのコメント"]
-  group_membership_id int [not null, ref: > group_memberships.id, note: "グループ用カードの場合"]
+  card_id int [not null, ref: > cards.id, note: "コメント対象のカード"]
+  group_membership_id int [not null, ref: > group_memberships.id, note: "コメント投稿者"]
   content text [not null, note: "コメント内容"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
@@ -218,11 +220,12 @@ Table comments {
   Indexes {
     card_id [name: "index_comments_on_card_id"]
     group_membership_id [name: "index_comments_on_group_membership_id"]
-    (card_id, created_at) [name: "index_comments_on_card_and_created_at"]
+    (card_id, created_at) [name: "index_comments_on_card_id_and_created_at"]
   }
 
   Note: '''
-
+  グループカードのみコメント機能あり。
+  CommentsController#check_group_card_accessで権限チェック。
   '''
 
 }
@@ -267,23 +270,23 @@ Table group_packing_items {
   '''
 }
 
-Table card_likes {
+Table likes {
   id int [pk, increment]
   card_id int [not null, ref: > cards.id, note: "いいねされたカード"]
   group_membership_id int [not null, ref: > group_memberships.id, note: "いいねした人"]
-
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
   Indexes {
-    (card_id, group_membership_id) [unique, name: "index_card_likes_on_card_and_membership"]
-    card_id [name: "index_card_likes_on_card_id"]
-    group_membership_id [name: "index_card_likes_on_membership_id"]
+    (card_id, group_membership_id) [unique, name: "index_likes_on_card_id_and_group_membership_id"]
+    card_id [name: "index_likes_on_card_id"]
+    group_membership_id [name: "index_likes_on_group_membership_id"]
   }
 
   Note: '''
-  1人は同じ目的地に1回のみいいね可能（unique制約）。
-  グッド数は card_likes.count で取得。
+  グループカードのみいいね機能あり。
+  1人は同じカードに1回のみいいね可能（unique制約）。
+  LikesController#check_group_card_accessで権限チェック。
   '''
 }
 
