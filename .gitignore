@@ -44,4 +44,3 @@
 /docs
 /.vscode
 .devcontainer
-.devcontainer/.env.devcontainer
