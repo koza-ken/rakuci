@@ -31,7 +31,6 @@
             <%= f.label :memo, t('cards.form.memo'), class: "block text-sm font-medium text-text mb-2" %>
             <%= f.text_area :memo,
                 rows: 5,
-                placeholder: t('cards.form.memo_placeholder'),
                 class: "form-text-field resize-vertical" %>
             <% if @card.errors.any? %>
               <div class="ml-2">
