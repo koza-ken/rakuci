@@ -41,9 +41,6 @@ services: # コンテナの定義開始
     depends_on: # 依存関係の設定
       db: # dbサービスに依存
         condition: service_healthy # dbの健康チェックが通るまで待機
-    # devcontainerからgithubの認証
-    env_file:
-        - .devcontainer/.env.devcontainer
 
 volumes: # ボリュームの定義
   bundle_data: # gemデータの永続化用ボリューム
