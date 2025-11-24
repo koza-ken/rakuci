@@ -439,6 +439,8 @@ ja:
         spot: スポット
         day: 日目
         note: メモ
+        start_time: 到着時刻
+        end_time: 出発時刻
         created_at: 作成日時
         updated_at: 更新日時
 
@@ -446,7 +448,16 @@ ja:
       messages:
         blank: を入力してください
         too_long: は%{count}文字以内で入力してください
+        greater_than: は%{count}より後に設定してください
       models:
+        schedule:
+          attributes:
+            end_date:
+              greater_than: は旅行開始日より後の日付を設定してください
+        schedule_spot:
+          attributes:
+            end_time:
+              greater_than: 到着時刻より後の時刻を設定してください
         spot:
           attributes:
             google_place_id:
