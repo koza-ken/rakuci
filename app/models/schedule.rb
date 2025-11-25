@@ -24,9 +24,9 @@ class Schedule < ApplicationRecord
   # バリデーション
   validates :name, presence: true, length: { maximum: 50 }
   validates :schedulable_type, presence: true
+  validates :end_date, comparison: { greater_than: :start_date }, allow_blank: true
 
   # カスタムバリデーション
-  validate :end_date_after_start_date
   validate :only_one_schedule_per_group
 
   # しおりのタイプを返す（個人 or グループ）
@@ -65,15 +65,6 @@ class Schedule < ApplicationRecord
   end
 
   private
-
-  # 終了日が開始日より後になるように
-  def end_date_after_start_date
-    return if start_date.blank? || end_date.blank?
-
-    if end_date < start_date
-      errors.add(:end_date, "は開始日より後の日付を設定してください")
-    end
-  end
 
   # グループは1つのスケジュールのみ持つことができる
   def only_one_schedule_per_group

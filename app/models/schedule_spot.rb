@@ -45,10 +45,10 @@ class ScheduleSpot < ApplicationRecord
   validates :snapshot_address, length: { maximum: 255 }
   validates :snapshot_phone_number, length: { maximum: 20 }
   validates :snapshot_website_url, length: { maximum: 500 }
+  validates :end_time, comparison: { greater_than: :start_time }, allow_blank: true
 
   # カスタムバリデーション
   validate :spot_or_custom_entry_valid
-  validate :end_time_after_start_time
 
   # 並び替えgem acts_as_list
   acts_as_list column: :global_position, scope: [ :schedule_id, :day_number ]
@@ -94,15 +94,6 @@ class ScheduleSpot < ApplicationRecord
       if spot_id.blank?
         errors.add(:spot_id, "を指定してください")
       end
-    end
-  end
-
-  # 終了時刻が開始時刻より後かチェック
-  def end_time_after_start_time
-    return if start_time.blank? || end_time.blank?
-
-    if end_time <= start_time
-      errors.add(:end_time, "は到着時刻より後の時刻を指定してください")
     end
   end
 end
