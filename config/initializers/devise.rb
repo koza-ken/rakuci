@@ -271,8 +271,8 @@ Devise.setup do |config|
   # --google認証------------------------
   # ==> OmniAuth
   # credentials または環境変数から取得（CI環境では環境変数を使用）
-  google_client_id = Rails.application.credentials.dig(:google, :client_id) || ENV["GOOGLE_CLIENT_ID"]
-  google_client_secret = Rails.application.credentials.dig(:google, :client_secret) || ENV["GOOGLE_CLIENT_SECRET"]
+  google_client_id = Rails.application.credentials.dig(:google, :client_id) || ENV.fetch("GOOGLE_CLIENT_ID", nil)
+  google_client_secret = Rails.application.credentials.dig(:google, :client_secret) || ENV.fetch("GOOGLE_CLIENT_SECRET", nil)
 
   config.omniauth :google_oauth2,
     google_client_id,
