@@ -270,9 +270,14 @@ Devise.setup do |config|
 
   # --google認証------------------------
   # ==> OmniAuth
+  # credentials または環境変数から取得（CI環境では環境変数を使用）
+  google_client_id = Rails.application.credentials.dig(:google, :client_id) || ENV["GOOGLE_CLIENT_ID"]
+  google_client_secret = Rails.application.credentials.dig(:google, :client_secret) || ENV["GOOGLE_CLIENT_SECRET"]
+
   config.omniauth :google_oauth2,
-    Rails.application.credentials.google[:client_id],
-    Rails.application.credentials.google[:client_secret]
+    google_client_id,
+    google_client_secret,
+    skip_jwt: true
 
   # 開発環境での CSRF エラーを避けるため、GET も許可（本番で締める場合は POST のみに戻す）
   OmniAuth.config.allowed_request_methods = %i[post get]
