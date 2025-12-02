@@ -41,4 +41,41 @@ class User < ApplicationRecord
   def member_of?(group)
     group_memberships.exists?(group: group)
   end
+
+  def self.from_omniauth(auth)
+    # 既存のOAuth認証ユーザーを探す
+    user = find_by(provider: auth.provider, uid: auth.uid)
+    return user if user
+
+    # 既存のOAuth認証ユーザーがなければ、同じメールアドレスの既存ユーザーを探す
+    user = find_by(email: auth.info.email)
+
+    # 同じメールアドレスの既存ユーザーが見つかったら
+    if user
+      # 既存ユーザーにOAuth情報を紐付け（provider/uidが未設定の場合のみ）
+      if user.provider.blank? && user.uid.blank?
+        user.update!(
+          provider: auth.provider,
+          uid: auth.uid
+        )
+      end
+      return user
+    end
+
+    # ユーザーがなければ、新規ユーザーを作成
+    create!(
+      provider: auth.provider,
+      uid: auth.uid,
+      email: auth.info.email,
+      password: Devise.friendly_token[0, 20],
+      display_name: sanitized_display_name(auth)
+    )
+  end
+
+  def self.sanitized_display_name(auth)
+    display_name = auth.info.name.presence || auth.info.first_name.presence || auth.info.email.split("@").first
+    display_name.to_s[0, 20]
+  end
+  private_class_method :sanitized_display_name
+
 end
