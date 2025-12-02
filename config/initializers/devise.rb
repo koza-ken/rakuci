@@ -268,10 +268,23 @@ Devise.setup do |config|
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
 
+  # --google認証------------------------
   # ==> OmniAuth
-  # Add a new OmniAuth provider. Check the wiki for more information on setting
-  # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  # credentials または環境変数から取得（CI環境では環境変数を使用）
+  google_client_id = Rails.application.credentials.dig(:google, :client_id) || ENV.fetch("GOOGLE_CLIENT_ID", nil)
+  google_client_secret = Rails.application.credentials.dig(:google, :client_secret) || ENV.fetch("GOOGLE_CLIENT_SECRET", nil)
+
+  config.omniauth :google_oauth2,
+    google_client_id,
+    google_client_secret,
+    skip_jwt: true
+
+  # 開発環境での CSRF エラーを避けるため、GET も許可（本番で締める場合は POST のみに戻す）
+  OmniAuth.config.allowed_request_methods = %i[post get]
+  OmniAuth.config.silence_get_warning = true
+
+  # ---------------------------
+
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
