@@ -28,6 +28,8 @@ gem "jbuilder"
 # gem "bcrypt", "~> 3.1.7"
 
 gem "devise"
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
 gem "acts_as_list"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
