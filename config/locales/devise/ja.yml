@@ -65,6 +65,7 @@ ja:
         terms_of_service: "利用規約"
         privacy_policy: "プライバシーポリシー"
         sign_up: "登録する"
+        google_login: "Googleで登録"
         sign_in: "ログインページへ"
     sessions:
       new:
