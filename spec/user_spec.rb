@@ -74,4 +74,27 @@ RSpec.describe User, type: :model do
     end
 
   end
+
+  describe "member_ofメソッド" do
+    context "ユーザーがグループのメンバーの場合" do
+      it "member_ofはtrueを返すこと" do
+        user = create(:user)
+        group = create(:group)
+        create(:group_membership, user: user, group: group)
+
+        result = user.member_of?(group)
+        expect(result).to eq(true)
+      end
+    end
+
+    context "ユーザーがグループのメンバーではない場合" do
+      it "member_ofはfalseを返すこと" do
+        user = create(:user)
+        group = create(:group)
+        # ユーザーとグループを作って、メンバーシップを作らない
+        result = user.member_of?(group)
+        expect(result).to eq(false)
+      end
+    end
+  end
 end
