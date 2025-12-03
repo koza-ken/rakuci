@@ -276,12 +276,7 @@ Devise.setup do |config|
 
   config.omniauth :google_oauth2,
     google_client_id,
-    google_client_secret,
-    skip_jwt: true
-
-  # 開発環境での CSRF エラーを避けるため、GET も許可（本番で締める場合は POST のみに戻す）
-  OmniAuth.config.allowed_request_methods = %i[post get]
-  OmniAuth.config.silence_get_warning = true
+    google_client_secret
 
   # ---------------------------
 
