@@ -9,12 +9,14 @@ RSpec.describe Spot, type: :model do
           expect(spot).not_to be_valid
         end
       end
+
       context "文字数が50文字以下の場合" do
         it "保存に成功すること" do
           spot = build(:spot, name: "a" * 50)
           expect(spot).to be_valid
         end
       end
+
       context "文字数が51文字以上の場合" do
         it "保存に失敗すること" do
           spot = build(:spot, name: "a" * 51)
@@ -30,12 +32,14 @@ RSpec.describe Spot, type: :model do
           expect(spot).to be_valid
         end
       end
+
       context "文字数が20文字以下の場合" do
         it "保存に成功すること" do
           spot = build(:spot, phone_number: "a" * 20)
           expect(spot).to be_valid
         end
       end
+
       context "文字数が21文字以上の場合" do
         it "保存に失敗すること" do
           spot = build(:spot, phone_number: "a" * 21)
@@ -51,6 +55,7 @@ RSpec.describe Spot, type: :model do
           expect(spot).to be_valid
         end
       end
+
       context "値が同じカードに存在しない場合" do
         it "保存に成功すること" do
           card = create(:card)
@@ -58,6 +63,7 @@ RSpec.describe Spot, type: :model do
           expect(spot).to be_valid
         end
       end
+
       context "値が同じカードに存在する場合" do
         it "保存に失敗すること" do
           card = create(:card)
@@ -66,6 +72,7 @@ RSpec.describe Spot, type: :model do
           expect(spot2).not_to be_valid
         end
       end
+
       context "値が異なるカードに存在する場合" do
         it "保存に成功すること" do
           card1 = create(:card)

@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe GroupMembership, type: :model do
   describe "バリデーション" do
-
     describe "group_nickname" do
       context "値が存在しない場合" do
         it "保存に失敗すること" do
@@ -10,6 +9,7 @@ RSpec.describe GroupMembership, type: :model do
           expect(membership).not_to be_valid
         end
       end
+
       context "値がすでにグループに存在している場合" do
         it "保存に失敗すること" do
           group = create(:group)
@@ -18,6 +18,7 @@ RSpec.describe GroupMembership, type: :model do
           expect(membership2).not_to be_valid
         end
       end
+
       context "異なるニックネームで別のグループに参加する場合" do
         it "保存に成功する" do
           user = create(:user)
@@ -28,6 +29,7 @@ RSpec.describe GroupMembership, type: :model do
           expect(membership2).to be_valid
         end
       end
+
       context "文字数が21文字以上の場合" do
         it "保存に失敗すること" do
           membership = build(:group_membership, group_nickname: "a" * 21)
@@ -44,12 +46,14 @@ RSpec.describe GroupMembership, type: :model do
           expect(membership).to be_valid
         end
       end
+
       context "文字数が64文字以下の場合" do
         it "保存に成功すること" do
           membership = build(:group_membership, guest_token: "a" * 64)
           expect(membership).to be_valid
         end
       end
+
       context "文字数が65文字以上の場合" do
         it "保存に失敗すること" do
           membership = build(:group_membership, guest_token: "a" * 65)
@@ -67,18 +71,21 @@ RSpec.describe GroupMembership, type: :model do
           expect(membership).to be_valid
         end
       end
+
       context "guest_tokenだけがある場合" do
         it "保存に成功すること" do
           membership = build(:group_membership, :guest)
           expect(membership).to be_valid
         end
       end
+
       context "user_idとguest_tokenの両方がある場合" do
         it "保存に成功すること" do
           membership = build(:group_membership, guest_token: "guest_token")
           expect(membership).to be_valid
         end
       end
+
       context "user_idとguest_tokenの両方がない場合" do
         it "保存に失敗すること" do
           membership = build(:group_membership, user_id: nil, guest_token: nil)
@@ -89,15 +96,14 @@ RSpec.describe GroupMembership, type: :model do
   end
 
   describe "メソッド" do
-
     # ログインユーザーがグループのメンバーか確認するメソッド
     describe ".user_member?" do
       context "ユーザーがグループのメンバーの場合" do
         it "trueを返すこと" do
           membership = create(:group_membership)
 
-          result = GroupMembership.user_member?(membership.user, membership.group)
-          expect(result).to eq(true)
+          result = described_class.user_member?(membership.user, membership.group)
+          expect(result).to be(true)
         end
       end
 
@@ -105,8 +111,8 @@ RSpec.describe GroupMembership, type: :model do
         it "falseを返すこと" do
           user = create(:user)
           group = create(:group)
-          result = GroupMembership.user_member?(user, group)
-          expect(result).to eq(false)
+          result = described_class.user_member?(user, group)
+          expect(result).to be(false)
         end
       end
     end
@@ -115,16 +121,16 @@ RSpec.describe GroupMembership, type: :model do
     describe ".guest_member?" do
       context "guest_tokenが空の場合" do
         it "falseを返すこと" do
-          result = GroupMembership.guest_member?(nil, create(:group))
-          expect(result).to eq(false)
+          result = described_class.guest_member?(nil, create(:group))
+          expect(result).to be(false)
         end
       end
 
       context "guest_tokenがグループに存在する場合" do
         it "trueを返すこと" do
           membership = create(:group_membership, :guest)
-          result = GroupMembership.guest_member?(membership.guest_token, membership.group)
-          expect(result).to eq(true)
+          result = described_class.guest_member?(membership.guest_token, membership.group)
+          expect(result).to be(true)
         end
       end
 
@@ -132,8 +138,8 @@ RSpec.describe GroupMembership, type: :model do
         it "falseを返すこと" do
           membership = create(:group_membership, :guest)
           other_group = create(:group)
-          result = GroupMembership.guest_member?(membership.guest_token, other_group)
-          expect(result).to eq(false)
+          result = described_class.guest_member?(membership.guest_token, other_group)
+          expect(result).to be(false)
         end
       end
     end

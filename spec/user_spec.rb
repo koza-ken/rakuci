@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe User, type: :model do
   describe "バリデーション" do
-
     describe "display_name" do
       context "20文字以下の場合" do
         it "保存に成功する" do
@@ -27,7 +26,6 @@ RSpec.describe User, type: :model do
     end
 
     describe "provider と uid の相互依存" do
-
       context "両方存在する場合" do
         it "保存に成功する" do
           user = build(:user, :oauth)
@@ -72,7 +70,6 @@ RSpec.describe User, type: :model do
         end
       end
     end
-
   end
 
   describe "member_ofメソッド" do
@@ -83,7 +80,7 @@ RSpec.describe User, type: :model do
         create(:group_membership, user: user, group: group)
 
         result = user.member_of?(group)
-        expect(result).to eq(true)
+        expect(result).to be(true)
       end
     end
 
@@ -93,7 +90,7 @@ RSpec.describe User, type: :model do
         group = create(:group)
         # ユーザーとグループを作って、メンバーシップを作らない
         result = user.member_of?(group)
-        expect(result).to eq(false)
+        expect(result).to be(false)
       end
     end
   end

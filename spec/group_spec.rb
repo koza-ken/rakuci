@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe Group, type: :model do
   describe "バリデーション" do
-
     describe "created_by_user_id" do
       context "存在する場合" do
         it "保存に成功すること" do
@@ -26,18 +25,21 @@ RSpec.describe Group, type: :model do
           expect(group).to be_valid
         end
       end
+
       context "存在しない場合" do
         it "保存に失敗すること" do
           group = build(:group, name: nil)
           expect(group).not_to be_valid
         end
       end
+
       context "文字数が30文字以下の場合" do
         it "保存に成功すること" do
           group = build(:group, name: "a" * 30)
           expect(group).to be_valid
         end
       end
+
       context "文字数が31文字以上の場合" do
         it "保存に失敗すること" do
           group = build(:group, name: "a" * 31)
@@ -53,18 +55,21 @@ RSpec.describe Group, type: :model do
           expect(group).to be_valid
         end
       end
+
       context "文字数が64文字以下の場合" do
         it "保存に成功すること" do
           group = build(:group, invite_token: "a" * 64)
           expect(group).to be_valid
         end
       end
+
       context "文字数が65文字以上の場合" do
         it "保存に失敗すること" do
           group = build(:group, invite_token: "a" * 65)
           expect(group).not_to be_valid
         end
       end
+
       context "既存データとの重複がない場合" do
         it "保存に成功すること" do
           # 他のグループを先に作成して、そのトークンとは違うことを確認
@@ -73,6 +78,7 @@ RSpec.describe Group, type: :model do
           expect(group).to be_valid
         end
       end
+
       context "既存データとの重複がある場合" do
         it "保存に失敗すること" do
           group1 = create(:group)
@@ -80,7 +86,6 @@ RSpec.describe Group, type: :model do
           expect(group2).not_to be_valid
         end
       end
-
     end
   end
 

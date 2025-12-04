@@ -9,12 +9,14 @@ RSpec.describe Schedule, type: :model do
           expect(schedule).not_to be_valid
         end
       end
+
       context "文字数が50文字以下の場合" do
         it "保存に成功すること" do
           schedule = build(:schedule, name: "a" * 50)
           expect(schedule).to be_valid
         end
       end
+
       context "文字数が51文字以上の場合" do
         it "保存に失敗すること" do
           schedule = build(:schedule, name: "a" * 51)
@@ -30,24 +32,28 @@ RSpec.describe Schedule, type: :model do
           expect(schedule).to be_valid
         end
       end
+
       context "start_dateがあり、end_dateが空の場合" do
         it "保存に成功すること" do
           schedule = build(:schedule, start_date: Date.current, end_date: nil)
           expect(schedule).to be_valid
         end
       end
+
       context "end_dateがstart_dateより後の場合" do
         it "保存に成功すること" do
           schedule = build(:schedule, start_date: Date.current, end_date: Date.current + 1.day)
           expect(schedule).to be_valid
         end
       end
+
       context "end_dateがstart_dateと同じ場合" do
         it "保存に失敗すること" do
           schedule = build(:schedule, start_date: Date.current, end_date: Date.current)
           expect(schedule).not_to be_valid
         end
       end
+
       context "end_dateがstart_dateより前の場合" do
         it "保存に失敗すること" do
           schedule = build(:schedule, start_date: Date.current, end_date: Date.current - 1.day)
@@ -65,6 +71,7 @@ RSpec.describe Schedule, type: :model do
           expect(schedule2).to be_valid
         end
       end
+
       context "グループが初めてのしおりを作成する場合" do
         it "保存に成功すること" do
           group = create(:group)
@@ -72,6 +79,7 @@ RSpec.describe Schedule, type: :model do
           expect(schedule).to be_valid
         end
       end
+
       context "グループが既にしおりを持っている場合" do
         it "保存に失敗すること" do
           group = create(:group)

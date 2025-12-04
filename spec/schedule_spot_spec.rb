@@ -9,12 +9,14 @@ RSpec.describe ScheduleSpot, type: :model do
           expect(schedule_spot).to be_valid
         end
       end
+
       context "値が存在しない場合" do
         it "保存に失敗すること" do
           schedule_spot = build(:schedule_spot, day_number: nil)
           expect(schedule_spot).not_to be_valid
         end
       end
+
       context "値が0以下の場合" do
         it "保存に失敗すること" do
           schedule_spot = build(:schedule_spot, day_number: 0)
@@ -30,6 +32,7 @@ RSpec.describe ScheduleSpot, type: :model do
           expect(schedule_spot).to be_valid
         end
       end
+
       context "値が存在しない場合" do
         it "保存に失敗すること" do
           schedule_spot = build(:schedule_spot, global_position: nil)
@@ -45,6 +48,7 @@ RSpec.describe ScheduleSpot, type: :model do
           expect(schedule_spot).to be_valid
         end
       end
+
       context "文字数が51文字以上の場合" do
         it "保存に失敗すること" do
           schedule_spot = build(:schedule_spot, snapshot_name: "a" * 51)
@@ -60,6 +64,7 @@ RSpec.describe ScheduleSpot, type: :model do
           expect(schedule_spot).to be_valid
         end
       end
+
       context "文字数が256文字以上の場合" do
         it "保存に失敗すること" do
           schedule_spot = build(:schedule_spot, snapshot_address: "a" * 256)
@@ -75,6 +80,7 @@ RSpec.describe ScheduleSpot, type: :model do
           expect(schedule_spot).to be_valid
         end
       end
+
       context "文字数が21文字以上の場合" do
         it "保存に失敗すること" do
           schedule_spot = build(:schedule_spot, snapshot_phone_number: "a" * 21)
@@ -90,6 +96,7 @@ RSpec.describe ScheduleSpot, type: :model do
           expect(schedule_spot).to be_valid
         end
       end
+
       context "文字数が501文字以上の場合" do
         it "保存に失敗すること" do
           schedule_spot = build(:schedule_spot, snapshot_website_url: "a" * 501)
@@ -105,24 +112,28 @@ RSpec.describe ScheduleSpot, type: :model do
           expect(schedule_spot).to be_valid
         end
       end
+
       context "start_timeがあり、end_timeが空の場合" do
         it "保存に成功すること" do
           schedule_spot = build(:schedule_spot, start_time: "10:00", end_time: nil)
           expect(schedule_spot).to be_valid
         end
       end
+
       context "end_timeがstart_timeより後の場合" do
         it "保存に成功すること" do
           schedule_spot = build(:schedule_spot, start_time: "10:00", end_time: "11:00")
           expect(schedule_spot).to be_valid
         end
       end
+
       context "end_timeがstart_timeと同じ場合" do
         it "保存に失敗すること" do
           schedule_spot = build(:schedule_spot, start_time: "10:00", end_time: "10:00")
           expect(schedule_spot).not_to be_valid
         end
       end
+
       context "end_timeがstart_timeより前の場合" do
         it "保存に失敗すること" do
           schedule_spot = build(:schedule_spot, start_time: "11:00", end_time: "10:00")
@@ -139,12 +150,14 @@ RSpec.describe ScheduleSpot, type: :model do
           expect(schedule_spot).to be_valid
         end
       end
+
       context "is_custom_entryがtrueで、spot_idがない場合" do
         it "保存に成功すること" do
           schedule_spot = build(:schedule_spot, :custom, is_custom_entry: true)
           expect(schedule_spot).to be_valid
         end
       end
+
       context "is_custom_entryがtrueで、spot_idがある場合" do
         it "保存に失敗すること" do
           spot = create(:spot)
@@ -152,12 +165,14 @@ RSpec.describe ScheduleSpot, type: :model do
           expect(schedule_spot).not_to be_valid
         end
       end
+
       context "is_custom_entryがfalseで、spot_idがない場合" do
         it "保存に失敗すること" do
           schedule_spot = build(:schedule_spot, spot_id: nil, is_custom_entry: false)
           expect(schedule_spot).not_to be_valid
         end
       end
+
       context "is_custom_entryがtrueで、snapshot_nameが空の場合" do
         it "保存に失敗すること" do
           schedule_spot = build(:schedule_spot, :custom, snapshot_name: nil, is_custom_entry: true)
@@ -199,7 +214,7 @@ RSpec.describe ScheduleSpot, type: :model do
         it "schedule_spotが作成されること" do
           schedule = create(:schedule)
           spot = create(:spot)
-          schedule_spot = ScheduleSpot.create_from_spot(schedule, spot, day_number: 2)
+          schedule_spot = described_class.create_from_spot(schedule, spot, day_number: 2)
 
           expect(schedule_spot.spot_id).to eq(spot.id)
           expect(schedule_spot.day_number).to eq(2)
