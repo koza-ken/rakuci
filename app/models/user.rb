@@ -34,7 +34,7 @@ class User < ApplicationRecord
   has_many :schedules, as: :schedulable, dependent: :destroy
 
   validates :display_name, length: { maximum: 20 }, allow_blank: true
-  validates :provider, presence: true, if: -> { uid.present? }, length: { maximum: 64 }, allow_blank: true
+  validates :provider, presence: true, if: -> { uid.present? }, length: { maximum: 64 }
   validates :uid, presence: true, if: -> { provider.present? }
 
   # ユーザーが特定のグループのメンバーかどうかを確認

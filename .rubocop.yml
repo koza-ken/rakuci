@@ -317,3 +317,16 @@ Rails/WhereNot:
   Enabled: true
 Rails/WhereNotWithMultipleConditions:
   Enabled: true
+
+# RSpec設定 - 日本語プロジェクトのため、when/with/withoutの必須は無効化
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 6  # デフォルト: 3
+
+RSpec/ExampleLength:
+  Max: 8  # デフォルト: 5
+
+RSpec/MultipleExpectations:
+  Max: 5  # デフォルト: 1
