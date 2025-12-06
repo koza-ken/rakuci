@@ -46,7 +46,8 @@ class Schedule < ApplicationRecord
     if schedule_type == :personal
       Rails.application.routes.url_helpers.schedule_path(self)
     else
-      Rails.application.routes.url_helpers.group_schedule_path(group, self)
+      # グループスケジュールは resource（単数形）なので、IDは不要
+      Rails.application.routes.url_helpers.group_schedule_path(group)
     end
   end
 
