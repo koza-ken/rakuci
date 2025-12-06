@@ -17,6 +17,8 @@
 #  index_schedules_on_polymorphic  (schedulable_type,schedulable_id) UNIQUE WHERE ((schedulable_type)::text = 'Group'::text)
 #
 class Schedule < ApplicationRecord
+  include Hashid::Rails
+
   # アソシエーション
   belongs_to :schedulable, polymorphic: true
   has_many :schedule_spots, dependent: :destroy
@@ -44,7 +46,8 @@ class Schedule < ApplicationRecord
     if schedule_type == :personal
       Rails.application.routes.url_helpers.schedule_path(self)
     else
-      Rails.application.routes.url_helpers.group_schedule_path(group, self)
+      # グループスケジュールは resource（単数形）なので、IDは不要
+      Rails.application.routes.url_helpers.group_schedule_path(group)
     end
   end
 

@@ -142,6 +142,10 @@ GEM
       net-http (~> 0.5)
     globalid (1.3.0)
       activesupport (>= 6.1)
+    hashid-rails (1.4.1)
+      activerecord (>= 4.0)
+      hashids (~> 1.0)
+    hashids (1.0.6)
     hashie (5.0.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
@@ -449,6 +453,7 @@ DEPENDENCIES
   devise
   factory_bot_rails
   faker
+  hashid-rails (~> 1.0)
   jbuilder
   jsbundling-rails
   omniauth-google-oauth2
