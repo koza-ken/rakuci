@@ -7,10 +7,9 @@ RSpec.describe "グループ利用フロー", type: :request do
 
   describe "グループ作成から共有までの一連の流れ" do
     it "グループAがグループを作成し、ゲストBが参加・カード作成・いいねする" do
-      # ユーザーA がログイン
+      # ① グループ作成（ユーザーA）
       sign_in user_a
 
-      # グループ作成
       post "/groups", params: {
         group_create_form: {
           name: "東京旅行グループ",
@@ -22,32 +21,65 @@ RSpec.describe "グループ利用フロー", type: :request do
       expect(group.name).to eq("東京旅行グループ")
       expect(group.created_by_user_id).to eq(user_a.id)
 
-      # 招待トークンが自動生成されていることを確認
+      # ② 招待リンク生成
       expect(group.invite_token).to be_present
+      invite_token = group.invite_token
 
-      # ユーザーA がログイン状態でグループカードを作成
+      # ③ ゲストB参加（招待トークンを使用）
+      sign_out user_a
+      sign_in user_b
+
+      post "/groups/join/#{invite_token}", params: {
+        group_nickname: "Bのニックネーム",
+        membership_source: "text_input"
+      }
+      expect(response).to redirect_to(/\/groups/)
+      user_b_membership = GroupMembership.find_by(user: user_b, group: group)
+      expect(user_b_membership).to be_present
+
+      # ④ グループカード作成（B）
       post "/cards", params: {
         card: {
-          name: "東京の隠れスポット",
+          name: "B作成のカード",
           group_id: group.id
         }
       }
       expect(response).to redirect_to(group_path(group))
-      card = Card.last
-      expect(card.group_id).to eq(group.id)
+      b_card = Card.last
+      expect(b_card.group_id).to eq(group.id)
 
       # スポット追加
-      post "/cards/#{card.id}/spots", params: {
+      post "/cards/#{b_card.id}/spots", params: {
         spot: {
           name: "渋谷のカフェ",
           category_id: category.id
         }
       }
-      expect(response).to redirect_to(card_path(card))
+      expect(response).to redirect_to(card_path(b_card))
       spot = Spot.last
 
-      # グループ用しおり作成
-      group.reload
+      # ⑤ ユーザーA が B のカードを閲覧・いいね
+      sign_out user_b
+      sign_in user_a
+
+      get "/cards/#{b_card.id}"
+      expect(response).to be_successful
+      expect(response.body).to include("B作成のカード")
+
+      post "/cards/#{b_card.id}/likes", params: {}
+      expect(response).to redirect_to(/\/cards/)
+
+      # ⑥ コメント追加
+      post "/cards/#{b_card.id}/comments", params: {
+        comment: { content: "いいカードですね！" }
+      }
+      expect(response).to redirect_to(/\/cards/)
+
+      b_card.reload
+      expect(b_card.comments.count).to eq(1)
+      expect(b_card.comments.first.content).to eq("いいカードですね！")
+
+      # ⑦ グループしおり作成・共有
       post "/groups/#{group.id}/schedule", params: {
         schedule: {
           name: "東京2日間プラン",
@@ -62,14 +94,20 @@ RSpec.describe "グループ利用フロー", type: :request do
       # スポットをしおりに追加
       post "/groups/#{group.id}/schedule/schedule_spots", params: {
         schedule_spot: {},
-        card_id: card.id,
+        card_id: b_card.id,
         schedule_id: schedule.id,
         spot_id: spot.id
       }
-      expect(response).to redirect_to(card_path(card))
+      expect(response).to redirect_to(card_path(b_card))
 
       schedule.reload
       expect(schedule.schedule_spots.count).to eq(1)
+
+      # ⑧ グループ削除
+      delete "/groups/#{group.id}"
+      expect(response).to redirect_to(/\/groups/)
+
+      expect(Group.find_by(id: group.id)).to be_nil
     end
   end
 
