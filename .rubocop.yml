@@ -323,10 +323,10 @@ RSpec/ContextWording:
   Enabled: false
 
 RSpec/NestedGroups:
-  Max: 6  # デフォルト: 3
+  Enabled: false  # デフォルト: 3
 
 RSpec/ExampleLength:
-  Max: 8  # デフォルト: 5
+  Enabled: false  # テスト種類により最適値が異なるためオフ
 
 RSpec/MultipleExpectations:
-  Max: 5  # デフォルト: 1
+  Enabled: false  # E2E テストは複数の検証が必須のためオフ
