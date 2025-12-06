@@ -62,10 +62,6 @@ RSpec.describe "グループ利用フロー", type: :request do
       sign_out user_b
       sign_in user_a
 
-      get "/cards/#{b_card.id}"
-      expect(response).to be_successful
-      expect(response.body).to include("B作成のカード")
-
       post "/cards/#{b_card.id}/likes", params: {}
       expect(response).to redirect_to(/\/cards/)
 

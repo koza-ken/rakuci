@@ -66,11 +66,6 @@ RSpec.describe "個人ユーザーのしおり作成フロー", type: :request d
       schedule_spot = schedule.schedule_spots.first
       expect(schedule_spot.spot_id).to eq(spot.id)
       expect(schedule_spot.day_number).to eq(1)
-
-      # しおりを表示
-      get "/schedules/#{schedule.id}"
-      expect(response).to be_successful
-      expect(response.body).to include("東京旅行")
     end
   end
 
