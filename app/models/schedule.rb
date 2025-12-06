@@ -17,6 +17,8 @@
 #  index_schedules_on_polymorphic  (schedulable_type,schedulable_id) UNIQUE WHERE ((schedulable_type)::text = 'Group'::text)
 #
 class Schedule < ApplicationRecord
+  include Hashid::Rails
+
   # アソシエーション
   belongs_to :schedulable, polymorphic: true
   has_many :schedule_spots, dependent: :destroy

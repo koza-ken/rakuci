@@ -19,6 +19,8 @@
 #  fk_rails_...  (created_by_user_id => users.id)
 #
 class Group < ApplicationRecord
+  include Hashid::Rails
+
   # コールバック（招待用のトークン設定）
   before_validation :generate_invite_token, on: :create
 

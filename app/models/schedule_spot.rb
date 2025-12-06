@@ -32,6 +32,8 @@
 #  fk_rails_...  (spot_id => spots.id)
 #
 class ScheduleSpot < ApplicationRecord
+  include Hashid::Rails
+
   # アソシエーション
   belongs_to :schedule
   belongs_to :spot, optional: true  # カスタム入力時はspot_id = NULL

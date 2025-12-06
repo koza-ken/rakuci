@@ -21,6 +21,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Card < ApplicationRecord
+  include Hashid::Rails
+
   has_many :spots, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
