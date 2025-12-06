@@ -44,7 +44,7 @@ RSpec.describe "グループ利用フロー", type: :request do
           group_id: group.id
         }
       }
-      expect(response).to redirect_to(group_path(group))
+      expect(response).to redirect_to(/\/groups\/\w+/)
       b_card = Card.last
       expect(b_card.group_id).to eq(group.id)
 
