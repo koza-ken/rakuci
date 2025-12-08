@@ -3,7 +3,7 @@
     <div class="w-full max-w-md">
       <h2 class="text-2xl font-bold text-text text-center mb-8"><%= t('.title') %></h2>
 
-      <%= form_with model: resource, as: resource_name, url: registration_path(resource_name), method: :put, local: true do |f| %>
+      <%= form_with model: resource, as: resource_name, url: registration_path(resource_name), method: :patch, local: true do |f| %>
         <%# OAuth認証情報の表示 %>
         <% if resource.oauth_user? %>
           <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-md">
