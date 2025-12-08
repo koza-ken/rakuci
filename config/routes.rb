@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, controllers: {
+    # deviseのコントローラをカスタム
+    omniauth_callbacks: "users/omniauth_callbacks",
+    registrations: "users/registrations"
+  }
+
+  # プロフィールページへのエイリアス（devise_scopeでDeviseの初期化処理を通す）
+  devise_scope :user do
+    get "/profile", to: "users/registrations#edit", as: :profile
+  end
+
   root "static_pages#home"
 
   resources :cards, only: %i[index show new create update destroy] do

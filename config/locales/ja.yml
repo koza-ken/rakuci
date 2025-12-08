@@ -420,9 +420,11 @@ ja:
         updated_at: 更新日時
 
       user:
+        display_name: ユーザー名
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード（確認）
+        current_password: 現在のパスワード
 
       schedule:
         name: しおり名
@@ -449,6 +451,8 @@ ja:
         blank: を入力してください
         too_long: は%{count}文字以内で入力してください
         greater_than: は%{count}より後に設定してください
+        taken: は既に使用されています
+        invalid: は無効です
       models:
         schedule:
           attributes:

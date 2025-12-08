@@ -44,6 +44,11 @@ class User < ApplicationRecord
     group_memberships.exists?(group: group)
   end
 
+  # OAuth認証（Google認証など）で登録されたユーザーかどうか
+  def oauth_user?
+    provider.present? && uid.present?
+  end
+
   def self.from_omniauth(auth)
     # 既存のOAuth認証ユーザーを探す
     user = find_by(provider: auth.provider, uid: auth.uid)

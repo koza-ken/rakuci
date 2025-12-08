@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   # フレンドリーフォアーディング
   before_action :store_user_location!, if: :storable_location?
+  # Deviseのパラメータ設定
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   # concernに書いたモジュールをinclude
   include GuestAuthentication
@@ -13,6 +15,12 @@ class ApplicationController < ActionController::Base
   # end
 
   private
+
+  # Deviseで許可するパラメータの設定
+  def configure_permitted_parameters
+    # アカウント更新時（/users/edit）にdisplay_nameを許可
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :display_name ])
+  end
 
   # フレンドリーフォアーディング
   def storable_location?
