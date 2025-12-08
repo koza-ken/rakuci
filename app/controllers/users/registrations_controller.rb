@@ -1,0 +1,24 @@
+class Users::RegistrationsController < Devise::RegistrationsController
+  before_action :authenticate_user!
+
+  protected
+
+  # アカウント更新時のパラメータ処理をカスタマイズ
+  def update_resource(resource, params)
+    # Google認証ユーザーの場合は、current_passwordなしで更新可能
+    if resource.oauth_user?
+      resource.update_without_password(params)
+    # 通常ユーザーでメールアドレスが変更されていない場合は、current_passwordなしで更新可能
+    elsif params[:email] == resource.email || params[:email].blank?
+      resource.update_without_password(params.except(:current_password))
+    else
+      # メールアドレスが変更される場合は、current_passwordが必要
+      super
+    end
+  end
+
+  # アカウント更新後のリダイレクト先を設定（deviseのメソッドをオーバーライド）
+  def after_update_path_for(resource)
+    profile_path
+  end
+end
