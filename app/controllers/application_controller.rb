@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   # Deviseで許可するパラメータの設定
   def configure_permitted_parameters
     # アカウント更新時（/users/edit）にdisplay_nameを許可
-    devise_parameter_sanitizer.permit(:account_update, keys: [:display_name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :display_name ])
   end
 
   # フレンドリーフォアーディング
