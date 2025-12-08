@@ -122,6 +122,14 @@ jobs:
       - name: Build JavaScript assets
         run: yarn build
 
+      - name: Build CSS assets
+        run: yarn build:css
+
+      - name: Precompile assets
+        env:
+          RAILS_ENV: test
+        run: bin/rails assets:precompile
+
       - name: Run tests
         env:
           RAILS_ENV: test
