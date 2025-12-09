@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
   before_action :ensure_group_present!, only: %i[ new_membership create_membership ]
 
   def index
-    @groups = current_user.groups.includes(:group_memberships, :schedule)
+    @groups = current_user.groups.includes(:group_memberships, :schedule).order(updated_at: :desc)
   end
 
   def show
