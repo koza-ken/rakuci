@@ -76,7 +76,7 @@
           <% end %>
         </div>
         <div id="group-create-button" class="card-index border-dashed text-center mt-2" data-controller="modal">
-          <%= link_to new_card_path, data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId", group_id: @group.id}, class: "flex items-center justify-center gap-2" do %>
+          <%= link_to new_group_card_path(@group), data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId", group_id: @group.id}, class: "flex items-center justify-center gap-2" do %>
             <%= render "shared/icon/group_card_icon_add" %>
             <p><%= t('groups.show.add_card') %></p>
           <% end %>

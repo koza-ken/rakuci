@@ -48,7 +48,7 @@
         <% end %>
       <% else %>
         <%# グループカード: チェックボックスフォーム %>
-        <%= form_with url: card_spots_group_schedule_spots_path(@card), method: :post, local: true do |f| %>
+        <%= form_with url: group_card_schedule_spots_path(@card.group, @card), method: :post, local: true do |f| %>
           <%= render "spots/spots", spots: @card.spots, categories: @categories %>
           <div class="flex gap-2 mt-4">
             <%= f.submit t('cards.add_spots_to_schedule'), class: "btn-main flex-1" %>
@@ -126,7 +126,7 @@
       <% end %>
     </div>
     <div class="flex justify-center mt-18">
-      <%= button_to card_path(@card), method: :delete, data: { turbo_confirm: t("cards.delete_confirm") }, class: "btn-danger" do %>
+      <%= button_to (@card.group_card? ? group_card_path(@card.group, @card) : card_path(@card)), method: :delete, data: { turbo_confirm: t("cards.delete_confirm") }, class: "btn-danger" do %>
         <%= t("cards.delete_button") %>
       <% end %>
     </div>

@@ -7,7 +7,7 @@
       <main class="flex flex-col items-center justify-center px-8 py-12">
         <h1 class="text-2xl font-bold text-text mb-8"><%= t('.title') %></h1>
 
-        <%= form_with model: @card, class: "w-full max-w-md" do |f| %>
+        <%= form_with model: @card, url: (@group ? group_cards_path(@group) : cards_path), class: "w-full max-w-md" do |f| %>
           <%# カード名 %>
           <div class="mb-6">
             <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
@@ -40,9 +40,6 @@
               </div>
             <% end %>
           </div>
-
-          <%# JavaScriptで動的に設定されるgroup_id %>
-          <%= f.hidden_field :group_id %>
 
           <%# ボタン %>
           <div class="flex gap-3">
