@@ -27,8 +27,7 @@ class Card < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_group_memberships, through: :likes, source: :group_membership
-  belongs_to :user, optional: true
-  belongs_to :group, optional: true
+  belongs_to :cardable, polymorphic: true
   validates :name, presence: true, length: { maximum: 50 }
 
   # カスタムバリデーション: user_idとgroup_idの排他制約
