@@ -3,7 +3,7 @@ class Users::CardsController < ApplicationController
   before_action :set_card, only: %i[show update destroy]
 
   def index
-    @cards = current_user.cards.includes(:user, :group).order(updated_at: :desc)
+    @cards = current_user.cards.includes(:cardable).order(updated_at: :desc)
   end
 
   def show
