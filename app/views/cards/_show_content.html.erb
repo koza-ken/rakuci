@@ -33,7 +33,7 @@
 
     <%# スポット追加ボタン %>
     <div class="flex justify-end mb-2 w-auto" data-controller="modal">
-      <%= link_to new_card_spot_path(@card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, class: "btn-main px-4 py-2 w-auto" do %>
+      <%= link_to (@card.group_card? ? new_group_card_spot_path(@card.group, @card) : new_card_spot_path(@card)), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, class: "btn-main px-4 py-2 w-auto" do %>
         <%= t('cards.add_spot') %>
       <% end %>
     </div>
