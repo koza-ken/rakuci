@@ -1,6 +1,6 @@
 <div id="like_area_<%= card.id %>" class="flex gap-1 items-center mr-1">
   <%# メンバーっシップの取得（パーシャルに渡されたlocal_assignsかturbostreamならヘルパーメソッドで自ら取得する %>
-  <% current_membership = local_assigns[:current_membership] || current_group_membership_for(card.group_id) %>
+  <% current_membership = local_assigns[:current_membership] || current_group_membership_for(card.group.id) %>
 
   <% if card.liked_by?(current_membership) %>
     <%= button_to card_likes_path(card), method: :delete, class: "flex items-center p-0 bg-transparent border-0 cursor-pointer hover:opacity-70", form: { onclick: "event.stopPropagation();" } do %>
