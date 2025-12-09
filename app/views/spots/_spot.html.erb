@@ -1,5 +1,5 @@
 <%# スポット追加時に挿入される要素 %>
 <div id="<%= dom_id(spot) %>" class="mb-2 flex items-center gap-2">
   <%= check_box_tag "spot_ids[]", spot.id, false, id: "spot_#{spot.id}", class: "w-4 h-4" %>
-  <%= link_to spot.name, card_spot_path(@card, spot), class: "text-text-light underline hover:opacity-70" %>
+  <%= link_to spot.name, (@card.group_card? ? group_card_spot_path(@card.group, @card, spot) : card_spot_path(@card, spot)), class: "text-text-light underline hover:opacity-70" %>
 </div>
