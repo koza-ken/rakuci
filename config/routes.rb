@@ -12,26 +12,34 @@ Rails.application.routes.draw do
 
   root "static_pages#home"
 
-  resources :cards, only: %i[index show new create update destroy] do
-    # 個人用しおり（チェックボックス）のスポット追加（spot_idがいらない）の新規作成new
-    get "schedule_spots/new", to: "users/schedule_spots#new", as: :new_schedule_spots
-    # 個人用しおり（チェックボックス）のスポット追加（spot_idがいらない）
-    post "schedule_spots", to: "users/schedule_spots#create", as: :spots_schedule_spots
-    # グループ用しおり（チェックボックス）のスポット追加（spot_idがいらない）
-    post "group_schedule_spots", to: "groups/schedule_spots#create", as: :spots_group_schedule_spots
+  # 個人用リソース（Users名前空間）
+  scope module: "users" do
+    resources :cards, only: %i[index show new create update destroy] do
+      # 個人用しおり（チェックボックス）のスポット追加（spot_idがいらない）
+      get "schedule_spots/new", to: "schedule_spots#new", as: :new_schedule_spots
+      post "schedule_spots", to: "schedule_spots#create", as: :spots_schedule_spots
 
-    resources :spots, only: %i[show new create edit update destroy] do
-      # 個人用しおりの個別スポット追加
-      resources :schedule_spots, only: %i[new create], controller: "users/schedule_spots"
-      # グループ用しおりの個別スポット追加（作成ページなし）
-      post "/group_schedule_spots", to: "groups/schedule_spots#create", as: :group_schedule_spot
+      resources :spots, only: %i[show new create edit update destroy] do
+        # 個人用しおりの個別スポット追加
+        resources :schedule_spots, only: %i[new create]
+      end
     end
-    resources :comments, only: %i[create destroy]
-    resource :likes, only: %i[create destroy]
   end
 
-  # group_idをURLに渡すためにネスト
+  # グループ用リソース
   resources :groups, only: %i[index show new create update destroy] do
+    resources :cards, only: %i[show new create update destroy], controller: "groups/cards" do
+      # グループ用しおり（チェックボックス）のスポット追加
+      post "schedule_spots", to: "groups/schedule_spots#create", as: :schedule_spots
+
+      resources :spots, only: %i[show new create edit update destroy], controller: "groups/spots" do
+        # グループ用しおりの個別スポット追加
+        post "/schedule_spots", to: "groups/schedule_spots#create", as: :schedule_spot
+      end
+      resources :comments, only: %i[create destroy], controller: "groups/comments"
+      resource :likes, only: %i[create destroy], controller: "groups/likes"
+    end
+
     resource :schedule, only: %i[show new create edit update], controller: "groups/schedules" do
       resources :schedule_spots, only: %i[new create show edit update destroy], controller: "groups/schedule_spots" do
         # 並び替えacts_as_listで設定したアクション
