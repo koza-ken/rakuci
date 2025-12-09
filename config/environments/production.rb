@@ -105,4 +105,5 @@ Rails.application.configure do
   # 独自ドメインの追加
   config.hosts << "rakuci.com"      # 独自ドメイン
   config.hosts << "www.rakuci.com"  # サブドメイン
+  config.hosts << "rakuci.onrender.com"     # Render.comのデフォルトドメイン
 end
