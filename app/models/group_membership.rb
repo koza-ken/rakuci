@@ -29,7 +29,7 @@ class GroupMembership < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_cards, through: :likes, source: :card
   belongs_to :user, optional: true
-  belongs_to :group
+  belongs_to :group, touch: true
   validates :group_nickname, presence: true, uniqueness: { scope: :group_id }, length: { maximum: 20 }
   validates :guest_token, length: { maximum: 64 }, allow_blank: true
   # user_id または guest_token のどちらかが必須

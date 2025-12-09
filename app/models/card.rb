@@ -21,7 +21,7 @@ class Card < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_group_memberships, through: :likes, source: :group_membership
-  belongs_to :cardable, polymorphic: true
+  belongs_to :cardable, polymorphic: true, touch: true
   validates :name, presence: true, length: { maximum: 50 }
 
   # カードのタイプを返す（個人用 or グループ用）

@@ -20,7 +20,7 @@
 #  fk_rails_...  (group_membership_id => group_memberships.id)
 #
 class Like < ApplicationRecord
-  belongs_to :card
+  belongs_to :card, touch: true
   belongs_to :group_membership
 
   validates :group_membership_id, uniqueness: { scope: :card_id }

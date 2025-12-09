@@ -20,7 +20,7 @@ class Schedule < ApplicationRecord
   include Hashid::Rails
 
   # アソシエーション
-  belongs_to :schedulable, polymorphic: true
+  belongs_to :schedulable, polymorphic: true, touch: true
   has_many :schedule_spots, dependent: :destroy
 
   # バリデーション
