@@ -3,19 +3,17 @@ FactoryBot.define do
     sequence(:name) { |n| "card#{n}" }
     memo { Faker::Lorem.characters(number: 200) }
 
-    # デフォルトはuser_idを持つ（個人用カード）
-    association :user, strategy: :create
-    group_id { nil }
+    # デフォルトは個人用カード（cardable = User）
+    association :cardable, factory: :user
 
     trait :for_user do
-      # user_idを明示的に指定
-      association :user, strategy: :create
+      # 個人用カード（明示的に指定）
+      association :cardable, factory: :user
     end
 
     trait :for_group do
-      # group_idに切り替え、user_idはnil
-      user_id { nil }
-      association :group, strategy: :create
+      # グループ用カード（cardable = Group）
+      association :cardable, factory: :group
     end
   end
 end

@@ -38,38 +38,37 @@ RSpec.describe "グループ利用フロー", type: :request do
       expect(user_b_membership).to be_present
 
       # ④ グループカード作成（B）
-      post "/cards", params: {
+      post "/groups/#{group.id}/cards", params: {
         card: {
-          name: "B作成のカード",
-          group_id: group.id
+          name: "B作成のカード"
         }
       }
-      expect(response).to redirect_to(/\/groups\/\w+/)
+      expect(response).to redirect_to(group_path(group))
       b_card = Card.last
-      expect(b_card.group_id).to eq(group.id)
+      expect(b_card.cardable_id).to eq(group.id)
 
       # スポット追加
-      post "/cards/#{b_card.id}/spots", params: {
+      post "/groups/#{group.id}/cards/#{b_card.id}/spots", params: {
         spot: {
           name: "渋谷のカフェ",
           category_id: category.id
         }
       }
-      expect(response).to redirect_to(card_path(b_card))
+      expect(response).to redirect_to(group_card_path(group, b_card))
       spot = Spot.last
 
       # ⑤ ユーザーA が B のカードを閲覧・いいね
       sign_out user_b
       sign_in user_a
 
-      post "/cards/#{b_card.id}/likes", params: {}
-      expect(response).to redirect_to(/\/cards/)
+      post "/groups/#{group.id}/cards/#{b_card.id}/likes", params: {}
+      expect(response).to redirect_to(group_card_path(group, b_card))
 
       # ⑥ コメント追加
-      post "/cards/#{b_card.id}/comments", params: {
+      post "/groups/#{group.id}/cards/#{b_card.id}/comments", params: {
         comment: { content: "いいカードですね！" }
       }
-      expect(response).to redirect_to(/\/cards/)
+      expect(response).to redirect_to(group_card_path(group, b_card))
 
       b_card.reload
       expect(b_card.comments.count).to eq(1)
@@ -94,7 +93,7 @@ RSpec.describe "グループ利用フロー", type: :request do
         schedule_id: schedule.id,
         spot_id: spot.id
       }
-      expect(response).to redirect_to(card_path(b_card))
+      expect(response).to redirect_to(group_card_path(group, b_card))
 
       schedule.reload
       expect(schedule.schedule_spots.count).to eq(1)
@@ -111,23 +110,23 @@ RSpec.describe "グループ利用フロー", type: :request do
     it "グループメンバーがコメント・いいねできること" do
       group = create(:group)
       membership = create(:group_membership, user: user_a, group: group)
-      card = create(:card, :for_group, group: group)
+      card = create(:card, :for_group, cardable: group)
 
       sign_in user_a
 
       # コメント作成
-      post "/cards/#{card.id}/comments", params: {
+      post "/groups/#{group.id}/cards/#{card.id}/comments", params: {
         comment: { content: "いいカードですね！" }
       }
-      expect(response).to redirect_to(/\/cards/)
+      expect(response).to redirect_to(group_card_path(group, card))
 
       card.reload
       expect(card.comments.count).to eq(1)
       expect(card.comments.first.content).to eq("いいカードですね！")
 
       # いいね作成
-      post "/cards/#{card.id}/likes", params: {}
-      expect(response).to redirect_to(/\/cards/)
+      post "/groups/#{group.id}/cards/#{card.id}/likes", params: {}
+      expect(response).to redirect_to(group_card_path(group, card))
 
       card.reload
       expect(card.likes.count).to eq(1)
@@ -138,7 +137,7 @@ RSpec.describe "グループ利用フロー", type: :request do
   describe "グループ削除時のカスケード削除" do
     it "グループを削除すると関連データがすべて削除されること" do
       group = create(:group)
-      card = create(:card, :for_group, group: group)
+      card = create(:card, :for_group, cardable: group)
       spot = create(:spot, card: card)
       schedule = create(:schedule, :for_group, schedulable: group)
       schedule_spot = create(:schedule_spot, schedule: schedule, spot: spot)

@@ -25,70 +25,27 @@ RSpec.describe Card, type: :model do
       end
     end
 
-    # userかgroupのどちらか一方に関連づいているかのバリデーション
-    describe "must_belong_to_user_or_group" do
-      context "user_idがあってgroup_idがない場合" do
+    # ポリモーフィック関連のバリデーション
+    describe "cardable（ポリモーフィック関連）" do
+      context "個人カードの場合" do
         it "保存に成功すること" do
           card = build(:card, :for_user)
           expect(card).to be_valid
+          expect(card.cardable_type).to eq("User")
         end
       end
 
-      context "user_idがなくてgroup_idがある場合" do
+      context "グループカードの場合" do
         it "保存に成功すること" do
           card = build(:card, :for_group)
           expect(card).to be_valid
-        end
-      end
-
-      context "user_idとgroup_idの両方がある場合" do
-        it "保存に失敗すること" do
-          group = create(:group)
-          card = build(:card, group_id: group.id)
-          expect(card).not_to be_valid
-        end
-      end
-
-      context "user_idとgroup_idの両方がない場合" do
-        it "保存に失敗すること" do
-          card = build(:card, user_id: nil, group_id: nil)
-          expect(card).not_to be_valid
+          expect(card.cardable_type).to eq("Group")
         end
       end
     end
   end
 
   describe "メソッド" do
-    describe ".build_forメソッド" do
-      context "group_idがある場合" do
-        it "グループカードが作成されること（ユーザーに紐づけない）" do
-          user = create(:user)
-          group = create(:group)
-          attributes = { name: "test", group_id: group.id }
-          card = described_class.build_for(user: user, attributes: attributes)
-          expect(card.group_id).to eq(group.id)
-          expect(card.user_id).to be_nil
-        end
-      end
-
-      context "group_idがない場合" do
-        it "個人カードが作成されること（ユーザーに紐づける）" do
-          user = create(:user)
-          attributes = { name: "test" }
-          card = described_class.build_for(user: user, attributes: attributes)
-          expect(card.user_id).to eq(user.id)
-        end
-      end
-
-      context "userがなく、group_idもない場合" do
-        it "エラーが発生すること" do
-          attributes = { name: "test" }
-          expect { described_class.build_for(user: nil, attributes: attributes) }
-            .to raise_error(ArgumentError, "個人用カードを作成するにはログインが必要です")
-        end
-      end
-    end
-
     describe "#accessible_by_user?メソッド" do
       context "グループカードの場合" do
         context "ユーザーがグループメンバーの場合" do
@@ -96,7 +53,7 @@ RSpec.describe Card, type: :model do
             user = create(:user)
             group = create(:group)
             create(:group_membership, user: user, group: group)
-            card = create(:card, :for_group, user: user, group: group)
+            card = create(:card, :for_group, cardable: group)
 
             expect(card.accessible_by_user?(user)).to be true
           end
@@ -117,7 +74,7 @@ RSpec.describe Card, type: :model do
         context "ユーザーが作成者の場合" do
           it "trueを返すこと" do
             user = create(:user)
-            card = create(:card, :for_user, user: user)
+            card = create(:card, :for_user, cardable: user)
 
             expect(card.accessible_by_user?(user)).to be true
           end
@@ -127,7 +84,7 @@ RSpec.describe Card, type: :model do
           it "falseを返すこと" do
             user1 = create(:user)
             user2 = create(:user)
-            card = create(:card, :for_user, user: user1)
+            card = create(:card, :for_user, cardable: user1)
 
             expect(card.accessible_by_user?(user2)).to be false
           end
@@ -147,7 +104,7 @@ RSpec.describe Card, type: :model do
         context "ゲストユーザーが参加できるグループidの配列（guest_group_ids）にグループが含まれる場合" do
           it "trueを返すこと" do
             group = create(:group)
-            card = create(:card, :for_group, group: group)
+            card = create(:card, :for_group, cardable: group)
             guest_group_ids = [ group.id, 2, 3 ]
 
             expect(card.accessible_by_guest?(guest_group_ids)).to be true
@@ -157,7 +114,7 @@ RSpec.describe Card, type: :model do
         context "ゲストユーザーが参加できるグループidの配列（guest_group_ids）にグループが含まれない場合" do
           it "falseを返すこと" do
             group = create(:group)
-            card = create(:card, :for_group, group: group)
+            card = create(:card, :for_group, cardable: group)
             guest_group_ids = [ 999, 1000, 1001 ]
 
             expect(card.accessible_by_guest?(guest_group_ids)).to be false
@@ -171,7 +128,7 @@ RSpec.describe Card, type: :model do
       context "ログインユーザーがアクセスできる場合" do
         it "trueを返すこと" do
           user = create(:user)
-          card = create(:card, :for_user, user: user)
+          card = create(:card, :for_user, cardable: user)
 
           expect(card.accessible?(user: user, guest_group_ids: [])).to be true
         end
@@ -181,7 +138,7 @@ RSpec.describe Card, type: :model do
         it "falseを返すこと" do
           user1 = create(:user)
           user2 = create(:user)
-          card = create(:card, :for_user, user: user1)
+          card = create(:card, :for_user, cardable: user1)
 
           expect(card.accessible?(user: user2, guest_group_ids: [])).to be false
         end
@@ -190,7 +147,7 @@ RSpec.describe Card, type: :model do
       context "ゲストがアクセスできる場合" do
         it "trueを返すこと" do
           group = create(:group)
-          card = create(:card, :for_group, group: group)
+          card = create(:card, :for_group, cardable: group)
 
           expect(card.accessible?(user: nil, guest_group_ids: [ group.id ])).to be true
         end
@@ -199,7 +156,7 @@ RSpec.describe Card, type: :model do
       context "ゲストがアクセスできない場合" do
         it "falseを返すこと" do
           group = create(:group)
-          card = create(:card, :for_group, group: group)
+          card = create(:card, :for_group, cardable: group)
 
           expect(card.accessible?(user: nil, guest_group_ids: [ 999 ])).to be false
         end
