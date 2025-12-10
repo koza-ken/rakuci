@@ -31,6 +31,7 @@ gem "devise"
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection', '1.0.2'
 gem "acts_as_list"
+gem "gretel"
 
 gem "hashid-rails", "~> 1.0"
 
