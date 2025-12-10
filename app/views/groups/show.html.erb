@@ -1,11 +1,12 @@
 <% content_for(:title, @group.name) %>
+<% breadcrumb :group, @group %>
 
 <%# 作成モーダルの挿入 %>
 <%= turbo_frame_tag "card-create-modal", data: { controller: "modal" } %>
 <%= turbo_frame_tag "schedule-create-modal", data: { controller: "modal" } %>
 
 <div class="min-h-screen bg-main-bg">
-  <main class="flex flex-col items-center justify-center px-8 py-12">
+  <main class="flex flex-col items-center justify-center px-8 py-6">
     <div class="w-full max-w-md mb-10">
       <%# グループ名セクション（表示/編集を切り替え） %>
       <div id="group-name-section" data-controller="card-edit" class="mb-4">

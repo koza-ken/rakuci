@@ -1,8 +1,9 @@
 <% content_for(:title, t('.title')) %>
+<% breadcrumb :groups %>
 
 <%= turbo_frame_tag "group-create-modal", data: { controller: "modal" }  %>
 
-<main class="flex flex-col items-center justify-center px-8 py-12">
+<main class="flex flex-col items-center justify-center px-8 py-6">
   <h1><%= t('.title') %></h1>
   <div id="groups_list" class="w-full text-center space-y-4 mt-8">
     <% if @groups.any? %>

@@ -1,4 +1,5 @@
 <% content_for(:title, @schedule.name) %>
+<% breadcrumb :group_schedule, @group %>
 
 <%= turbo_frame_tag "spot-create-modal", data: { controller: "modal" } %>
 

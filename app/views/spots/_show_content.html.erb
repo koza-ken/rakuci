@@ -3,7 +3,7 @@
 <turbo-frame id="spot-edit-modal">
   <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
     <%= render "shared/flash_messages", flash: flash %>
-    <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
+    <main class="flex flex-col justify-center px-8 py-6 bg-main-bg">
       <div class="flex items-center gap-2 mb-8">
         <h1 class="text-2xl font-bold text-text"><%= @spot.name %></h1>
         <% if @spot.google_place_id.present? %>

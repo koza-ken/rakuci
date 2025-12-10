@@ -1,9 +1,10 @@
 <% content_for(:title, t('.title')) %>
+<% breadcrumb :cards %>
 
 <%# 作成モーダルの挿入 %>
 <%= turbo_frame_tag "card-create-modal", data: { controller: "modal" } %>
 
-<main class="flex flex-col items-center justify-center px-8 py-12">
+<main class="flex flex-col items-center justify-center px-8 py-6">
   <h1><%= t('.title') %></h1>
   <div id="cards_list" class="w-full grid grid-cols-2 gap-4 mt-8">
     <%= render partial: "cards/card", collection: @cards %>
