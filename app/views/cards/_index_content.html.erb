@@ -15,14 +15,22 @@
     <% if @cards.any? %>
       <%= render partial: "cards/card", collection: @cards %>
     <% else %>
-      <div id="cards_empty_state" class="col-span-2 flex flex-col items-center justify-center py-12 mt-16">
-        <p class="text-text text-center text-2xl font-semibold mb-20">
-          <%= t('.no_cards') %>
-        </p>
-        <p class="text-text text-center text-lg mb-10">
-          <%= t('.lets_create_card') %>
-        </p>
-        <%= link_to t('.create_card'), new_card_path, data: {turbo_frame: "card-create-modal"}, class: "inline-block px-6 py-3 bg-primary text-text-light rounded-4xl hover:opacity-80 transition-opacity duration-300 font-semibold shadow-md hover:shadow-lg" %>
+      <div id="cards_empty_state" class="col-span-2 flex flex-col items-center justify-center py-8 mt-6 px-4">
+        <div class="w-full max-w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-8 py-10 space-y-8 text-center animate-fade-in-up">
+          <div class="mx-auto w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
+            <%= render "shared/icon/footer_icon_card", icon_class: "text-text-light/40" %>
+          </div>
+          <div class="space-y-6">
+            <p class="text-xl font-semibold text-text"><%= t('.no_cards') %></p>
+            <p class="text-sm text-text-light leading-relaxed"><%= t('.lets_create_card') %></p>
+          </div>
+          <div class="space-y-3">
+            <%= link_to new_card_path, data: {turbo_frame: "card-create-modal"}, class: "first-create-btn" do %>
+              <span class="text-xl">+</span>
+              <span><%= t('.create_card') %></span>
+            <% end %>
+          </div>
+        </div>
       </div>
     <% end %>
   </div>

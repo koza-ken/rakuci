@@ -15,11 +15,22 @@
       <% if @schedules.any? %>
         <%= render @schedules %>
       <% else %>
-        <div id="schedules_empty_state" class="flex flex-col items-center justify-center py-12 mt-10">
-          <p class="text-text text-center text-lg">
-            <%= t('users.schedules.index.no_schedules') %><br>
-            <%= link_to t('users.schedules.index.create_schedule'), new_schedule_path, data: {turbo_frame: "schedule-create-modal"}, class: "inline-block mt-10 px-6 py-3 bg-primary text-text-light rounded-4xl hover:opacity-80 transition-opacity duration-300 font-semibold shadow-md hover:shadow-lg" %>
-          </p>
+        <div id="schedules_empty_state" class="flex justify-center py-8 mt-6 px-4">
+          <div class="w-full max-w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-8 py-10 space-y-8 text-center animate-fade-in-up">
+            <div class="mx-auto w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
+              <%= render "shared/icon/footer_icon_schedule", icon_class: "text-text-light/40" %>
+            </div>
+            <div class="space-y-6">
+              <p class="text-xl font-semibold text-text"><%= t('users.schedules.index.no_schedules') %></p>
+              <p class="text-sm text-text-light leading-relaxed"><%= t('users.schedules.index.create_schedule_caption') %></p>
+            </div>
+            <div>
+              <%= link_to new_schedule_path, data: {turbo_frame: "schedule-create-modal"}, class: "first-create-btn" do %>
+                <span class="text-xl">+</span>
+                <span><%= t('users.schedules.index.create_schedule') %></span>
+              <% end %>
+            </div>
+          </div>
         </div>
       <% end %>
     </div>
