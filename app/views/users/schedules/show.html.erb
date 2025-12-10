@@ -1,7 +1,8 @@
 <% content_for(:title, @schedule.name) %>
+<% breadcrumb :schedule, @schedule %>
 
 <%= turbo_frame_tag "spot-create-modal", data: { controller: "modal" } %>
 
-<main id="main" class="flex flex-col items-center justify-center px-8 py-12">
+<main id="main" class="flex flex-col items-center justify-center px-8 py-6">
   <%= render partial: "users/schedules/show", locals: { schedule: @schedule } %>
 </main>
