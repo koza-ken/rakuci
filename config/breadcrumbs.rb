@@ -32,11 +32,22 @@ crumb :group do |group|
   parent :groups
 end
 
+crumb :group_for_card do |group|
+  link "グループ", root_path
+  parent :root
+end
+
+crumb :group_name_for_card do |group|
+  truncated_name = group.name.length > 8 ? "#{group.name[0...8]}..." : group.name
+  link truncated_name, group_path(group)
+  parent :group_for_card, group
+end
+
 # グループ内カード
 crumb :group_card do |group, card|
   truncated_name = card.name.length > 8 ? "#{card.name[0...8]}..." : card.name
   link truncated_name, group_card_path(group, card)
-  parent :group, group
+  parent :group_name_for_card, group
 end
 
 crumb :group_card_spot do |group, card, spot|
