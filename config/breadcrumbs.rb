@@ -1,11 +1,6 @@
-crumb :root do
-  link "HOME", root_path
-end
-
 # ====== 個人用カード系 ======
 crumb :cards do
   link "カード", cards_path
-  parent :root
 end
 
 crumb :card do |card|
@@ -23,7 +18,6 @@ end
 # ====== グループ系 ======
 crumb :groups do
   link "グループ", groups_path
-  parent :root
 end
 
 crumb :group do |group|
@@ -33,8 +27,7 @@ crumb :group do |group|
 end
 
 crumb :group_for_card do |group|
-  link "グループ", root_path
-  parent :root
+  link "グループ", groups_path
 end
 
 crumb :group_name_for_card do |group|
@@ -78,7 +71,6 @@ end
 # ====== 個人用しおり系 ======
 crumb :schedules do
   link "しおり", schedules_path
-  parent :root
 end
 
 crumb :schedule do |schedule|
