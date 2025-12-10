@@ -1,6 +1,7 @@
 class Users::SpotsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_card
+  before_action :check_card_owner
   before_action :set_spot, only: %i[show edit update destroy]
 
   def show
@@ -48,7 +49,7 @@ class Users::SpotsController < ApplicationController
   private
 
   def set_card
-    @card = current_user.cards.find(params[:card_id])
+    @card = Card.find(params[:card_id])
   end
 
   def set_spot
@@ -57,5 +58,11 @@ class Users::SpotsController < ApplicationController
 
   def spot_params
     params.require(:spot).permit(:name, :address, :phone_number, :website_url, :category_id, :google_place_id)
+  end
+
+  def check_card_owner
+    unless @card.accessible?(user: current_user, guest_group_ids: [])
+      redirect_to cards_path, alert: t("errors.cards.unauthorized_view")
+    end
   end
 end

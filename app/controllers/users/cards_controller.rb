@@ -1,6 +1,7 @@
 class Users::CardsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_card, only: %i[show update destroy]
+  before_action :check_card_owner, only: %i[show update destroy]
 
   def index
     @cards = current_user.cards.includes(:cardable).order(updated_at: :desc)
@@ -49,10 +50,16 @@ class Users::CardsController < ApplicationController
   private
 
   def set_card
-    @card = current_user.cards.find(params[:id])
+    @card = Card.find(params[:id])
   end
 
   def card_params
     params.require(:card).permit(:name, :memo)
+  end
+
+  def check_card_owner
+    unless @card.accessible?(user: current_user, guest_group_ids: [])
+      redirect_to cards_path, alert: t("errors.cards.unauthorized_view")
+    end
   end
 end

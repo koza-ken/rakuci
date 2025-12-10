@@ -2,6 +2,7 @@ class Groups::SpotsController < ApplicationController
   before_action :set_group
   before_action :set_card
   before_action :check_group_member
+  before_action :check_card_in_group
   before_action :set_spot, only: %i[show edit update destroy]
 
   def show
@@ -53,7 +54,7 @@ class Groups::SpotsController < ApplicationController
   end
 
   def set_card
-    @card = @group.cards.find(params[:card_id])
+    @card = Card.find(params[:card_id])
   end
 
   def set_spot
@@ -74,6 +75,13 @@ class Groups::SpotsController < ApplicationController
 
     unless authorized
       redirect_to (user_signed_in? ? groups_path : root_path), alert: t("errors.groups.not_member")
+    end
+  end
+
+  # カードがそのグループに属しているか確認
+  def check_card_in_group
+    unless @card.group_card? && @card.cardable_id == @group.id
+      redirect_to group_path(@group), alert: t("errors.cards.unauthorized_view")
     end
   end
 end
