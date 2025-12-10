@@ -93,6 +93,12 @@ ja:
       new_card: 新規作成
       no_cards: まだカードがありません
 
+    index_content:
+      title: カード一覧
+      no_cards: まだカードがありません
+      lets_create_card: 行きたい旅行先をカードにしてみよう
+      create_card: カードを作成
+
     new:
       title: カード作成
 
@@ -136,6 +142,8 @@ ja:
       title: グループ一覧
       new_group: 新規作成
       no_groups: まだグループがありません
+      create_group: グループを作成
+      create_group_caption: グループを作って仲間を招待しよう
       created_groups: 作成したグループ
       joined_groups: 参加しているグループ
 
@@ -330,6 +338,8 @@ ja:
         title: しおり一覧
         new_schedule: 新規作成
         no_schedules: まだしおりがありません
+        create_schedule: しおりを作成
+        create_schedule_caption: 旅行先が決まったらしおりをつくろう
 
       new:
         title: しおり作成
