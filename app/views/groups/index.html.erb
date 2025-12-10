@@ -4,22 +4,36 @@
 <%= turbo_frame_tag "group-create-modal", data: { controller: "modal" }  %>
 
 <main class="flex flex-col items-center justify-center px-8 py-6">
-  <h1><%= t('.title') %></h1>
+  <div id="groups-page-title">
+    <% if @groups.any? %>
+      <h1><%= t('.title') %></h1>
+    <% end %>
+  </div>
+
   <div id="groups_list" class="w-full text-center space-y-4 mt-8">
     <% if @groups.any? %>
       <%= render @groups %>
     <% else %>
-      <p id="no_groups_message" class="text-gray-500"><%= t('groups.index.no_groups') %></p>
+      <div id="groups_empty_state" class="flex flex-col items-center justify-center py-12 mt-10">
+        <p class="text-text text-center text-lg">
+          <%= t('.no_groups') %><br>
+          <%= link_to t('.create_group'), new_group_path, data: {turbo_frame: "group-create-modal"}, class: "inline-block mt-10 px-6 py-3 bg-primary text-text-light rounded-4xl hover:opacity-80 transition-opacity duration-300 font-semibold shadow-md hover:shadow-lg" %>
+        </p>
+      </div>
     <% end %>
   </div>
 
   <%# 右下の+ボタン（新規作成ページへのリンク） %>
-  <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
-    <%= link_to new_group_path, data: {turbo_frame: "group-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
-                class: "group bg-primary hover:opacity-80 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
-      <%# +アイコン %>
-      <span class="block w-6 h-[3px] bg-text-light rounded absolute transition-all duration-300"></span>
-      <span class="block w-6 h-[3px] bg-text-light rounded absolute rotate-90 transition-all duration-300"></span>
+  <div id="groups-fab-container">
+    <% if @groups.any? %>
+      <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
+        <%= link_to new_group_path, data: {turbo_frame: "group-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
+                    class: "group bg-primary hover:opacity-80 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
+          <%# +アイコン %>
+          <span class="block w-6 h-[3px] bg-text-light rounded absolute transition-all duration-300"></span>
+          <span class="block w-6 h-[3px] bg-text-light rounded absolute rotate-90 transition-all duration-300"></span>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </main>

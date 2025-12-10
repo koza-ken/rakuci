@@ -5,18 +5,39 @@
 <%= turbo_frame_tag "card-create-modal", data: { controller: "modal" } %>
 
 <main class="flex flex-col items-center justify-center px-8 py-6">
-  <h1><%= t('.title') %></h1>
+  <div id="cards-page-title">
+    <% if @cards.any? %>
+      <h1><%= t('.title') %></h1>
+    <% end %>
+  </div>
+
   <div id="cards_list" class="w-full grid grid-cols-2 gap-4 mt-8">
-    <%= render partial: "cards/card", collection: @cards %>
+    <% if @cards.any? %>
+      <%= render partial: "cards/card", collection: @cards %>
+    <% else %>
+      <div id="cards_empty_state" class="col-span-2 flex flex-col items-center justify-center py-12 mt-16">
+        <p class="text-text text-center text-2xl font-semibold mb-20">
+          <%= t('.no_cards') %>
+        </p>
+        <p class="text-text text-center text-lg mb-10">
+          <%= t('.lets_create_card') %>
+        </p>
+        <%= link_to t('.create_card'), new_card_path, data: {turbo_frame: "card-create-modal"}, class: "inline-block px-6 py-3 bg-primary text-text-light rounded-4xl hover:opacity-80 transition-opacity duration-300 font-semibold shadow-md hover:shadow-lg" %>
+      </div>
+    <% end %>
   </div>
 
   <%# 右下の+ボタン（新規作成ページへのリンク） %>
-  <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
-    <%= link_to new_card_path, data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
-                class: "group bg-primary hover:opacity-80 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
-      <%# +アイコン %>
-      <span class="block w-6 h-[3px] bg-text-light rounded absolute transition-all duration-300"></span>
-      <span class="block w-6 h-[3px] bg-text-light rounded absolute rotate-90 transition-all duration-300"></span>
+  <div id="cards-fab-container">
+    <% if @cards.any? %>
+      <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
+        <%= link_to new_card_path, data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
+                    class: "group bg-primary hover:opacity-80 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
+          <%# +アイコン %>
+          <span class="block w-6 h-[3px] bg-text-light rounded absolute transition-all duration-300"></span>
+          <span class="block w-6 h-[3px] bg-text-light rounded absolute rotate-90 transition-all duration-300"></span>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </main>

@@ -4,15 +4,9 @@
 <%= turbo_frame_tag "schedule-create-modal", data: { controller: "modal" } %>
 
 <main class="flex flex-col items-center justify-center px-8 py-6">
-  <h1 class="text-2xl text-text font-bold mb-8"><%= t('users.schedules.index.title') %></h1>
-
-  <%# FAB ボタン %>
-  <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
-    <%= link_to new_schedule_path, data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" },
-                class: "group bg-primary hover:opacity-80 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
-      <%# +アイコン %>
-      <span class="block w-6 h-[3px] bg-text-light rounded absolute transition-all duration-300"></span>
-      <span class="block w-6 h-[3px] bg-text-light rounded absolute rotate-90 transition-all duration-300"></span>
+  <div id="schedules-page-title">
+    <% if @schedules.any? %>
+      <h1 class="text-2xl text-text font-bold mb-8"><%= t('users.schedules.index.title') %></h1>
     <% end %>
   </div>
 
@@ -21,8 +15,27 @@
       <% if @schedules.any? %>
         <%= render @schedules %>
       <% else %>
-        <p id="no_schedules_message" class="text-gray-500 text-center mt-8"><%= t('users.schedules.index.no_schedules') %></p>
+        <div id="schedules_empty_state" class="flex flex-col items-center justify-center py-12 mt-10">
+          <p class="text-text text-center text-lg">
+            <%= t('users.schedules.index.no_schedules') %><br>
+            <%= link_to t('users.schedules.index.create_schedule'), new_schedule_path, data: {turbo_frame: "schedule-create-modal"}, class: "inline-block mt-10 px-6 py-3 bg-primary text-text-light rounded-4xl hover:opacity-80 transition-opacity duration-300 font-semibold shadow-md hover:shadow-lg" %>
+          </p>
+        </div>
       <% end %>
     </div>
+  </div>
+
+  <%# FAB ボタン %>
+  <div id="schedules-fab-container">
+    <% if @schedules.any? %>
+      <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
+        <%= link_to new_schedule_path, data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" },
+                    class: "group bg-primary hover:opacity-80 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
+          <%# +アイコン %>
+          <span class="block w-6 h-[3px] bg-text-light rounded absolute transition-all duration-300"></span>
+          <span class="block w-6 h-[3px] bg-text-light rounded absolute rotate-90 transition-all duration-300"></span>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </main>
