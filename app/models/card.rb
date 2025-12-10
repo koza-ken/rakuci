@@ -75,5 +75,4 @@ class Card < ApplicationRecord
     return false unless group_membership
     likes.exists?(group_membership: group_membership)
   end
-
 end
