@@ -20,7 +20,8 @@ RSpec.describe "個人ユーザーのしおり作成フロー", type: :request d
       expect(response).to redirect_to(/\/cards/)
       card = Card.last
       expect(card.name).to eq("東京観光")
-      expect(card.user_id).to eq(user.id)
+      expect(card.cardable_id).to eq(user.id)
+      expect(card.cardable_type).to eq("User")
 
       # スポット追加
       post "/cards/#{card.id}/spots", params: {
@@ -71,7 +72,7 @@ RSpec.describe "個人ユーザーのしおり作成フロー", type: :request d
 
   describe "複数のスポットをしおりに追加" do
     it "複数のスポットが正常に追加できること" do
-      card = create(:card, user: user)
+      card = create(:card, :for_user, cardable: user)
       spot1 = create(:spot, card: card, name: "スカイツリー")
       spot2 = create(:spot, card: card, name: "浅草寺")
       spot3 = create(:spot, card: card, name: "スカイツリーの隣")

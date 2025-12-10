@@ -35,13 +35,13 @@ class Groups::ScheduleSpotsController < ApplicationController
       if results.all?
         respond_to do |format|
           format.turbo_stream { flash.now[:notice] = t("notices.group_schedule_spots.created_multiple", count: results.size) }
-          format.html { redirect_to card_path(@card), notice: t("notices.group_schedule_spots.created_multiple", count: results.size) }
+          format.html { redirect_to group_card_path(@group, @card), notice: t("notices.group_schedule_spots.created_multiple", count: results.size) }
         end
       elsif results.none?
         # 全て失敗
         respond_to do |format|
           format.turbo_stream { flash.now[:alert] = t("errors.group_schedule_spots.create_failed") }
-          format.html { redirect_to card_path(@card), alert: t("errors.group_schedule_spots.create_failed") }
+          format.html { redirect_to group_card_path(@group, @card), alert: t("errors.group_schedule_spots.create_failed") }
         end
       else
         # 一部成功
@@ -49,7 +49,7 @@ class Groups::ScheduleSpotsController < ApplicationController
         failed = results.count(false)
         respond_to do |format|
           format.turbo_stream { flash.now[:notice] = t("notices.group_schedule_spots.created_partial", added: added, failed: failed) }
-          format.html { redirect_to card_path(@card), notice: t("notices.group_schedule_spots.created_partial", added: added, failed: failed) }
+          format.html { redirect_to group_card_path(@group, @card), notice: t("notices.group_schedule_spots.created_partial", added: added, failed: failed) }
         end
       end
     else

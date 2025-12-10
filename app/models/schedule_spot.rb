@@ -22,9 +22,8 @@
 #
 # Indexes
 #
-#  index_schedule_spots_on_spot_id    (spot_id)
-#  index_ss_on_schedule_and_day       (schedule_id,day_number)
-#  index_ss_on_schedule_and_position  (schedule_id,global_position) UNIQUE
+#  index_schedule_spots_on_spot_id  (spot_id)
+#  index_ss_on_schedule_and_day     (schedule_id,day_number)
 #
 # Foreign Keys
 #

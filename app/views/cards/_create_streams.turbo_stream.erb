@@ -4,7 +4,7 @@
 <%# モーダルを閉じる（中身を空にする） %>
 <%= turbo_stream.update "card-create-modal", "" %>
 
-<% if @card.group_id.present? %>
+<% if @card.group_card? %>
   <%# グループ詳細ページの場合 %>
   <%= turbo_stream.append "group_cards_list", partial: "cards/card", locals: { card: @card } %>
 <% else %>

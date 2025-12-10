@@ -56,16 +56,21 @@
       </div>
 
       <div class="flex gap-3 mt-8">
-        <%= link_to t('cards.form.edit'), edit_card_spot_path(@card, @spot), data: {turbo_frame: "spot-edit-modal"}, class: "btn-main flex-1 text-center" %>
-        <%= link_to t('cards.form.back'), card_path(@card), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
+        <% if @card.group_card? %>
+          <%= link_to t('cards.form.edit'), edit_group_card_spot_path(@card.group, @card, @spot), data: {turbo_frame: "spot-edit-modal"}, class: "btn-main flex-1 text-center" %>
+          <%= link_to t('cards.form.back'), group_card_path(@card.group, @card), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
+        <% else %>
+          <%= link_to t('cards.form.edit'), edit_card_spot_path(@card, @spot), data: {turbo_frame: "spot-edit-modal"}, class: "btn-main flex-1 text-center" %>
+          <%= link_to t('cards.form.back'), card_path(@card), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
+        <% end %>
       </div>
 
       <div class="mt-14">
         <%# グループのカード か ユーザーのカード か判定 %>
-        <% if @card.group_id.present? %>
+        <% if @card.group_card? %>
           <%# グループのカード → 直接作成（postなのでbutton_to）  %>
           <%= button_to t('spots.show.add_to_group_schedule'),
-              card_spot_group_schedule_spot_path(@card, @spot),
+              group_card_spot_schedule_spot_path(@card.group, @card, @spot),
               method: :post, class: "btn-main w-full" %>
         <% else %>
           <%# ユーザーのカード → しおり選択ページへ（getなのでlink_to） %>
@@ -76,7 +81,11 @@
         <% end %>
       </div>
       <div class="flex justify-center">
-        <%= link_to t('cards.form.delete'), card_spot_path(@card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger text-center mt-20" %>
+        <% if @card.group_card? %>
+          <%= link_to t('cards.form.delete'), group_card_spot_path(@card.group, @card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger text-center mt-20" %>
+        <% else %>
+          <%= link_to t('cards.form.delete'), card_spot_path(@card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger text-center mt-20" %>
+        <% end %>
       </div>
     </main>
   </div>

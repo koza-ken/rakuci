@@ -6,7 +6,7 @@ RSpec.describe "データ保全性チェック", type: :request do
 
   describe "個人カード削除時のカスケード削除" do
     it "個人カードを削除すると関連データがすべて削除されること" do
-      card = create(:card, user: user)
+      card = create(:card, :for_user, cardable: user)
       spot = create(:spot, card: card)
       schedule = create(:schedule, :for_user, schedulable: user)
       schedule_spot = create(:schedule_spot, schedule: schedule, spot: spot)
@@ -27,7 +27,7 @@ RSpec.describe "データ保全性チェック", type: :request do
 
   describe "スケジュール削除時のカスケード削除" do
     it "スケジュールを削除すると関連のスケジュールスポットがすべて削除されること" do
-      card = create(:card, user: user)
+      card = create(:card, :for_user, cardable: user)
       spot1 = create(:spot, card: card)
       spot2 = create(:spot, card: card)
       schedule = create(:schedule, :for_user, schedulable: user)
@@ -53,7 +53,7 @@ RSpec.describe "データ保全性チェック", type: :request do
     it "グループを削除すると関連データがすべて削除されること" do
       group = create(:group, creator: user)
       membership = create(:group_membership, user: user, group: group, group_nickname: "userのニックネーム")
-      card = create(:card, :for_group, group: group)
+      card = create(:card, :for_group, cardable: group)
       spot = create(:spot, card: card)
       schedule = create(:schedule, :for_group, schedulable: group)
       schedule_spot = create(:schedule_spot, schedule: schedule, spot: spot)

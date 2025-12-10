@@ -21,7 +21,7 @@
 #  fk_rails_...  (group_membership_id => group_memberships.id)
 #
 class Comment < ApplicationRecord
-  belongs_to :card
+  belongs_to :card, touch: true
   belongs_to :group_membership
 
   validates :content, presence: true, length: { maximum: 200 }

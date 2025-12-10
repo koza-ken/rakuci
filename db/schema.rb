@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_18_233355) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_09_052410) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,11 +19,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_18_233355) do
     t.text "memo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.bigint "group_id"
-    t.index ["group_id"], name: "index_cards_on_group_id"
-    t.index ["user_id"], name: "index_cards_on_user_id"
-    t.check_constraint "user_id IS NOT NULL AND group_id IS NULL OR user_id IS NULL AND group_id IS NOT NULL", name: "cards_must_belong_to_user_or_group"
+    t.string "cardable_type", null: false
+    t.bigint "cardable_id", null: false
+    t.index ["cardable_type", "cardable_id"], name: "index_cards_on_cardable_type_and_cardable_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -144,8 +142,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_18_233355) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "cards", "groups"
-  add_foreign_key "cards", "users"
   add_foreign_key "comments", "cards"
   add_foreign_key "comments", "group_memberships"
   add_foreign_key "group_memberships", "groups"

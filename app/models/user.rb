@@ -30,7 +30,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [ :google_oauth2 ]
   # groupモデルでcreatorにしたのでuserモデルもあわせておく
   has_many :created_groups, class_name: "Group", foreign_key: "created_by_user_id", inverse_of: :creator
-  has_many :cards, dependent: :destroy
+  has_many :cards, as: :cardable, dependent: :destroy
   has_many :group_memberships, dependent: :destroy
   has_many :groups, through: :group_memberships
   has_many :schedules, as: :schedulable, dependent: :destroy
