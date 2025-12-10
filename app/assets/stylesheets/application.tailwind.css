@@ -54,4 +54,8 @@ body {
   .icon-stroke {
     stroke: var(--color-secondary);
   }
+  .first-create-btn {
+    @apply inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 bg-primary text-text font-semibold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition duration-200
+  }
+}
 }
