@@ -27,3 +27,6 @@ application.register("member-delete", MemberDeleteController);
 
 import TurboController from "./turbo_controller";
 application.register("turbo", TurboController);
+
+import SpotSelectorController from "./spot_selector_controller";
+application.register("spot-selector", SpotSelectorController);
