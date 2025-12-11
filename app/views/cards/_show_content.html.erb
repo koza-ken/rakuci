@@ -65,8 +65,8 @@
 
     <%# コメント欄（グループカードのみ） %>
     <% if @card.group_card? %>
-      <div class="mb-6">
-        <h2 class="text-xl font-bold text-text-light mb-4"><%= t('cards.comments') %></h2>
+      <div class="my-6">
+        <h2 class="text-xl font-bold text-text mb-4"><%= t('cards.comments') %></h2>
         <%# コメント一覧 %>
         <div id="comments_list">
           <% if @comments.present? %>
@@ -91,7 +91,7 @@
       <%# 表示モード %>
       <div id="memo-display" data-memo-edit-target="display">
         <%= form_with model: @card, class: "w-full" do |f| %>
-          <%= f.label :memo, t('cards.form.memo'), class: "block text-2xl font-bold text-text mb-2" %>
+          <%= f.label :memo, t('cards.form.memo'), class: "block text-xl font-bold text-text mb-2" %>
           <%= f.text_area :memo, class: "form-text-field bg-gray-100 cursor-pointer", readonly: true, data: { action: "click->memo-edit#toggleForm" } %>
         <% end %>
       </div>
