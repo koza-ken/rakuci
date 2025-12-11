@@ -200,5 +200,37 @@ RSpec.describe Schedule, type: :model do
         end
       end
     end
+
+    describe "#formatted_date_range" do
+      context "start_dateとend_dateが両方nilの場合" do
+        it "nilを返すこと" do
+          schedule = build(:schedule, start_date: nil, end_date: nil)
+
+          expect(schedule.formatted_date_range).to be_nil
+        end
+      end
+
+      context "start_dateがあり、end_dateがnilの場合" do
+        it "nilを返すこと" do
+          schedule = build(:schedule, start_date: Date.current, end_date: nil)
+
+          expect(schedule.formatted_date_range).to be_nil
+        end
+      end
+
+      context "start_dateとend_dateが両方ある場合" do
+        it "開始日～終了日を曜日付きでフォーマットして返すこと" do
+          start_date = Date.new(2025, 1, 15)  # 水曜日
+          end_date = Date.new(2025, 1, 20)    # 月曜日
+          schedule = build(:schedule, start_date: start_date, end_date: end_date)
+
+          result = schedule.formatted_date_range
+          expect(result).to include("2025/01/15")
+          expect(result).to include("2025/01/20")
+          expect(result).to include("（")
+          expect(result).to include("～")
+        end
+      end
+    end
   end
 end
