@@ -41,7 +41,7 @@
       <% if !@card.group_card? %>
         <%# 個人しおり: スポット追加（しおりがある場合のみ） %>
           <div class="mb-4">
-            <%= form_with url: card_new_schedule_spots_path(@card), method: :get, data: { turbo_frame: "add_new_schedule_spot", controller: "spot-selector" } do |f| %>
+            <%= form_with url: card_new_schedule_spots_path(@card), method: :get, data: { controller: "spot-selector" } do |f| %>
               <%= render "spots/spots", spots: @card.spots, categories: @categories %>
               <% if @card.user.schedules.any? %>
                 <div class="flex gap-2 mt-4">
