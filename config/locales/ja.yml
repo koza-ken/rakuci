@@ -166,6 +166,7 @@ ja:
       invite_button: 招待する
       schedule_detail: しおり詳細
       schedule_create: しおり作成
+      schedule_create_message: 旅行先が決まったらしおりを作成しよう
       add_card: カードを追加する
       cards_empty_label: 旅行先の候補をカードにしよう
       delete_group: グループを削除
