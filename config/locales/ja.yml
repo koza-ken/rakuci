@@ -89,12 +89,12 @@ ja:
 
   cards:
     index:
-      title: カード一覧
+      title: あなたの旅のカード
       new_card: 新規作成
       no_cards: まだカードがありません
 
     index_content:
-      title: カード一覧
+      title: あなたの旅のカード
       no_cards: まだカードがありません
       lets_create_card: 行きたい旅行先をカードにしよう
       create_card: カードを作成
@@ -139,13 +139,12 @@ ja:
 
   groups:
     index:
-      title: グループ一覧
+      title: 参加しているグループ
       new_group: 新規作成
       no_groups: まだグループがありません
       create_group: グループを作成
       create_group_caption: グループを作って仲間を招待しよう
       created_groups: 作成したグループ
-      joined_groups: 参加しているグループ
 
     new:
       title: グループ作成
@@ -161,7 +160,7 @@ ja:
       invite_link: 招待リンク
       copy_link: リンクをコピー
       members: メンバー
-      travel_candidates: 旅行先候補
+      travel_candidates: 旅行先の候補
       no_cards: まだ旅行先候補がありません
       invite_button: 招待する
       schedule_detail: しおり詳細
@@ -222,9 +221,9 @@ ja:
 
     schedules:
       new:
-        title: グループしおり作成
+        title: グループのしおり作成
       edit:
-        title: グループしおり編集
+        title: グループのしおり編集
       show:
         add_spot_button: スポットを追加
         day_label: 日目
@@ -234,7 +233,7 @@ ja:
 
   schedules:
     index:
-      title: しおり一覧
+      title: 旅のしおり
       new_schedule: 新規作成
       no_schedules: まだしおりがありません
 
@@ -337,7 +336,7 @@ ja:
       no_schedules_message: まだしおりがありません
       not_group: not group
       index:
-        title: しおり一覧
+        title: 旅のしおり
         new_schedule: 新規作成
         no_schedules: まだしおりがありません
         create_schedule: しおりを作成
