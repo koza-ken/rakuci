@@ -11,7 +11,7 @@
 
     <%# しおり期間 %>
     <div class="flex items-center gap-2 mb-2">
-      <span class="text-text-light">しおり : </span>
+      <span class="text-text-light">日程 : </span>
       <% if group.schedule.present? && group.schedule.start_date.present? && group.schedule.end_date.present? %>
         <span class="text-text-light">
           <%= group.schedule.start_date.strftime("%Y/%m/%d") %> 〜 <%= group.schedule.end_date.strftime("%Y/%m/%d") %>
