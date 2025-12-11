@@ -167,6 +167,7 @@ ja:
       schedule_detail: しおり詳細
       schedule_create: しおり作成
       add_card: カードを追加する
+      cards_empty_label: 旅行先の候補をカードにしよう
       delete_group: グループを削除
       delete_confirm: このグループを削除しますか
 
