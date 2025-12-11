@@ -96,7 +96,7 @@ ja:
     index_content:
       title: カード一覧
       no_cards: まだカードがありません
-      lets_create_card: 行きたい旅行先をカードにしてみよう
+      lets_create_card: 行きたい旅行先をカードにしよう
       create_card: カードを作成
 
     new:
@@ -250,7 +250,7 @@ ja:
       schedule_dates: 日程
       memo: メモ
       schedule_spots: スケジュール
-      no_spots: スポットを追加しましょう
+      no_spots: スポットを追加しよう
       add_spot_button: スポットを追加
       no_schedule_message: はまだ作成されていません
       edit: 編集
