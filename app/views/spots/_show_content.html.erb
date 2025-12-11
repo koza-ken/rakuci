@@ -73,18 +73,20 @@
               group_card_spot_schedule_spot_path(@card.group, @card, @spot),
               method: :post, class: "btn-main w-full" %>
         <% else %>
-          <%# ユーザーのカード → しおり選択ページへ（getなのでlink_to） %>
-          <%= link_to t('spots.show.add_to_user_schedule'),
-              new_card_spot_schedule_spot_path(@card, @spot),
-              data: {turbo_frame: "add_new_schedule_spot"},
-              class: "btn-main w-full block text-center" %>
+          <%# ユーザーのカード → ユーザーがしおりを持つ場合のみ表示 %>
+          <% if @card.user.schedules.any? %>
+            <%= link_to t('spots.show.add_to_user_schedule'),
+                new_card_spot_schedule_spot_path(@card, @spot),
+                data: {turbo_frame: "add_new_schedule_spot"},
+                class: "btn-main w-full block text-center" %>
+          <% end %>
         <% end %>
       </div>
       <div class="flex justify-center">
         <% if @card.group_card? %>
-          <%= link_to t('cards.form.delete'), group_card_spot_path(@card.group, @card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger text-center mt-20" %>
+          <%= link_to t('cards.form.delete'), group_card_spot_path(@card.group, @card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger text-center mt-12" %>
         <% else %>
-          <%= link_to t('cards.form.delete'), card_spot_path(@card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger text-center mt-20" %>
+          <%= link_to t('cards.form.delete'), card_spot_path(@card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger text-center mt-12" %>
         <% end %>
       </div>
     </main>

@@ -284,7 +284,7 @@ ja:
 
     show:
       add_to_group_schedule: グループのしおりに追加
-      add_to_user_schedule: ユーザーのしおりに追加
+      add_to_user_schedule: あなたのしおりに追加
 
     form:
       name: スポット名
