@@ -5,19 +5,19 @@
 
     <%# メンバー数 %>
     <div class="flex items-center gap-2 mb-2">
-      <span class="text-text-light">メンバー : </span>
-      <span class="text-text-light"><%= group.group_memberships.count %>人</span>
+      <span class="text-text-light text-sm">メンバー : </span>
+      <span class="text-text-light text-sm"><%= group.group_memberships.count %>人</span>
     </div>
 
     <%# しおり期間 %>
     <div class="flex items-center gap-2 mb-2">
-      <span class="text-text-light">日程 : </span>
-      <% if group.schedule.present? && group.schedule.start_date.present? && group.schedule.end_date.present? %>
-        <span class="text-text-light">
-          <%= group.schedule.start_date.strftime("%Y/%m/%d") %> 〜 <%= group.schedule.end_date.strftime("%Y/%m/%d") %>
+      <span class="text-text-light text-sm">日程 : </span>
+      <% if group.schedule.present? && group.schedule.formatted_date_range.present? %>
+        <span class="text-text-light text-sm">
+          <%= group.schedule.formatted_date_range %>
         </span>
       <% else %>
-        <span class="text-text-light">なし</span>
+        <span class="text-text-light text-sm">（しおりの作成が必要です）</span>
       <% end %>
     </div>
 

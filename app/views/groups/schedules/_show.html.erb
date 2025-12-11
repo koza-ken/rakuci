@@ -9,10 +9,8 @@
     <%# スケジュール日程 %>
     <div class="mb-2">
       <p class="text-text">
-        <span class="font-semibold"><%= t('schedules.show.schedule_dates') %>：</span>
-        <span class="font-semibold"><%= schedule.start_date %></span>
-        <span class="text-text">~</span>
-        <span class="font-semibold"><%= schedule.end_date %></span>
+        <span class=""><%= t('schedules.show.schedule_dates') %>：</span>
+        <span class=""><%= schedule.formatted_date_range %></span>
       </p>
     </div>
 

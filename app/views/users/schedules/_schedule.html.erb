@@ -6,10 +6,10 @@
       <h2 class="text-xl font-bold text-text"><%= schedule.name %></h2>
 
       <%# 日付 %>
-      <% if schedule.start_date.present? && schedule.end_date.present? %>
+      <% if schedule.formatted_date_range.present? %>
         <div class="flex items-center text-text-light text-sm">
           <%= render "shared/icon/schedule_icon_date" %>
-          <span><%= schedule.start_date %> ~ <%= schedule.end_date %></span>
+          <span><%= schedule.formatted_date_range %></span>
         </div>
       <% end %>
 
