@@ -67,6 +67,14 @@ class Schedule < ApplicationRecord
     date.strftime(date_format) + "（#{wday}）"
   end
 
+  # スケジュールの開始日～終了日を曜日付きで返す
+  def formatted_date_range
+    return nil if start_date.blank? || end_date.blank?
+    start_wday = I18n.t("date.day_names")[start_date.wday]
+    end_wday = I18n.t("date.day_names")[end_date.wday]
+    "#{start_date.strftime('%Y/%m/%d')}（#{start_wday}）～ #{end_date.strftime('%Y/%m/%d')}（#{end_wday}）"
+  end
+
   private
 
   # グループは1つのスケジュールのみ持つことができる

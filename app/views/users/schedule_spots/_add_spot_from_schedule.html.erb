@@ -1,6 +1,8 @@
 <%# しおり詳細から直接スポット追加 %>
 <main class="flex flex-col items-center justify-center px-8 py-12">
-  <h1 class="text-2xl font-bold text-text mb-8"><%= t('spots.new.title') %></h1>
+  <div class="w-full max-w-md">
+    <h1 class="text-2xl font-bold text-text mb-8"><%= t('spots.new.title') %></h1>
+  </div>
 
   <%= form_with model: @schedule_spot, url: schedule_schedule_spots_path(@schedule), class: "w-full max-w-md", data: { controller: "autocomplete" } do |f| %>
     <%# スポット名 %>
