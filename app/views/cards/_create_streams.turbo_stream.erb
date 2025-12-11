@@ -18,7 +18,7 @@
   <%= turbo_stream.append "cards_list", partial: "cards/card", locals: { card: @card } %>
   <%# ページタイトル（h1）を表示 %>
   <%= turbo_stream.replace "cards-page-title" do %>
-    <h1><%= t('cards.index_content.title') %></h1>
+    <h1 class="text-2xl text-text font-bold"><%= t('cards.index_content.title') %></h1>
   <% end %>
   <%# FABボタンを表示 %>
   <%= turbo_stream.replace "cards-fab-container" do %>
