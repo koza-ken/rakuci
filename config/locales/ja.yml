@@ -249,7 +249,7 @@ ja:
       schedule_dates: 日程
       memo: メモ
       schedule_spots: スケジュール
-      no_spots: スポットはありません
+      no_spots: スポットを追加しましょう
       add_spot_button: スポットを追加
       no_schedule_message: はまだ作成されていません
       edit: 編集
