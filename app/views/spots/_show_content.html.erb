@@ -68,10 +68,12 @@
       <div class="mt-14">
         <%# グループのカード か ユーザーのカード か判定 %>
         <% if @card.group_card? %>
-          <%# グループのカード → 直接作成（postなのでbutton_to）  %>
-          <%= button_to t('spots.show.add_to_group_schedule'),
-              group_card_spot_schedule_spot_path(@card.group, @card, @spot),
-              method: :post, class: "btn-main w-full" %>
+          <% if @card.group.schedule.present? %>
+            <%# グループのカード → 直接作成（postなのでbutton_to）  %>
+            <%= button_to t('spots.show.add_to_group_schedule'),
+                group_card_spot_schedule_spot_path(@card.group, @card, @spot),
+                method: :post, class: "btn-main w-full" %>
+          <% end %>
         <% else %>
           <%# ユーザーのカード → ユーザーがしおりを持つ場合のみ表示 %>
           <% if @card.user.schedules.any? %>
