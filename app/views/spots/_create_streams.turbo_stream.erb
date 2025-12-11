@@ -4,10 +4,5 @@
 <%# モーダルを閉じる（中身を空にする） %>
 <%= turbo_stream.update "spot-create-modal", "" %>
 
-<%# <% if @card.group_id.present? %>
-  <%# グループ詳細ページの場合 %>
-  <%# <%= turbo_stream.append "group_cards_list", partial: "cards/card", locals: { card: @card } %>
-<%# <% else %>
-  <%# ユーザーページの場合 %>
-  <%= turbo_stream.append "category_#{@spot.category_id}_spots", partial: "spots/spot", locals: { spot: @spot } %>
-<%# <% end %>
+
+<%= turbo_stream.append "category_#{@spot.category_id}_spots", partial: "spots/spot", locals: { spot: @spot } %>

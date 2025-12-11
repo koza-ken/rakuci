@@ -4,18 +4,14 @@
 <%# モーダルを閉じる（中身を空にする） %>
 <%= turbo_stream.update "card-create-modal", "" %>
 
-<% if @card.group_card? %>
-  <%# グループ詳細ページの場合 %>
-  <%# 空状態メッセージを削除 %>
-  <%= turbo_stream.remove "group_cards_empty_state" %>
-  <%# 新規カードを追加 %>
-  <%= turbo_stream.append "group_cards_list", partial: "cards/card", locals: { card: @card } %>
-<% else %>
-  <%# ユーザーページの場合 %>
-  <%# 空状態メッセージを削除 %>
-  <%= turbo_stream.remove "cards_empty_state" %>
-  <%# 新規カードを追加 %>
-  <%= turbo_stream.append "cards_list", partial: "cards/card", locals: { card: @card } %>
+<%# 空状態メッセージを削除 %>
+<%= turbo_stream.remove (@card.group_card? ? "group_cards_empty_state" : "cards_empty_state") %>
+
+<%# 新規カードを追加 %>
+<%= turbo_stream.append (@card.group_card? ? "group_cards_list" : "cards_list"), partial: "cards/card", locals: { card: @card } %>
+
+<% unless @card.group_card? %>
+  <%# ユーザーページの場合のみ（ページタイトルとFABボタンを表示） %>
   <%# ページタイトル（h1）を表示 %>
   <%= turbo_stream.replace "cards-page-title" do %>
     <h1 class="text-2xl text-text font-bold"><%= t('cards.index_content.title') %></h1>
