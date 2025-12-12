@@ -7,7 +7,7 @@
       <div class="flex items-center gap-2 mb-8">
         <h1 class="text-2xl font-bold text-text"><%= @spot.name %></h1>
         <% if @spot.google_place_id.present? %>
-          <%= link_to "https://maps.google.com/maps?q=place_id:#{@spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition" do %>
+          <%= link_to "https://www.google.com/maps/search/?api=1&query=7-Elevan&query_place_id=#{@spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition" do %>
             <%= render "shared/icon/map_icon_google" %>
           <% end %>
         <% end %>
