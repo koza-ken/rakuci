@@ -21,7 +21,7 @@
         <div class="mb-6">
           <%= f.label :password, t('.password'), class: "block text-sm font-medium text-text mb-2" %>
           <%= f.password_field :password, autocomplete: "new-password",
-              class: "w-full px-4 py-2 bg-white  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" %>
+              class: "form-text-field" %>
           <% if @minimum_password_length %>
             <span class="text-xs text-gray-400 ml-1"><%= t('.password_hint', count: @minimum_password_length) %></span>
           <% end %>
@@ -36,7 +36,7 @@
         <div class="mb-12">
           <%= f.label :password_confirmation, t('.password_confirmation'), class: "block text-sm font-medium text-text mb-2" %>
           <%= f.password_field :password_confirmation, autocomplete: "new-password",
-              class: "w-full px-4 py-2 bg-white  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" %>
+              class: "form-text-field" %>
           <% if resource.errors[:password_confirmation].any? %>
             <% resource.errors[:password_confirmation]&.each do |message| %>
               <p class="text-red-600 text-xs mt-1 ml-1"><%= t('devise.registrations.new.password_confirmation') %><%= message %></p>
@@ -50,6 +50,12 @@
         </div>
       <% end %>
 
+      <%# 区切り線と「または」 %>
+      <div class="flex items-center mb-8">
+        <div class="flex-1 border-t border-gray-300"></div>
+        <div class="px-4 text-sm text-gray-500"><%= t('devise.sessions.new.or') %></div>
+        <div class="flex-1 border-t border-gray-300"></div>
+      </div>
 
       <%# Googleログインボタン %>
       <div class="mb-14">
