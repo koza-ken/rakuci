@@ -91,6 +91,7 @@ ja:
         forgot_password: "パスワードを忘れた方は"
         forgot_password_link: "こちら"
         sign_in: "ログイン"
+        or: "または"
         google_login: "Googleでログイン"
         sign_up: "新規登録は"
         sign_up_link: "こちら"
