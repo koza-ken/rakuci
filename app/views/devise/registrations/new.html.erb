@@ -50,6 +50,12 @@
         </div>
       <% end %>
 
+      <%# 区切り線と「または」 %>
+      <div class="flex items-center mb-8">
+        <div class="flex-1 border-t border-gray-300"></div>
+        <div class="px-4 text-sm text-gray-500"><%= t('devise.sessions.new.or') %></div>
+        <div class="flex-1 border-t border-gray-300"></div>
+      </div>
 
       <%# Googleログインボタン %>
       <div class="mb-14">
