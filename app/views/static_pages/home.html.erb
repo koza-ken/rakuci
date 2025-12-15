@@ -15,7 +15,7 @@
           RakuCi
         </h1>
         <p class="text-base text-text-light max-w-3xl mx-auto leading-relaxed hero-fade-up hero-delay-3">
-          RakuCi（ラクシィ）は、あなたが興味のある観光地をカードにしたり、みんなで旅行の計画をたてたりすることができるアプリです。
+          RakuCi（ラクシィ）は、旅行の計画で散らばりがちな情報を整理して、参加メンバーと共有できるアプリです。
         </p>
         <div class="flex flex-col gap-5 justify-center items-center pt-2 hero-fade-up hero-delay-4">
           <%= link_to new_user_registration_path, class: "btn-main w-full", data: { turbo: false } do %>
@@ -49,34 +49,18 @@
         </span>
         <span class="font-logo text-4xl">RakuCi<span class="text-3xl">でできること</span></span>
       </h2>
-      <%# <p class="text-sm text-text-light hero-fade-up hero-delay-2">問いかけ → イメージ → 解決の順に並べました。</p> %>
     </div>
     <div class="space-y-10">
-      <div class="pb-2 opacity-0 text-center max-w-md mx-auto" data-controller="reveal" data-reveal-delay-value="320">
+      <div class="pb-10 opacity-0 text-center max-w-md mx-auto" data-controller="reveal" data-reveal-delay-value="320">
         <p class="text-xl font-bold text-secondary mb-2">改めてスケジュールやしおりつくるのって手間じゃない？</p>
-        <div class="mx-auto rounded-xl bg-gradient-to-b from-secondary/10 via-white to-primary/20 border border-secondary/15 w-full max-w-sm h-32 flex items-center justify-center">
-          <div class="text-secondary">
-            <%= render "/shared/icon/top_icon_schedule" %>
-          </div>
-        </div>
         <p class="text-lg text-text mt-4 font-semibold">旅行の計画からしおりの作成、費用の精算まで、RakuCiで完結させることができます。</p>
       </div>
       <div class="pb-10 border-b border-border opacity-0 text-center max-w-md mx-auto" data-controller="reveal">
         <p class="text-xl font-bold text-secondary mb-2">チャットでどこ行くか検討していると、見返しづらくない？</p>
-        <div class="mx-auto rounded-xl bg-linear-to-b from-secondary/10 via-white to-primary/20 border border-secondary/15 w-full max-w-sm h-32 flex items-center justify-center">
-          <div class="text-secondary">
-            <%= render "/shared/icon/top_icon_card" %>
-          </div>
-        </div>
         <p class="text-lg text-text mt-4 font-semibold">目的地ごとにカード化して情報を一元管理します。自分のカードとしても保存しておけば次の機会にも参照できます。</p>
       </div>
       <div class="pb-10 border-b border-border opacity-0 text-center max-w-md mx-auto" data-controller="reveal" data-reveal-delay-value="200">
         <p class="text-xl font-bold text-secondary mb-2">みんなの意見取りまとめるの大変じゃない？</p>
-        <div class="mx-auto rounded-xl bg-linear-to-b from-secondary/10 via-white to-primary/20 border border-secondary/15 w-full max-w-sm h-32 flex items-center justify-center">
-          <div class="text-secondary">
-            <%= render "/shared/icon/top_icon_group" %>
-          </div>
-        </div>
         <p class="text-lg text-text mt-4 font-semibold">グループ内でカードにいいねやコメントをつけられるので、意見の集約が簡単になります。</p>
       </div>
     </div>
@@ -110,7 +94,7 @@
   </section>
 
   <%# その他の機能（追加予定含む） %>
-  <section class="max-w-5xl mx-auto px-6 pb-14">
+  <section class="max-w-5xl mx-auto px-6 py-14 bg-gray-200/70">
     <div class="text-center mb-8">
       <p class="mb-2 text-xl font-semibold text-secondary tracking-wide hero-fade-up">More features</p>
       <h class="text-2xl font-bold text-text hero-fade-up hero-delay-2">そのほかの機能</h>
