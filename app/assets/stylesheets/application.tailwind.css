@@ -62,6 +62,49 @@ body {
 }
 
 @layer utilities {
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes gentle-float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .hero-fade-up {
+    opacity: 0;
+    animation: hero-rise 720ms ease forwards;
+  }
+
+  .hero-delay-1 { animation-delay: 0.12s; }
+  .hero-delay-2 { animation-delay: 0.32s; }
+  .hero-delay-3 { animation-delay: 0.54s; }
+  .hero-delay-4 { animation-delay: 0.78s; }
+
+  .bg-hero-surface {
+    background: radial-gradient(circle at 20% 20%, rgba(255, 241, 133, 0.25), transparent 38%),
+      radial-gradient(circle at 80% 10%, rgba(63, 192, 231, 0.22), transparent 36%),
+      linear-gradient(135deg, #ffffff 0%, #f7fbff 50%, #f5f5ff 100%);
+  }
+
+  .bg-solution-surface {
+    background: radial-gradient(circle at 20% 0%, rgba(63, 192, 231, 0.18), transparent 38%),
+      radial-gradient(circle at 82% 14%, rgba(255, 241, 133, 0.25), transparent 42%),
+      linear-gradient(160deg, #f0fbff 0%, #e9f8ff 55%, #fdfaf2 100%);
+  }
+
+  .floaty {
+    animation: gentle-float 5s ease-in-out infinite;
+  }
+
   @keyframes fade-in-up {
     from {
       opacity: 0;
@@ -75,5 +118,14 @@ body {
 
   .animate-fade-in-up {
     animation: fade-in-up 400ms ease forwards;
+  }
+
+  @keyframes chevron-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  .chevron-bounce {
+    animation: chevron-bounce 1.2s ease-in-out infinite;
   }
 }
