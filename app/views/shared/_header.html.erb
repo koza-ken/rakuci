@@ -1,6 +1,6 @@
 <header class="flex items-center justify-between px-6 py-4 border-b-3 bg-header-bg border-secondary">
   <h1>
-    <%= link_to "RakuCi", (user_signed_in? ? cards_path : root_path), class: "text-3xl font-bold text-secondary" %>
+    <%= link_to "RakuCi", (user_signed_in? ? cards_path : root_path), class: "text-4xl font-bold text-secondary font-logo hover:opacity-70 transition-opacity duration-300" %>
   </h1>
   <button class="relative w-8 h-6 flex flex-col justify-between items-center group" data-action="click->hamburger#toggle" data-hamburger-target="hamburger">
     <span class="hamburger-to-close group-[.open]:translate-y-[12px] group-[.open]:rotate-45"></span>

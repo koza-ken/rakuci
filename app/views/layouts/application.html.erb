@@ -31,9 +31,11 @@
       <%= render "shared/header" %>
 
       <div class="relative min-h-screen bg-main-bg overflow-hidden">
-          <div class="px-4 pt-4 pb-2 text-sm text-text-light">
-            <%= breadcrumbs separator: " > " %>
-          </div>
+          <% if show_breadcrumbs? %>
+            <div class="px-4 pt-4 pb-2 text-sm text-text-light">
+              <%= breadcrumbs separator: " > " %>
+            </div>
+          <% end %>
           <%= yield %>
         <%= render "shared/hamburger_menu" %>
         <div id="flash-container">

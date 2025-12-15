@@ -30,3 +30,6 @@ application.register("turbo", TurboController);
 
 import SpotSelectorController from "./spot_selector_controller";
 application.register("spot-selector", SpotSelectorController);
+
+import RevealController from "./reveal_controller";
+application.register("reveal", RevealController);

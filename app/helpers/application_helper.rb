@@ -29,4 +29,9 @@ module ApplicationHelper
     base_title = "RakuCi"
     title.present? ? "#{title} | #{base_title}" : base_title
   end
+
+  # ホーム（トップ）ではパンくずを表示しない
+  def show_breadcrumbs?
+    !current_page?(root_path)
+  end
 end
