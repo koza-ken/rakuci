@@ -97,6 +97,8 @@ ja:
       title: あなたの旅のカード
       no_cards: まだカードがありません
       lets_create_card: 行きたい旅行先をカードにしよう
+      personal_card_page: このページはあなた専用のカードをつくることができます
+      personal_or_group: グループで旅行を計画する場合はグループページに移動しよう
       create_card: カードを作成
 
     new:

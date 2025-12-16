@@ -1,1 +1,53 @@
-<%= render "cards/index_content" %>
+<% content_for(:title, t('cards.index_content.title')) %>
+<% breadcrumb :cards %>
+
+<%# 作成モーダルの挿入 %>
+<%= turbo_frame_tag "card-create-modal", data: { controller: "modal" } %>
+
+<main class="flex flex-col items-center justify-center px-8 py-6">
+  <div id="cards-page-title">
+    <% if @cards.any? %>
+      <h1 class="text-2xl text-text font-bold"><%= t('cards.index_content.title') %></h1>
+    <% end %>
+  </div>
+
+  <div id="cards_list" class="w-full grid grid-cols-2 gap-4 mt-8">
+    <% if @cards.any? %>
+      <%= render partial: "cards/card", collection: @cards %>
+    <% else %>
+      <div id="cards_empty_state" class="col-span-2 flex flex-col items-center justify-center py-8 mt-6 px-4">
+        <div class="w-full max-w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-8 py-10 space-y-8 text-center animate-fade-in-up">
+          <div class="mx-auto w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
+            <%= render "shared/icon/footer_icon_card", icon_class: "text-text-light/40" %>
+          </div>
+          <div class="">
+            <p class="text-xl font-semibold text-text mb-4"><%= t('cards.index_content.no_cards') %></p>
+            <p class="text-sm text-text-light leading-relaxed mb-8"><%= t('cards.index_content.lets_create_card') %></p>
+            <p class="text-xs text-text-light text-left leading-relaxed mb-1"><%= t('cards.index_content.personal_card_page') %></p>
+            <p class="text-xs text-text-light text-left leading-relaxed mb-1"><%= t('cards.index_content.personal_or_group') %></p>
+          </div>
+          <div class="space-y-3">
+            <%= link_to new_card_path, data: {turbo_frame: "card-create-modal"}, class: "first-create-btn" do %>
+              <span class="text-xl">+</span>
+              <span><%= t('cards.index_content.create_card') %></span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%# 右下の+ボタン（新規作成ページへのリンク） %>
+  <div id="cards-fab-container">
+    <% if @cards.any? %>
+      <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
+        <%= link_to new_card_path, data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
+                    class: "group bg-primary hover:opacity-80 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
+          <%# +アイコン %>
+          <span class="block w-6 h-[3px] bg-text-light rounded absolute transition-all duration-300"></span>
+          <span class="block w-6 h-[3px] bg-text-light rounded absolute rotate-90 transition-all duration-300"></span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</main>
