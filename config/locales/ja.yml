@@ -172,19 +172,22 @@ ja:
       delete_confirm: このグループを削除しますか
 
     new_membership:
-      title: グループに参加
-      invited_message: に招待されました。
-      signed_up_users_title: ユーザー登録済みの方
-      signed_up_users_text: ログインしてからグループに参加してください
+      title: グループに招待されました
+      invited_message: に参加する方法を選んでください
+      signed_up_users_title: ログインしてから参加する
+      signed_up_users_text: ログイン／新規登録後にこのページに戻ってきます
+      signed_up_users_text_sub: 過去にゲスト参加した場合はログインしてから入りなおすこともできます
       sign_in: ログイン
       new_user_text: 新規ユーザー登録は
       new_user_link: こちら
-      past_users_title: 過去に
-      past_users_title_suffix: に参加したことがある方
-      past_users_text: 前回参加したユーザー名を選択してください
-      select_placeholder: ゲストユーザーから選択してください
+      past_users_title: すでに
+      past_users_title_suffix: に参加している
+      past_users_text: 前回参加したときのユーザー名を選んでください
+      past_users_text_login_user: ログインして参加する場合は過去に参加したユーザー名を選んでください
+      past_users_text_sub: ゲストユーザーのメンバーの名前が表示されます
+      select_placeholder: 参加メンバー一覧
       first_time_title: はじめて
-      first_time_title_suffix: に参加する方
+      first_time_title_suffix: に参加する
       first_time_text: ユーザー名を入力してください
       note: ユーザー名は参加するグループ「
       note_suffix: 」でのみ有効です
