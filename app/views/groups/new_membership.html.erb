@@ -4,7 +4,17 @@
   <main class="flex flex-col items-center justify-center px-8 py-12">
     <div class="w-full max-w-md">
       <%# タイトル %>
-      <h1 class="text-2xl font-bold text-text mb-2"><%= t('groups.new_membership.title') %></h1>
+      <div class="flex items-center justify-between gap-3 mb-2">
+        <h1 class="text-2xl font-bold text-text"><%= t('groups.new_membership.title') %></h1>
+        <%# TODO 使い方ページを実装したらモーダル追加 %>
+        <%# <div class="relative">
+          <button class="text-gray-100 transition" title="RakuCiについて" disabled>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </button>
+        </div> %>
+      </div>
       <p class="text-sm text-text-light mb-8"><%= @group.name %><%= t('groups.new_membership.invited_message') %></p>
 
       <%# ユーザー登録済み %>
