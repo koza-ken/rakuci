@@ -10,12 +10,23 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+     <!-- OGPメタタグ -->
+    <meta property="og:title" content="<%= content_for(:og_title) || 'RakuCi' %>">
+    <meta property="og:type" content="<%= content_for(:og_type) || 'website' %>">
+    <meta property="og:url" content="<%= content_for(:og_url) || request.original_url %>">
+    <meta property="og:image" content="<%= content_for(:og_image) || "#{request.base_url}/rakuci_ogp.png" %>">
+    <meta property="og:description" content="<%= content_for(:og_description) || '旅行の計画から終了までを管理できるアプリです' %>">
+    <meta property="og:site_name" content="RakuCi">
+
     <%= yield :head %>
 
     <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# favicon %>
+    <link rel="icon" href="/rakuci_favicon.png" type="image/png">
+    <link rel="icon" href="/rakuci_favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/rakuci_favicon.png">
+
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%# <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
