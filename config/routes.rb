@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   root "static_pages#home"
+  get "/privacy", to: "static_pages#privacy", as: :privacy
 
   # 個人用リソース（Users名前空間）
   scope module: "users" do
