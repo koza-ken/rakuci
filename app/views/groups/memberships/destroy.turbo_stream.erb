@@ -7,8 +7,11 @@
     <% @group.group_memberships.each do |membership| %>
       <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
         <span class="text-sm text-text"><%= membership.group_nickname %></span>
-        <%= button_to group_group_membership_path(@group, membership), method: :delete, form_class: "inline", class: "btn-sub px-3 py-1 text-sm", data: { turbo_confirm: "#{membership.group_nickname}を削除しますか？" } do %>
-          削除
+        <%# オーナーのみが削除ボタンを表示、かつオーナー本人は削除できない %>
+        <% if current_user&.id == @group.created_by_user_id && !membership.owner? %>
+          <%= button_to group_group_membership_path(@group, membership), method: :delete, form_class: "inline", class: "btn-danger px-3 py-1 text-sm", data: { turbo_confirm: "#{membership.group_nickname}を削除しますか？" } do %>
+            削除
+          <% end %>
         <% end %>
       </div>
     <% end %>
