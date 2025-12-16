@@ -33,7 +33,7 @@
         </div>
 
         <%# パスワード確認 %>
-        <div class="mb-12">
+        <div class="mb-6">
           <%= f.label :password_confirmation, t('.password_confirmation'), class: "block text-sm font-medium text-text mb-2" %>
           <%= f.password_field :password_confirmation, autocomplete: "new-password",
               class: "form-text-field" %>
@@ -42,6 +42,12 @@
               <p class="text-red-600 text-xs mt-1 ml-1"><%= t('devise.registrations.new.password_confirmation') %><%= message %></p>
             <% end %>
           <% end %>
+        </div>
+
+        <%# 利用規約とプライバシーポリシーへの同意 %>
+        <div class="mb-6 text-sm text-text text-center">
+          <%= link_to t('.terms_of_service'), terms_path, class: "text-secondary font-bold underline hover:opacity-80" %>と<%= link_to t('.privacy_policy'), privacy_path, class: "text-secondary font-bold underline hover:opacity-80" %><br>
+          <%= t('.terms_agreement') %>
         </div>
 
         <%# 登録ボタン %>
