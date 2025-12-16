@@ -20,9 +20,11 @@
           <div class="mx-auto w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
             <%= render "shared/icon/footer_icon_card", icon_class: "text-text-light/40" %>
           </div>
-          <div class="space-y-6">
-            <p class="text-xl font-semibold text-text"><%= t('cards.index_content.no_cards') %></p>
-            <p class="text-sm text-text-light leading-relaxed"><%= t('cards.index_content.lets_create_card') %></p>
+          <div class="">
+            <p class="text-xl font-semibold text-text mb-4"><%= t('cards.index_content.no_cards') %></p>
+            <p class="text-sm text-text-light leading-relaxed mb-8"><%= t('cards.index_content.lets_create_card') %></p>
+            <p class="text-xs text-text-light text-left leading-relaxed mb-1"><%= t('cards.index_content.personal_card_page') %></p>
+            <p class="text-xs text-text-light text-left leading-relaxed mb-1"><%= t('cards.index_content.personal_or_group') %></p>
           </div>
           <div class="space-y-3">
             <%= link_to new_card_path, data: {turbo_frame: "card-create-modal"}, class: "first-create-btn" do %>
