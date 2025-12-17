@@ -42,36 +42,37 @@
 
   <%# 課題の問いかけ＋解決イメージ＋テキスト %>
   <section id="problems" class="max-w-5xl mx-auto px-6 py-16 space-y-10 bg-[#e2f4f9]">
-    <div class="text-left">
+    <%# 課題提起セクション %>
+    <div class="text-left px-4">
       <h2 class="flex items-center gap-2 font-bold text-secondary hero-fade-up mb-6 leading-none">
         <span class="inline-flex items-center justify-center size-6 shrink-0">
           <%= render "shared/icon/favicon" %>
         </span>
         <span class="font-logo text-2xl">こんなことしてない？</span>
       </h2>
-    </div>
-    <div class="space-y-10 text-left">
-      <div class="pb-10  max-w-3xl" data-controller="reveal">
-        <p class="text-xl font-bold text-secondary mb-4">チャットで旅行先で決めたあと、こんな手戻りが発生していませんか？</p>
-        <div class="pl-6 text-sm text-text-light mb-20">
-          <ul class="space-y-4">
+      <div class="pb-6 max-w-3xl" data-controller="reveal">
+        <div class="pl-6 text-text-light mb-2">
+          <ul class="space-y-3">
             <li class="list-disc">チャットをさかのぼって「どんな案が出ていたか」を拾い集める</li>
             <li class="list-disc">行き先や観光地をしおり用に整理しなおす</li>
             <li class="list-disc">別のフォーマットに転記して、共有しなおす</li>
           </ul>
         </div>
-        <div class="flex items-center gap-2 text-secondary mb-4">
-          <span class="inline-flex items-center justify-center size-6 shrink-0">
-            <%= render "shared/icon/favicon" %>
-          </span>
-          <span class="font-logo text-3xl font-semibold">RakuCiなら</span>
-        </div>
-        <p class="text-lg text-text font-semibold">
-          旅行先の案をカードに残しておけるので、行き先が決まったときに会話をさかのぼらずに確認でき、整理し直す手間が減ります。
-        </p>
       </div>
     </div>
-  </section>
+
+    <%# 解決提案セクション %>
+    <div class="text-left px-4 max-w-3xl">
+      <div class="flex items-center gap-2 text-secondary mb-4">
+        <span class="inline-flex items-center justify-center size-6 shrink-0">
+          <%= render "shared/icon/favicon" %>
+        </span>
+        <span class="font-logo text-3xl font-semibold">RakuCi<span class="text-2xl">なら</span></span>
+      </div>
+      <p class="text-lg text-text font-semibold">
+        旅行先の案をカードに残しておけるので、行き先が決まったときに会話をさかのぼらずに確認でき、整理し直す手間が減ります。
+      </p>
+    </div>
   </section>
 
   <%# 主な使い方 %>
@@ -86,17 +87,17 @@
       <div class="bg-white border border-border rounded-xl p-5 shadow-sm opacity-0" data-controller="reveal">
         <p class="text-xs font-semibold text-secondary mb-1">01 つくる</p>
         <p class="font-bold text-text mb-2">行き先ごとにカードを作成</p>
-        <p class="text-sm text-text-light leading-relaxed">気になるスポットやメモをカードに追加して、話し合いの土台をつくる。</p>
+        <p class="text-sm text-text-light leading-relaxed">気になるスポットやメモをカードに追加して、行き先ごとに情報をまとめておく。</p>
       </div>
       <div class="bg-white border border-border rounded-xl p-5 shadow-sm opacity-0" data-controller="reveal" data-reveal-delay-value="260">
         <p class="text-xs font-semibold text-secondary mb-1">02 計画する</p>
         <p class="font-bold text-text mb-2">グループでカードを共有</p>
-        <p class="text-sm text-text-light leading-relaxed">カードを共有して、いいねやコメントで反応を見ながら行き先を絞る。</p>
+        <p class="text-sm text-text-light leading-relaxed">カードを共有して、いいねやコメントで反応を見ながら行き先を決める。</p>
       </div>
       <div class="bg-white border border-border rounded-xl p-5 shadow-sm opacity-0" data-controller="reveal" data-reveal-delay-value="380">
         <p class="text-xs font-semibold text-secondary mb-1">03 まとめる</p>
         <p class="font-bold text-text mb-2">決まったらそのまましおりへ</p>
-        <p class="text-sm text-text-light leading-relaxed">必要な情報はカードにそろっているので、整理し直さずにしおりへ進める。</p>
+        <p class="text-sm text-text-light leading-relaxed">カードを見ながら、整理し直さずにしおりへ進める。</p>
       </div>
     </div>
   </section>
