@@ -33,3 +33,6 @@ application.register("spot-selector", SpotSelectorController);
 
 import RevealController from "./reveal_controller";
 application.register("reveal", RevealController);
+
+import HeaderScrollController from "./header_scroll_controller";
+application.register("header-scroll", HeaderScrollController);

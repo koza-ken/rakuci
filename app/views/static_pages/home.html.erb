@@ -11,15 +11,16 @@
         <p class="inline-flex items-center justify-center px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-secondary bg-white/70 rounded-full shadow-sm hero-fade-up hero-delay-1">
           旅の計画づくりを、もっとラクに
         </p>
-        <h1 class="text-[70px] font-logo font-bold text-secondary hero-fade-up hero-delay-2">
-          RakuCi
+        <h1 class="text-[70px] font-logo font-bold text-secondary hero-fade-up hero-delay-2 leading-none mb-16 logo-drop" aria-label="RakuCi">
+          <span class="sr-only">RakuCi</span>
+          <span class="logo-letter" style="--i:0">R</span><span class="logo-letter" style="--i:1">a</span><span class="logo-letter" style="--i:2">k</span><span class="logo-letter" style="--i:3">u</span><span class="logo-letter" style="--i:4">C</span><span class="logo-letter" style="--i:5">i</span>
         </h1>
-        <p class="text-base text-text-light max-w-3xl mx-auto leading-relaxed hero-fade-up hero-delay-3">
-          RakuCi（ラクシィ）は、旅行の計画で散らばりがちな情報を整理して、参加メンバーと共有できるアプリです。
+        <p class="text-sm text-left text-text-light max-w-3xl mx-auto leading-relaxed hero-fade-up hero-delay-3">
+          RakuCi（ラクシィ）は、目的地のカードを使って旅行を計画するアプリです。旅行先が決まったらそのまま計画が進められます。
         </p>
-        <div class="flex flex-col gap-5 justify-center items-center pt-2 hero-fade-up hero-delay-4">
+        <div class="flex flex-col gap-5 justify-center items-center pt-4 hero-fade-up hero-delay-4">
           <%= link_to new_user_registration_path, class: "btn-main w-full", data: { turbo: false } do %>
-            はじめて登録する
+            登録する
           <% end %>
           <%= link_to new_user_session_path, class: "btn-sub w-full", data: { turbo: false } do %>
             ログイン
@@ -27,7 +28,7 @@
         </div>
         <div class="flex justify-center pt-8">
           <a href="#problems" class="flex flex-col items-center text-text-light text-sm gap-2 hero-fade-up hero-delay-4">
-            <span>くわしくみる</span>
+            <span>どんなアプリ？</span>
             <span class="chevron-bounce text-secondary">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-7" fill="none" viewBox="0 0 24 28" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m6 8 6 6 6-6"/>
@@ -41,113 +42,131 @@
   </section>
 
   <%# 課題の問いかけ＋解決イメージ＋テキスト %>
-  <section id="problems" class="max-w-5xl mx-auto px-6 py-16 space-y-10 bg-gray-200/70">
-    <div class="text-center">
-      <h2 class="flex items-center justify-center gap-2 font-bold text-secondary hero-fade-up mb-12 leading-none">
-        <span class="inline-flex items-center justify-center size-8 shrink-0">
+  <section id="problems" class="max-w-5xl mx-auto px-6 py-16 space-y-10 bg-[#e2f4f9]">
+    <%# 課題提起セクション %>
+    <div class="text-left px-4">
+      <h2 class="flex items-center gap-2 font-bold text-secondary hero-fade-up mb-6 leading-none">
+        <span class="inline-flex items-center justify-center size-6 shrink-0">
           <%= render "shared/icon/favicon" %>
         </span>
-        <span class="font-logo text-4xl">RakuCi<span class="text-3xl">でできること</span></span>
+        <span class="font-logo text-2xl">こんなことしてない？</span>
       </h2>
+      <div class="pb-6 max-w-3xl" data-controller="reveal">
+        <div class="pl-6 text-text-light mb-2">
+          <ul class="space-y-3">
+            <li class="list-disc">チャットをさかのぼって「どんな案が出ていたか」を拾い集める</li>
+            <li class="list-disc">行き先や観光地をしおり用に整理しなおす</li>
+            <li class="list-disc">別のフォーマットに転記して、共有しなおす</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="space-y-10">
-      <div class="pb-10 opacity-0 text-center max-w-md mx-auto" data-controller="reveal" data-reveal-delay-value="320">
-        <p class="text-xl font-bold text-secondary mb-2">改めてスケジュールやしおりつくるのって手間じゃない？</p>
-        <p class="text-lg text-text mt-4 font-semibold">旅行の計画からしおりの作成、費用の精算まで、RakuCiで完結させることができます。</p>
+
+    <%# 解決提案セクション %>
+    <div class="text-left px-4 max-w-3xl mb-8">
+      <div class="flex items-center gap-2 text-secondary mb-4">
+        <span class="inline-flex items-center justify-center size-6 shrink-0">
+          <%= render "shared/icon/favicon" %>
+        </span>
+        <span class="font-logo text-3xl font-semibold">RakuCi<span class="text-2xl">なら</span></span>
       </div>
-      <div class="pb-10 border-b border-border opacity-0 text-center max-w-md mx-auto" data-controller="reveal">
-        <p class="text-xl font-bold text-secondary mb-2">チャットでどこ行くか検討していると、見返しづらくない？</p>
-        <p class="text-lg text-text mt-4 font-semibold">目的地ごとにカード化して情報を一元管理します。自分のカードとしても保存しておけば次の機会にも参照できます。</p>
-      </div>
-      <div class="pb-10 border-b border-border opacity-0 text-center max-w-md mx-auto" data-controller="reveal" data-reveal-delay-value="200">
-        <p class="text-xl font-bold text-secondary mb-2">みんなの意見取りまとめるの大変じゃない？</p>
-        <p class="text-lg text-text mt-4 font-semibold">グループ内でカードにいいねやコメントをつけられるので、意見の集約が簡単になります。</p>
-      </div>
+      <p class="text-lg text-text font-semibold">
+        旅行先の案をカードに残しておけるので、行き先が決まったときに会話をさかのぼらずに確認でき、整理し直す手間が減ります。
+      </p>
     </div>
   </section>
 
   <%# 主な使い方 %>
-  <section class="max-w-5xl mx-auto px-6 py-14">
+  <section class="max-w-5xl mx-auto px-6 py-14 bg-[#f4fdff]">
     <div class="text-center mb-10">
       <p class="mb-2 text-xl font-semibold text-secondary tracking-wide hero-fade-up">How to use</p>
       <h3 class="text-2xl font-bold text-text hero-fade-up hero-delay-2">
         <span class="font-logo text-3xl">RakuCi<span class="text-2xl">の使い方
       </h3>
     </div>
-    <div class="grid gap-6 sm:grid-cols-3">
+    <div class="grid gap-8 mb-12">
       <div class="bg-white border border-border rounded-xl p-5 shadow-sm opacity-0" data-controller="reveal">
         <p class="text-xs font-semibold text-secondary mb-1">01 つくる</p>
-        <p class="font-bold text-text mb-2">カードを作成</p>
-        <p class="text-sm text-text-light leading-relaxed">興味のある場所のカードを作成して、スポットを追加しておく。一人旅ならそのまましおりを作るだけでOK。</p>
+        <p class="font-bold text-text mb-2">行き先ごとにカードを作成</p>
+        <p class="text-sm text-text-light leading-relaxed">気になるスポットやメモをカードに追加して、行き先ごとに情報をまとめておく。</p>
       </div>
       <div class="bg-white border border-border rounded-xl p-5 shadow-sm opacity-0" data-controller="reveal" data-reveal-delay-value="260">
         <p class="text-xs font-semibold text-secondary mb-1">02 計画する</p>
-        <p class="font-bold text-text mb-2">みんなで共有</p>
-        <p class="text-sm text-text-light leading-relaxed">旅行のメンバーでグループをつくり、どこに行くかを決めていく。</p>
+        <p class="font-bold text-text mb-2">グループでカードを共有</p>
+        <p class="text-sm text-text-light leading-relaxed">カードを共有して、いいねやコメントで反応を見ながら行き先を決める。</p>
       </div>
       <div class="bg-white border border-border rounded-xl p-5 shadow-sm opacity-0" data-controller="reveal" data-reveal-delay-value="380">
         <p class="text-xs font-semibold text-secondary mb-1">03 まとめる</p>
-        <p class="font-bold text-text mb-2">しおりをつくる</p>
-        <p class="text-sm text-text-light leading-relaxed">決まったらしおりをつくっていく。</p>
+        <p class="font-bold text-text mb-2">決まったらそのまましおりへ</p>
+        <p class="text-sm text-text-light leading-relaxed">カードを見ながら、整理し直さずにしおりへ進める。</p>
       </div>
     </div>
   </section>
 
   <%# その他の機能（追加予定含む） %>
-  <section class="max-w-5xl mx-auto px-6 py-14 bg-gray-200/70">
-    <div class="text-center mb-8">
+  <section class="max-w-5xl mx-auto px-6 py-16 bg-[#e2f4f9]">
+    <div class="text-center mb-10">
       <p class="mb-2 text-xl font-semibold text-secondary tracking-wide hero-fade-up">More features</p>
       <h class="text-2xl font-bold text-text hero-fade-up hero-delay-2">そのほかの機能</h>
     </div>
-    <div class="grid gap-4 sm:grid-cols-2">
+    <div class="space-y-4 mb-10">
       <div class="bg-white border border-border rounded-lg p-4 shadow-sm flex items-start gap-3 opacity-0" data-controller="reveal">
-        <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg">💬</div>
+        <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square"><path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1"/></svg>
+        </div>
         <div>
           <p class="font-bold text-text mb-1">リアクション</p>
-          <p class="text-sm text-text-light">コメントやいいねでみんなの意見を可視化する機能。</p>
+          <p class="text-sm text-text-light">コメントやいいねでみんなの意見を可視化</p>
         </div>
       </div>
       <div class="bg-white border border-border rounded-lg p-4 shadow-sm flex items-start gap-3 opacity-0" data-controller="reveal" data-reveal-delay-value="260">
-        <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg">💰</div>
+        <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-coins-icon lucide-hand-coins"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>
+        </div>
         <div>
-          <p class="font-bold text-text mb-1">精算・割り勘</p>
-          <p class="text-sm text-text-light">旅費の共有と精算をスムーズに。（今後実装予定）</p>
+          <p class="font-bold text-text mb-1">精算・割り勘（今後実装予定）</p>
+          <p class="text-sm text-text-light">旅費の共有と精算をスムーズに</p>
         </div>
       </div>
       <div class="bg-white border border-border rounded-lg p-4 shadow-sm flex items-start gap-3 opacity-0" data-controller="reveal" data-reveal-delay-value="320">
-        <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg">🧳</div>
+        <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-luggage-icon lucide-luggage"><path d="M6 20a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2"/><path d="M8 18V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14"/><path d="M10 20h4"/><circle cx="16" cy="20" r="2"/><circle cx="8" cy="20" r="2"/></svg>
+        </div>
         <div>
-          <p class="font-bold text-text mb-1">持ち物管理</p>
-          <p class="text-sm text-text-light">チェックリストで忘れ物を防止。（今後実装予定）</p>
+          <p class="font-bold text-text mb-1">もちもの管理（今後実装予定）</p>
+          <p class="text-sm text-text-light">チェックリストで忘れ物を防止</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="max-w-5xl mx-auto px-6 py-12 bg-gray-100/80">
+  <section class="max-w-5xl mx-auto px-6 py-16 bg-primary/10">
     <div class="text-center mb-8">
       <h2 class="font-bold text-text mb-2 hero-fade-up">
         <span class="font-logo text-3xl">RakuCi<span class="text-2xl">で、<br>ラクに旅行をたのしもう
       </h2>
     </div>
-    <div class="flex flex-col items-center justify-center gap-5 hero-fade-up hero-delay-4">
+    <div class="flex flex-col items-center justify-center mb-6 gap-5 hero-fade-up hero-delay-4">
       <%= link_to new_user_registration_path, class: "btn-main w-full text-center", data: { turbo: false } do %>
-        ユーザー登録する
+        登録する
       <% end %>
       <%= link_to new_user_session_path, class: "btn-sub w-full text-center", data: { turbo: false } do %>
-        ログインする
+        ログイン
       <% end %>
     </div>
   </section>
 
   <%# 利用規約など %>
-  <section class="max-w-5xl mx-auto px-6 py-10">
-    <div class="flex flex-col sm:flex-row justify-center items-center gap-4 text-sm text-text-light">
-      <a href="#" class="hover:text-secondary transition">利用規約</a>
-      <span class="hidden sm:inline text-border">|</span>
-      <a href="#" class="hover:text-secondary transition">プライバシーポリシー</a>
-      <span class="hidden sm:inline text-border">|</span>
-      <a href="#" class="hover:text-secondary transition">お問い合わせ</a>
+  <section class="max-w-5xl mx-auto px-6 py-6">
+    <div class="flex justify-between items-start gap-6">
+      <%# コピーライト %>
+      <p class="text-sm text-text-light">© 2025 RakuCi</p>
+
+      <div class="flex flex-col items-start justify-start gap-2 text-sm text-text-light">
+        <%= link_to "利用規約", terms_path, class: "hover:text-secondary transition" %>
+        <%= link_to "プライバシーポリシー", privacy_path, class: "hover:text-secondary transition" %>
+        <a href="#" class="hover:text-secondary transition">お問い合わせ（準備中）</a>
+      </div>
     </div>
   </section>
 </div>
