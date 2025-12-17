@@ -156,13 +156,16 @@
   </section>
 
   <%# 利用規約など %>
-  <section class="max-w-5xl mx-auto px-6 py-10">
-    <div class="flex flex-col justify-center items-center gap-4 text-sm text-text-light">
-      <a href="#" class="hover:text-secondary transition">利用規約</a>
-      <span class="hidden text-border">|</span>
-      <a href="#" class="hover:text-secondary transition">プライバシーポリシー</a>
-      <span class="hidden text-border">|</span>
-      <a href="#" class="hover:text-secondary transition">お問い合わせ</a>
+  <section class="max-w-5xl mx-auto px-6 py-6">
+    <div class="flex justify-between items-start gap-6">
+      <%# コピーライト %>
+      <p class="text-sm text-text-light">© 2025 RakuCi</p>
+
+      <div class="flex flex-col items-start justify-start gap-2 text-sm text-text-light">
+        <%= link_to "利用規約", terms_path, class: "hover:text-secondary transition" %>
+        <%= link_to "プライバシーポリシー", privacy_path, class: "hover:text-secondary transition" %>
+        <a href="#" class="hover:text-secondary transition">お問い合わせ（準備中）</a>
+      </div>
     </div>
   </section>
 </div>
