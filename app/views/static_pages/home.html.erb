@@ -41,34 +41,41 @@
   </section>
 
   <%# 課題の問いかけ＋解決イメージ＋テキスト %>
-  <section id="problems" class="max-w-5xl mx-auto px-6 py-16 space-y-10 bg-gray-200/70">
-    <div class="text-center">
-      <h2 class="flex items-center justify-center gap-2 font-bold text-secondary hero-fade-up mb-12 leading-none">
-        <span class="inline-flex items-center justify-center size-8 shrink-0">
+  <section id="problems" class="max-w-5xl mx-auto px-6 py-16 space-y-10 bg-[#e2f4f9]">
+    <div class="text-left">
+      <h2 class="flex items-center gap-2 font-bold text-secondary hero-fade-up mb-6 leading-none">
+        <span class="inline-flex items-center justify-center size-6 shrink-0">
           <%= render "shared/icon/favicon" %>
         </span>
-        <span class="font-logo text-3xl">こんなことしてない？</span>
+        <span class="font-logo text-2xl">こんなことしてない？</span>
       </h2>
     </div>
-    <div class="space-y-10">
-      <div class="pb-10 border-b border-border opacity-0 text-center max-w-3xl mx-auto" data-controller="reveal">
-        <p class="text-xl font-bold text-secondary mb-4">チャットで決めたあと、こんな手戻りが発生していませんか？</p>
-        <div class="pl-6 text-sm text-left text-text-light space-y-2 mb-12">
-          <ul>
+    <div class="space-y-10 text-left">
+      <div class="pb-10  max-w-3xl" data-controller="reveal">
+        <p class="text-xl font-bold text-secondary mb-4">チャットで旅行先で決めたあと、こんな手戻りが発生していませんか？</p>
+        <div class="pl-6 text-sm text-text-light mb-20">
+          <ul class="space-y-4">
             <li class="list-disc">チャットをさかのぼって「どんな案が出ていたか」を拾い集める</li>
-            <li class="list-disc">別のフォーマットに転記して、共有しなおす</li>
             <li class="list-disc">行き先や観光地をしおり用に整理しなおす</li>
+            <li class="list-disc">別のフォーマットに転記して、共有しなおす</li>
           </ul>
         </div>
-        <p class="text-2xl text-secondary mt-2 font-semibold">RakuCiなら</p>
-        <p class="text-lg text-text mt-4 font-semibold">
+        <div class="flex items-center gap-2 text-secondary mb-4">
+          <span class="inline-flex items-center justify-center size-6 shrink-0">
+            <%= render "shared/icon/favicon" %>
+          </span>
+          <span class="font-logo text-3xl font-semibold">RakuCiなら</span>
+        </div>
+        <p class="text-lg text-text font-semibold">
           旅行先の案をカードに残しておけるので、行き先が決まったときに会話をさかのぼらずに確認でき、整理し直す手間が減ります。
         </p>
+      </div>
     </div>
+  </section>
   </section>
 
   <%# 主な使い方 %>
-  <section class="max-w-5xl mx-auto px-6 py-14">
+  <section class="max-w-5xl mx-auto px-6 py-14 bg-[#f4fdff]">
     <div class="text-center mb-10">
       <p class="mb-2 text-xl font-semibold text-secondary tracking-wide hero-fade-up">How to use</p>
       <h3 class="text-2xl font-bold text-text hero-fade-up hero-delay-2">
@@ -95,7 +102,7 @@
   </section>
 
   <%# その他の機能（追加予定含む） %>
-  <section class="max-w-5xl mx-auto px-6 py-10 bg-gray-200/50">
+  <section class="max-w-5xl mx-auto px-6 py-10 bg-[#c5e5ef]">
     <div class="text-center mb-6">
       <p class="mb-2 text-xl font-semibold text-secondary tracking-wide hero-fade-up">More</p>
       <h class="text-xl font-bold text-text hero-fade-up hero-delay-2">そのほかの機能</h>
