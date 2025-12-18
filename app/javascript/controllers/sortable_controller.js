@@ -12,6 +12,7 @@ export default class extends Controller {
         group: `schedule-spots-${list.dataset.scheduleId}`,
         animation: 150,
         ghostClass: "sortable-ghost",
+        handle: ".drag-handle", // ドラッグハンドルのみでドラッグ可能
         onEnd: (evt) => this.handleSortEnd(evt), // ドロップしたら発火するコールバック関数を定義
       })
     })
