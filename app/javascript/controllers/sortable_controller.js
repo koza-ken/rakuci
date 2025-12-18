@@ -1,21 +1,23 @@
+// Sortable.jsでスポットを並び替えるコントローラー
+
 import { Controller } from "@hotwired/stimulus"
 import Sortable from "sortablejs"
 
 export default class extends Controller {
   connect() {
     const dayLists = document.querySelectorAll(".sortable-day-list")
-    const groupName = this.element.dataset.controller
 
     dayLists.forEach((list) => {
       new Sortable(list, {
         group: `schedule-spots-${list.dataset.scheduleId}`,
         animation: 150,
         ghostClass: "sortable-ghost",
-        onEnd: (evt) => this.handleSortEnd(evt),
+        onEnd: (evt) => this.handleSortEnd(evt), // ドロップしたら発火するコールバック関数を定義
       })
     })
   }
 
+  // ドロップしたときに実行される関数
   handleSortEnd(evt) {
     const item = evt.item
     const spotId = item.dataset.spotId
@@ -28,7 +30,12 @@ export default class extends Controller {
   }
 
   updateSpotPosition(scheduleId, spotId, dayNumber, globalPosition) {
-    const url = `/schedule_spots/${spotId}`
+    // groupIdがあればgroups用、なければusers用
+    const groupId = this.element.dataset.groupId
+    const url = groupId
+      ? `/groups/${groupId}/schedule/schedule_spots/${spotId}`
+      : `/schedules/${scheduleId}/schedule_spots/${spotId}`
+
     const params = {
       schedule_spot: {
         day_number: dayNumber,
@@ -43,11 +50,6 @@ export default class extends Controller {
         "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
       },
       body: JSON.stringify(params),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Spot position updated:", data)
-      })
-      .catch((error) => console.error("Error updating spot position:", error))
+    }).catch((error) => console.error("Error updating spot position:", error))
   }
 }
