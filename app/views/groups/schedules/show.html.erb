@@ -3,6 +3,6 @@
 
 <%= turbo_frame_tag "spot-create-modal", data: { controller: "modal" } %>
 
-<main id="main" class="flex flex-col items-center justify-center px-8 py-6">
+<main id="main" class="flex flex-col items-center justify-center px-8 py-6" data-controller="sortable">
   <%= render partial: "groups/schedules/show", locals: { group: @group, schedule: @schedule } %>
 </main>
