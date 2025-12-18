@@ -92,11 +92,17 @@ class Users::ScheduleSpotsController < ApplicationController
     @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
   end
 
+  # スポットの編集フォームによる更新と、並び替えによる更新を処理
   def update
     @schedule = current_user.schedules.find(params[:schedule_id])
     @schedule_spot = @schedule.schedule_spots.find(params[:id])
     if @schedule_spot.update(schedule_spot_params)
-      redirect_to schedule_schedule_spot_path(@schedule, @schedule_spot), notice: t("notices.schedule_spots.updated")
+      respond_to do |format|
+        # 並び替えによる更新のレスポンス
+        format.json { head :ok }
+        # 編集フォームによる更新のレスポンス
+        format.html { redirect_to schedule_schedule_spot_path(@schedule, @schedule_spot), notice: t("notices.schedule_spots.updated") }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -140,6 +146,6 @@ class Users::ScheduleSpotsController < ApplicationController
   private
 
   def schedule_spot_params
-    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_address, :snapshot_website_url, :snapshot_phone_number, :snapshot_category_id, :google_place_id, :start_time, :end_time, :memo, :day_number)
+    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_address, :snapshot_website_url, :snapshot_phone_number, :snapshot_category_id, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
   end
 end
