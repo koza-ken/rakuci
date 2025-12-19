@@ -22,6 +22,7 @@ class Schedule < ApplicationRecord
   # アソシエーション
   belongs_to :schedulable, polymorphic: true, touch: true
   has_many :schedule_spots, dependent: :destroy
+  has_one :item_list, as: :listable, dependent: :destroy
 
   # バリデーション
   validates :name, presence: true, length: { maximum: 50 }
