@@ -27,7 +27,7 @@
             <%= day %><%= t('users.schedules.show.day_label') %>
           <% end %>
         </h3>
-        <div class="sortable-day-list space-y-4" data-day-number="<%= day %>" data-schedule-id="<%= schedule.hashid %>">
+        <div class="sortable-day-list space-y-2" data-day-number="<%= day %>" data-schedule-id="<%= schedule.hashid %>">
           <% day_spots = schedule.schedule_spots.where(day_number: day).order(:global_position) %>
           <% if day_spots.any? %>
             <% day_spots.each do |schedule_spot| %>
