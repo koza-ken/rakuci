@@ -36,3 +36,6 @@ application.register("reveal", RevealController);
 
 import HeaderScrollController from "./header_scroll_controller";
 application.register("header-scroll", HeaderScrollController);
+
+import SortableController from "./sortable_controller";
+application.register("sortable", SortableController);

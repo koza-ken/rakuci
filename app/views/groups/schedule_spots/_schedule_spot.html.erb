@@ -1,32 +1,12 @@
-<div class="flex gap-3 items-stretch mb-2">
-  <%# 並び替えボタン %>
-  <div class="flex gap-2 justify-center items-center w-16">
-    <% if schedule_spot.first? %>
-      <%# 位置をそろえるため透明の箱を設置 %>
-      <div class="text-base px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center opacity-0">▲</div>
-    <% else %>
-      <%= button_to move_higher_group_schedule_schedule_spot_path(schedule_spot.schedule.schedulable, schedule_spot),
-          method: :patch,
-          class: "text-base text-[#ababab] px-2 py-1 bg-gray-100 rounded hover:bg-gray-300 flex items-center justify-center" do %>
-        ▲
-      <% end %>
-    <% end %>
-
-    <% if schedule_spot.last? %>
-      <%# 位置をそろえるため透明の箱を設置 %>
-      <div class="text-base px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center opacity-0">▼</div>
-    <% else %>
-      <%= button_to move_lower_group_schedule_schedule_spot_path(schedule_spot.schedule.schedulable, schedule_spot),
-          method: :patch,
-          class: "text-base text-[#ababab] px-2 py-1 bg-gray-100 rounded hover:bg-gray-300 flex items-center justify-center" do %>
-        ▼
-      <% end %>
-    <% end %>
+<div class="flex gap-1 items-stretch mb-2">
+  <%# ドラッグハンドル %>
+  <div class="drag-handle flex items-center justify-center w-8 text-gray-400 cursor-grab active:cursor-grabbing">
+    <span class="text-2xl leading-none">⋮⋮</span>
   </div>
 
   <%# スポット情報 %>
   <%= link_to group_schedule_schedule_spot_path(schedule_spot.schedule.schedulable, schedule_spot), class: "flex-1" do %>
-    <div class="bg-white rounded-lg shadow p-2 border-l-4 border-secondary">
+    <div class="<%= schedule_spot.category_background_color %> rounded-sm shadow p-2">
       <%# 時間帯 %>
       <% if schedule_spot.start_time.present? || schedule_spot.end_time.present? %>
         <p class="text-sm text-text-light">
@@ -41,6 +21,10 @@
       <% end %>
       <%# スポット名 %>
       <h3 class="text-lg font-bold text-text"><%= schedule_spot.display_name %></h3>
+      <%# メモ（3行まで表示） %>
+      <% if schedule_spot.memo.present? %>
+        <p class="text-xs text-text-light mt-1 line-clamp-2"><%= schedule_spot.memo %></p>
+      <% end %>
     </div>
   <% end %>
 </div>

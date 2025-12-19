@@ -10,7 +10,7 @@ class Groups::SpotsController < ApplicationController
 
   def new
     @spot = @card.spots.build
-    @categories = Category.all.order(:display_order)
+    @categories = Category.order(display_order: :asc)
   end
 
   def create
@@ -24,20 +24,20 @@ class Groups::SpotsController < ApplicationController
         format.html { redirect_to group_card_path(@group, @card), notice: t("notices.spots.created") }
       end
     else
-      @categories = Category.all.order(:display_order)
+      @categories = Category.order(display_order: :asc)
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @categories = Category.all.order(:display_order)
+    @categories = Category.order(display_order: :asc)
   end
 
   def update
     if @spot.update(spot_params)
       redirect_to group_card_spot_path(@group, @card, @spot), notice: t("notices.spots.updated")
     else
-      @categories = Category.all.order(:display_order)
+      @categories = Category.order(display_order: :asc)
       render :edit, status: :unprocessable_entity
     end
   end

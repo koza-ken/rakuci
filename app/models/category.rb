@@ -33,4 +33,36 @@ class Category < ApplicationRecord
       nil
     end
   end
+
+  # カテゴリ名に対応する背景色のTailwindクラスを返す
+  def background_color_class
+    case name
+    when "観光地"
+      "bg-sky-100/60"
+    when "グルメ"
+      "bg-red-100/60"
+    when "体験"
+      "bg-green-100/60"
+    when "買い物"
+      "bg-violet-100/70"
+    else
+      "bg-white" # デフォルト
+    end
+  end
+
+  # カテゴリ名に対応する文字色のTailwindクラスを返す
+  def text_color_class
+    case name
+    when "観光地"
+      "text-sky-600"
+    when "グルメ"
+      "text-red-500"
+    when "体験"
+      "text-green-500"
+    when "買い物"
+      "text-violet-700"
+    else
+      "text-text" # デフォルト
+    end
+  end
 end

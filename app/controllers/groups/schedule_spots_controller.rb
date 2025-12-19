@@ -10,7 +10,7 @@ class Groups::ScheduleSpotsController < ApplicationController
   def new
     @schedule = @group.schedule
     @schedule_spot = ScheduleSpot.new
-    @categories = Category.all
+    @categories = Category.order(display_order: :asc)
   end
 
   def create
@@ -65,7 +65,7 @@ class Groups::ScheduleSpotsController < ApplicationController
           format.html { redirect_to group_schedule_path(@group), notice: t("notices.schedule_spots.created") }
         end
       else
-        @categories = Category.all
+        @categories = Category.order(display_order: :asc)
         render :new, status: :unprocessable_entity
       end
     end
@@ -76,11 +76,17 @@ class Groups::ScheduleSpotsController < ApplicationController
     @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
   end
 
+  # スポットの編集フォームによる更新と、並び替えによる更新を処理
   def update
     @schedule = @group.schedule
     @schedule_spot = @schedule.schedule_spots.find(params[:id])
     if @schedule_spot.update(schedule_spot_params)
-      redirect_to group_schedule_schedule_spot_path(@group, @schedule_spot), notice: t("notices.schedule_spots.updated")
+      respond_to do |format|
+        # 並び替えによる更新のレスポンス
+        format.json { head :ok }
+        # 編集フォームによる更新のレスポンス
+        format.html { redirect_to group_schedule_schedule_spot_path(@group, @schedule_spot), notice: t("notices.schedule_spots.updated") }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -133,7 +139,7 @@ class Groups::ScheduleSpotsController < ApplicationController
   end
 
   def schedule_spot_params
-    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_category_id, :snapshot_address, :snapshot_phone_number, :snapshot_website_url, :google_place_id, :start_time, :end_time, :memo, :day_number)
+    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_category_id, :snapshot_address, :snapshot_phone_number, :snapshot_website_url, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
   end
 
   # グループに参加しているか確認するフィルター（showアクションのフィルター）
