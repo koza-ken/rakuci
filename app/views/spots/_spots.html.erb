@@ -1,7 +1,7 @@
 <div>
   <% categories.each do |category| %>
     <div class="mb-4">
-      <div class="text-lg font-bold text-text">
+      <div class="text-lg font-bold <%= category.text_color_class %>">
         <%= category.name %>
       </div>
       <div class="ml-5 mb-2" id="category_<%= category.id %>_spots">
