@@ -63,6 +63,15 @@ class ScheduleSpot < ApplicationRecord
     snapshot_name.presence || spot&.name || "予定"
   end
 
+  # カテゴリに応じた背景色のTailwindクラスを返す
+  def category_background_color
+    category_id = snapshot_category_id || spot&.category_id
+    return "bg-white" unless category_id
+
+    category = Category.find_by(id: category_id)
+    category&.background_color_class || "bg-white"
+  end
+
   def self.create_from_spot(schedule, spot, day_number: 1)
       schedule.schedule_spots.build(
         spot_id: spot.id,
