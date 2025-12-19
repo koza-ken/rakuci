@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_09_052410) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_19_221949) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,6 +66,26 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_09_052410) do
     t.datetime "updated_at", null: false
     t.index ["created_by_user_id"], name: "index_groups_on_created_by_user_id"
     t.index ["invite_token"], name: "index_groups_on_invite_token", unique: true
+  end
+
+  create_table "item_lists", force: :cascade do |t|
+    t.string "listable_type", null: false
+    t.integer "listable_id", null: false
+    t.string "name", limit: 100
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["listable_type", "listable_id"], name: "index_item_lists_on_listable", unique: true
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.integer "item_list_id", null: false
+    t.string "name", limit: 100, null: false
+    t.boolean "checked", default: false, null: false
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_list_id", "position"], name: "index_items_on_list_and_position"
+    t.index ["item_list_id"], name: "index_items_on_item_list_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -147,6 +167,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_09_052410) do
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "users"
   add_foreign_key "groups", "users", column: "created_by_user_id"
+  add_foreign_key "items", "item_lists"
   add_foreign_key "likes", "cards"
   add_foreign_key "likes", "group_memberships"
   add_foreign_key "schedule_spots", "schedules"
