@@ -330,3 +330,9 @@ RSpec/ExampleLength:
 
 RSpec/MultipleExpectations:
   Enabled: false  # E2E テストは複数の検証が必須のためオフ
+
+RSpec/IndexedLet:
+  Enabled: false  # acts_as_list など順序が重要なテストでは数字付き変数名が分かりやすい
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10  # デフォルト: 5、複雑なテストでは多めの let が必要

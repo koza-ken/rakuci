@@ -34,6 +34,7 @@ class User < ApplicationRecord
   has_many :group_memberships, dependent: :destroy
   has_many :groups, through: :group_memberships
   has_many :schedules, as: :schedulable, dependent: :destroy
+  has_one :item_list, as: :listable, dependent: :destroy
 
   validates :display_name, length: { maximum: 20 }, allow_blank: true
   validates :provider, presence: true, if: -> { uid.present? }, length: { maximum: 64 }
