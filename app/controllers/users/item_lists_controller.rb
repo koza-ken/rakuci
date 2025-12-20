@@ -15,9 +15,9 @@ class Users::ItemListsController < ApplicationController
 
   def set_item_list
     @item_list = if params[:schedule_id].present?
-                   @schedule.item_list
-                 else
-                   current_user.item_list
-                 end
+      @schedule.item_list
+    else
+      current_user.item_list
+    end
   end
 end
