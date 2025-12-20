@@ -22,19 +22,19 @@ RSpec.describe ItemList, type: :model do
     describe 'listable_type' do
       context '存在しない場合' do
         it '無効であること' do
-          item_list = ItemList.new(listable_id: user.id, name: 'テスト')
+          item_list = described_class.new(listable_id: user.id, name: 'テスト')
           expect(item_list).not_to be_valid
           expect(item_list.errors[:listable_type]).to be_present
         end
       end
     end
 
-    describe 'listable_id' do
+    describe 'listable' do
       context '存在しない場合' do
         it '無効であること' do
-          item_list = ItemList.new(listable_type: 'User', name: 'テスト')
+          item_list = described_class.new(listable_type: 'User', name: 'テスト')
           expect(item_list).not_to be_valid
-          expect(item_list.errors[:listable_id]).to be_present
+          expect(item_list.errors[:listable]).to be_present
         end
       end
     end

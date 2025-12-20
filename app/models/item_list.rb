@@ -22,6 +22,5 @@ class ItemList < ApplicationRecord
 
   # バリデーション
   validates :listable_type, presence: true
-  validates :listable_id, presence: true
   validates :name, length: { maximum: 100 }
 end

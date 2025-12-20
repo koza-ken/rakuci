@@ -26,7 +26,7 @@ RSpec.describe Item, type: :model do
     describe 'name' do
       context '存在しない場合' do
         it '無効であること' do
-          item = Item.new(checked: false)
+          item = described_class.new(checked: false)
           expect(item).not_to be_valid
           expect(item.errors[:name]).to be_present
         end
