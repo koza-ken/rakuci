@@ -21,9 +21,9 @@
 #
 FactoryBot.define do
   factory :item do
-    item_list_id { 1 }
-    name { "MyString" }
+    association :item_list
+    name { "持ち物アイテム" }
     checked { false }
-    position { 1 }
+    # position は acts_as_list が自動で管理するため設定不要
   end
 end
