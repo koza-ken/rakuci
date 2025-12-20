@@ -48,18 +48,33 @@ Rails.application.routes.draw do
         patch :move_higher, on: :member
         patch :move_lower, on: :member
       end
+
+      # グループしおりの持ち物リスト
+      resource :item_list, only: %i[show], controller: "groups/item_lists" do
+        resources :items, only: %i[create update destroy], controller: "groups/items"
+      end
     end
     resources :group_memberships, only: %i[destroy], controller: "groups/memberships"
   end
 
   # URLは"/schedules"（個人用）
   scope module: "users" do
+    # ユーザーの持ち物リスト（全体管理・表示のみ）
+    resource :item_list, only: %i[show] do
+      resources :items, only: %i[create update destroy]
+    end
+
     resources :schedules, only: %i[index show new create edit update destroy] do
       # showはscheduleの詳細からアクセスする（追加のnew,createは/card/spotsから、またはscheduleから直接）
       resources :schedule_spots, only: %i[new create show edit update destroy] do
         # 並び替えacts_as_listで設定したアクション
         patch :move_higher, on: :member
         patch :move_lower, on: :member
+      end
+
+      # 個人しおり個別の持ち物リスト
+      resource :item_list, only: %i[show] do
+        resources :items, only: %i[create update destroy]
       end
     end
   end

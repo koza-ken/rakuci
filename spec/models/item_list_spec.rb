@@ -62,7 +62,7 @@ RSpec.describe ItemList, type: :model do
     let(:schedule) { create(:schedule, schedulable: user) }
 
     context 'User に紐付く場合' do
-      let(:item_list) { create(:item_list, listable: user) }
+      let(:item_list) { user.item_list }
 
       it 'listable_type が User であること' do
         expect(item_list.listable_type).to eq('User')
@@ -74,7 +74,7 @@ RSpec.describe ItemList, type: :model do
     end
 
     context 'Schedule に紐付く場合' do
-      let(:item_list) { create(:item_list, listable: schedule) }
+      let(:item_list) { schedule.item_list }
 
       it 'listable_type が Schedule であること' do
         expect(item_list.listable_type).to eq('Schedule')
@@ -88,7 +88,7 @@ RSpec.describe ItemList, type: :model do
 
   describe 'dependent: :destroy' do
     let(:user) { create(:user) }
-    let(:item_list) { create(:item_list, listable: user) }
+    let(:item_list) { user.item_list }
 
     before do
       create_list(:item, 3, item_list: item_list)

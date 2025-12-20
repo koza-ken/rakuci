@@ -34,7 +34,8 @@ RSpec.describe Item, type: :model do
 
       context '100文字を超える場合' do
         it '無効であること' do
-          item_list = create(:item_list)
+          user = create(:user)
+          item_list = user.item_list
           item = build(:item, item_list: item_list, name: 'a' * 101)
           expect(item).not_to be_valid
           expect(item.errors[:name]).to be_present
@@ -43,7 +44,8 @@ RSpec.describe Item, type: :model do
 
       context '100文字以内の場合' do
         it '有効であること' do
-          item_list = create(:item_list)
+          user = create(:user)
+          item_list = user.item_list
           item = build(:item, item_list: item_list, name: 'a' * 100)
           expect(item).to be_valid
         end
@@ -55,8 +57,8 @@ RSpec.describe Item, type: :model do
     let(:user) { create(:user) }
     let(:schedule_a) { create(:schedule, schedulable: user, name: 'スケジュール A') }
     let(:schedule_b) { create(:schedule, schedulable: user, name: 'スケジュール B') }
-    let(:item_list_a) { create(:item_list, listable: schedule_a, name: 'リスト A') }
-    let(:item_list_b) { create(:item_list, listable: schedule_b, name: 'リスト B') }
+    let(:item_list_a) { schedule_a.item_list }
+    let(:item_list_b) { schedule_b.item_list }
 
     context '同じリスト内での並び順管理' do
       let!(:item1) { create(:item, item_list: item_list_a, name: 'アイテム 1') }
@@ -99,7 +101,7 @@ RSpec.describe Item, type: :model do
 
   describe 'checked デフォルト値' do
     let(:user) { create(:user) }
-    let(:item_list) { create(:item_list, listable: user) }
+    let(:item_list) { user.item_list }
     let(:item) { create(:item, item_list: item_list, name: 'テストアイテム') }
 
     it 'デフォルトで false になること' do
