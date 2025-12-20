@@ -32,6 +32,9 @@ class Schedule < ApplicationRecord
   # カスタムバリデーション
   validate :only_one_schedule_per_group
 
+  # しおりがつくられたらしおりに紐づくもちものリストが作られる
+  after_create :create_item_list
+
   # しおりのタイプを返す（個人 or グループ）
   def schedule_type
     schedulable_type == "User" ? :personal : :group
@@ -77,6 +80,10 @@ class Schedule < ApplicationRecord
   end
 
   private
+
+  def create_item_list
+    ItemList.create(listable: self)
+  end
 
   # グループは1つのスケジュールのみ持つことができる
   def only_one_schedule_per_group

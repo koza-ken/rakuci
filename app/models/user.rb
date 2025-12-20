@@ -40,6 +40,9 @@ class User < ApplicationRecord
   validates :provider, presence: true, if: -> { uid.present? }, length: { maximum: 64 }
   validates :uid, presence: true, if: -> { provider.present? }
 
+  # ユーザーがつくられたらユーザー用のもちものリストが作られる
+  after_create :create_item_list
+
   # ユーザーが特定のグループのメンバーかどうかを確認
   def member_of?(group)
     group_memberships.exists?(group: group)
@@ -85,4 +88,10 @@ class User < ApplicationRecord
     display_name.to_s[0, 20]
   end
   private_class_method :sanitized_display_name
+
+  private
+
+  def create_item_list
+    ItemList.create(listable: self)
+  end
 end
