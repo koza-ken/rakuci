@@ -16,11 +16,9 @@
         <span class="text-xs text-secondary font-bold">しおり</span>
       <% end %>
 
-      <%# TODO リンクを設定 %>
-      <%= link_to "#", class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity" do %>
+      <%= link_to item_list_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity" do %>
         <%= render "shared/icon/footer_icon_backpack" %>
-        <%# text-secondary %>
-        <span class="text-xs text-[#9a9a9a] font-bold">もちもの</span>
+        <span class="text-xs text-secondary font-bold">もちもの</span>
       <% end %>
     </nav>
   </footer>
