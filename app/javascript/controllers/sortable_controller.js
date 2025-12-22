@@ -5,6 +5,7 @@ import Sortable from "sortablejs"
 
 export default class extends Controller {
   connect() {
+    // スケジュール内のスポット並び替え
     const dayLists = document.querySelectorAll(".sortable-day-list")
 
     dayLists.forEach((list) => {
@@ -12,8 +13,20 @@ export default class extends Controller {
         group: `schedule-spots-${list.dataset.scheduleId}`,
         animation: 150,
         ghostClass: "sortable-ghost",
-        handle: ".drag-handle", // ドラッグハンドルのみでドラッグ可能
-        onEnd: (evt) => this.handleSortEnd(evt), // ドロップしたら発火するコールバック関数を定義
+        handle: ".drag-handle",
+        onEnd: (evt) => this.handleSortEnd(evt),
+      })
+    })
+
+    // もちものリストのアイテム並び替え
+    const itemsLists = document.querySelectorAll("#items-list")
+
+    itemsLists.forEach((list) => {
+      new Sortable(list, {
+        animation: 150,
+        ghostClass: "sortable-ghost",
+        handle: "[data-sortable-handle]",
+        onEnd: (evt) => this.handleItemsSortEnd(evt),
       })
     })
   }
@@ -52,5 +65,34 @@ export default class extends Controller {
       },
       body: JSON.stringify(params),
     }).catch((error) => console.error("Error updating spot position:", error))
+  }
+
+  // もちものリストのアイテム並び替え後に実行
+  handleItemsSortEnd(evt) {
+    const item = evt.item
+    const itemId = item.id.replace("item_", "")
+    const newPosition = Array.from(item.parentElement.children).indexOf(item) + 1
+
+    // バックエンドに更新を送信
+    this.updateItemPosition(itemId, newPosition)
+  }
+
+  updateItemPosition(itemId, position) {
+    const url = `${window.location.pathname.replace(/\/item_list.*/, "")}/item_list/items/${itemId}`
+
+    const params = {
+      item: {
+        position: position,
+      },
+    }
+
+    fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+      },
+      body: JSON.stringify(params),
+    }).catch((error) => console.error("Error updating item position:", error))
   }
 }

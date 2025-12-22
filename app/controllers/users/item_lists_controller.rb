@@ -5,6 +5,7 @@ class Users::ItemListsController < ApplicationController
 
   # GET /item_list または /schedules/:schedule_id/item_list
   def show
+    @items = @item_list.items.order(:position)
   end
 
   private

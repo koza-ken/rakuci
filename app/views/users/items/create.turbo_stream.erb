@@ -1,0 +1,14 @@
+<%# 新規アイテムをリストに追加 %>
+<%= turbo_stream.append "items-list" do %>
+  <%= render "users/items/item", item: @item, item_list: @item_list %>
+<% end %>
+
+<%# 空状態メッセージを削除（最初のアイテム追加時） %>
+<%= turbo_stream.remove "empty-state" %>
+
+<%# フォームをリセット＆非表示化 %>
+<%= turbo_stream.update "item-form" do %>
+  <div id="item-form" class="hidden mb-6" data-item-list-form-target="form">
+    <%= render "users/item_lists/item_form", item_list: @item_list %>
+  </div>
+<% end %>
