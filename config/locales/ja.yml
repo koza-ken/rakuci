@@ -1,474 +1,72 @@
 ja:
-  date:
-    formats:
-      schedule_day: "%-m月%-d日"
-    day_names:
-      - 日
-      - 月
-      - 火
-      - 水
-      - 木
-      - 金
-      - 土
-
-  errors:
-    cards:
-      unauthorized_view: このカードを閲覧する権限がありません
-      guest_creation_not_allowed: カードを作成するにはログインするかグループに参加してください
-      guest_not_member: カードを作成するにはログインするかグループに参加してください
-    groups:
-      not_member: このグループには参加していません
-      invalid_link: 無効なリンクです
-      invalid_operation: 無効な操作です
-      user_not_found: 選択したユーザーが見つかりません
-      token_mismatch: トークンが一致しません
-      membership_failed: 参加に失敗しました
-    memberships:
-      cannot_delete_owner: オーナーは削除できません
-      not_authorized: メンバーを削除する権限がありません
-    spots:
-      unauthorized_view: このスポットにアクセスする権限がありません
-      unauthorized_create: このカードにスポットを追加する権限がありません
-      guest_creation_not_allowed: スポットを追加するにはログインするかグループに参加してください
-      guest_not_member: スポットを追加するにはログインするかグループに参加してください
-    comments:
-      unauthorized_access: このカードにアクセスする権限がありません
-      unauthorized_delete: このコメントを削除する権限がありません
-      create_failed: コメントの投稿に失敗しました
-    likes:
-      create_failed: いいねに失敗しました
-      unauthorized: いいねする権限がありません
-    user_schedule_spots:
-      create_failed: スポット追加に失敗しました
-    group_schedule_spots:
-      create_failed: スポット追加に失敗しました
-    schedules:
-      not_found: しおりが見つかりません
-      unauthorized_view: このしおりを閲覧する権限がありません
-    not_group_card: この機能は無効です
-    not_group_member: このグループに参加していません
-    messages:
-      not_saved: "%{count}件のエラーが発生しました"
-
-  notices:
-    cards:
-      created: カードが作成されました
-      updated: カードが更新されました
-      destroyed: カードが削除されました
-    groups:
-      created: グループが作成されました
-      updated: グループ名が更新されました
-      joined: グループに参加しました
-      destroyed: グループを削除しました
-    spots:
-      created: スポットを追加しました
-      updated: スポットを更新しました
-      destroyed: スポットを削除しました
-    comments:
-      created: コメントを投稿しました
-      destroyed: コメントを削除しました
-    likes:
-      created: いいねしました
-      destroyed: いいねを取り消しました
-    schedules:
-      created: しおりを作成しました
-      updated: しおりを更新しました
-      destroyed: しおりを削除しました
-    schedule_spots:
-      created: スポットを追加しました
-      updated: スポットを更新しました
-      destroyed: スポットを削除しました
-    user_schedule_spots:
-      created_multiple: "%{count}件のスポットを追加しました"
-      created_partial: "%{added}件追加しました。%{failed}件失敗しました"
-    group_schedule_spots:
-      created_multiple: "%{count}件のスポットを追加しました"
-      created_partial: "%{added}件追加しました。%{failed}件失敗しました"
-    memberships:
-      deleted: メンバーを削除しました
-
-  cards:
-    index:
-      title: あなたの旅のカード
-      new_card: 新規作成
-      no_cards: まだカードがありません
-
-    index_content:
-      title: あなたの旅のカード
-      no_cards: まだカードがありません
-      lets_create_card: 行きたい旅行先をカードにしよう
-      personal_card_page: このページはあなた専用のカードをつくることができます
-      personal_or_group: グループで旅行を計画する場合はグループページに移動しよう
-      create_card: カードを作成
-
-    new:
-      title: カード作成
-
-    edit:
-      title: カード編集
-
-    show:
-      title: カード詳細
-
-    form:
-      name: カード名
-      name_placeholder: カード名を記入してください
-      memo: メモ
-      submit: 作成
-      edit: 編集
-      update: 更新
-      delete: スポットを削除
-      back: もどる
-      cancel: キャンセル
-      confirm_delete: このスポットを削除しますか
-
-    add_spot: スポット追加
-    add_spots_to_schedule: 選択したスポットをしおりに追加
-    comments: コメント
-    back: もどる
-    delete_button: カード削除
-    delete_confirm: このカードを削除してもよろしいですか
-    no_comments: まだコメントがありません
-    memo_input_placeholder: メモを入力してください
-
-    messages:
-      created: カードを作成しました
-      updated: カードを更新しました
-      deleted: カードを削除しました
-      create_failed: カードの作成に失敗しました
-      update_failed: カードの更新に失敗しました
-      delete_failed: カードの削除に失敗しました
-
-  groups:
-    index:
-      title: 参加しているグループ
-      new_group: 新規作成
-      no_groups: まだグループがありません
-      create_group: グループを作成
-      create_group_caption: グループを作って仲間を招待しよう
-      created_groups: 作成したグループ
-
-    new:
-      title: グループ作成
-
-    edit:
-      title: グループ編集
-
-    show:
-      title: グループ詳細
-      edit: 編集
-      delete: 削除
-      back: もどる
-      invite_link: 招待リンク
-      copy_link: リンクをコピー
-      members: メンバー
-      travel_candidates: 旅行先の候補
-      no_cards: まだ旅行先候補がありません
-      invite_button: 招待する
-      schedule_detail: しおり詳細
-      schedule_create: しおり作成
-      schedule_create_message: 旅行先が決まったらしおりを作成しよう
-      add_card: カードを追加する
-      cards_empty_label: 旅行先の候補をカードにしよう
-      delete_group: グループを削除
-      delete_confirm: このグループを削除しますか
-
-    new_membership:
-      title: グループに招待されました
-      invited_message: に参加する方法を選んでください
-      signed_up_users_title: ログインしてから参加する
-      signed_up_users_text: ログイン／新規登録後にこのページに戻ってきます
-      signed_up_users_text_sub: 過去にゲスト参加した場合はログインしてから入りなおすこともできます
-      sign_in: ログイン
-      new_user_text: 新規ユーザー登録は
-      new_user_link: こちら
-      past_users_title: すでに
-      past_users_title_suffix: に参加している
-      past_users_text: 前回参加したときのユーザー名を選んでください
-      past_users_text_login_user: ログインして参加する場合は過去に参加したユーザー名を選んでください
-      past_users_text_sub: ゲストユーザーのメンバーの名前が表示されます
-      select_placeholder: 参加メンバー一覧
-      first_time_title: はじめて
-      first_time_title_suffix: に参加する
-      first_time_text: ユーザー名を入力してください
-      note: ユーザー名は参加するグループ「
-      note_suffix: 」でのみ有効です
-      submit: 参加する
-
-    details:
-      delete_member_title: メンバーを削除
-      delete_confirm: を削除しますか
-      delete_button: 削除
-
-    form:
-      name: グループ名
-      name_placeholder: グループ名を入力してください
-      trip_name: 旅行先
-      trip_name_placeholder: 旅行先を入力してください
-      start_date: 旅行開始日
-      end_date: 旅行終了日
-      trip_memo: メモ
-      trip_memo_placeholder: グループ内で共有できます
-      group_nickname: グループでの名前
-      group_nickname_placeholder: グループのメンバーに表示されます
-      submit: 作成
-      update: 更新
-      cancel: キャンセル
-
-    messages:
-      created: グループを作成しました
-      updated: グループを更新しました
-      deleted: グループを削除しました
-      create_failed: グループの作成に失敗しました
-      update_failed: グループの更新に失敗しました
-      delete_failed: グループの削除に失敗しました
-      link_copied: 招待リンクをコピーしました
-
-    schedules:
-      new:
-        title: グループのしおり作成
-      edit:
-        title: グループのしおり編集
-      show:
-        add_spot_button: スポットを追加
-        day_label: 日目
-        memo: メモ
-        delete_schedule: しおりを削除
-        back_to_group: グループ詳細
-
-  schedules:
-    index:
-      title: 旅のしおり
-      new_schedule: 新規作成
-      no_schedules: まだしおりがありません
-
-    new:
-      title: しおり作成
-
-    edit:
-      title: しおり編集
-
-    show:
-      title: しおり詳細
-      group_name: グループ名
-      schedule_dates: 日程
-      memo: メモ
-      schedule_spots: スケジュール
-      no_spots: スポットを追加しよう
-      add_spot_button: スポットを追加
-      no_schedule_message: はまだ作成されていません
-      edit: 編集
-      delete_schedule: しおりを削除
-      delete_confirm: このしおりを削除しますか
-
-    form:
-      name: しおり名
-      name_placeholder: しおり名を入力してください
-      start_date: 旅行開始日
-      end_date: 旅行終了日
-      memo: メモ
-      memo_placeholder: メモを入力してください
-      submit: 作成
-      update: 更新
-      cancel: キャンセル
-
-    messages:
-      created: しおりを作成しました
-      updated: しおりを更新しました
-      deleted: しおりを削除しました
-      create_failed: しおりの作成に失敗しました
-      update_failed: しおりの更新に失敗しました
-      delete_failed: しおりの削除に失敗しました
-
-  spots:
-    new:
-      title: スポットを追加
-
-    edit:
-      title: スポットを編集
-
-    show:
-      add_to_group_schedule: グループのしおりに追加
-      add_to_user_schedule: あなたのしおりに追加
-
-    form:
-      name: スポット名
-      name_placeholder: スポット名を入力してください
-      category: カテゴリ
-      address: 住所
-      address_placeholder: 住所を入力してください
-      website_url: URL
-      web_site_url_placeholder: URLを入力してください
-      phone_number: 電話番号
-      phone_number_placeholder: 電話番号を入力してください
-      submit: 追加
-      update: 更新
-      cancel: キャンセル
-
-  schedule_spots:
-    show:
-      category: カテゴリ
-      address: 住所
-      website_url: URL
-      phone_number: 電話
-      start_time: 予定時間
-      memo: メモ
-    edit:
-      title: スポット編集
-      arrival_time: 到着時刻
-      departure_time: 出発時刻
-    form:
-      spot_name: スポット名
-      category: カテゴリ
-      address: 住所
-      website_url: URL
-      phone_number: 電話
-      memo: メモ
-      submit: 追加
-      update: 更新
-      cancel: キャンセル
-    delete_confirm: このスポットを削除しますか
-    add_spot_select_message: または下から施設を検索して選択：
-    autocomplete_error: 施設情報の自動入力に失敗しました。下記のフィールドに手動で入力してください。
-    category_placeholder: "--- 選択してください ---"
-
-  users:
-    schedules:
-      select_message: しおりを選択
-      add_spots_message: 追加するスポット
-      spot_count_message: 件のスポットを追加します
-      add_to_schedule: このしおりに追加
-      no_schedules_message: まだしおりがありません
-      not_group: not group
-      index:
-        title: 旅のしおり
-        new_schedule: 新規作成
-        no_schedules: まだしおりがありません
-        create_schedule: しおりを作成
-        create_schedule_caption: 旅行先が決まったらしおりをつくろう
-
-      new:
-        title: しおり作成
-
-      edit:
-        title: しおり編集
-
-      show:
-        title: しおり詳細
-        add_spot_button: スポットを追加
-        day_label: 日目
-        memo: メモ
-        detail: 詳細
-        delete_schedule: しおりを削除
-        delete_confirm: このしおりを削除しますか
-        back: もどる
-
-      form:
-        name_label: しおり名
-        name_placeholder: しおり名を入力してください
-        spot_name: スポット名
-        category: カテゴリ
-        address: 住所
-        website_url: URL
-        phone_number: 電話
-        memo: メモ
-        category_placeholder: "---"
-        submit: 作成
-        update: 更新
-        cancel: キャンセル
-
-  comments:
-    form:
-      placeholder: コメントを入力（200字以内）
-      submit: 投稿
-    confirm_delete: コメントを削除しますか
-
   activerecord:
-    models:
-      spot: スポット
-      card: カード
-      category: カテゴリ
-      comment: コメント
-      group: グループ
-      group_membership: グループメンバーシップ
-      schedule: しおり
-      schedule_spot: スケジュール
-
     attributes:
-      spot:
-        name: スポット名
-        category: カテゴリ
-        category_id: カテゴリ
-        address: 住所
-        phone_number: 電話番号
-        website_url: Webサイト
-        google_place_id: 施設
-
       card:
-        name: カード名
-        memo: メモ
-        user: ユーザー
-        group: グループ
         created_at: 作成日時
+        group: グループ
+        memo: メモ
+        name: カード名
         updated_at: 更新日時
-
+        user: ユーザー
       comment:
         content: コメント
-
       group:
-        name: グループ名
-        trip_name: 旅行名
-        start_date: 旅行開始日
-        end_date: 旅行終了日
-        trip_memo: メモ
-        invite_token: 招待トークン
+        created_at: 作成日時
         created_by_user_id: 作成者
-        created_at: 作成日時
+        end_date: 旅行終了日
+        invite_token: 招待トークン
+        name: グループ名
+        start_date: 旅行開始日
+        trip_memo: メモ
+        trip_name: 旅行名
         updated_at: 更新日時
-
       group_membership:
-        group_nickname: グループ内での名前
-        role: 役割
-        guest_token: ゲストトークン
-        user: ユーザー
-        group: グループ
         created_at: 作成日時
+        group: グループ
+        group_nickname: グループ内での名前
+        guest_token: ゲストトークン
+        role: 役割
         updated_at: 更新日時
-
+        user: ユーザー
+      schedule:
+        created_at: 作成日時
+        end_date: 旅行終了日
+        memo: メモ
+        name: しおり名
+        schedulable_id: 関連リソースID
+        schedulable_type: 関連リソースタイプ
+        start_date: 旅行開始日
+        updated_at: 更新日時
+      schedule_spot:
+        created_at: 作成日時
+        day: 日目
+        end_time: 出発時刻
+        note: メモ
+        schedule: しおり
+        spot: スポット
+        start_time: 到着時刻
+        updated_at: 更新日時
+      spot:
+        address: 住所
+        category: カテゴリ
+        category_id: カテゴリ
+        google_place_id: 施設
+        name: スポット名
+        phone_number: 電話番号
+        website_url: Webサイト
       user:
+        current_password: 現在のパスワード
         display_name: ユーザー名
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード（確認）
-        current_password: 現在のパスワード
-
-      schedule:
-        name: しおり名
-        start_date: 旅行開始日
-        end_date: 旅行終了日
-        memo: メモ
-        schedulable_type: 関連リソースタイプ
-        schedulable_id: 関連リソースID
-        created_at: 作成日時
-        updated_at: 更新日時
-
-      schedule_spot:
-        schedule: しおり
-        spot: スポット
-        day: 日目
-        note: メモ
-        start_time: 到着時刻
-        end_time: 出発時刻
-        created_at: 作成日時
-        updated_at: 更新日時
-
     errors:
       messages:
         blank: を入力してください
-        too_long: は%{count}文字以内で入力してください
         greater_than: は%{count}より後に設定してください
-        taken: は既に使用されています
         invalid: は無効です
+        taken: は既に使用されています
+        too_long: は%{count}文字以内で入力してください
       models:
         schedule:
           attributes:
@@ -484,3 +82,377 @@ ja:
               taken: この施設は既にこのカードに登録されています
             name:
               blank: を入力してください
+    models:
+      card: カード
+      category: カテゴリ
+      comment: コメント
+      group: グループ
+      group_membership: グループメンバーシップ
+      schedule: しおり
+      schedule_spot: スケジュール
+      spot: スポット
+  cards:
+    add_spot: スポット追加
+    add_spots_to_schedule: 選択したスポットをしおりに追加
+    back: もどる
+    comments: コメント
+    delete_button: カード削除
+    delete_confirm: このカードを削除してもよろしいですか
+    edit:
+      title: カード編集
+    form:
+      back: もどる
+      cancel: キャンセル
+      confirm_delete: このスポットを削除しますか
+      delete: スポットを削除
+      edit: 編集
+      memo: メモ
+      name: カード名
+      name_placeholder: カード名を記入してください
+      submit: 作成
+      update: 更新
+    index:
+      new_card: 新規作成
+      no_cards: まだカードがありません
+      title: あなたの旅のカード
+    index_content:
+      create_card: カードを作成
+      lets_create_card: 行きたい旅行先をカードにしよう
+      no_cards: まだカードがありません
+      personal_card_page: このページはあなた専用のカードをつくることができます
+      personal_or_group: グループで旅行を計画する場合はグループページに移動しよう
+      title: あなたの旅のカード
+    memo_input_placeholder: メモを入力してください
+    messages:
+      create_failed: カードの作成に失敗しました
+      created: カードを作成しました
+      delete_failed: カードの削除に失敗しました
+      deleted: カードを削除しました
+      update_failed: カードの更新に失敗しました
+      updated: カードを更新しました
+    new:
+      title: カード作成
+    no_comments: まだコメントがありません
+    show:
+      title: カード詳細
+  comments:
+    confirm_delete: コメントを削除しますか
+    form:
+      placeholder: コメントを入力（200字以内）
+      submit: 投稿
+  date:
+    day_names:
+      - 日
+      - 月
+      - 火
+      - 水
+      - 木
+      - 金
+      - 土
+    formats:
+      schedule_day: '%-m月%-d日'
+  errors:
+    cards:
+      guest_creation_not_allowed: カードを作成するにはログインするかグループに参加してください
+      guest_not_member: カードを作成するにはログインするかグループに参加してください
+      unauthorized_view: このカードを閲覧する権限がありません
+    comments:
+      create_failed: コメントの投稿に失敗しました
+      unauthorized_access: このカードにアクセスする権限がありません
+      unauthorized_delete: このコメントを削除する権限がありません
+    group_schedule_spots:
+      create_failed: スポット追加に失敗しました
+    groups:
+      invalid_link: 無効なリンクです
+      invalid_operation: 無効な操作です
+      membership_failed: 参加に失敗しました
+      not_member: このグループには参加していません
+      token_mismatch: トークンが一致しません
+      user_not_found: 選択したユーザーが見つかりません
+    items:
+      create_failed: もちものの追加に失敗しました
+      update_failed: もちものの更新に失敗しました
+    likes:
+      create_failed: いいねに失敗しました
+      unauthorized: いいねする権限がありません
+    memberships:
+      cannot_delete_owner: オーナーは削除できません
+      not_authorized: メンバーを削除する権限がありません
+    messages:
+      not_saved: '%{count}件のエラーが発生しました'
+    not_group_card: この機能は無効です
+    not_group_member: このグループに参加していません
+    schedules:
+      not_found: しおりが見つかりません
+      unauthorized_view: このしおりを閲覧する権限がありません
+    spots:
+      guest_creation_not_allowed: スポットを追加するにはログインするかグループに参加してください
+      guest_not_member: スポットを追加するにはログインするかグループに参加してください
+      unauthorized_create: このカードにスポットを追加する権限がありません
+      unauthorized_view: このスポットにアクセスする権限がありません
+    user_schedule_spots:
+      create_failed: スポット追加に失敗しました
+  groups:
+    details:
+      delete_button: 削除
+      delete_confirm: を削除しますか
+      delete_member_title: メンバーを削除
+    edit:
+      title: グループ編集
+    form:
+      cancel: キャンセル
+      end_date: 旅行終了日
+      group_nickname: グループでの名前
+      group_nickname_placeholder: グループのメンバーに表示されます
+      name: グループ名
+      name_placeholder: グループ名を入力してください
+      start_date: 旅行開始日
+      submit: 作成
+      trip_memo: メモ
+      trip_memo_placeholder: グループ内で共有できます
+      trip_name: 旅行先
+      trip_name_placeholder: 旅行先を入力してください
+      update: 更新
+    index:
+      create_group: グループを作成
+      create_group_caption: グループを作って仲間を招待しよう
+      created_groups: 作成したグループ
+      new_group: 新規作成
+      no_groups: まだグループがありません
+      title: 参加しているグループ
+    messages:
+      create_failed: グループの作成に失敗しました
+      created: グループを作成しました
+      delete_failed: グループの削除に失敗しました
+      deleted: グループを削除しました
+      link_copied: 招待リンクをコピーしました
+      update_failed: グループの更新に失敗しました
+      updated: グループを更新しました
+    new:
+      title: グループ作成
+    new_membership:
+      first_time_text: ユーザー名を入力してください
+      first_time_title: はじめて
+      first_time_title_suffix: に参加する
+      invited_message: に参加する方法を選んでください
+      new_user_link: こちら
+      new_user_text: 新規ユーザー登録は
+      note: ユーザー名は参加するグループ「
+      note_suffix: 」でのみ有効です
+      past_users_text: 前回参加したときのユーザー名を選んでください
+      past_users_text_login_user: ログインして参加する場合は過去に参加したユーザー名を選んでください
+      past_users_text_sub: ゲストユーザーのメンバーの名前が表示されます
+      past_users_title: すでに
+      past_users_title_suffix: に参加している
+      select_placeholder: 参加メンバー一覧
+      sign_in: ログイン
+      signed_up_users_text: ログイン／新規登録後にこのページに戻ってきます
+      signed_up_users_text_sub: 過去にゲスト参加した場合はログインしてから入りなおすこともできます
+      signed_up_users_title: ログインしてから参加する
+      submit: 参加する
+      title: グループに招待されました
+    schedules:
+      edit:
+        title: グループのしおり編集
+      new:
+        title: グループのしおり作成
+      show:
+        add_spot_button: スポットを追加
+        back_to_group: グループ詳細
+        day_label: 日目
+        delete_schedule: しおりを削除
+        memo: メモ
+    show:
+      add_card: カードを追加する
+      back: もどる
+      cards_empty_label: 旅行先の候補をカードにしよう
+      copy_link: リンクをコピー
+      delete: 削除
+      delete_confirm: このグループを削除しますか
+      delete_group: グループを削除
+      edit: 編集
+      invite_button: 招待する
+      invite_link: 招待リンク
+      members: メンバー
+      no_cards: まだ旅行先候補がありません
+      schedule_create: しおり作成
+      schedule_create_message: 旅行先が決まったらしおりを作成しよう
+      schedule_detail: しおり詳細
+      title: グループ詳細
+      travel_candidates: 旅行先の候補
+  hello: ''
+  item_lists:
+    form:
+      cancel_button: キャンセル
+      create_button: 追加
+      item_name_placeholder: アイテム名を入力
+      update_button: 更新
+    show:
+      add_item_button: もちものを追加
+      empty_message: もちものを追加しよう
+      title: もちものリスト
+  notices:
+    cards:
+      created: カードが作成されました
+      destroyed: カードが削除されました
+      updated: カードが更新されました
+    comments:
+      created: コメントを投稿しました
+      destroyed: コメントを削除しました
+    group_schedule_spots:
+      created_multiple: '%{count}件のスポットを追加しました'
+      created_partial: '%{added}件追加しました。%{failed}件失敗しました'
+    groups:
+      created: グループが作成されました
+      destroyed: グループを削除しました
+      joined: グループに参加しました
+      updated: グループ名が更新されました
+    items:
+      created: もちものを追加しました
+      destroyed: もちものを削除しました
+      updated: もちものを更新しました
+    likes:
+      created: いいねしました
+      destroyed: いいねを取り消しました
+    memberships:
+      deleted: メンバーを削除しました
+    schedule_spots:
+      created: スポットを追加しました
+      destroyed: スポットを削除しました
+      updated: スポットを更新しました
+    schedules:
+      created: しおりを作成しました
+      destroyed: しおりを削除しました
+      updated: しおりを更新しました
+    spots:
+      created: スポットを追加しました
+      destroyed: スポットを削除しました
+      updated: スポットを更新しました
+    user_schedule_spots:
+      created_multiple: '%{count}件のスポットを追加しました'
+      created_partial: '%{added}件追加しました。%{failed}件失敗しました'
+  schedule_spots:
+    add_spot_select_message: または下から施設を検索して選択：
+    autocomplete_error: 施設情報の自動入力に失敗しました。下記のフィールドに手動で入力してください。
+    category_placeholder: '--- 選択してください ---'
+    delete_confirm: このスポットを削除しますか
+    edit:
+      arrival_time: 到着時刻
+      departure_time: 出発時刻
+      title: スポット編集
+    form:
+      address: 住所
+      cancel: キャンセル
+      category: カテゴリ
+      memo: メモ
+      phone_number: 電話
+      spot_name: スポット名
+      submit: 追加
+      update: 更新
+      website_url: URL
+    show:
+      address: 住所
+      category: カテゴリ
+      memo: メモ
+      phone_number: 電話
+      start_time: 予定時間
+      website_url: URL
+  schedules:
+    edit:
+      title: しおり編集
+    form:
+      cancel: キャンセル
+      end_date: 旅行終了日
+      memo: メモ
+      memo_placeholder: メモを入力してください
+      name: しおり名
+      name_placeholder: しおり名を入力してください
+      start_date: 旅行開始日
+      submit: 作成
+      update: 更新
+    index:
+      new_schedule: 新規作成
+      no_schedules: まだしおりがありません
+      title: 旅のしおり
+    messages:
+      create_failed: しおりの作成に失敗しました
+      created: しおりを作成しました
+      delete_failed: しおりの削除に失敗しました
+      deleted: しおりを削除しました
+      update_failed: しおりの更新に失敗しました
+      updated: しおりを更新しました
+    new:
+      title: しおり作成
+    show:
+      add_spot_button: スポットを追加
+      delete_confirm: このしおりを削除しますか
+      delete_schedule: しおりを削除
+      edit: 編集
+      group_name: グループ名
+      memo: メモ
+      no_schedule_message: はまだ作成されていません
+      no_spots: スポットを追加しよう
+      schedule_dates: 日程
+      schedule_spots: スケジュール
+      title: しおり詳細
+  spots:
+    edit:
+      title: スポットを編集
+    form:
+      address: 住所
+      address_placeholder: 住所を入力してください
+      cancel: キャンセル
+      category: カテゴリ
+      name: スポット名
+      name_placeholder: スポット名を入力してください
+      phone_number: 電話番号
+      phone_number_placeholder: 電話番号を入力してください
+      submit: 追加
+      update: 更新
+      web_site_url_placeholder: URLを入力してください
+      website_url: URL
+    new:
+      title: スポットを追加
+    show:
+      add_to_group_schedule: グループのしおりに追加
+      add_to_user_schedule: あなたのしおりに追加
+  users:
+    schedules:
+      add_spots_message: 追加するスポット
+      add_to_schedule: このしおりに追加
+      edit:
+        title: しおり編集
+      form:
+        address: 住所
+        cancel: キャンセル
+        category: カテゴリ
+        category_placeholder: '---'
+        memo: メモ
+        name_label: しおり名
+        name_placeholder: しおり名を入力してください
+        phone_number: 電話
+        spot_name: スポット名
+        submit: 作成
+        update: 更新
+        website_url: URL
+      index:
+        create_schedule: しおりを作成
+        create_schedule_caption: 旅行先が決まったらしおりをつくろう
+        new_schedule: 新規作成
+        no_schedules: まだしおりがありません
+        title: 旅のしおり
+      new:
+        title: しおり作成
+      no_schedules_message: まだしおりがありません
+      not_group: not group
+      select_message: しおりを選択
+      show:
+        add_spot_button: スポットを追加
+        back: もどる
+        day_label: 日目
+        delete_confirm: このしおりを削除しますか
+        delete_schedule: しおりを削除
+        detail: 詳細
+        memo: メモ
+        title: しおり詳細
+      spot_count_message: 件のスポットを追加します
