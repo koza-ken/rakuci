@@ -10,11 +10,6 @@
       <p class="text-center text-text-light mb-4"><%= t('item_lists.show.empty_message') %></p>
     </div>
 
-    <%# 追加フォーム（最初は非表示） %>
-    <div id="item-form" class="hidden mb-6" data-item-list-form-target="form">
-      <%= render "item_form", item_list: @item_list %>
-    </div>
-
     <%# アイテムリスト %>
     <div id="items-list" class="space-y-2 mb-4">
       <% if @item_list.items.any? %>
@@ -22,6 +17,11 @@
           <%= render partial: "users/items/item", locals: { item: item, item_list: @item_list } %>
         <% end %>
       <% end %>
+    </div>
+
+    <%# 追加フォーム（最初は非表示） %>
+    <div id="item-form" class="hidden mb-6" data-item-list-form-target="form">
+      <%= render "item_form", item_list: @item_list %>
     </div>
 
     <%# ＋ボタン %>
