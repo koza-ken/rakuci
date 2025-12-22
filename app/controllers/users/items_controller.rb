@@ -23,6 +23,24 @@ class Users::ItemsController < ApplicationController
 
   # PATCH/PUT /item_list/items/:id または /schedules/:schedule_id/item_list/items/:id
   def update
+    # checked, position フィールドのみの更新か、name フィールドの更新かで分岐
+    if @item.update(item_params)
+      # checked, position だけの更新の場合 (AJAX-only)
+      if request.format.json? || (item_params.key?(:checked) && !item_params.key?(:name)) || (item_params.key?(:position) && !item_params.key?(:name))
+        head :ok
+      else
+        # 名前の更新の場合 (Turbo Stream)
+        respond_to do |format|
+          format.turbo_stream
+          format.html { redirect_to item_list_path, notice: t("notices.items.updated") }
+        end
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to item_list_path, alert: t("errors.items.update_failed") }
+      end
+    end
   end
 
   # DELETE /item_list/items/:id または /schedules/:schedule_id/item_list/items/:id
