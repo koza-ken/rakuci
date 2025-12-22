@@ -6,14 +6,14 @@
     <h1 class="text-2xl font-bold text-text mb-6"><%= t('item_lists.show.title') %></h1>
 
     <%# 空状態メッセージ %>
-    <div id="empty-state" class="<%= @item_list.items.any? ? 'hidden' : '' %>">
+    <div id="empty-state" class="<%= @items.any? ? 'hidden' : '' %>">
       <p class="text-center text-text-light mb-4"><%= t('item_lists.show.empty_message') %></p>
     </div>
 
     <%# アイテムリスト %>
     <div id="items-list" class="space-y-2 mb-4">
-      <% if @item_list.items.any? %>
-        <% @item_list.items.each do |item| %>
+      <% if @items.any? %>
+        <% @items.each do |item| %>
           <%= render partial: "users/items/item", locals: { item: item, item_list: @item_list } %>
         <% end %>
       <% end %>
