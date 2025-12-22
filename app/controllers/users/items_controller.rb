@@ -45,6 +45,12 @@ class Users::ItemsController < ApplicationController
 
   # DELETE /item_list/items/:id または /schedules/:schedule_id/item_list/items/:id
   def destroy
+    @item.destroy
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to item_list_path, notice: t("notices.items.destroyed") }
+    end
   end
 
   private
