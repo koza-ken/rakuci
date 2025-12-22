@@ -1,0 +1,18 @@
+<%# item追加フォーム %>
+<div class="flex gap-2 items-end">
+  <input
+    type="text"
+    name="item[name]"
+    placeholder="<%= t('item_lists.form.item_name_placeholder') %>"
+    class="form-text-field flex-1"
+    autofocus
+    data-item-list-form-target="nameInput"
+  />
+  <button
+    type="button"
+    class="btn-main px-4 py-2 w-auto"
+    data-action="click->item-list-form#submitForm"
+  >
+    <%= t('item_lists.form.create_button') %>
+  </button>
+</div>
