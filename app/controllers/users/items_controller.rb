@@ -35,6 +35,6 @@ class Users::ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:name, :checked)
+    params.require(:item).permit(:name, :checked, :position)
   end
 end
