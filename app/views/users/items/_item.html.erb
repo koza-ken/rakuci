@@ -6,6 +6,7 @@
   </div>
 
   <%# チェックボックス %>
+  <%# JavaScriptで処理するからinputタグ（form_withにするとturboが動く %>
   <input
     type="checkbox"
     id="item_<%= item.id %>_checked"
@@ -29,6 +30,7 @@
 
   <%# アイテム名（編集モード） %>
   <div id="item_<%= item.id %>_form" class="hidden flex-1" data-item-edit-target="editForm">
+    <%# JavaScriptで処理するからinputタグ（form_withにするとturboが動く %>
     <input
       type="text"
       value="<%= item.name %>"
