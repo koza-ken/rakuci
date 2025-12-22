@@ -6,6 +6,19 @@ class Users::ItemsController < ApplicationController
 
   # POST /item_list/items または /schedules/:schedule_id/item_list/items
   def create
+    @item = @item_list.items.build(item_params)
+
+    if @item.save
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to item_list_path, notice: t("notices.items.created") }
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to item_list_path, alert: t("errors.items.create_failed") }
+      end
+    end
   end
 
   # PATCH/PUT /item_list/items/:id または /schedules/:schedule_id/item_list/items/:id
