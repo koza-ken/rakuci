@@ -56,7 +56,16 @@
 
     <section>
       <h2 class="text-lg font-bold text-text mb-2">9. お問い合わせ</h2>
-      <p>本規約に関するお問い合わせについては、お問い合わせフォーム（準備中）よりご連絡ください。</p>
+      <p>
+        本規約に関するお問い合わせについては、
+        <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", target: "_blank", rel: "noopener noreferrer", class: "text-secondary hover:text-secondary underline inline-flex items-center" do %>
+          お問い合わせフォーム
+          <span class="text-secondary underline">
+            <%= render "shared/icon/new_window_icon" %>
+          </span>
+        <% end %>
+        よりご連絡ください。
+      </p>
     </section>
 
     <section>
