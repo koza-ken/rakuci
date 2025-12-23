@@ -165,7 +165,10 @@
       <div class="flex flex-col items-start justify-start gap-2 text-sm text-text-light">
         <%= link_to "利用規約", terms_path, class: "hover:text-secondary transition" %>
         <%= link_to "プライバシーポリシー", privacy_path, class: "hover:text-secondary transition" %>
-        <a href="#" class="hover:text-secondary transition">お問い合わせ（準備中）</a>
+        <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", target: "_blank", rel: "noopener noreferrer", class: "hover:text-secondary transition inline-flex items-center" do %>
+          お問い合わせ
+          <span class="w-4 h-4"><%= render "shared/icon/new_window_icon" %></span>
+        <% end %>
       </div>
     </div>
   </section>
