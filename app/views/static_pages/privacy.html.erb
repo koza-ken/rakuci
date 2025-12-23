@@ -65,8 +65,16 @@
 
     <section>
       <h2 class="text-lg font-bold text-text mb-2">7. 利用者の権利</h2>
-      <%# TODO 問い合わせフォーム %>
-      <p>登録情報・投稿データの確認・訂正・削除、退会が可能です。法令に基づき、開示・利用停止等を求めることができます。詳細はお問い合わせフォーム（準備中）よりご連絡ください。</p>
+      <p>
+        登録情報・投稿データの確認・訂正・削除、退会が可能です。法令に基づき、開示・利用停止等を求めることができます。詳細は
+        <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", target: "_blank", rel: "noopener noreferrer", class: "text-secondary hover:text-secondary underline inline-flex items-center" do %>
+          お問い合わせフォーム
+          <span class="text-secondary">
+            <%= render "shared/icon/new_window_icon" %>
+          </span>
+        <% end %>
+        よりご連絡ください。
+      </p>
     </section>
 
     <section>
@@ -76,8 +84,16 @@
 
     <section>
       <h2 class="text-lg font-bold text-text mb-2">9. お問い合わせ</h2>
-      <%# TODO 問い合わせフォーム %>
-      <p>本プライバシーポリシーに関するお問い合わせについては、お問い合わせフォーム（準備中）よりご連絡ください。</p>
+      <p>
+        本プライバシーポリシーに関するお問い合わせについては、
+        <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", target: "_blank", rel: "noopener noreferrer", class: "text-secondary hover:text-secondary underline inline-flex items-center" do %>
+          お問い合わせフォーム
+          <span class="text-secondary">
+            <%= render "shared/icon/new_window_icon" %>
+          </span>
+        <% end %>
+        よりご連絡ください。
+      </p>
     </section>
   </div>
 
