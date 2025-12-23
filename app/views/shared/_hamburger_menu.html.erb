@@ -42,7 +42,7 @@
           </svg>
         <% end %>
       </li>
-      
+
       <li class="border-b border-gray-200">
         <%= link_to profile_path, class: "flex items-center justify-between px-6 py-4 text-text hover:bg-gray-100 transition" do %>
           <span>ユーザー設定</span>
@@ -77,6 +77,17 @@
         <% end %>
       </li>
       <li>
+        <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", class: "flex items-center justify-between px-6 py-2 text-text hover:bg-gray-100 transition", target: "_blank", rel: "noopener noreferrer" do %>
+          <span class="flex items-center gap-1">
+            お問い合わせ
+            <%= render "shared/icon/new_window_icon" %>
+          </span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        <% end %>
+      </li>
+      <li>
         <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "flex items-center justify-between px-6 py-2 text-text hover:bg-gray-100 transition" do %>
           <span>ログアウト</span>
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,7 +110,6 @@
           </svg>
         <% end %>
       </li>
-      <%# TODO リンク設定 %>
       <li class="mt-40">
         <%= link_to "#", class: "flex items-center justify-between px-6 py-2 text-[#9a9a9a] hover:bg-gray-100 transition" do %>
           <span>使い方</span>
@@ -119,6 +129,17 @@
       <li>
         <%= link_to privacy_path, class: "flex items-center justify-between px-6 py-2 text-text hover:bg-gray-100 transition" do %>
           <span>プライバシーポリシー</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", class: "flex items-center justify-between px-6 py-2 text-text hover:bg-gray-100 transition", target: "_blank", rel: "noopener noreferrer" do %>
+          <span class="flex items-center gap-1">
+            お問い合わせ
+            <%= render "shared/icon/new_window_icon" %>
+          </span>
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
           </svg>
