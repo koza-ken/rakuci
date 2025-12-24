@@ -41,7 +41,7 @@
 
     <%# 戻るボタン（個人スケジュールの場合のみ） %>
     <% if @schedule.present? %>
-      <div class="flex justify-center mt-8">
+      <div class="flex justify-center mt-20">
         <%= link_to t('item_lists.show.back_to_schedule'), schedule_path(@schedule), class: "btn-sub w-full text-center" %>
       </div>
     <% end %>
