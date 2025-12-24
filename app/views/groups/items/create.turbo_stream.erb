@@ -1,14 +1,23 @@
-<%# 新規アイテムをリストに追加 %>
-<%= turbo_stream.append "items-list" do %>
-  <%= render "groups/items/item", item: @saved_item, item_list: @item_list %>
-<% end %>
+<% if @saved_item.present? %>
+  <%# 新規アイテムをリストに追加 %>
+  <%= turbo_stream.append "items-list" do %>
+    <%= render "groups/items/item", item: @saved_item, item_list: @item_list %>
+  <% end %>
 
-<%# 空状態メッセージを削除（最初のアイテム追加時） %>
-<%= turbo_stream.remove "empty-state" %>
+  <%# 空状態メッセージを削除（最初のアイテム追加時） %>
+  <%= turbo_stream.remove "empty-state" %>
 
-<%# フォームをリセット&非表示化 %>
-<%= turbo_stream.replace "item-form" do %>
-  <div id="item-form" class="hidden mb-6" data-item-list-form-target="form">
-    <%= render partial: "groups/item_lists/item_form", locals: { item_list: @item_list } %>
-  </div>
+  <%# フォームをリセット&非表示化 %>
+  <%= turbo_stream.replace "item-form" do %>
+    <div id="item-form" class="hidden mb-6" data-item-list-form-target="form">
+      <%= render partial: "groups/item_lists/item_form", locals: { item_list: @item_list } %>
+    </div>
+  <% end %>
+<% else %>
+  <%# エラー時はフォームを表示してエラーメッセージを表示 %>
+  <%= turbo_stream.replace "item-form" do %>
+    <div id="item-form" class="mb-6" data-item-list-form-target="form">
+      <%= render partial: "groups/item_lists/item_form", locals: { item_list: @item_list } %>
+    </div>
+  <% end %>
 <% end %>
