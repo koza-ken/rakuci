@@ -260,7 +260,7 @@ ja:
         title: グループのしおり作成
       show:
         add_spot_button: スポットを追加
-        back_to_group: グループ詳細
+        back_to_group: グループへ
         day_label: 日目
         delete_schedule: しおりを削除
         memo: メモ
@@ -452,7 +452,7 @@ ja:
       select_message: しおりを選択
       show:
         add_spot_button: スポットを追加
-        back: もどる
+        back: しおり一覧
         day_label: 日目
         delete_confirm: このしおりを削除しますか
         delete_schedule: 削除
