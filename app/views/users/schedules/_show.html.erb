@@ -15,8 +15,9 @@
     </div>
 
     <%# スポット %>
-    <div class="mt-4">
-      <div class="flex items-center justify-end gap-3 mb-4">
+    <div class="mt-8">
+      <div class="flex items-center justify-between gap-3 mb-4">
+        <%= link_to t('users.schedules.show.back'), schedules_path, class: "btn-sub text-center px-4" %>
         <%= link_to schedule_item_list_path(schedule), class: "btn-main p-2 w-auto" do %>
           <%= render "shared/icon/footer_icon_backpack", icon_class: "text-text-light" %>
         <% end %>
@@ -56,8 +57,4 @@
       <p class="text-text"><%= schedule.memo %></p>
     </div>
   <% end %>
-
-  <div class="flex justify-center mt-20">
-    <%= button_to t('schedules.show.delete_schedule'), schedule_path(schedule), method: :delete, data: { turbo: false }, onclick: "return confirm('#{t('schedules.show.delete_confirm')}')", class: "btn-danger text-center" %>
-  </div>
 </div>

@@ -18,8 +18,9 @@
     </div>
 
     <%# スポット %>
-    <div class="mt-4">
-      <div class="flex items-center justify-end gap-3 mb-4">
+    <div class="mt-8">
+      <div class="flex items-center justify-between gap-3 mb-4">
+        <%= link_to t('groups.schedules.show.back_to_group'), group_path(@group), class: "btn-sub text-center px-4" %>
         <%= link_to group_schedule_item_list_path(group), class: "btn-main p-2 w-auto" do %>
           <%= render "shared/icon/footer_icon_backpack", icon_class: "text-text-light" %>
         <% end %>
@@ -59,10 +60,4 @@
       <p class="text-text"><%= schedule.memo %></p>
     </div>
   <% end %>
-
-  <%# 操作ボタン %>
-  <div class="my-16 flex gap-3">
-    <%= link_to t('schedules.show.edit'), edit_group_schedule_path(group), class: "btn-main flex-1 text-center" %>
-    <%= link_to t('groups.schedules.show.back_to_group'), group_path(@group), class: "btn-sub flex-1 text-center" %>
-  </div>
 </div>
