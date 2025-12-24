@@ -7,11 +7,11 @@ class Users::ItemsController < ApplicationController
   # POST /item_list/items または /schedules/:schedule_id/item_list/items
   def create
     @item = @item_list.items.build(item_params)
+    @form_path = determine_form_path # 常にパスを設定
 
     if @item.save
       @saved_item = @item # リスト追加用に保存済みアイテムを保持
       @item = @item_list.items.build # フォームリセット用に新しい空のインスタンスを作成（newアクションの代わり）
-      @form_path = determine_form_path # Turbo Stream用にパスを再設定
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to item_list_path, notice: t("notices.items.created") }

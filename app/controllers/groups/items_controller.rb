@@ -17,6 +17,7 @@ class Groups::ItemsController < ApplicationController
         format.html { redirect_to group_schedule_item_list_path(@group) }
       end
     else
+      # エラー時は@itemを上書きしない（エラーメッセージを保持）
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to group_schedule_item_list_path(@group), alert: t("errors.items.create_failed") }
