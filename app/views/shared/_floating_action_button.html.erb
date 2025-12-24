@@ -1,0 +1,8 @@
+<%# 個人・グループしおりページから参照 %>
+<%= link_to path,
+    data: { turbo_frame: "spot-create-modal" },
+    class: "fixed bottom-22 right-6 z-50 w-14 h-14 inline-flex items-center justify-center bg-primary text-text-light rounded-full shadow-lg hover:bg-primary-hover hover:shadow-xl transition" do %>
+  <span class="w-10 h-10">
+    <%= render icon %>
+  </span>
+<% end %>

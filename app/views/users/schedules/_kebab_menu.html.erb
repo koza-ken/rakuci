@@ -1,0 +1,30 @@
+<div class="relative" data-controller="dropdown">
+  <button
+    class="inline-flex items-center justify-center w-10 h-10 rounded hover:bg-gray-100"
+    data-action="click->dropdown#toggle"
+  >
+    <%= render "shared/icon/menu_icon_kebab" %>
+  </button>
+
+  <div
+    class="absolute right-0 mt-1 bg-white border border-border rounded-lg shadow-lg z-10 hidden min-w-max"
+    data-dropdown-target="menu"
+  >
+    <%= link_to edit_schedule_path(schedule), class: "flex items-center justify-start gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline", data: { action: "click->dropdown#close" } do %>
+      <span class="inline-flex items-center justify-center w-6 h-6">
+        <%= render "shared/icon/form_icon_edit" %>
+      </span>
+      <span><%= t('schedules.show.edit') %></span>
+    <% end %>
+
+    <%= button_to schedule_path(schedule),
+        method: :delete,
+        class: "flex items-center justify-start gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline bg-transparent border-none cursor-pointer",
+        data: { turbo_confirm: t('schedules.show.delete_confirm'), action: "click->dropdown#close" } do %>
+      <span class="inline-flex items-center justify-center w-6 h-6">
+        <%= render "shared/icon/form_icon_delete" %>
+      </span>
+      <span><%= t('schedules.show.delete_schedule') %></span>
+    <% end %>
+  </div>
+</div>

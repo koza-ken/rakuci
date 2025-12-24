@@ -1,7 +1,10 @@
 <div class="w-full max-w-2xl">
   <% if schedule.present? %>
     <%# しおり名 %>
-    <h1 class="text-3xl text-text font-bold mb-4"><%= schedule.name %></h1>
+    <div class="flex items-start justify-between mb-4 gap-1">
+      <h1 class="text-3xl text-text font-bold"><%= schedule.name %></h1>
+      <%= render partial: "groups/schedules/kebab_menu", locals: { group: group, schedule: schedule } %>
+    </div>
 
     <%# グループ名 %>
     <p class="text-text mb-2"><%= t('schedules.show.group_name') %>：<%= group.name %></p>
@@ -15,9 +18,9 @@
     </div>
 
     <%# スポット %>
-    <div class="mt-4">
-      <div class="flex items-center justify-end gap-3 mb-4">
-        <%= link_to t('schedules.show.add_spot_button'), new_group_schedule_schedule_spot_path(group), data: { turbo_frame: "spot-create-modal" }, class: "btn-main w-auto" %>
+    <div class="mt-8">
+      <div class="flex items-center justify-between gap-3 mb-4">
+        <%= link_to t('groups.schedules.show.back_to_group'), group_path(@group), class: "btn-sub text-center px-4" %>
         <%= link_to group_schedule_item_list_path(group), class: "btn-main p-2 w-auto" do %>
           <%= render "shared/icon/footer_icon_backpack", icon_class: "text-text-light" %>
         <% end %>
@@ -57,10 +60,4 @@
       <p class="text-text"><%= schedule.memo %></p>
     </div>
   <% end %>
-
-  <%# 操作ボタン %>
-  <div class="my-16 flex gap-3">
-    <%= link_to t('schedules.show.edit'), edit_group_schedule_path(group), class: "btn-main flex-1 text-center" %>
-    <%= link_to t('groups.schedules.show.back_to_group'), group_path(@group), class: "btn-sub flex-1 text-center" %>
-  </div>
 </div>

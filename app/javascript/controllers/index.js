@@ -45,3 +45,6 @@ application.register("item-list-form", ItemListFormController);
 
 import ItemEditController from "./item_edit_controller";
 application.register("item-edit", ItemEditController);
+
+import DropdownController from "./dropdown_controller";
+application.register("dropdown", DropdownController);
