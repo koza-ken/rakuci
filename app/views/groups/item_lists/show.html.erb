@@ -1,0 +1,45 @@
+<% content_for(:title, t('item_lists.show.title')) %>
+<% breadcrumb :group_schedule_item_list, @group %>
+
+<main class="flex flex-col items-center justify-center px-8 py-6" data-controller="item-list-form sortable">
+  <div class="w-full max-w-2xl">
+    <%# タイトル %>
+    <h1 class="text-2xl font-bold text-text mb-6"><%= t('item_lists.show.title') %></h1>
+
+    <%# 空状態メッセージ %>
+    <div id="empty-state" class="<%= @items.any? ? 'hidden' : '' %>">
+      <p class="text-center text-text-light mb-4"><%= t('item_lists.show.empty_message') %></p>
+    </div>
+
+    <%# アイテムリスト %>
+    <div id="items-list" class="space-y-2 mb-4">
+      <% if @items.any? %>
+        <% @items.each do |item| %>
+          <%= render partial: "groups/items/item", locals: { item: item, item_list: @item_list } %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%# 追加フォーム（最初は非表示） %>
+    <div id="item-form" class="hidden mb-6" data-item-list-form-target="form">
+      <%= render partial: "groups/item_lists/item_form", locals: { item_list: @item_list } %>
+    </div>
+
+    <%# ＋ボタン %>
+    <div class="flex justify-start mb-3">
+      <button
+        class="flex border border-dashed rounded-md px-4 py-2 w-full gap-4"
+        data-action="click->item-list-form#toggleForm"
+        data-item-list-form-target="addButton"
+      >
+        <%= render "shared/icon/group_card_icon_add" %>
+        <%= t('item_lists.show.add_item_button') %>
+      </button>
+    </div>
+
+    <%# 戻るボタン %>
+    <div class="flex justify-center mt-8">
+      <%= link_to t('item_lists.show.back_to_schedule'), group_schedule_path(@group), class: "btn-sub w-full text-center" %>
+    </div>
+  </div>
+</main>
