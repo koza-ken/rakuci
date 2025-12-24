@@ -1,0 +1,11 @@
+<%# アイテム要素を削除 %>
+<%= turbo_stream.remove "item_#{@item.id}" %>
+
+<%# 全アイテムが削除された場合、空状態メッセージを表示 %>
+<% if @item_list.items.empty? %>
+  <%= turbo_stream.update "empty-state" do %>
+    <div id="empty-state" class="">
+      <p class="text-center text-text-light mb-4"><%= t('item_lists.show.empty_message') %></p>
+    </div>
+  <% end %>
+<% end %>
