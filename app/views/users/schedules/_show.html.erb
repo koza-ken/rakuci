@@ -13,8 +13,11 @@
 
     <%# スポット %>
     <div class="mt-4">
-      <div class="flex items-center justify-end mb-4">
+      <div class="flex items-center justify-end gap-3 mb-4">
         <%= link_to t('schedules.show.add_spot_button'), new_schedule_schedule_spot_path(schedule), data: { turbo_frame: "spot-create-modal" }, class: "btn-main w-auto" %>
+        <%= link_to schedule_item_list_path(schedule), class: "btn-main p-2 w-auto" do %>
+          <%= render "shared/icon/footer_icon_backpack", icon_class: "text-text-light" %>
+        <% end %>
       </div>
 
       <% (1..schedule.days).each do |day| %>

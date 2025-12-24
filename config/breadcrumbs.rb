@@ -68,6 +68,11 @@ crumb :group_schedule_spot do |group, schedule_spot|
   parent :group_schedule, group
 end
 
+crumb :group_schedule_item_list do |group|
+  link "もちもの", group_schedule_item_list_path(group)
+  parent :group_schedule, group
+end
+
 # ====== 個人用しおり系 ======
 crumb :schedules do
   link "しおり", schedules_path
@@ -83,5 +88,10 @@ crumb :schedule_spot do |schedule, schedule_spot|
   display_name = schedule_spot.display_name
   truncated_name = display_name.length > 6 ? "#{display_name[0...6]}..." : display_name
   link truncated_name, schedule_schedule_spot_path(schedule, schedule_spot)
+  parent :schedule, schedule
+end
+
+crumb :schedule_item_list do |schedule|
+  link "もちもの", schedule_item_list_path(schedule)
   parent :schedule, schedule
 end

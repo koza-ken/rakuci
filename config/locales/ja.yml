@@ -20,6 +20,8 @@ ja:
         trip_memo: メモ
         trip_name: 旅行名
         updated_at: 更新日時
+      item:
+        name: もちもの
       group_membership:
         created_at: 作成日時
         group: グループ
@@ -285,10 +287,11 @@ ja:
     form:
       cancel_button: キャンセル
       create_button: 追加
-      item_name_placeholder: アイテム名を入力
+      item_name_placeholder: もちものを入力
       update_button: 更新
     show:
       add_item_button: もちものを追加
+      back_to_schedule: しおりにもどる
       empty_message: もちものを追加しよう
       title: もちものリスト
   notices:
@@ -389,6 +392,7 @@ ja:
       delete_schedule: しおりを削除
       edit: 編集
       group_name: グループ名
+      item_list_button: もちもの
       memo: メモ
       no_schedule_message: はまだ作成されていません
       no_spots: スポットを追加しよう

@@ -1,7 +1,5 @@
 <% content_for(:title, t('item_lists.show.title')) %>
-<% if @schedule.present? %>
-  <% breadcrumb :schedule_item_list, @schedule %>
-<% end %>
+<% breadcrumb :group_schedule_item_list, @group %>
 
 <main class="flex flex-col items-center justify-center px-8 py-6" data-controller="item-list-form sortable">
   <div class="w-full max-w-2xl">
@@ -17,14 +15,14 @@
     <div id="items-list" class="space-y-2 mb-4">
       <% if @items.any? %>
         <% @items.each do |item| %>
-          <%= render partial: "users/items/item", locals: { item: item, item_list: @item_list } %>
+          <%= render partial: "groups/items/item", locals: { item: item, item_list: @item_list } %>
         <% end %>
       <% end %>
     </div>
 
     <%# 追加フォーム（最初は非表示） %>
     <div id="item-form" class="hidden mb-6" data-item-list-form-target="form">
-      <%= render "item_form", item_list: @item_list %>
+      <%= render partial: "groups/item_lists/item_form", locals: { item_list: @item_list } %>
     </div>
 
     <%# ＋ボタン %>
@@ -39,11 +37,9 @@
       </button>
     </div>
 
-    <%# 戻るボタン（個人スケジュールの場合のみ） %>
-    <% if @schedule.present? %>
-      <div class="flex justify-center mt-20">
-        <%= link_to t('item_lists.show.back_to_schedule'), schedule_path(@schedule), class: "btn-sub w-full text-center" %>
-      </div>
-    <% end %>
+    <%# 戻るボタン %>
+    <div class="flex justify-center mt-20">
+      <%= link_to t('item_lists.show.back_to_schedule'), group_schedule_path(@group), class: "btn-sub w-full text-center" %>
+    </div>
   </div>
 </main>

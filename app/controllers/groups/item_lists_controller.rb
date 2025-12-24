@@ -6,6 +6,8 @@ class Groups::ItemListsController < ApplicationController
 
   # GET /groups/:group_id/schedule/item_list
   def show
+    @items = @item_list.items.order(:position)
+    @item = @item_list.items.build
   end
 
   private
