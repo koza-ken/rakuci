@@ -3,7 +3,7 @@
     <%# しおり名 %>
     <div class="flex items-start justify-between mb-4 gap-1">
       <h1 class="text-3xl text-text font-bold"><%= schedule.name %></h1>
-      <%= render partial: "kebab_menu", locals: { group: group, schedule: schedule } %>
+      <%= render partial: "groups/schedules/kebab_menu", locals: { group: group, schedule: schedule } %>
     </div>
 
     <%# グループ名 %>
