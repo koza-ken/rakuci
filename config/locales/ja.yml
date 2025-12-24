@@ -389,7 +389,7 @@ ja:
     show:
       add_spot_button: スポットを追加
       delete_confirm: このしおりを削除しますか
-      delete_schedule: しおりを削除
+      delete_schedule: 削除
       edit: 編集
       group_name: グループ名
       item_list_button: もちもの
@@ -455,7 +455,7 @@ ja:
         back: もどる
         day_label: 日目
         delete_confirm: このしおりを削除しますか
-        delete_schedule: しおりを削除
+        delete_schedule: 削除
         detail: 詳細
         memo: メモ
         title: しおり詳細
