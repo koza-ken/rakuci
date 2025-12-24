@@ -6,6 +6,8 @@ class Users::ItemListsController < ApplicationController
   # GET /item_list または /schedules/:schedule_id/item_list
   def show
     @items = @item_list.items.order(:position)
+    @item = @item_list.items.build
+    @form_path = determine_form_path
   end
 
   private
@@ -19,6 +21,14 @@ class Users::ItemListsController < ApplicationController
       @schedule.item_list
     else
       current_user.item_list
+    end
+  end
+
+  def determine_form_path
+    if @item_list.listable_type == 'User'
+      item_list_items_path
+    else
+      schedule_item_list_items_path(@item_list.listable)
     end
   end
 end
