@@ -4,6 +4,11 @@
 <%= turbo_frame_tag "spot-create-modal", data: { controller: "modal" } %>
 
 <%# stimulusからリクエストを投げるために必要なidを取得するときにハッシュ化されている必要があるのでhashidを使う %>
-<main id="main" class="flex flex-col items-center justify-center px-8 py-6" data-controller="sortable" data-group-id="<%= @group.hashid %>" data-schedule-id="<%= @schedule.hashid %>">
+<main id="main" class="flex flex-col items-center justify-center px-8 py-6 mb-12" data-controller="sortable" data-group-id="<%= @group.hashid %>" data-schedule-id="<%= @schedule.hashid %>">
   <%= render partial: "groups/schedules/show", locals: { group: @group, schedule: @schedule } %>
 </main>
+
+<%# スポット追加FAB %>
+<%= render "shared/floating_action_button",
+    path: new_group_schedule_schedule_spot_path(@group),
+    icon: "shared/icon/add_spot_icon" %>
