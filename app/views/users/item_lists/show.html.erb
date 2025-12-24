@@ -1,4 +1,7 @@
 <% content_for(:title, t('item_lists.show.title')) %>
+<% if @schedule.present? %>
+  <% breadcrumb :schedule_item_list, @schedule %>
+<% end %>
 
 <main class="flex flex-col items-center justify-center px-8 py-6" data-controller="item-list-form sortable">
   <div class="w-full max-w-2xl">
@@ -35,5 +38,12 @@
         <%= t('item_lists.show.add_item_button') %>
       </button>
     </div>
+
+    <%# 戻るボタン（個人スケジュールの場合のみ） %>
+    <% if @schedule.present? %>
+      <div class="flex justify-center mt-8">
+        <%= link_to t('item_lists.show.back_to_schedule'), schedule_path(@schedule), class: "btn-sub w-full text-center" %>
+      </div>
+    <% end %>
   </div>
 </main>
