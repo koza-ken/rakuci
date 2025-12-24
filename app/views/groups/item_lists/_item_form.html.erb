@@ -1,0 +1,7 @@
+<%# グループ用 item追加フォーム %>
+<%= form_with model: [@item_list, @item], url: @form_path, local: true, data: { turbo: true } do |f| %>
+  <div class="flex gap-2 items-end">
+    <%= f.text_field :name, placeholder: t('item_lists.form.item_name_placeholder'), class: "form-text-field flex-1", autofocus: true, data: { item_list_form_target: "nameInput" } %>
+    <%= f.submit t('item_lists.form.create_button'), class: "btn-main px-4 py-2 w-auto" %>
+  </div>
+<% end %>
