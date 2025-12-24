@@ -25,7 +25,7 @@ class Users::ItemListsController < ApplicationController
   end
 
   def determine_form_path
-    if @item_list.listable_type == 'User'
+    if @item_list.listable_type == "User"
       item_list_items_path
     else
       schedule_item_list_items_path(@item_list.listable)
