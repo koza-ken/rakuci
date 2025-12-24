@@ -17,7 +17,6 @@
     <%# スポット %>
     <div class="mt-4">
       <div class="flex items-center justify-end gap-3 mb-4">
-        <%= link_to t('schedules.show.add_spot_button'), new_schedule_schedule_spot_path(schedule), data: { turbo_frame: "spot-create-modal" }, class: "btn-main w-auto" %>
         <%= link_to schedule_item_list_path(schedule), class: "btn-main p-2 w-auto" do %>
           <%= render "shared/icon/footer_icon_backpack", icon_class: "text-text-light" %>
         <% end %>
@@ -49,12 +48,6 @@
   <% else %>
     <p class="text-text text-center mt-8"><%= t('activerecord.models.schedule') %><%= t('schedules.show.no_schedule_message') %></p>
   <% end %>
-
-  <%# 操作ボタン %>
-  <div class="mt-16 flex gap-3">
-    <%= link_to t('schedules.show.edit'), edit_schedule_path(schedule), class: "btn-main flex-1 text-center" %>
-    <%= link_to t('users.schedules.show.back'), schedules_path, class: "btn-sub flex-1 text-center" %>
-  </div>
 
   <%# メモ %>
   <% if schedule.memo.present? %>
