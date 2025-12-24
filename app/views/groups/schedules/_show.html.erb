@@ -1,7 +1,10 @@
 <div class="w-full max-w-2xl">
   <% if schedule.present? %>
     <%# しおり名 %>
-    <h1 class="text-3xl text-text font-bold mb-4"><%= schedule.name %></h1>
+    <div class="flex items-start justify-between mb-4 gap-1">
+      <h1 class="text-3xl text-text font-bold"><%= schedule.name %></h1>
+      <%= render partial: "kebab_menu", locals: { group: group, schedule: schedule } %>
+    </div>
 
     <%# グループ名 %>
     <p class="text-text mb-2"><%= t('schedules.show.group_name') %>：<%= group.name %></p>
