@@ -127,14 +127,14 @@ RSpec.describe ScheduleSpot, type: :model do
 
       context "文字数が500文字以下の場合" do
         it "保存に成功すること" do
-          schedule_spot = build(:schedule_spot, snapshot_website_url: "https://example.com" + "a" * 481)
+          schedule_spot = build(:schedule_spot, snapshot_website_url: "https://example.com" + ("a" * 481))
           expect(schedule_spot).to be_valid
         end
       end
 
       context "文字数が501文字以上の場合" do
         it "保存に失敗すること" do
-          schedule_spot = build(:schedule_spot, snapshot_website_url: "https://example.com" + "a" * 482)
+          schedule_spot = build(:schedule_spot, snapshot_website_url: "https://example.com" + ("a" * 482))
           expect(schedule_spot).not_to be_valid
         end
       end
