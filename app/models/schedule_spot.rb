@@ -45,7 +45,7 @@ class ScheduleSpot < ApplicationRecord
   validates :snapshot_name, length: { maximum: 50 }
   validates :snapshot_address, length: { maximum: 255 }
   validates :snapshot_phone_number, length: { maximum: 20 }
-  validates :snapshot_website_url, length: { maximum: 500 }
+  validates :snapshot_website_url, format: { with: URI::DEFAULT_PARSER.make_regexp(['http', 'https']) }, length: { maximum: 500 }, allow_blank: true
   validates :end_time, comparison: { greater_than: :start_time }, allow_blank: true
 
   # カスタムバリデーション
