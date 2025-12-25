@@ -5,6 +5,7 @@ class Groups::ScheduleSpotsController < ApplicationController
   def show
     @schedule = @group.schedule
     @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
+    @category = Category.find_by(id: @schedule_spot.snapshot_category_id)
   end
 
   def new

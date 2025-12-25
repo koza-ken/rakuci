@@ -4,6 +4,7 @@ class Users::ScheduleSpotsController < ApplicationController
   def show
     @schedule = current_user.schedules.find(params[:schedule_id])
     @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
+    @category = Category.find_by(id: @schedule_spot.snapshot_category_id)
   end
 
   # TODO でかそう

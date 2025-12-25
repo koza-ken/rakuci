@@ -4,68 +4,50 @@
   <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
     <%= render "shared/flash_messages", flash: flash %>
     <main class="flex flex-col justify-center px-8 py-6 bg-main-bg">
-      <div class="flex items-center gap-2 mb-8">
+      <div class="flex items-start justify-between gap-3 mb-6">
         <h1 class="text-2xl font-bold text-text"><%= @spot.name %></h1>
-        <% if @spot.google_place_id.present? %>
-          <%= link_to "https://www.google.com/maps/search/?api=1&query=7-Elevan&query_place_id=#{@spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition" do %>
-            <%= render "shared/icon/map_icon_google" %>
-          <% end %>
-        <% end %>
+        <%= render "spots/kebab_menu" %>
       </div>
 
       <div class="w-full max-w-md">
         <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2"><%= t('spots.form.category') %></label>
-          <div class="form-text-field bg-gray-100">
-            <%= @spot.category&.name || "---" %>
-          </div>
+          <input type="text" value="<%= @spot.category&.name || "---" %>" readonly class="form-text-field bg-gray-100" />
         </div>
 
         <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2"><%= t('spots.form.address') %></label>
-          <div class="form-text-field bg-gray-100 truncate">
-            <% if @spot.address.present? %>
-              <%= @spot.address %>
-            <% else %>
-              ---
+          <div class="flex items-center gap-2">
+            <input type="text" value="<%= @spot.address.present? ? @spot.address : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
+            <% if @spot.google_place_id.present? %>
+              <%= link_to "https://www.google.com/maps/search/?api=1&query=7-Elevan&query_place_id=#{@spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0" do %>
+                <%= render "shared/icon/map_icon_google" %>
+              <% end %>
             <% end %>
           </div>
         </div>
 
         <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2"><%= t('spots.form.website_url') %></label>
-          <div class="form-text-field bg-gray-100 truncate">
+          <div class="flex items-center gap-2">
+            <input type="text" value="<%= @spot.website_url.present? ? @spot.website_url : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
             <% if @spot.website_url.present? %>
-              <%= @spot.website_url %>
-            <% else %>
-              ---
+              <%# website_url は Spot モデルでバリデーション済み（HTTP/HTTPS のみ） %>
+              <%= link_to @spot.website_url, target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('外部サイトに移動しますか？')" do %>
+                <%= render "shared/icon/jump_homepage_icon" %>
+              <% end %>
             <% end %>
           </div>
         </div>
 
         <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2"><%= t('spots.form.phone_number') %></label>
-          <div class="form-text-field bg-gray-100 truncate">
-            <% if @spot.phone_number.present? %>
-              <%= @spot.phone_number %>
-            <% else %>
-              ---
-            <% end %>
-          </div>
+          <input type="text" value="<%= @spot.phone_number.present? ? @spot.phone_number : "---" %>" readonly class="form-text-field bg-gray-100" />
         </div>
       </div>
 
-      <div class="flex gap-3 mt-8">
-        <% if @card.group_card? %>
-          <%= link_to t('cards.form.edit'), edit_group_card_spot_path(@card.group, @card, @spot), data: {turbo_frame: "spot-edit-modal"}, class: "btn-main flex-1 text-center" %>
-          <%= link_to t('cards.form.back'), group_card_path(@card.group, @card), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
-        <% else %>
-          <%= link_to t('cards.form.edit'), edit_card_spot_path(@card, @spot), data: {turbo_frame: "spot-edit-modal"}, class: "btn-main flex-1 text-center" %>
-          <%= link_to t('cards.form.back'), card_path(@card), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
-        <% end %>
-      </div>
 
-      <div class="mt-14">
+      <div class="mt-12">
         <%# グループのカード か ユーザーのカード か判定 %>
         <% if @card.group_card? %>
           <% if @card.group.schedule.present? %>
@@ -84,11 +66,12 @@
           <% end %>
         <% end %>
       </div>
-      <div class="flex justify-center">
+
+      <div class="flex gap-3 mt-8">
         <% if @card.group_card? %>
-          <%= link_to t('cards.form.delete'), group_card_spot_path(@card.group, @card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger text-center mt-12" %>
+          <%= link_to t('cards.form.back'), group_card_path(@card.group, @card), data: {turbo_frame: "_top"}, class: "btn-sub w-full text-center" %>
         <% else %>
-          <%= link_to t('cards.form.delete'), card_spot_path(@card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger text-center mt-12" %>
+          <%= link_to t('cards.form.back'), card_path(@card), data: {turbo_frame: "_top"}, class: "btn-sub w-full text-center" %>
         <% end %>
       </div>
     </main>

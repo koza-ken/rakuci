@@ -1,0 +1,49 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "f102e809b7cfbca65227744a85e691f29f147147c09d8b7f7091de3259785e54",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in `link_to` href",
+      "file": "app/views/spots/_show_content.html.erb",
+      "line": 36,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(Card.find(params[:card_id]).spots.find(params[:id]).website_url, :target => \"_blank\", :rel => \"noopener noreferrer\", :class => \"hover:opacity-60 transition flex-shrink-0\", :onclick => \"return confirm('\\u5916\\u90E8\\u30B5\\u30A4\\u30C8\\u306B\\u79FB\\u52D5\\u3057\\u307E\\u3059\\u304B\\uFF1F')\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Groups::SpotsController",
+          "method": "show",
+          "line": 9,
+          "file": "app/controllers/groups/spots_controller.rb",
+          "rendered": {
+            "name": "groups/spots/show",
+            "file": "app/views/groups/spots/show.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "groups/spots/show",
+          "line": 2,
+          "file": "app/views/groups/spots/show.html.erb",
+          "rendered": {
+            "name": "spots/_show_content",
+            "file": "app/views/spots/_show_content.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "spots/_show_content"
+      },
+      "user_input": "Card.find(params[:card_id]).spots.find(params[:id]).website_url",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    }
+  ],
+  "brakeman_version": "7.1.1"
+}
