@@ -5,13 +5,9 @@
   <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
     <%= render "shared/flash_messages", flash: flash %>
     <main class="flex flex-col justify-center px-8 py-6 bg-main-bg">
-      <div class="flex items-center gap-2 mb-8">
-        <h1 class="text-2xl font-bold text-text"><%= @schedule_spot.display_name %></h1>
-        <% if @schedule_spot.present? && @schedule_spot.google_place_id.present? %>
-          <%= link_to "https://maps.google.com/maps?q=place_id:#{@schedule_spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition" do %>
-            <%= render "shared/icon/map_icon_google" %>
-          <% end %>
-        <% end %>
+      <div class="flex items-start justify-between gap-3 mb-6">
+        <h1 class="text-2xl font-bold text-text mb-2"><%= @schedule_spot.display_name %></h1>
+        <%= render "shared/schedule_spot_kebab_menu" %>
       </div>
 
       <div class="w-full max-w-md">
@@ -22,35 +18,31 @@
 
         <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.address') %></label>
-          <div class="form-text-field bg-gray-100 truncate">
-            <% if @schedule_spot.snapshot_address.present? %>
-              <%= @schedule_spot.snapshot_address %>
-            <% else %>
-              ---
+          <div class="flex items-center gap-2">
+            <input type="text" value="<%= @schedule_spot.snapshot_address.present? ? @schedule_spot.snapshot_address : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
+            <% if @schedule_spot.google_place_id.present? %>
+              <%= link_to "https://maps.google.com/maps?q=place_id:#{@schedule_spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition flex-shrink-0" do %>
+                <%= render "shared/icon/map_icon_google" %>
+              <% end %>
             <% end %>
           </div>
         </div>
 
         <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.website_url') %></label>
-          <div class="form-text-field bg-gray-100 truncate">
+          <div class="flex items-center gap-2">
+            <input type="text" value="<%= @schedule_spot.snapshot_website_url.present? ? @schedule_spot.snapshot_website_url : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
             <% if @schedule_spot.snapshot_website_url.present? %>
-              <%= @schedule_spot.snapshot_website_url %>
-            <% else %>
-              ---
+              <%= link_to @schedule_spot.snapshot_website_url, target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('外部サイトに移動しますか？')" do %>
+                <%= render "shared/icon/jump_homepage_icon" %>
+              <% end %>
             <% end %>
           </div>
         </div>
 
         <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.phone_number') %></label>
-          <div class="form-text-field bg-gray-100 truncate">
-            <% if @schedule_spot.snapshot_phone_number.present? %>
-              <%= @schedule_spot.snapshot_phone_number %>
-            <% else %>
-              ---
-            <% end %>
-          </div>
+          <input type="text" value="<%= @schedule_spot.snapshot_phone_number.present? ? @schedule_spot.snapshot_phone_number : "---" %>" readonly class="form-text-field bg-gray-100" />
         </div>
 
         <div class="mb-4">
@@ -92,12 +84,7 @@
       </div>
 
       <div class="flex gap-3 mt-8">
-        <%= link_to t('cards.form.edit'), edit_group_schedule_schedule_spot_path(@group, @schedule_spot), class: "btn-main flex-1 text-center" %>
-        <%= link_to t('cards.form.back'), group_schedule_path(@group), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
-      </div>
-      <%# 削除後のページ遷移とturboの相性が悪いのでturboをfalseにして、確認ダイアログをJSで実装 %>
-      <div class="flex justify-center">
-        <%= button_to t('cards.form.delete'), group_schedule_schedule_spot_path(@group, @schedule_spot), method: :delete, data: { turbo: false }, onclick: "return confirm('#{t('schedule_spots.delete_confirm')}')", class: "btn-danger mt-20" %>
+        <%= link_to t('cards.form.back'), group_schedule_path(@group), data: {turbo_frame: "_top"}, class: "btn-sub w-full text-center" %>
       </div>
     </main>
   </div>
