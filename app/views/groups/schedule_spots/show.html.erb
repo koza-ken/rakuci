@@ -33,6 +33,7 @@
           <div class="flex items-center gap-2">
             <input type="text" value="<%= @schedule_spot.snapshot_website_url.present? ? @schedule_spot.snapshot_website_url : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
             <% if @schedule_spot.snapshot_website_url.present? %>
+              <%# snapshot_website_url は ScheduleSpot モデルでバリデーション済み（HTTP/HTTPS のみ） %>
               <%= link_to @schedule_spot.snapshot_website_url, target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('外部サイトに移動しますか？')" do %>
                 <%= render "shared/icon/jump_homepage_icon" %>
               <% end %>

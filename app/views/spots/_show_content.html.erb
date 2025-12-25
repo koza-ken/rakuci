@@ -32,6 +32,7 @@
           <div class="flex items-center gap-2">
             <input type="text" value="<%= @spot.website_url.present? ? @spot.website_url : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
             <% if @spot.website_url.present? %>
+              <%# website_url は Spot モデルでバリデーション済み（HTTP/HTTPS のみ） %>
               <%= link_to @spot.website_url, target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('外部サイトに移動しますか？')" do %>
                 <%= render "shared/icon/jump_homepage_icon" %>
               <% end %>
