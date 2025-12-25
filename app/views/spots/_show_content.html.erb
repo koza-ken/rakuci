@@ -84,13 +84,6 @@
           <% end %>
         <% end %>
       </div>
-      <div class="flex justify-center">
-        <% if @card.group_card? %>
-          <%= link_to t('cards.form.delete'), group_card_spot_path(@card.group, @card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger text-center mt-12" %>
-        <% else %>
-          <%= link_to t('cards.form.delete'), card_spot_path(@card, @spot), method: :delete, data: { turbo_method: :delete, turbo_confirm: t('cards.form.confirm_delete'), disable_with: t('cards.form.delete'), turbo_frame: "_top" }, class: "btn-danger text-center mt-12" %>
-        <% end %>
-      </div>
     </main>
   </div>
 </turbo-frame>
