@@ -45,17 +45,8 @@
         </div>
       </div>
 
-      <div class="flex gap-3 mt-8">
-        <% if @card.group_card? %>
-          <%= link_to t('cards.form.edit'), edit_group_card_spot_path(@card.group, @card, @spot), data: {turbo_frame: "spot-edit-modal"}, class: "btn-main flex-1 text-center" %>
-          <%= link_to t('cards.form.back'), group_card_path(@card.group, @card), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
-        <% else %>
-          <%= link_to t('cards.form.edit'), edit_card_spot_path(@card, @spot), data: {turbo_frame: "spot-edit-modal"}, class: "btn-main flex-1 text-center" %>
-          <%= link_to t('cards.form.back'), card_path(@card), data: {turbo_frame: "_top"}, class: "btn-sub flex-1 text-center" %>
-        <% end %>
-      </div>
 
-      <div class="mt-14">
+      <div class="mt-12">
         <%# グループのカード か ユーザーのカード か判定 %>
         <% if @card.group_card? %>
           <% if @card.group.schedule.present? %>
@@ -72,6 +63,14 @@
                 data: {turbo_frame: "add_new_schedule_spot"},
                 class: "btn-main w-full block text-center" %>
           <% end %>
+        <% end %>
+      </div>
+
+      <div class="flex gap-3 mt-8">
+        <% if @card.group_card? %>
+          <%= link_to t('cards.form.back'), group_card_path(@card.group, @card), data: {turbo_frame: "_top"}, class: "btn-sub w-full text-center" %>
+        <% else %>
+          <%= link_to t('cards.form.back'), card_path(@card), data: {turbo_frame: "_top"}, class: "btn-sub w-full text-center" %>
         <% end %>
       </div>
     </main>
