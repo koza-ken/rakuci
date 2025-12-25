@@ -90,16 +90,51 @@ RSpec.describe ScheduleSpot, type: :model do
     end
 
     describe "snapshot_website_url" do
+      context "値が空の場合" do
+        it "保存に成功すること" do
+          schedule_spot = build(:schedule_spot, snapshot_website_url: nil)
+          expect(schedule_spot).to be_valid
+        end
+      end
+
+      context "有効な HTTP URL の場合" do
+        it "保存に成功すること" do
+          schedule_spot = build(:schedule_spot, snapshot_website_url: "http://example.com")
+          expect(schedule_spot).to be_valid
+        end
+      end
+
+      context "有効な HTTPS URL の場合" do
+        it "保存に成功すること" do
+          schedule_spot = build(:schedule_spot, snapshot_website_url: "https://example.com")
+          expect(schedule_spot).to be_valid
+        end
+      end
+
+      context "JavaScript プロトコルの場合" do
+        it "保存に失敗すること" do
+          schedule_spot = build(:schedule_spot, snapshot_website_url: "javascript:alert('xss')")
+          expect(schedule_spot).not_to be_valid
+        end
+      end
+
+      context "不正なスキーム（ftp）の場合" do
+        it "保存に失敗すること" do
+          schedule_spot = build(:schedule_spot, snapshot_website_url: "ftp://example.com")
+          expect(schedule_spot).not_to be_valid
+        end
+      end
+
       context "文字数が500文字以下の場合" do
         it "保存に成功すること" do
-          schedule_spot = build(:schedule_spot, snapshot_website_url: "a" * 500)
+          schedule_spot = build(:schedule_spot, snapshot_website_url: "https://example.com" + "a" * 481)
           expect(schedule_spot).to be_valid
         end
       end
 
       context "文字数が501文字以上の場合" do
         it "保存に失敗すること" do
-          schedule_spot = build(:schedule_spot, snapshot_website_url: "a" * 501)
+          schedule_spot = build(:schedule_spot, snapshot_website_url: "https://example.com" + "a" * 482)
           expect(schedule_spot).not_to be_valid
         end
       end

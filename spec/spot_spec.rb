@@ -48,6 +48,43 @@ RSpec.describe Spot, type: :model do
       end
     end
 
+    describe "website_url" do
+      context "値が空の場合" do
+        it "保存に成功すること" do
+          spot = build(:spot, website_url: nil)
+          expect(spot).to be_valid
+        end
+      end
+
+      context "有効な HTTP URL の場合" do
+        it "保存に成功すること" do
+          spot = build(:spot, website_url: "http://example.com")
+          expect(spot).to be_valid
+        end
+      end
+
+      context "有効な HTTPS URL の場合" do
+        it "保存に成功すること" do
+          spot = build(:spot, website_url: "https://example.com")
+          expect(spot).to be_valid
+        end
+      end
+
+      context "JavaScript プロトコルの場合" do
+        it "保存に失敗すること" do
+          spot = build(:spot, website_url: "javascript:alert('xss')")
+          expect(spot).not_to be_valid
+        end
+      end
+
+      context "不正なスキーム（ftp）の場合" do
+        it "保存に失敗すること" do
+          spot = build(:spot, website_url: "ftp://example.com")
+          expect(spot).not_to be_valid
+        end
+      end
+    end
+
     describe "google_place_id" do
       context "値が空の場合" do
         it "保存に成功すること" do
