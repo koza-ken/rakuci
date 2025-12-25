@@ -419,7 +419,7 @@ ja:
       title: スポットを追加
     show:
       add_to_group_schedule: グループのしおりに追加
-      add_to_user_schedule: あなたのしおりに追加
+      add_to_user_schedule: しおりに追加
   users:
     schedules:
       add_spots_message: 追加するスポット
