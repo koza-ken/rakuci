@@ -17,9 +17,7 @@
       <div class="w-full max-w-md">
         <div class="mb-4">
           <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.category') %></label>
-          <div class="form-text-field bg-gray-100">
-            <%= Category.find_by(id: @schedule_spot.snapshot_category_id)&.name || "---" %>
-          </div>
+          <input type="text" value="<%= @category&.name || "---" %>" readonly class="form-text-field bg-gray-100" />
         </div>
 
         <div class="mb-4">
