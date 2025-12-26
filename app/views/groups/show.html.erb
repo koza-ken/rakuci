@@ -46,8 +46,11 @@
           data-controller="clipboard"
           data-clipboard-text-value="<%= new_membership_url(@group.invite_token) %>"
           data-action="click->clipboard#copy"
-          class="btn-main w-auto px-3">
-          <%= t('groups.show.invite_button') %>
+          title="<%= t('groups.show.invite_button') %>"
+          class="btn-main w-auto p-2">
+          <div class="flex items-center justify-center size-8 text-text-light">
+            <%= render "shared/icon/add_membership_icon" %>
+          </div>
         </button>
       </div>
 
