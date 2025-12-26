@@ -47,26 +47,18 @@ class Users::ScheduleSpotsController < ApplicationController
         schedule_spot.global_position = current_max_position + index + 1
         schedule_spot.save
       end
-      # 成功・失敗を判定
+      # 成功・失敗を判定して、常に HTML レスポンス
+      # TODO Turboをfalseにすべきか確認
       if results.all?
-        respond_to do |format|
-          format.turbo_stream { flash.now[:notice] = t("notices.user_schedule_spots.created_multiple", count: results.size) }
-          format.html { redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_multiple", count: results.size) }
-        end
+        redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_multiple", count: results.size)
       elsif results.none?
         # 全て失敗
-        respond_to do |format|
-          format.turbo_stream { flash.now[:alert] = t("errors.user_schedule_spots.create_failed") }
-          format.html { redirect_to card_path(@card), alert: t("errors.user_schedule_spots.create_failed") }
-        end
+        redirect_to card_path(@card), alert: t("errors.user_schedule_spots.create_failed")
       else
         # 一部成功
         added = results.count(true)
         failed = results.count(false)
-        respond_to do |format|
-          format.turbo_stream { flash.now[:notice] = t("notices.user_schedule_spots.created_partial", added: added, failed: failed) }
-          format.html { redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_partial", added: added, failed: failed) }
-        end
+        redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_partial", added: added, failed: failed)
       end
     else
       # しおり詳細から直接スポット追加
