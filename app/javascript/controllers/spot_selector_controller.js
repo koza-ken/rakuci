@@ -4,18 +4,13 @@ export default class extends Controller {
   static targets = ["submitButton"]
 
   connect() {
-    this.setupCheckboxListeners()
-    this.updateSubmitButton()
-  }
-
-  setupCheckboxListeners() {
-    const checkboxes = this.getCheckboxes()
-
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventListener("change", () => {
+    // Event delegation を使用：フォーム全体でチェック変更を監視
+    this.element.addEventListener("change", (event) => {
+      if (event.target.matches('input[type="checkbox"][name="spot_ids[]"]')) {
         this.updateSubmitButton()
-      })
+      }
     })
+    this.updateSubmitButton()
   }
 
   getCheckboxes() {
