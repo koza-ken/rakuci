@@ -16,7 +16,7 @@
           <span class="logo-letter" style="--i:0">R</span><span class="logo-letter" style="--i:1">a</span><span class="logo-letter" style="--i:2">k</span><span class="logo-letter" style="--i:3">u</span><span class="logo-letter" style="--i:4">C</span><span class="logo-letter" style="--i:5">i</span>
         </h1>
         <p class="text-sm text-left text-text-light max-w-3xl mx-auto leading-relaxed hero-fade-up hero-delay-3">
-          RakuCi（ラクシィ）は、目的地のカードを使って旅行を計画するアプリです。旅行先が決まったらそのまま計画が進められます。
+          RakuCi（ラクシィ）は、目的地のカードを使って旅行を計画するアプリです。<br>旅行先が決まればそのまま計画を進められます。
         </p>
         <div class="flex flex-col gap-5 justify-center items-center pt-4 hero-fade-up hero-delay-4">
           <%= link_to new_user_registration_path, class: "btn-main w-full", data: { turbo: false } do %>
@@ -26,7 +26,7 @@
             ログイン
           <% end %>
         </div>
-        <div class="flex justify-center pt-8">
+        <div class="flex justify-center pt-16">
           <a href="#problems" class="flex flex-col items-center text-text-light text-sm gap-2 hero-fade-up hero-delay-4">
             <span>どんなアプリ？</span>
             <span class="chevron-bounce text-secondary">
@@ -46,17 +46,17 @@
     <%# 課題提起セクション %>
     <div class="text-left px-4">
       <h2 class="flex items-center gap-2 font-bold text-secondary hero-fade-up mb-6 leading-none">
-        <span class="inline-flex items-center justify-center size-6 shrink-0">
-          <%= render "shared/icon/favicon" %>
+        <span class="inline-flex items-center justify-center size-8 shrink-0">
+          <%= render "shared/icon/top_icon_alert" %>
         </span>
-        <span class="font-logo text-2xl">こんなことしてない？</span>
+        <span class="font-logo text-xl">旅行の計画でこんなことしてませんか？</span>
       </h2>
       <div class="pb-6 max-w-3xl" data-controller="reveal">
         <div class="pl-6 text-text-light mb-2">
           <ul class="space-y-3">
             <li class="list-disc">チャットをさかのぼって「どんな案が出ていたか」を拾い集める</li>
-            <li class="list-disc">行き先や観光地をしおり用に整理しなおす</li>
-            <li class="list-disc">別のフォーマットに転記して、共有しなおす</li>
+            <li class="list-disc">行き先や観光地をしおりに整理しなおす</li>
+            <li class="list-disc">スケジュールを別のフォーマットに転記して、共有しなおす</li>
           </ul>
         </div>
       </div>
@@ -70,9 +70,13 @@
         </span>
         <span class="font-logo text-3xl font-semibold">RakuCi<span class="text-2xl">なら</span></span>
       </div>
-      <p class="text-lg text-text font-semibold">
-        旅行先の案をカードに残しておけるので、行き先が決まったときに会話をさかのぼらずに確認でき、整理し直す手間が減ります。
-      </p>
+      <div class="pl-6 text-lg text-text font-semibold">
+        <ul class="space-y-3">
+          <li class="list-disc">旅行先の案が「カード」として残る</li>
+          <li class="list-disc">そのカードを見れば、内容かすぐにわかる</li>
+          <li class="list-disc">すでに情報が整理されているので、やり直しがいらない</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -119,6 +123,15 @@
           <p class="text-sm text-text-light">コメントやいいねでみんなの意見を可視化</p>
         </div>
       </div>
+      <div class="bg-white border border-border rounded-lg p-4 shadow-sm flex items-start gap-3 opacity-0" data-controller="reveal" data-reveal-delay-value="320">
+        <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-luggage-icon lucide-luggage"><path d="M6 20a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2"/><path d="M8 18V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14"/><path d="M10 20h4"/><circle cx="16" cy="20" r="2"/><circle cx="8" cy="20" r="2"/></svg>
+        </div>
+        <div>
+          <p class="font-bold text-text mb-1">もちもの管理</p>
+          <p class="text-sm text-text-light">チェックリストで忘れ物を防止</p>
+        </div>
+      </div>
       <div class="bg-white border border-border rounded-lg p-4 shadow-sm flex items-start gap-3 opacity-0" data-controller="reveal" data-reveal-delay-value="260">
         <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-coins-icon lucide-hand-coins"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>
@@ -126,15 +139,6 @@
         <div>
           <p class="font-bold text-text mb-1">精算・割り勘（今後実装予定）</p>
           <p class="text-sm text-text-light">旅費の共有と精算をスムーズに</p>
-        </div>
-      </div>
-      <div class="bg-white border border-border rounded-lg p-4 shadow-sm flex items-start gap-3 opacity-0" data-controller="reveal" data-reveal-delay-value="320">
-        <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-luggage-icon lucide-luggage"><path d="M6 20a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2"/><path d="M8 18V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14"/><path d="M10 20h4"/><circle cx="16" cy="20" r="2"/><circle cx="8" cy="20" r="2"/></svg>
-        </div>
-        <div>
-          <p class="font-bold text-text mb-1">もちもの管理（今後実装予定）</p>
-          <p class="text-sm text-text-light">チェックリストで忘れ物を防止</p>
         </div>
       </div>
     </div>
