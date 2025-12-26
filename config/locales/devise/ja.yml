@@ -26,8 +26,8 @@ ja:
       password_change:
         subject: "パスワードが変更されました"
     omniauth_callbacks:
-      failure: "%{kind} アカウントで認証できませんでした。理由：\"%{reason}\""
-      success: "%{kind} アカウントで正常に認証されました。"
+      failure: "Googleログインに失敗しました。もう一度お試しください。"
+      success: "Googleアカウントでログインしました"
     passwords:
       no_token: "このページにアクセスすることはできません。パスワード再設定メール内のリンクから選択してください。"
       send_instructions: "パスワード再設定方法をメールでお送りしました。"
