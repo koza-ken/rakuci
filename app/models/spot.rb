@@ -32,6 +32,9 @@ class Spot < ApplicationRecord
   belongs_to :category
 
   validates :name, presence: true, length: { maximum: 50 }
+  # rubocop:disable Rails/RedundantPresenceValidationOnBelongsTo（エラーメッセージ表示のためのコメント）
+  validates :category_id, presence: true
+  # rubocop:enable Rails/RedundantPresenceValidationOnBelongsTo
   validates :phone_number, length: { maximum: 20 }, allow_blank: true
   validates :website_url, format: { with: URI::DEFAULT_PARSER.make_regexp([ "http", "https" ]) }, allow_blank: true
   validates :google_place_id, uniqueness: { scope: :card_id }, allow_blank: true
