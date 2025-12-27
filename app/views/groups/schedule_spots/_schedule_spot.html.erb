@@ -20,7 +20,7 @@
         </p>
       <% end %>
       <%# スポット名 %>
-      <h3 class="text-lg font-bold text-text"><%= schedule_spot.display_name %></h3>
+      <h3 class="font-bold text-text"><%= schedule_spot.display_name %></h3>
       <%# メモ（3行まで表示） %>
       <% if schedule_spot.memo.present? %>
         <p class="text-xs text-text-light mt-1 line-clamp-2"><%= schedule_spot.memo %></p>
