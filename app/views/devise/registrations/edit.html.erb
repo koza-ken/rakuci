@@ -22,7 +22,7 @@
         <%# ユーザー名 %>
         <div class="mb-6">
           <%= f.label :display_name, t('.display_name'), class: "block text-sm font-medium text-text mb-2" %>
-          <%= f.text_field :display_name, autofocus: true, autocomplete: "name", maxlength: 20, class: "form-text-field #{'border-red-500' if resource.errors[:display_name].any?}" %>
+          <%= f.text_field :display_name, autocomplete: "name", maxlength: 20, class: "form-text-field #{'border-red-500' if resource.errors[:display_name].any?}" %>
           <% resource.errors.full_messages_for(:display_name).each do |message| %>
             <p class="text-sm text-red-600 mt-1"><%= message %></p>
           <% end %>
