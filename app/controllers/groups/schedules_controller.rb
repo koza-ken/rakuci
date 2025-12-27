@@ -33,7 +33,7 @@ class Groups::SchedulesController < ApplicationController
     from_page = params[:schedule][:from_page]
 
     if @schedule.update(schedule_params)
-      redirect_to group_path(@group), notice: t("notices.schedules.updated")
+      redirect_to group_schedule_path(@group), notice: t("notices.schedules.updated")
     else
       if from_page == "edit"
         render :edit, status: :unprocessable_entity
