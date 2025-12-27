@@ -3,11 +3,11 @@
     <div class="mb-4">
       <div class="flex items-center gap-2">
         <% if category.icon_partial %>
-          <div class="w-5 h-5 <%= category.text_color_class %>">
+          <div class="mb-2 w-5 h-5 <%= category.text_color_class %>">
             <%= render category.icon_partial %>
           </div>
         <% end %>
-        <div class="text-lg font-bold <%= category.text_color_class %>">
+        <div class="mb-2 font-bold <%= category.text_color_class %>">
           <%= category.name %>
         </div>
       </div>
