@@ -65,9 +65,11 @@
         <div class="flex-1">
           <h2 class="text-2xl font-bold text-text mb-1"><%= t('groups.show.travel_candidates') %></h2>
           <%# しおり作成メッセージ %>
-          <% if @group.schedule.blank? %>
-            <p class="text-text-light text-xs"><%= t('groups.show.schedule_create_message') %></p>
-          <% end %>
+          <div id="schedule-create-message">
+            <% if @group.schedule.blank? %>
+              <p class="text-text-light text-xs"><%= t('groups.show.schedule_create_message') %></p>
+            <% end %>
+          </div>
         </div>
         <div id="schedule-button" class="">
           <% if @group.schedule.present? %>
