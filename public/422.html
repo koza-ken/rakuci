@@ -1,67 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <title>The change you wanted was rejected (422)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>リクエストが無効です</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-  .rails-default-error-page {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
-  }
-
-  .rails-default-error-page div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
-
-  .rails-default-error-page div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-
-  .rails-default-error-page h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
-
-  .rails-default-error-page div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+    :root {
+      --color-main-bg: #fafafa;
+      --color-text: #1a1a1a;
+    }
+    body {
+      background-color: var(--color-main-bg);
+      color: var(--color-text);
+    }
   </style>
 </head>
-
-<body class="rails-default-error-page">
-  <!-- This file lives in public/422.html -->
-  <div class="dialog">
-    <div>
-      <h1>The change you wanted was rejected.</h1>
-      <p>Maybe you tried to change something you didn't have access to.</p>
+<body class="min-h-screen flex items-center justify-center px-4">
+  <div class="text-center max-w-md">
+    <div class="mb-8">
+      <h1 class="text-6xl font-bold text-gray-400 mb-4">422</h1>
+      <h2 class="text-2xl font-bold mb-2">リクエストが無効です</h2>
+      <p class="text-gray-600 text-sm">申し訳ありませんが、送信されたリクエストが無効です。</p>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
+
+    <div class="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
+      <p class="text-sm text-yellow-800">
+        入力内容を確認してもう一度お試しいただくか、前のページに戻ってください。
+      </p>
+    </div>
+
+    <div class="space-y-3">
+      <a href="/" class="block w-full py-3 px-4 bg-blue-500 text-white rounded-md font-medium hover:bg-blue-600 transition-colors">
+        ホームへ戻る
+      </a>
+      <button onclick="window.history.back()" class="block w-full py-3 px-4 border-2 border-gray-300 text-gray-700 rounded-md font-medium hover:bg-gray-50 transition-colors">
+        戻る
+      </button>
+    </div>
+
+    <p class="text-xs text-gray-500 mt-8">
+      このエラーが繰り返し発生する場合は、管理者にお問い合わせください。
+    </p>
   </div>
 </body>
 </html>

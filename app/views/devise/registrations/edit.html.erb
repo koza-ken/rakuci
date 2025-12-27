@@ -22,7 +22,7 @@
         <%# ユーザー名 %>
         <div class="mb-6">
           <%= f.label :display_name, t('.display_name'), class: "block text-sm font-medium text-text mb-2" %>
-          <%= f.text_field :display_name, autofocus: true, autocomplete: "name", maxlength: 20, class: "form-text-field #{'border-red-500' if resource.errors[:display_name].any?}" %>
+          <%= f.text_field :display_name, autocomplete: "name", maxlength: 20, class: "form-text-field #{'border-red-500' if resource.errors[:display_name].any?}" %>
           <% resource.errors.full_messages_for(:display_name).each do |message| %>
             <p class="text-sm text-red-600 mt-1"><%= message %></p>
           <% end %>
@@ -77,9 +77,9 @@
       <%# パスワード変更リンク %>
       <%# TODO パスワードリセット実装後にリンク設定 %>
       <div class="mb-6 mt-12">
-        <%= link_to "#", class: "block w-full text-center py-3 px-4 border-2 border-secondary text-secondary rounded-md hover:bg-secondary hover:text-white transition-colors font-medium" do %>
-          パスワードを変更する
-        <% end %>
+        <button type="button" disabled class="w-full text-center py-3 px-4 border-2 border-gray-300 text-gray-400 rounded-md bg-gray-50 cursor-not-allowed font-medium">
+          パスワードを変更する（未実装）
+        </button>
       </div>
 
       <%# アカウント削除 %>

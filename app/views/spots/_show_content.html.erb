@@ -20,7 +20,7 @@
           <div class="flex items-center gap-2">
             <input type="text" value="<%= @spot.address.present? ? @spot.address : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
             <% if @spot.google_place_id.present? %>
-              <%= link_to "https://www.google.com/maps/search/?api=1&query=7-Elevan&query_place_id=#{@spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0" do %>
+              <%= link_to "https://www.google.com/maps/search/?api=1&query=7-Elevan&query_place_id=#{@spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('Googleマップに移動します')" do %>
                 <%= render "shared/icon/map_icon_google" %>
               <% end %>
             <% end %>

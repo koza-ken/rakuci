@@ -7,7 +7,16 @@
 <%# グループ詳細情報を更新 %>
 <%= turbo_stream.replace "group_details", partial: "groups/details", locals: { group: @group } %>
 
-<%# ボタンのテキストを更新（"しおり作成" → "しおり詳細"） %>
+<%# しおり作成したら、しおり作成しようのメッセージを削除 %>
+<%= turbo_stream.replace "schedule-create-message" do %>
+  <div id="schedule-create-message"></div>
+<% end %>
+
+<%# ボタンのアイコンを更新（"しおり作成" → "しおり詳細"） %>
 <%= turbo_stream.replace "schedule-button" do %>
-  <%= link_to "しおり詳細", group_schedule_path(@group), class: "btn-main p-2 w-auto" %>
+  <%= link_to group_schedule_path(@group), class: "btn-main w-auto p-2 inline-flex items-center justify-center", title: t('groups.show.schedule_detail') do %>
+    <div class="size-8">
+      <%= render "shared/icon/footer_icon_schedule", icon_class: "text-text-light" %>
+    </div>
+  <% end %>
 <% end %>

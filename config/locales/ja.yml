@@ -448,7 +448,7 @@ ja:
       new:
         title: しおり作成
       no_schedules_message: まだしおりがありません
-      not_group: not group
+      not_group: あなたのしおり
       select_message: しおりを選択
       show:
         add_spot_button: スポットを追加
