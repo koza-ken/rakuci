@@ -1,6 +1,6 @@
 <main class="flex flex-col items-center justify-center px-8 py-12">
   <div class="w-full max-w-2xl">
-    <h1 class="text-3xl text-text font-bold mb-8"><%= t('groups.schedules.edit.title') %></h1>
+    <h1 class="text-xl text-text font-bold mb-8"><%= t('groups.schedules.edit.title') %></h1>
 
     <%= form_with model: [@group, @schedule], url: group_schedule_path(@group), local: true do |f| %>
       <%= f.hidden_field :from_page, value: "edit" %>

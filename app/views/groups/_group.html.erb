@@ -1,7 +1,7 @@
 <%= link_to group_path(group), id: dom_id(group), class: "" do %>
   <div class="bg-white rounded-lg shadow p-4 mb-4">
     <%# グループ名 %>
-    <h2 class="text-xl font-bold text-text mb-3 text-left"><%= group.name %></h2>
+    <h2 class="text-lg font-bold text-text mb-3 text-left"><%= group.name %></h2>
 
     <%# メンバー数 %>
     <div class="flex items-center gap-2 mb-2">
@@ -12,10 +12,12 @@
     <%# しおり期間 %>
     <div class="flex items-center gap-2 mb-2">
       <span class="text-text-light text-sm">日程 : </span>
-      <% if group.schedule.present? && group.schedule.formatted_date_range.present? %>
-        <span class="text-text-light text-sm">
-          <%= group.schedule.formatted_date_range %>
-        </span>
+      <% if group.schedule.present? %>
+        <% if group.schedule.formatted_date_range.present? %>
+          <span class="text-text-light text-sm">
+            <%= group.schedule.formatted_date_range %>
+          </span>
+        <% end %>
       <% else %>
         <span class="text-text-light text-sm">（しおりの作成が必要です）</span>
       <% end %>

@@ -292,7 +292,7 @@ ja:
     show:
       add_item_button: もちものを追加
       back_to_schedule: しおりにもどる
-      empty_message: もちものを追加しよう
+      empty_message: 旅行のもちものを追加しよう
       title: もちものリスト
   notices:
     cards:

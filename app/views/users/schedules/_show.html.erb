@@ -2,7 +2,7 @@
   <% if schedule.present? %>
     <%# しおり名 %>
     <div class="flex items-start justify-between mb-4 gap-1">
-      <h1 class="text-3xl text-text font-bold"><%= schedule.name %></h1>
+      <h1 class="text-xl text-text font-bold"><%= schedule.name %></h1>
       <%= render partial: "users/schedules/kebab_menu", locals: { schedule: schedule } %>
     </div>
 
@@ -16,7 +16,7 @@
 
     <%# スポット %>
     <div class="mt-8">
-      <div class="flex items-center justify-between gap-3 mb-4">
+      <div class="flex items-center justify-between gap-3 mb-8">
         <%= link_to t('users.schedules.show.back'), schedules_path, class: "btn-sub text-center px-4" %>
         <%= link_to schedule_item_list_path(schedule), class: "btn-main p-2 w-auto" do %>
           <%= render "shared/icon/footer_icon_backpack", icon_class: "text-text-light" %>

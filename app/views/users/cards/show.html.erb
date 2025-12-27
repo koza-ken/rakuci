@@ -11,7 +11,7 @@
     <div id="card-name-section" data-controller="card-edit">
       <%# 表示モード %>
       <div id="card-name-display" class="flex items-start gap-6 mb-4" data-card-edit-target="display">
-        <h1 class="text-2xl font-bold text-text"><%= @card.name %></h1>
+        <h1 class="text-xl font-bold text-text"><%= @card.name %></h1>
         <%# 編集アイコン（サイズ固定） %>
         <button class="shrink-0 text-text hover:opacity-70 transition pt-1" data-action="click->card-edit#toggleForm">
           <%= render "shared/icon/form_icon_edit" %>
@@ -58,7 +58,7 @@
       <%# 表示モード %>
       <div id="memo-display" data-memo-edit-target="display">
         <%= form_with model: @card, class: "w-full" do |f| %>
-          <%= f.label :memo, t('cards.form.memo'), class: "block text-xl font-bold text-text mb-2" %>
+          <%= f.label :memo, t('cards.form.memo'), class: "block text-lg font-bold text-text mb-2" %>
           <%= f.text_area :memo, class: "form-text-field bg-gray-100 cursor-pointer", readonly: true, data: { action: "click->memo-edit#toggleForm" } %>
         <% end %>
       </div>
@@ -66,7 +66,7 @@
       <%# 編集モード（非表示） %>
       <div id="memo-form" data-memo-edit-target="form" class="hidden">
         <%= form_with model: @card, local: true, class: "w-full" do |f| %>
-          <%= f.label :memo, t('cards.form.memo'), class: "block text-2xl font-bold text-text mb-2" %>
+          <%= f.label :memo, t('cards.form.memo'), class: "block text-lg font-bold text-text mb-2" %>
           <%= f.text_area :memo, class: "form-text-field flex-1 resize-none min-h-[100px]", placeholder: t('cards.memo_input_placeholder') %>
           <div class="flex gap-2 mt-2">
             <%= f.submit t('cards.form.update'), class: "btn-main px-4 py-2 w-auto" %>
