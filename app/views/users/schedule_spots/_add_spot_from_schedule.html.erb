@@ -44,7 +44,6 @@
     <div class="mb-6">
       <%= f.label :snapshot_category_id, class: "block text-sm font-medium text-text mb-2" do %>
         <%= t('spots.form.category') %>
-        <span class="text-red-600 font-bold ml-1">*</span>
       <% end %>
       <%= f.collection_select :snapshot_category_id, @categories, :id, :name,
           {include_blank: "--- 選択してください ---"},
