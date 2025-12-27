@@ -6,7 +6,7 @@
 <main class="flex flex-col items-center justify-center px-8 py-6" data-controller="item-list-form sortable">
   <div class="w-full max-w-2xl">
     <%# タイトル %>
-    <h1 class="text-2xl font-bold text-text mb-6"><%= t('item_lists.show.title') %></h1>
+    <h1 class="text-xl font-bold text-text mb-6"><%= t('item_lists.show.title') %></h1>
 
     <%# 空状態メッセージ %>
     <div id="empty-state" class="<%= @items.any? ? 'hidden' : '' %>">
