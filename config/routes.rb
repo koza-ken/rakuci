@@ -14,8 +14,29 @@ Rails.application.routes.draw do
   get "/privacy", to: "static_pages#privacy", as: :privacy
   get "/terms", to: "static_pages#terms", as: :terms
 
+  # Routing Concerns（共通パターン）
+
+  # acts_as_listによる並び替え機能
+  concern :movable do
+    member do
+      patch :move_higher
+      patch :move_lower
+    end
+  end
+
+  # 持ち物リスト機能
+  concern :with_item_list do
+    resource :item_list, only: :show do
+      resources :items, only: %i[create update destroy]
+    end
+  end
+
+  # ========================================
   # 個人用リソース（Users名前空間）
+  # ========================================
+
   scope module: "users" do
+    # カード
     resources :cards, only: %i[index show new create update destroy] do
       # 個人用しおり（チェックボックス）のスポット追加（spot_idがいらない）
       get "schedule_spots/new", to: "schedule_spots#new", as: :new_schedule_spots
@@ -26,56 +47,53 @@ Rails.application.routes.draw do
         resources :schedule_spots, only: %i[new create]
       end
     end
-  end
 
-  # グループ用リソース
-  resources :groups, only: %i[index show new create update destroy] do
-    resources :cards, only: %i[show new create update destroy], controller: "groups/cards" do
-      # グループ用しおり（チェックボックス）のスポット追加
-      post "schedule_spots", to: "groups/schedule_spots#create", as: :schedule_spots
-
-      resources :spots, only: %i[show new create edit update destroy], controller: "groups/spots" do
-        # グループ用しおりの個別スポット追加
-        post "/schedule_spots", to: "groups/schedule_spots#create", as: :schedule_spot
-      end
-      resources :comments, only: %i[create destroy], controller: "groups/comments"
-      resource :likes, only: %i[create destroy], controller: "groups/likes"
-    end
-
-    resource :schedule, only: %i[show new create edit update], controller: "groups/schedules" do
-      resources :schedule_spots, only: %i[new create show edit update destroy], controller: "groups/schedule_spots" do
-        # 並び替えacts_as_listで設定したアクション
-        patch :move_higher, on: :member
-        patch :move_lower, on: :member
-      end
-
-      # グループしおりの持ち物リスト
-      resource :item_list, only: %i[show], controller: "groups/item_lists" do
-        resources :items, only: %i[create update destroy], controller: "groups/items"
-      end
-    end
-    resources :group_memberships, only: %i[destroy], controller: "groups/memberships"
-  end
-
-  # URLは"/schedules"（個人用）
-  scope module: "users" do
     # ユーザーの持ち物リスト（全体管理・表示のみ）
-    resource :item_list, only: %i[show] do
+    resource :item_list, only: :show do
       resources :items, only: %i[create update destroy]
     end
 
+    # しおり
     resources :schedules, only: %i[index show new create edit update destroy] do
       # showはscheduleの詳細からアクセスする（追加のnew,createは/card/spotsから、またはscheduleから直接）
-      resources :schedule_spots, only: %i[new create show edit update destroy] do
-        # 並び替えacts_as_listで設定したアクション
-        patch :move_higher, on: :member
-        patch :move_lower, on: :member
-      end
+      resources :schedule_spots, only: %i[new create show edit update destroy], concerns: :movable
 
       # 個人しおり個別の持ち物リスト
-      resource :item_list, only: %i[show] do
-        resources :items, only: %i[create update destroy]
+      concerns :with_item_list
+    end
+  end
+
+  # ========================================
+  # グループ用リソース
+  # ========================================
+
+  resources :groups, only: %i[index show new create update destroy] do
+    # 各ルーティングでコントローラの指定が不要になる
+    scope module: "groups" do
+      # カード
+      resources :cards, only: %i[show new create update destroy] do
+        # グループ用しおり（チェックボックス）のスポット追加
+        post "schedule_spots", to: "schedule_spots#create", as: :schedule_spots
+
+        resources :spots, only: %i[show new create edit update destroy] do
+          # グループ用しおりの個別スポット追加
+          post "/schedule_spots", to: "schedule_spots#create", as: :schedule_spot
+        end
+
+        resources :comments, only: %i[create destroy]
+        resource :likes, only: %i[create destroy]
       end
+
+      # グループしおり
+      resource :schedule, only: %i[show new create edit update] do
+        resources :schedule_spots, only: %i[new create show edit update destroy], concerns: :movable
+
+        # グループしおりの持ち物リスト
+        concerns :with_item_list
+      end
+
+      # グループメンバーシップ
+      resources :group_memberships, only: :destroy
     end
   end
 
