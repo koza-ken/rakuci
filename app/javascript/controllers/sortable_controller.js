@@ -5,6 +5,13 @@ import Sortable from "sortablejs"
 
 export default class extends Controller {
   connect() {
+    this.initializeSortables()
+
+    // Turbo Stream でスポット追加時に再初期化
+    document.addEventListener("turbo:load", () => this.initializeSortables())
+  }
+
+  initializeSortables() {
     // スケジュール内のスポット並び替え
     const dayLists = document.querySelectorAll(".sortable-day-list")
 
