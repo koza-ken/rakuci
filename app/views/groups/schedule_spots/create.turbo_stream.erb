@@ -10,6 +10,10 @@
   <%# スポット作成モーダルを閉じる %>
   <%= turbo_stream.update "spot-create-modal", "" %>
 
-  <%# グループスケジュール詳細を更新 %>
-  <%= turbo_stream.update "main", partial: "groups/schedules/show", locals: { group: @group, schedule: @schedule } %>
+  <%# 新しいスポットを該当日のリストに追加（Sortableインスタンスを保持） %>
+  <%= turbo_stream.append "sortable-day-list-#{@schedule_spot.day_number}" do %>
+    <div class="sortable-item" data-spot-id="<%= @schedule_spot.hashid %>">
+      <%= render 'groups/schedule_spots/schedule_spot', schedule_spot: @schedule_spot %>
+    </div>
+  <% end %>
 <% end %>
