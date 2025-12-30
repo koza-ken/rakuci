@@ -3,7 +3,7 @@
     <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
       <h1 class="text-2xl font-bold text-text mb-8"><%= t('spots.edit.title') %></h1>
 
-      <%= form_with model: @spot, url: (@card.group_card? ? group_card_spot_path(@card.group, @card, @spot) : card_spot_path(@card, @spot)), local: true, class: "w-full max-w-md" do |f| %>
+      <%= form_with model: @spot, url: (@card.group_card? ? group_spot_path(@spot) : user_spot_path(@spot)), local: true, class: "w-full max-w-md" do |f| %>
         <div class="mb-6">
           <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
             <%= t('spots.form.name') %>
@@ -61,7 +61,7 @@
 
         <div class="flex gap-3">
           <%= f.submit t('spots.form.update'), class: "btn-main flex-1" %>
-          <%= link_to t('cards.form.cancel'), (@card.group_card? ? group_card_spot_path(@card.group, @card, @spot) : card_spot_path(@card, @spot)), class: "btn-sub flex-1 text-center" %>
+          <%= link_to t('cards.form.cancel'), (@card.group_card? ? group_spot_path(@spot) : user_spot_path(@spot)), class: "btn-sub flex-1 text-center" %>
         </div>
       <% end %>
     </main>

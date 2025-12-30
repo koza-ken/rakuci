@@ -66,7 +66,7 @@
     <% if @spot_ids.present? %>
       <%= link_to t('cards.back'), card_path(@card), data: { turbo_frame: "_top" }, class: "btn-sub w-full block text-center" %>
     <% else %>
-      <%= link_to t('cards.back'), card_spot_path(@card, @spot), data: { turbo_frame: "_top" }, class: "btn-sub w-full block text-center" %>
+      <%= link_to t('cards.back'), user_spot_path(@spot), data: { turbo_frame: "_top" }, class: "btn-sub w-full block text-center" %>
     <% end %>
   </div>
 </main>
