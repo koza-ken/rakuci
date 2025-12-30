@@ -45,10 +45,10 @@ export default class extends Controller {
 
   updateSpotPosition(scheduleId, spotId, dayNumber, globalPosition) {
     // groupIdがあればgroups用、なければusers用
-    const groupId = this.element.dataset.groupId
-    const url = groupId
-      ? `/groups/${groupId}/schedule/schedule_spots/${spotId}`
-      : `/schedules/${scheduleId}/schedule_spots/${spotId}`
+    const isGroup = this.element.dataset.groupId
+    const url = isGroup
+      ? `/group/schedule_spots/${spotId}`
+      : `/user/schedule_spots/${spotId}`
 
     const params = {
       schedule_spot: {
