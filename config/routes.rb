@@ -5,13 +5,15 @@ Rails.application.routes.draw do
     registrations: "users/registrations"
   }
 
-  # プロフィールページへのエイリアス（devise_scopeでDeviseの初期化処理を通す）
+  # プロフィールページ（devise_scopeでDeviseの初期化処理を通す）
   devise_scope :user do
     get "/profile", to: "users/registrations#edit", as: :profile
   end
 
   root "static_pages#home"
+  # プライバシーポリシー
   get "/privacy", to: "static_pages#privacy", as: :privacy
+  # 利用規約
   get "/terms", to: "static_pages#terms", as: :terms
 
   # Routing Concerns（共通パターン）
@@ -26,7 +28,7 @@ Rails.application.routes.draw do
 
   # 持ち物リスト機能
   concern :with_item_list do
-    resource :item_list, only: :show do
+    resource :item_list, only: %i[show] do
       resources :items, only: %i[create update destroy]
     end
   end
@@ -50,12 +52,12 @@ Rails.application.routes.draw do
     end
 
     # ユーザーの持ち物リスト（全体管理・表示のみ）
-    resource :item_list, only: :show do
+    resource :item_list, only: %i[show] do
       resources :items, only: %i[create update destroy]
     end
 
     # しおり
-    resources :schedules, only: %i[index show new create edit update destroy] do
+    resources :schedules do
       # new/createのみ親IDが必要のためネスト（他のアクションは外に定義）
       resources :schedule_spots, only: %i[new create]
 
@@ -107,7 +109,7 @@ Rails.application.routes.draw do
       end
 
       # グループメンバーシップ
-      resources :group_memberships, only: :destroy
+      resources :group_memberships, only: %i[destroy]
     end
   end
 
