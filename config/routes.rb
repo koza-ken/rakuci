@@ -38,9 +38,8 @@ Rails.application.routes.draw do
   scope module: "users" do
     # カード
     resources :cards, only: %i[index show new create update destroy] do
-      # 個人用しおり（チェックボックス）のスポット追加（spot_idがいらない）
-      get "schedule_spots/new", to: "schedule_spots#new", as: :new_schedule_spots
-      post "schedule_spots", to: "schedule_spots#create", as: :spots_schedule_spots
+      # 個人用しおり（チェックボックス）のスポット追加（cardから直接送信）
+      resources :schedule_spots, only: %i[new create]
 
       # カードのスポット
       # new/createのみ親IDが必要のためネスト（他のアクションは外に定義）
@@ -85,13 +84,13 @@ Rails.application.routes.draw do
     scope module: "groups" do
       # カード
       resources :cards, only: %i[show new create update destroy] do
-        # グループ用しおり（チェックボックス）のスポット追加
-        post "schedule_spots", to: "schedule_spots#create", as: :schedule_spots
+        # グループ用しおり（チェックボックス）のスポット追加（cardから直接追加）
+        resources :schedule_spots, only: %i[create]
 
         # new/createのみ親IDが必要のためネスト（他のアクションは外に定義）
         resources :spots, only: %i[new create] do
           # グループ用しおりの個別スポット追加
-          post "/schedule_spots", to: "schedule_spots#create", as: :schedule_spot
+          resources :schedule_spots, only: %i[create]
         end
 
         resources :comments, only: %i[create destroy]
