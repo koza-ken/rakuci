@@ -1,8 +1,8 @@
 class Users::SpotsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_card
-  before_action :check_card_owner
   before_action :set_spot, only: %i[show edit update destroy]
+  before_action :set_card, only: %i[new create]
+  before_action :check_card_owner
 
   def show
   end
@@ -34,7 +34,7 @@ class Users::SpotsController < ApplicationController
 
   def update
     if @spot.update(spot_params)
-      redirect_to card_spot_path(@card, @spot), notice: t("notices.spots.updated")
+      redirect_to user_spot_path(@spot), notice: t("notices.spots.updated")
     else
       @categories = Category.order(display_order: :asc)
       render :edit, status: :unprocessable_entity
@@ -53,7 +53,11 @@ class Users::SpotsController < ApplicationController
   end
 
   def set_spot
-    @spot = @card.spots.find(params[:id])
+    if params[:card_id]
+      @spot = @card.spots.find(params[:id])
+    else
+      @spot = Spot.find(params[:id])
+    end
   end
 
   def spot_params
@@ -61,6 +65,7 @@ class Users::SpotsController < ApplicationController
   end
 
   def check_card_owner
+    @card ||= @spot.card
     unless @card.accessible?(user: current_user, guest_group_ids: [])
       redirect_to cards_path, alert: t("errors.cards.unauthorized_view")
     end
