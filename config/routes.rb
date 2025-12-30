@@ -82,7 +82,7 @@ Rails.application.routes.draw do
         # グループ用しおり（チェックボックス）のスポット追加
         post "schedule_spots", to: "schedule_spots#create", as: :schedule_spots
 
-        resources :spots, only: %i[show new create edit update destroy] do
+        resources :spots, only: %i[show new create edit update destroy], shallow: true do
           # グループ用しおりの個別スポット追加
           post "/schedule_spots", to: "schedule_spots#create", as: :schedule_spot
         end
@@ -106,8 +106,8 @@ Rails.application.routes.draw do
   end
 
   # グループしおりのスポット（shallow化: /group/schedule_spots/:id）
-  # shallow化する
-
+  # resources :groupsのネストから外す必要があるため、scope module: "groups"の外に配置
+  # そのためcontroller: "groups/schedule_spots"を明示的に指定
   resources :schedule_spots, only: %i[show edit update destroy],
                               path: "group/schedule_spots",
                               controller: "groups/schedule_spots",
