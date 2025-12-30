@@ -42,7 +42,8 @@ Rails.application.routes.draw do
       get "schedule_spots/new", to: "schedule_spots#new", as: :new_schedule_spots
       post "schedule_spots", to: "schedule_spots#create", as: :spots_schedule_spots
 
-      resources :spots, only: %i[show new create edit update destroy] do
+      # カードのスポット
+      resources :spots, only: %i[show new create edit update destroy], shallow: true do
         # 個人用しおりの個別スポット追加
         resources :schedule_spots, only: %i[new create]
       end
@@ -55,12 +56,18 @@ Rails.application.routes.draw do
 
     # しおり
     resources :schedules, only: %i[index show new create edit update destroy] do
-      # showはscheduleの詳細からアクセスする（追加のnew,createは/card/spotsから、またはscheduleから直接）
-      resources :schedule_spots, only: %i[new create show edit update destroy], concerns: :movable
+      # new/createのみ親IDが必要のためネスト（他のアクションは外に定義）
+      resources :schedule_spots, only: %i[new create]
 
       # 個人しおり個別の持ち物リスト
       concerns :with_item_list
     end
+
+    # しおりのスポット（shallow化: /user/schedule_spots/:id）
+    resources :schedule_spots, only: %i[show edit update destroy],
+                                path: "user/schedule_spots",
+                                as: :user_schedule_spot,
+                                concerns: :movable
   end
 
   # ========================================
@@ -86,7 +93,8 @@ Rails.application.routes.draw do
 
       # グループしおり
       resource :schedule, only: %i[show new create edit update] do
-        resources :schedule_spots, only: %i[new create show edit update destroy], concerns: :movable
+        # new/createのみ親IDが必要なためネスト（他のアクションは外に定義）
+        resources :schedule_spots, only: %i[new create]
 
         # グループしおりの持ち物リスト
         concerns :with_item_list
@@ -96,6 +104,15 @@ Rails.application.routes.draw do
       resources :group_memberships, only: :destroy
     end
   end
+
+  # グループしおりのスポット（shallow化: /group/schedule_spots/:id）
+  # shallow化する
+
+  resources :schedule_spots, only: %i[show edit update destroy],
+                              path: "group/schedule_spots",
+                              controller: "groups/schedule_spots",
+                              as: :group_schedule_spot,
+                              concerns: :movable
 
   # 招待リンクからの参加
   # asオプションで、/groups/join/:invite_tokenのURLを生成するヘルパーを定義
