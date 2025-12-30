@@ -94,7 +94,7 @@ class Users::ScheduleSpotsController < ApplicationController
         # 並び替えによる更新のレスポンス
         format.json { head :ok }
         # 編集フォームによる更新のレスポンス
-        format.html { redirect_to schedule_schedule_spot_path(@schedule, @schedule_spot), notice: t("notices.schedule_spots.updated") }
+        format.html { redirect_to user_schedule_spot_path(@schedule_spot), notice: t("notices.schedule_spots.updated") }
       end
     else
       render :edit, status: :unprocessable_entity

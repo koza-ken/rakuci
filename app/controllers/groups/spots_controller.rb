@@ -35,7 +35,7 @@ class Groups::SpotsController < ApplicationController
 
   def update
     if @spot.update(spot_params)
-      redirect_to group_card_spot_path(@group, @card, @spot), notice: t("notices.spots.updated")
+      redirect_to group_spot_path(@spot), notice: t("notices.spots.updated")
     else
       @categories = Category.order(display_order: :asc)
       render :edit, status: :unprocessable_entity

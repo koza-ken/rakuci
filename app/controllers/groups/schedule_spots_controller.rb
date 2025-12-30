@@ -86,7 +86,7 @@ class Groups::ScheduleSpotsController < ApplicationController
         # 並び替えによる更新のレスポンス
         format.json { head :ok }
         # 編集フォームによる更新のレスポンス
-        format.html { redirect_to group_schedule_schedule_spot_path(@group, @schedule_spot), notice: t("notices.schedule_spots.updated") }
+        format.html { redirect_to group_schedule_spot_path(@schedule_spot), notice: t("notices.schedule_spots.updated") }
       end
     else
       render :edit, status: :unprocessable_entity
