@@ -43,7 +43,8 @@ Rails.application.routes.draw do
       post "schedule_spots", to: "schedule_spots#create", as: :spots_schedule_spots
 
       # カードのスポット
-      resources :spots, only: %i[show new create edit update destroy], shallow: true do
+      # new/createのみ親IDが必要のためネスト（他のアクションは外に定義）
+      resources :spots, only: %i[new create] do
         # 個人用しおりの個別スポット追加
         resources :schedule_spots, only: %i[new create]
       end
@@ -68,6 +69,11 @@ Rails.application.routes.draw do
                                 path: "user/schedule_spots",
                                 as: :user_schedule_spot,
                                 concerns: :movable
+
+    # カードのスポット（shallow化: /user/spots/:id）
+    resources :spots, only: %i[show edit update destroy],
+                      path: "user/spots",
+                      as: :user_spot
   end
 
   # ========================================
@@ -82,7 +88,8 @@ Rails.application.routes.draw do
         # グループ用しおり（チェックボックス）のスポット追加
         post "schedule_spots", to: "schedule_spots#create", as: :schedule_spots
 
-        resources :spots, only: %i[show new create edit update destroy], shallow: true do
+        # new/createのみ親IDが必要のためネスト（他のアクションは外に定義）
+        resources :spots, only: %i[new create] do
           # グループ用しおりの個別スポット追加
           post "/schedule_spots", to: "schedule_spots#create", as: :schedule_spot
         end
@@ -113,6 +120,13 @@ Rails.application.routes.draw do
                               controller: "groups/schedule_spots",
                               as: :group_schedule_spot,
                               concerns: :movable
+
+  # グループカードのスポット（shallow化: /group/spots/:id）
+  # resources :groupsのネストから外すため、controller: "groups/spots"を明示的に指定
+  resources :spots, only: %i[show edit update destroy],
+                    path: "group/spots",
+                    controller: "groups/spots",
+                    as: :group_spot
 
   # 招待リンクからの参加
   # asオプションで、/groups/join/:invite_tokenのURLを生成するヘルパーを定義
