@@ -43,7 +43,7 @@
 
     <%# 個人カード: スポット追加フォーム %>
     <div class="mb-4">
-      <%= form_with url: card_new_schedule_spots_path(@card), method: :get, data: { controller: "spot-selector" } do |f| %>
+      <%= form_with url: new_card_schedule_spot_path(@card), method: :get, data: { controller: "spot-selector" } do |f| %>
         <%= render "spots/spots", spots: @card.spots, categories: @categories %>
         <% if @card.user.schedules.any? %>
           <div class="flex gap-2 mt-4">
