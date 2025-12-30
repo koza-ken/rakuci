@@ -70,7 +70,7 @@ RSpec.describe "権限チェック", type: :request do
 
       sign_in user_b
 
-      get "/cards/#{card.id}/spots/#{spot.id}"
+      get "/user/spots/#{spot.id}"
       expect(response).to redirect_to(/\/cards/)
     end
 
@@ -80,7 +80,7 @@ RSpec.describe "権限チェック", type: :request do
 
       sign_in user_b
 
-      delete "/cards/#{card.id}/spots/#{spot.id}"
+      delete "/user/spots/#{spot.id}"
       expect(response).to redirect_to(/\/cards/)
 
       expect(Spot.find_by(id: spot.id)).not_to be_nil
@@ -95,7 +95,7 @@ RSpec.describe "権限チェック", type: :request do
 
       sign_in user_b
 
-      get "/groups/#{group.id}/cards/#{card.id}/spots/#{spot.id}"
+      get "/group/spots/#{spot.id}"
       expect(response).to redirect_to(/\/groups/)
     end
 
@@ -106,7 +106,7 @@ RSpec.describe "権限チェック", type: :request do
 
       sign_in user_b
 
-      delete "/groups/#{group.id}/cards/#{card.id}/spots/#{spot.id}"
+      delete "/group/spots/#{spot.id}"
       expect(response).to redirect_to(/\/groups/)
 
       expect(Spot.find_by(id: spot.id)).not_to be_nil
