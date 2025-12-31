@@ -1,10 +1,11 @@
 class Groups::ScheduleSpotsController < ApplicationController
-  before_action :set_group
+  before_action :set_schedule_spot, only: %i[show edit update destroy]
+  before_action :set_group, only: %i[new create]
+  before_action :set_group_from_schedule_spot, only: %i[show edit update destroy]
   before_action :check_group_member
 
   def show
     @schedule = @group.schedule
-    @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
     @category = Category.find_by(id: @schedule_spot.snapshot_category_id)
   end
 
@@ -80,13 +81,12 @@ class Groups::ScheduleSpotsController < ApplicationController
   # スポットの編集フォームによる更新と、並び替えによる更新を処理
   def update
     @schedule = @group.schedule
-    @schedule_spot = @schedule.schedule_spots.find(params[:id])
     if @schedule_spot.update(schedule_spot_params)
       respond_to do |format|
         # 並び替えによる更新のレスポンス
         format.json { head :ok }
         # 編集フォームによる更新のレスポンス
-        format.html { redirect_to group_schedule_schedule_spot_path(@group, @schedule_spot), notice: t("notices.schedule_spots.updated") }
+        format.html { redirect_to group_schedule_spot_path(@schedule_spot), notice: t("notices.schedule_spots.updated") }
       end
     else
       render :edit, status: :unprocessable_entity
@@ -129,14 +129,16 @@ class Groups::ScheduleSpotsController < ApplicationController
 
   private
 
+  def set_schedule_spot
+    @schedule_spot = ScheduleSpot.find(params[:id])
+  end
+
   def set_group
-    if params[:group_id].present?
-      @group = Group.find(params[:group_id])
-    elsif params[:card_id].present?
-      # スポット詳細からの追加の場合、cardからgroupを取得
-      card = Card.find(params[:card_id])
-      @group = card.group
-    end
+    @group = Group.find(params[:group_id])
+  end
+
+  def set_group_from_schedule_spot
+    @group = @schedule_spot.schedule.schedulable
   end
 
   def schedule_spot_params

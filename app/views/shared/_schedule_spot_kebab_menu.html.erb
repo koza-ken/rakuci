@@ -12,21 +12,21 @@
   >
     <% if @group.present? %>
       <%# グループしおり %>
-      <%= link_to edit_group_schedule_schedule_spot_path(@group, @schedule_spot), class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline", data: { action: "click->dropdown#close" } do %>
+      <%= link_to edit_group_schedule_spot_path(@schedule_spot), class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline", data: { action: "click->dropdown#close" } do %>
         <%= render "shared/icon/form_icon_edit" %>
         <span><%= t('cards.form.edit') %></span>
       <% end %>
-      <%= button_to group_schedule_schedule_spot_path(@group, @schedule_spot), method: :delete, form: { class: "contents" }, data: { turbo: false }, onclick: "return confirm('#{t('schedule_spots.delete_confirm')}')", class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline w-full text-left" do %>
+      <%= button_to group_schedule_spot_path(@schedule_spot), method: :delete, form: { class: "contents" }, data: { turbo: false }, onclick: "return confirm('#{t('schedule_spots.delete_confirm')}')", class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline w-full text-left" do %>
         <%= render "shared/icon/form_icon_delete" %>
         <span><%= t('cards.form.delete') %></span>
       <% end %>
     <% elsif @schedule.present? %>
       <%# ユーザーしおり %>
-      <%= link_to edit_schedule_schedule_spot_path(@schedule, @schedule_spot), class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline", data: { action: "click->dropdown#close" } do %>
+      <%= link_to edit_user_schedule_spot_path(@schedule_spot), class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline", data: { action: "click->dropdown#close" } do %>
         <%= render "shared/icon/form_icon_edit" %>
         <span><%= t('cards.form.edit') %></span>
       <% end %>
-      <%= button_to schedule_schedule_spot_path(@schedule, @schedule_spot), method: :delete, form: { class: "contents" }, data: { turbo: false }, onclick: "return confirm('#{t('schedule_spots.delete_confirm')}')", class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline w-full text-left" do %>
+      <%= button_to user_schedule_spot_path(@schedule_spot), method: :delete, form: { class: "contents" }, data: { turbo: false }, onclick: "return confirm('#{t('schedule_spots.delete_confirm')}')", class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline w-full text-left" do %>
         <%= render "shared/icon/form_icon_delete" %>
         <span><%= t('cards.form.delete') %></span>
       <% end %>

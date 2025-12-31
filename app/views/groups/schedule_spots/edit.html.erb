@@ -7,7 +7,7 @@
 
       <div class="w-full max-w-md">
         <%# ルーティングがネストしているとURLが上手く作られないかもしれないのでURLを指定 %>
-        <%= form_with model: @schedule_spot, url: group_schedule_schedule_spot_path(@group, @schedule_spot), method: :patch, local: true do |f| %>
+        <%= form_with model: @schedule_spot, url: group_schedule_spot_path(@schedule_spot), local: true do |f| %>
           <div class="mb-4">
             <%= f.label :snapshot_name, class: "block text-sm font-medium text-text mb-2" do %>
               <%= t('schedule_spots.form.spot_name') %>
@@ -88,7 +88,7 @@
 
           <div class="flex gap-3 mt-8">
             <%= f.submit t('schedule_spots.form.update'), class: "btn-main flex-1 text-center" %>
-            <%= link_to t('schedule_spots.form.cancel'), group_schedule_schedule_spot_path(@group, @schedule_spot), class: "btn-sub flex-1 text-center" %>
+            <%= link_to t('schedule_spots.form.cancel'), group_schedule_spot_path(@schedule_spot), class: "btn-sub flex-1 text-center" %>
           </div>
         <% end %>
       </div>

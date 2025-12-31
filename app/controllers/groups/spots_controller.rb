@@ -1,9 +1,10 @@
 class Groups::SpotsController < ApplicationController
-  before_action :set_group
-  before_action :set_card
+  before_action :set_spot, only: %i[show edit update destroy]
+  before_action :set_group, only: %i[new create]
+  before_action :set_group_from_spot, only: %i[show edit update destroy]
+  before_action :set_card, only: %i[new create]
   before_action :check_group_member
   before_action :check_card_in_group
-  before_action :set_spot, only: %i[show edit update destroy]
 
   def show
   end
@@ -35,7 +36,7 @@ class Groups::SpotsController < ApplicationController
 
   def update
     if @spot.update(spot_params)
-      redirect_to group_card_spot_path(@group, @card, @spot), notice: t("notices.spots.updated")
+      redirect_to group_spot_path(@spot), notice: t("notices.spots.updated")
     else
       @categories = Category.order(display_order: :asc)
       render :edit, status: :unprocessable_entity
@@ -53,12 +54,20 @@ class Groups::SpotsController < ApplicationController
     @group = Group.find(params[:group_id])
   end
 
+  def set_group_from_spot
+    @group = @spot.card.group
+  end
+
   def set_card
-    @card = Card.find(params[:card_id])
+    @card = Card.find(params[:card_id]) if params[:card_id]
   end
 
   def set_spot
-    @spot = @card.spots.find(params[:id])
+    if params[:card_id]
+      @spot = @card.spots.find(params[:id])
+    else
+      @spot = Spot.find(params[:id])
+    end
   end
 
   def spot_params
@@ -80,6 +89,7 @@ class Groups::SpotsController < ApplicationController
 
   # カードがそのグループに属しているか確認
   def check_card_in_group
+    @card ||= @spot.card
     unless @card.group_card? && @card.cardable_id == @group.id
       redirect_to group_path(@group), alert: t("errors.cards.unauthorized_view")
     end

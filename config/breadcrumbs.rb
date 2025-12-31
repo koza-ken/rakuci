@@ -9,10 +9,10 @@ crumb :card do |card|
   parent :cards
 end
 
-crumb :card_spot do |card, spot|
+crumb :card_spot do |spot|
   truncated_name = spot.name.length > 6 ? "#{spot.name[0...6]}..." : spot.name
-  link truncated_name, card_spot_path(card, spot)
-  parent :card, card
+  link truncated_name, user_spot_path(spot)
+  parent :card, spot.card
 end
 
 # ====== グループ系 ======
@@ -43,10 +43,10 @@ crumb :group_card do |group, card|
   parent :group_name_for_card, group
 end
 
-crumb :group_card_spot do |group, card, spot|
+crumb :group_card_spot do |spot|
   truncated_name = spot.name.length > 6 ? "#{spot.name[0...6]}..." : spot.name
-  link truncated_name, group_card_spot_path(group, card, spot)
-  parent :group_card, group, card
+  link truncated_name, group_spot_path(spot)
+  parent :group_card, spot.card.group, spot.card
 end
 
 # グループしおり
@@ -61,11 +61,11 @@ crumb :group_schedule do |group|
   parent :group_schedule_label, group
 end
 
-crumb :group_schedule_spot do |group, schedule_spot|
+crumb :group_schedule_spot do |schedule_spot|
   display_name = schedule_spot.display_name
   truncated_name = display_name.length > 6 ? "#{display_name[0...6]}..." : display_name
-  link truncated_name, group_schedule_schedule_spot_path(group, schedule_spot)
-  parent :group_schedule, group
+  link truncated_name, group_schedule_spot_path(schedule_spot)
+  parent :group_schedule, schedule_spot.schedule.schedulable
 end
 
 crumb :group_schedule_item_list do |group|
@@ -84,11 +84,11 @@ crumb :schedule do |schedule|
   parent :schedules
 end
 
-crumb :schedule_spot do |schedule, schedule_spot|
+crumb :schedule_spot do |schedule_spot|
   display_name = schedule_spot.display_name
   truncated_name = display_name.length > 6 ? "#{display_name[0...6]}..." : display_name
-  link truncated_name, schedule_schedule_spot_path(schedule, schedule_spot)
-  parent :schedule, schedule
+  link truncated_name, user_schedule_spot_path(schedule_spot)
+  parent :schedule, schedule_spot.schedule
 end
 
 crumb :schedule_item_list do |schedule|

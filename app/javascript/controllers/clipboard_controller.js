@@ -12,7 +12,7 @@ export default class extends Controller {
     navigator.clipboard.writeText(this.textValue)
       .then(() => {
         // コピー成功
-        this.showToast("招待URLを共有しよう", "success")
+        this.showToast("招待URLをコピーしました。共有してグループに招待しましょう", "success")
       })
       // .catch(() => {
       //   // コピー失敗時のフォールバック処理

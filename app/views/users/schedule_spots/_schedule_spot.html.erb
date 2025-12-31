@@ -5,7 +5,7 @@
   </div>
 
   <%# スポット情報 %>
-  <%= link_to schedule_schedule_spot_path(schedule_spot.schedule, schedule_spot), class: "flex-1" do %>
+  <%= link_to user_schedule_spot_path(schedule_spot), class: "flex-1" do %>
     <div class="<%= schedule_spot.category_background_color %> rounded-sm shadow p-2">
       <%# 時間帯 %>
       <% if schedule_spot.start_time.present? || schedule_spot.end_time.present? %>

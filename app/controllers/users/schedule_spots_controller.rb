@@ -1,9 +1,9 @@
 class Users::ScheduleSpotsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_schedule_spot, only: %i[show edit update destroy]
+  before_action :set_schedule_from_schedule_spot, only: %i[show edit update destroy]
 
   def show
-    @schedule = current_user.schedules.find(params[:schedule_id])
-    @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
     @category = Category.find_by(id: @schedule_spot.snapshot_category_id)
   end
 
@@ -81,20 +81,16 @@ class Users::ScheduleSpotsController < ApplicationController
   end
 
   def edit
-    @schedule = current_user.schedules.find(params[:schedule_id])
-    @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
   end
 
   # スポットの編集フォームによる更新と、並び替えによる更新を処理
   def update
-    @schedule = current_user.schedules.find(params[:schedule_id])
-    @schedule_spot = @schedule.schedule_spots.find(params[:id])
     if @schedule_spot.update(schedule_spot_params)
       respond_to do |format|
         # 並び替えによる更新のレスポンス
         format.json { head :ok }
         # 編集フォームによる更新のレスポンス
-        format.html { redirect_to schedule_schedule_spot_path(@schedule, @schedule_spot), notice: t("notices.schedule_spots.updated") }
+        format.html { redirect_to user_schedule_spot_path(@schedule_spot), notice: t("notices.schedule_spots.updated") }
       end
     else
       render :edit, status: :unprocessable_entity
@@ -102,8 +98,6 @@ class Users::ScheduleSpotsController < ApplicationController
   end
 
   def destroy
-    @schedule = current_user.schedules.find(params[:schedule_id])
-    @schedule_spot = @schedule.schedule_spots.find(params[:id])
     if @schedule_spot.destroy
       redirect_to schedule_path(@schedule), notice: t("notices.schedule_spots.destroyed"), turbo: false
     end
@@ -111,9 +105,8 @@ class Users::ScheduleSpotsController < ApplicationController
 
   # 並び替えacts_as_listのメソッド
   def move_higher
-    @schedule = current_user.schedules.find(params[:schedule_id])
-    # スポットを取得
-    @schedule_spot = @schedule.schedule_spots.find(params[:id])
+    @schedule_spot = ScheduleSpot.find(params[:id])
+    @schedule = @schedule_spot.schedule
     # acts_as_listのメソッドで移動
     @schedule_spot.move_higher
     # レスポンス(Turbo Stream)
@@ -124,9 +117,8 @@ class Users::ScheduleSpotsController < ApplicationController
   end
 
   def move_lower
-    @schedule = current_user.schedules.find(params[:schedule_id])
-    # スポットを取得
-    @schedule_spot = @schedule.schedule_spots.find(params[:id])
+    @schedule_spot = ScheduleSpot.find(params[:id])
+    @schedule = @schedule_spot.schedule
     # acts_as_listのメソッドで移動
     @schedule_spot.move_lower
     # レスポンス(Turbo Stream)
@@ -137,6 +129,14 @@ class Users::ScheduleSpotsController < ApplicationController
   end
 
   private
+
+  def set_schedule_spot
+    @schedule_spot = ScheduleSpot.find(params[:id])
+  end
+
+  def set_schedule_from_schedule_spot
+    @schedule = @schedule_spot.schedule
+  end
 
   def schedule_spot_params
     params.require(:schedule_spot).permit(:snapshot_name, :snapshot_address, :snapshot_website_url, :snapshot_phone_number, :snapshot_category_id, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
