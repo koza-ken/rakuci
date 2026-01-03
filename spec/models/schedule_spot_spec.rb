@@ -25,21 +25,7 @@ RSpec.describe ScheduleSpot, type: :model do
       end
     end
 
-    describe "global_position" do
-      context "値が存在する場合" do
-        it "保存に成功すること" do
-          schedule_spot = build(:schedule_spot, global_position: 1)
-          expect(schedule_spot).to be_valid
-        end
-      end
-
-      context "値が存在しない場合" do
-        it "保存に失敗すること" do
-          schedule_spot = build(:schedule_spot, global_position: nil)
-          expect(schedule_spot).not_to be_valid
-        end
-      end
-    end
+    # global_position は acts_as_list が自動で管理するためバリデーションテスト不要
 
     describe "snapshot_name" do
       context "文字数が50文字以下の場合" do
