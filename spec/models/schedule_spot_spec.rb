@@ -309,5 +309,63 @@ RSpec.describe ScheduleSpot, type: :model do
         expect(day2_spot2.reload.global_position).to eq(2)
       end
     end
+
+    context '並び替え機能' do
+      let!(:spot1) { create(:schedule_spot, schedule: schedule_a, day_number: 1) }
+      let!(:spot2) { create(:schedule_spot, schedule: schedule_a, day_number: 1) }
+      let!(:spot3) { create(:schedule_spot, schedule: schedule_a, day_number: 1) }
+
+      it 'move_higherで上に移動できること' do
+        spot2.move_higher
+        expect(spot1.reload.global_position).to eq(2)
+        expect(spot2.reload.global_position).to eq(1)
+        expect(spot3.reload.global_position).to eq(3)
+      end
+
+      it 'move_lowerで下に移動できること' do
+        spot2.move_lower
+        expect(spot1.reload.global_position).to eq(1)
+        expect(spot2.reload.global_position).to eq(3)
+        expect(spot3.reload.global_position).to eq(2)
+      end
+
+      it '最上位のスポットはmove_higherしても変わらないこと' do
+        spot1.move_higher
+        expect(spot1.reload.global_position).to eq(1)
+        expect(spot2.reload.global_position).to eq(2)
+        expect(spot3.reload.global_position).to eq(3)
+      end
+
+      it '最下位のスポットはmove_lowerしても変わらないこと' do
+        spot3.move_lower
+        expect(spot1.reload.global_position).to eq(1)
+        expect(spot2.reload.global_position).to eq(2)
+        expect(spot3.reload.global_position).to eq(3)
+      end
+    end
+
+    context '日付を跨ぐ移動' do
+      let!(:day1_spot1) { create(:schedule_spot, schedule: schedule_a, day_number: 1) }
+      let!(:day1_spot2) { create(:schedule_spot, schedule: schedule_a, day_number: 1) }
+      let!(:day1_spot3) { create(:schedule_spot, schedule: schedule_a, day_number: 1) }
+      let!(:day2_spot1) { create(:schedule_spot, schedule: schedule_a, day_number: 2) }
+      let!(:day2_spot2) { create(:schedule_spot, schedule: schedule_a, day_number: 2) }
+
+      it 'day_numberを変更すると移動先のday内で新しいpositionが割り当てられること' do
+        # 1日目のspot2を2日目に移動
+        day1_spot2.update!(day_number: 2)
+
+        # 移動先（2日目）では最後尾に追加される
+        expect(day1_spot2.reload.global_position).to eq(3)
+
+        # 元の1日目では後続のpositionが詰まる
+        expect(day1_spot1.reload.global_position).to eq(1)
+        expect(day1_spot3.reload.global_position).to eq(2)
+
+        # 2日目の既存スポットは影響を受けない
+        expect(day2_spot1.reload.global_position).to eq(1)
+        expect(day2_spot2.reload.global_position).to eq(2)
+      end
+    end
   end
 end
