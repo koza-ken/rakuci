@@ -3,7 +3,6 @@ FactoryBot.define do
     association :schedule, strategy: :create
     association :spot, strategy: :create
     day_number { 1 }
-    sequence(:global_position) { |n| n }
     start_time { "10:00" }
     end_time { "11:00" }
     memo { "Test memo" }
