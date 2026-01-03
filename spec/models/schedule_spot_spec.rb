@@ -245,6 +245,39 @@ RSpec.describe ScheduleSpot, type: :model do
         end
       end
     end
+
+    describe "#category_background_color" do
+      context "snapshot_category_idがある場合" do
+        it "そのカテゴリの背景色クラスを返すこと" do
+          category = create(:category, name: "観光地")
+          schedule_spot = build(:schedule_spot, snapshot_category_id: category.id)
+          expect(schedule_spot.category_background_color).to eq("bg-sky-100/60")
+        end
+      end
+
+      context "snapshot_category_idがなく、spot.category_idがある場合" do
+        it "spotのカテゴリの背景色クラスを返すこと" do
+          category = create(:category, name: "グルメ")
+          spot = create(:spot, category: category)
+          schedule_spot = build(:schedule_spot, snapshot_category_id: nil, spot: spot)
+          expect(schedule_spot.category_background_color).to eq("bg-red-100/60")
+        end
+      end
+
+      context "どちらのcategory_idもない場合" do
+        it "bg-whiteを返すこと" do
+          schedule_spot = build(:schedule_spot, snapshot_category_id: nil, spot: nil)
+          expect(schedule_spot.category_background_color).to eq("bg-white")
+        end
+      end
+
+      context "category_idはあるがCategoryが見つからない場合" do
+        it "bg-whiteを返すこと" do
+          schedule_spot = build(:schedule_spot, snapshot_category_id: 99999)
+          expect(schedule_spot.category_background_color).to eq("bg-white")
+        end
+      end
+    end
   end
 
   describe 'acts_as_list（並び替え）' do
