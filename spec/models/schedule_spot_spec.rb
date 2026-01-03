@@ -246,4 +246,68 @@ RSpec.describe ScheduleSpot, type: :model do
       end
     end
   end
+
+  describe 'acts_as_list（並び替え）' do
+    let(:schedule_a) { create(:schedule) }
+    let(:schedule_b) { create(:schedule) }
+
+    context '同じしおり・同じ日内での並び順の場合' do
+      let!(:spot1) { create(:schedule_spot, schedule: schedule_a, day_number: 1) }
+      let!(:spot2) { create(:schedule_spot, schedule: schedule_a, day_number: 1) }
+      let!(:spot3) { create(:schedule_spot, schedule: schedule_a, day_number: 1) }
+
+      it 'global_positionが自動的に割り当てられること' do
+        expect(spot1.global_position).to eq(1)
+        expect(spot2.global_position).to eq(2)
+        expect(spot3.global_position).to eq(3)
+      end
+
+      it 'スポットを削除すると後続のglobal_positionが繰り上がること' do
+        spot2.destroy
+        expect(spot3.reload.global_position).to eq(2)
+      end
+    end
+
+    context '異なるしおり間でのglobal_positionの独立性' do
+      let!(:spot_a1) { create(:schedule_spot, schedule: schedule_a, day_number: 1) }
+      let!(:spot_a2) { create(:schedule_spot, schedule: schedule_a, day_number: 1) }
+      let!(:spot_b1) { create(:schedule_spot, schedule: schedule_b, day_number: 1) }
+      let!(:spot_b2) { create(:schedule_spot, schedule: schedule_b, day_number: 1) }
+
+      it '各しおりで独立したglobal_positionを持つこと' do
+        expect(spot_a1.global_position).to eq(1)
+        expect(spot_a2.global_position).to eq(2)
+        expect(spot_b1.global_position).to eq(1)
+        expect(spot_b2.global_position).to eq(2)
+      end
+
+      it 'しおりAのスポットを削除してもしおりBには影響しないこと' do
+        spot_a1.destroy
+        expect(spot_a2.reload.global_position).to eq(1)
+        expect(spot_b1.reload.global_position).to eq(1)
+        expect(spot_b2.reload.global_position).to eq(2)
+      end
+    end
+
+    context '異なる日にち間でのglobal_positionの独立性' do
+      let!(:day1_spot1) { create(:schedule_spot, schedule: schedule_a, day_number: 1) }
+      let!(:day1_spot2) { create(:schedule_spot, schedule: schedule_a, day_number: 1) }
+      let!(:day2_spot1) { create(:schedule_spot, schedule: schedule_a, day_number: 2) }
+      let!(:day2_spot2) { create(:schedule_spot, schedule: schedule_a, day_number: 2) }
+
+      it '各日にちで独立したglobal_positionを持つこと' do
+        expect(day1_spot1.global_position).to eq(1)
+        expect(day1_spot2.global_position).to eq(2)
+        expect(day2_spot1.global_position).to eq(1)
+        expect(day2_spot2.global_position).to eq(2)
+      end
+
+      it '1日目のスポットを削除しても2日目には影響しないこと' do
+        day1_spot1.destroy
+        expect(day1_spot2.reload.global_position).to eq(1)
+        expect(day2_spot1.reload.global_position).to eq(1)
+        expect(day2_spot2.reload.global_position).to eq(2)
+      end
+    end
+  end
 end
