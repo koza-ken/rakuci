@@ -93,6 +93,29 @@ RSpec.describe 'Groups::ScheduleSpots', type: :request do
       patch group_schedule_spot_path(schedule_spot), params: params
       expect(response).to redirect_to(group_schedule_spot_path(schedule_spot))
     end
+
+    context 'バリデーションエラーの場合' do
+      let(:invalid_params) do
+        {
+          schedule_spot: {
+            snapshot_name: '',  # 空文字列は無効
+            day_number: 0       # 0は無効
+          }
+        }
+      end
+
+      it '編集フォームが再表示されること' do
+        patch group_schedule_spot_path(schedule_spot), params: invalid_params
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'ScheduleSpotが更新されないこと' do
+        original_name = schedule_spot.snapshot_name
+        patch group_schedule_spot_path(schedule_spot), params: invalid_params
+        schedule_spot.reload
+        expect(schedule_spot.snapshot_name).to eq(original_name)
+      end
+    end
   end
 
   describe 'DELETE /group/schedule_spots/:id' do
