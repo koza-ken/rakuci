@@ -38,8 +38,7 @@ class ScheduleSpot < ApplicationRecord
   belongs_to :spot, optional: true  # カスタム入力時はspot_id = NULL
 
   # バリデーション
-  validates :global_position, presence: true,
-            numericality: { only_integer: true, greater_than: 0 }
+  # global_position は acts_as_list が自動で管理するためバリデーション不要
   validates :day_number, presence: true,
             numericality: { only_integer: true, greater_than: 0 }
   validates :snapshot_name, length: { maximum: 50 }
