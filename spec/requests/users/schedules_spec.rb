@@ -57,7 +57,7 @@ RSpec.describe 'Users::Schedules', type: :request do
       it 'しおりが作成されないこと' do
         expect {
           post schedules_path, params: invalid_params
-        }.to change(Schedule, :count).by(0)
+        }.not_to change(Schedule, :count)
       end
 
       it '新規作成フォームが再表示されること' do
@@ -80,7 +80,7 @@ RSpec.describe 'Users::Schedules', type: :request do
       it 'しおりが作成されないこと' do
         expect {
           post schedules_path, params: invalid_params
-        }.to change(Schedule, :count).by(0)
+        }.not_to change(Schedule, :count)
       end
     end
 

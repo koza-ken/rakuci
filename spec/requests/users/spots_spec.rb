@@ -60,7 +60,7 @@ RSpec.describe 'Users::Spots', type: :request do
       it 'スポットが作成されないこと' do
         expect {
           post card_spots_path(card), params: invalid_params
-        }.to change(Spot, :count).by(0)
+        }.not_to change(Spot, :count)
       end
 
       it '新規作成フォームが再表示されること' do
@@ -88,7 +88,7 @@ RSpec.describe 'Users::Spots', type: :request do
       it 'スポットが作成されないこと' do
         expect {
           post card_spots_path(other_card), params: params
-        }.to change(Spot, :count).by(0)
+        }.not_to change(Spot, :count)
       end
     end
 

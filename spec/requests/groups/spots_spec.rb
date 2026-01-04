@@ -70,7 +70,7 @@ RSpec.describe 'Groups::Spots', type: :request do
       it 'スポットが作成されないこと' do
         expect {
           post group_card_spots_path(group, card), params: invalid_params
-        }.to change(Spot, :count).by(0)
+        }.not_to change(Spot, :count)
       end
     end
 

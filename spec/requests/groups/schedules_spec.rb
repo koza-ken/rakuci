@@ -73,7 +73,7 @@ RSpec.describe 'Groups::Schedules', type: :request do
 
         expect {
           post group_schedule_path(group_without_schedule), params: params
-        }.to change(Schedule, :count).by(0)
+        }.not_to change(Schedule, :count)
       end
     end
 
@@ -214,5 +214,4 @@ RSpec.describe 'Groups::Schedules', type: :request do
       end
     end
   end
-
 end

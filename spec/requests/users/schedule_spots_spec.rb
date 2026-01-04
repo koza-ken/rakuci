@@ -34,7 +34,7 @@ RSpec.describe 'Users::ScheduleSpots', type: :request do
     context '個人カードの複数スポットをしおりに追加する場合' do
       let(:params) do
         {
-          spot_ids: [spot1.id, spot2.id],
+          spot_ids: [ spot1.id, spot2.id ],
           schedule_id: schedule.id
         }
       end
@@ -61,7 +61,7 @@ RSpec.describe 'Users::ScheduleSpots', type: :request do
       before { sign_out user }
 
       it 'ログインページにリダイレクトされること' do
-        post card_schedule_spots_path(card), params: { spot_ids: [spot1.id], schedule_id: schedule.id }
+        post card_schedule_spots_path(card), params: { spot_ids: [ spot1.id ], schedule_id: schedule.id }
         expect(response).to redirect_to(new_user_session_path)
       end
     end
@@ -71,7 +71,7 @@ RSpec.describe 'Users::ScheduleSpots', type: :request do
       let(:other_card) { create(:card, cardable: other_user) }
 
       it 'current_user.cards.findが失敗して404が返ること' do
-        post card_schedule_spots_path(other_card), params: { spot_ids: [spot1.id], schedule_id: schedule.id }
+        post card_schedule_spots_path(other_card), params: { spot_ids: [ spot1.id ], schedule_id: schedule.id }
         expect(response).to have_http_status(404)
       end
     end

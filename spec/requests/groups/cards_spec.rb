@@ -64,7 +64,7 @@ RSpec.describe 'Groups::Cards', type: :request do
       it 'カードが作成されないこと' do
         expect {
           post group_cards_path(group), params: invalid_params
-        }.to change(Card, :count).by(0)
+        }.not_to change(Card, :count)
       end
 
       it '新規作成フォームが再表示されること' do
@@ -91,7 +91,7 @@ RSpec.describe 'Groups::Cards', type: :request do
       it 'カードが作成されないこと' do
         expect {
           post group_cards_path(other_group), params: params
-        }.to change(Card, :count).by(0)
+        }.not_to change(Card, :count)
       end
     end
 

@@ -34,7 +34,7 @@ RSpec.describe 'Groups::ScheduleSpots', type: :request do
     context 'グループカードの複数スポットをしおりに追加する場合' do
       let(:params) do
         {
-          spot_ids: [spot1.id, spot2.id],
+          spot_ids: [ spot1.id, spot2.id ],
           card_id: card.id
         }
       end
@@ -50,7 +50,6 @@ RSpec.describe 'Groups::ScheduleSpots', type: :request do
         expect(response.media_type).to eq('text/vnd.turbo-stream.html')
       end
     end
-
   end
 
   describe 'GET /group/schedule_spots/:id/edit' do
@@ -132,5 +131,4 @@ RSpec.describe 'Groups::ScheduleSpots', type: :request do
       expect(response).to redirect_to(group_schedule_path(group))
     end
   end
-
 end

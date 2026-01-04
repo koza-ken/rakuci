@@ -50,7 +50,7 @@ RSpec.describe 'Users::Cards', type: :request do
       end
 
       it 'カードが作成されないこと' do
-        expect { post cards_path, params: invalid_params }.to change(Card, :count).by(0)
+        expect { post cards_path, params: invalid_params }.not_to change(Card, :count)
       end
 
       it '新規作成フォームが再表示されること' do
@@ -196,7 +196,7 @@ RSpec.describe 'Users::Cards', type: :request do
         delete card_path(other_card)
         expect(response).to redirect_to(cards_path)
       end
-      
+
       # 削除処理は認可チェック前に実行される可能性があるため、リダイレクト確認で十分
     end
 
