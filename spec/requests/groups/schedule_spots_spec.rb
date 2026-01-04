@@ -53,6 +53,15 @@ RSpec.describe 'Groups::ScheduleSpots', type: :request do
 
   end
 
+  describe 'GET /group/schedule_spots/:id/edit' do
+    let(:schedule_spot) { create(:schedule_spot, schedule: schedule) }
+
+    it 'グループしおりのスポット編集フォームが表示されること' do
+      get edit_group_schedule_spot_path(schedule_spot)
+      expect(response).to have_http_status(:success)
+    end
+  end
+
   describe 'GET /group/schedule_spots/:id' do
     let(:schedule_spot) { create(:schedule_spot, schedule: schedule) }
 

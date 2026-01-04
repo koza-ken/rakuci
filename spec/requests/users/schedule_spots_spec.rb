@@ -95,6 +95,16 @@ RSpec.describe 'Users::ScheduleSpots', type: :request do
     end
   end
 
+  describe 'GET /schedule_spots/:id/edit' do
+    let(:schedule_spot) { create(:schedule_spot, schedule: schedule) }
+
+    it 'スポット編集フォームが表示されること' do
+      get edit_user_schedule_spot_path(schedule_spot)
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include('編集')
+    end
+  end
+
   describe 'PATCH /schedule_spots/:id' do
     let(:schedule_spot) { create(:schedule_spot, schedule: schedule, snapshot_name: '元の名前') }
     let(:params) do
