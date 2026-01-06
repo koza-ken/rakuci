@@ -27,8 +27,6 @@ class ExpenseParticipant < ApplicationRecord
   belongs_to :group_membership
 
   # バリデーション
-  validates :expense_id, presence: true
-  validates :group_membership_id, presence: true
   validates :group_membership_id, uniqueness: { scope: :expense_id }
 
   # カスタムバリデーション
