@@ -302,9 +302,9 @@ Table expenses {
   group_id int [not null, ref: > groups.id]
   paid_by_membership_id int [not null, ref: > group_memberships.id, note: "立て替えた人"]
   name varchar(100) [not null, note: "項目名（ホテル代、交通費等）"]
-  amount decimal(10, 1) [not null, note: "支払額（小数第一位まで、第二位で切り捨て）"]
+  amount int [not null, note: "支払額（円、整数で保存）"]
   memo text [note: "支出に関する自由記述メモ"]
-  paid_at date
+  paid_at date [not null, note: "支払日"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
@@ -314,13 +314,8 @@ Table expenses {
 
   Note: '''
   グループの支出を記録。
-  金額は小数第一位まで保存し、均等割り時の端数を正確に計算。
+  金額は整数で保存される。割り勘計算時の端数処理はアプリケーション層で実施。
   メモフィールドで支出の詳細や理由を記録可能。
-
-  例：
-  支出: 10,000円、参加者: 3人
-  → 各自の負担: 3,333.3円（小数第一位まで表示）
-  メモ: 「タクシー代。C,Dは別行動のため不参加」
   '''
 }
 
