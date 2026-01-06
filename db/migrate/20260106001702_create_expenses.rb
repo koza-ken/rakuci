@@ -10,7 +10,5 @@ class CreateExpenses < ActiveRecord::Migration[7.2]
 
       t.timestamps
     end
-
-    add_index :expenses, :group_id
   end
 end
