@@ -28,6 +28,9 @@ class GroupMembership < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_cards, through: :likes, source: :card
+  has_many :expenses, foreign_key: 'paid_by_membership_id', dependent: :nullify
+  has_many :expense_participants, dependent: :destroy
+  has_many :joined_expenses, through: :expense_participants, source: :expense
   belongs_to :user, optional: true
   belongs_to :group, touch: true
   validates :group_nickname, presence: true, uniqueness: { scope: :group_id }, length: { maximum: 20 }

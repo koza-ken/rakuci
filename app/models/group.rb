@@ -29,6 +29,7 @@ class Group < ApplicationRecord
   has_many :group_memberships, dependent: :destroy
   has_many :members, through: :group_memberships, source: :user
   has_one :schedule, as: :schedulable, dependent: :destroy
+  has_many :expenses, dependent: :destroy
 
   validates :created_by_user_id, presence: true
   validates :name, presence: true, length: { maximum: 30 }
