@@ -8,7 +8,6 @@ class CreateExpenseParticipants < ActiveRecord::Migration[7.2]
     end
 
     add_index :expense_participants, [:expense_id, :group_membership_id], unique: true, name: "index_expense_participants_unique"
-    add_index :expense_participants, :expense_id
     add_index :expense_participants, :group_membership_id, name: "index_expense_participants_on_membership_id"
   end
 end
