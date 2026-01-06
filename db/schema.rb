@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_19_221949) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_06_002642) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,6 +41,30 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_19_221949) do
     t.index ["card_id", "created_at"], name: "index_comments_on_card_id_and_created_at"
     t.index ["card_id"], name: "index_comments_on_card_id"
     t.index ["group_membership_id"], name: "index_comments_on_group_membership_id"
+  end
+
+  create_table "expense_participants", force: :cascade do |t|
+    t.bigint "expense_id", null: false
+    t.bigint "group_membership_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["expense_id", "group_membership_id"], name: "index_expense_participants_unique", unique: true
+    t.index ["expense_id"], name: "index_expense_participants_on_expense_id"
+    t.index ["group_membership_id"], name: "index_expense_participants_on_group_membership_id"
+    t.index ["group_membership_id"], name: "index_expense_participants_on_membership_id"
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.bigint "paid_by_membership_id", null: false
+    t.string "name", limit: 100, null: false
+    t.integer "amount", null: false
+    t.text "memo"
+    t.date "paid_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_expenses_on_group_id"
+    t.index ["paid_by_membership_id"], name: "index_expenses_on_paid_by_membership_id"
   end
 
   create_table "group_memberships", force: :cascade do |t|
@@ -164,6 +188,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_19_221949) do
 
   add_foreign_key "comments", "cards"
   add_foreign_key "comments", "group_memberships"
+  add_foreign_key "expense_participants", "expenses"
+  add_foreign_key "expense_participants", "group_memberships"
+  add_foreign_key "expenses", "group_memberships", column: "paid_by_membership_id"
+  add_foreign_key "expenses", "groups"
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "users"
   add_foreign_key "groups", "users", column: "created_by_user_id"
