@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: cards
+#
+#  id            :bigint           not null, primary key
+#  cardable_type :string           not null
+#  memo          :text
+#  name          :string(50)       not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  cardable_id   :bigint           not null
+#
+# Indexes
+#
+#  index_cards_on_cardable_type_and_cardable_id  (cardable_type,cardable_id)
+#
 require "rails_helper"
 
 RSpec.describe Card, type: :model do

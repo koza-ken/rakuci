@@ -2,15 +2,16 @@
 #
 # Table name: expense_participants
 #
-#  id                    :bigint           not null, primary key
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  expense_id            :bigint           not null
-#  group_membership_id   :bigint           not null
+#  id                  :bigint           not null, primary key
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  expense_id          :bigint           not null
+#  group_membership_id :bigint           not null
 #
 # Indexes
 #
 #  index_expense_participants_on_expense_id           (expense_id)
+#  index_expense_participants_on_group_membership_id  (group_membership_id)
 #  index_expense_participants_on_membership_id        (group_membership_id)
 #  index_expense_participants_unique                  (expense_id,group_membership_id) UNIQUE
 #
