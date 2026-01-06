@@ -18,10 +18,10 @@ class Groups::ExpensesController < ApplicationController
   # グループに参加しているか確認するフィルター
   def check_group_member
     authorized = if user_signed_in?
-                  current_user.member_of?(@group)
-                else
-                  GroupMembership.guest_member?(guest_token_for(@group.id), @group.id)
-                end
+      current_user.member_of?(@group)
+    else
+      GroupMembership.guest_member?(guest_token_for(@group.id), @group.id)
+    end
 
     unless authorized
       redirect_to (user_signed_in? ? groups_path : root_path), alert: t("errors.groups.not_member")
