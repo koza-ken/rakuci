@@ -36,7 +36,7 @@
           <div class="space-y-2">
             <% @group.group_memberships.each do |membership| %>
               <label class="flex items-center gap-2">
-                <%= check_box_tag "expense[participant_ids][]", membership.id, false, { class: "form-checkbox" } %>
+                <%= check_box_tag "expense[participant_ids][]", membership.id, true, { class: "form-checkbox" } %>
                 <span class="text-text"><%= membership.nickname %></span>
               </label>
             <% end %>
