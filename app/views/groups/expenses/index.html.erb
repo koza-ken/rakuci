@@ -95,18 +95,21 @@
                 <span class="shrink-0"><%= t('expenses.participants') %>：</span>
                 <span class="flex-1"><%= expense.participants.map(&:nickname).join(', ') %></span>
               </div>
-              <p class="text-sm text-gray-500"><%= l(expense.paid_at, format: :expense_date) %></p>
+              <p class="text-sm text-text-light"><%= l(expense.paid_at, format: :expense_date) %></p>
             </div>
           <% end %>
         </div>
       <% else %>
-        <p class="text-gray-500 text-center py-8"><%= t('expenses.no_expenses') %></p>
+        <p class="text-text-light text-center py-8"><%= t('expenses.no_expenses') %></p>
       <% end %>
     </div>
 
     <%# 参加者ごとの精算額 %>
     <div class="mb-8">
-      <h2 class="text-lg font-bold text-text mb-4"><%= t('expenses.settlement_summary') %></h2>
+      <div class="flex items-center justify-between gap-2 mb-4">
+        <h2 class="text-lg font-bold text-text"><%= t('expenses.settlement_summary') %></h2>
+        <p class="text-xs text-text-light"><%= t('expenses.settlement_rounding_note') %></p>
+      </div>
       <% if @group.group_memberships.any? %>
         <div class="space-y-2">
           <% @group.group_memberships.each do |membership| %>
@@ -114,25 +117,25 @@
             <div class="p-4 bg-white rounded border border-gray-200">
               <div class="flex items-center justify-between mb-2">
                 <p class="text-text font-semibold"><%= membership.nickname %></p>
-                <p class="text-text">
+                <p>
                   <% if settlement[:settlement] > 0 %>
-                    <span class="text-green-600">+ <%= number_to_currency(settlement[:settlement], unit: '¥', format: '%u%n') %></span>
+                    <span class="text-green-600">+<%= number_to_currency(settlement[:settlement], unit: '¥', format: '%u%n', precision: 1) %></span>
                   <% elsif settlement[:settlement] < 0 %>
-                    <span class="text-red-600"><%= number_to_currency(settlement[:settlement], unit: '¥', format: '%u%n') %></span>
+                    <span class="text-red-600"><%= number_to_currency(settlement[:settlement], unit: '¥', format: '%u%n', precision: 1) %></span>
                   <% else %>
-                    <span class="text-gray-500"><%= number_to_currency(0, unit: '¥', format: '%u%n') %></span>
+                    <span class="text-text"><%= number_to_currency(0, unit: '¥', format: '%u%n', precision: 0) %></span>
                   <% end %>
                 </p>
               </div>
-              <div class="text-sm text-gray-600 space-y-1">
-                <p>支払額：<%= number_to_currency(settlement[:paid], unit: '¥', format: '%u%n') %></p>
-                <p>負担額：<%= number_to_currency(settlement[:participation], unit: '¥', format: '%u%n') %></p>
+              <div class="text-sm text-text-light space-y-1">
+                <p>支払額：<%= number_to_currency(settlement[:paid], unit: '¥', format: '%u%n', precision: 0) %></p>
+                <p>負担額：<%= number_to_currency(settlement[:participation], unit: '¥', format: '%u%n', precision: 1) %></p>
               </div>
             </div>
           <% end %>
         </div>
       <% else %>
-        <p class="text-gray-500 text-center py-8"><%= t('expenses.no_members') %></p>
+        <p class="text-text-light text-center py-8"><%= t('expenses.no_members') %></p>
       <% end %>
     </div>
 

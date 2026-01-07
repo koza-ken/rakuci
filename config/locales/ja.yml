@@ -474,7 +474,7 @@ ja:
     back_to_group: グループへ
     back_to_schedule: しおりにもどる
     add_expense: 支払いを追加する
-    select_payer: 支払った人を選択してください
+    select_payer: 選択してください
     participants: 対象者
     description: 内容
     name_placeholder: タクシー代など
@@ -482,7 +482,8 @@ ja:
     paid_at: 支払日
     add_button: 追加する
     history: 支出履歴
-    paid_by: 支払った人
+    paid_by: 立替え
     no_expenses: 支出はまだありません
     settlement_summary: 精算額
+    settlement_rounding_note: '※負担額は小数第2位を切り捨て'
     no_members: メンバーがまだいません

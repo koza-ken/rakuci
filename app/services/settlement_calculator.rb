@@ -33,15 +33,16 @@ class SettlementCalculator
   end
 
   # メンバーが参加した支出額の合計を、参加人数で割った一人分
+  # 小数第1位で切り捨て
   def participation_total(membership)
-    total_participation = 0
+    total_participation = 0.0
 
     @group.expenses.joins(:expense_participants)
           .where(expense_participants: { group_membership_id: membership.id })
           .each do |expense|
-      # 支出額を参加人数で割る
+      # 支出額を参加人数で割る（小数第1位で切り捨て）
       participant_count = expense.expense_participants.count
-      total_participation += expense.amount / participant_count
+      total_participation += (expense.amount.to_f / participant_count).floor(1)
     end
 
     total_participation
