@@ -93,19 +93,46 @@
         <div class="space-y-2">
           <% @expenses.each do |expense| %>
             <div class="p-4 bg-white rounded border border-gray-200">
+              <%# 説明と金額 %>
               <div class="flex items-center justify-between mb-2 gap-2">
                 <p class="font-semibold text-text"><%= expense.name %></p>
                 <p class="text-text"><%= number_to_currency(expense.amount, unit: '¥', format: '%u%n') %></p>
               </div>
+
+              <%# 支払った人 %>
               <div class="flex text-sm text-text-light mb-1">
                 <span class="shrink-0"><%= t('expenses.paid_by') %>：</span>
                 <span class="flex-1"><%= expense.paid_by_membership.nickname %></span>
               </div>
+
+              <%# 対象者 %>
               <div class="flex text-sm text-text-light mb-1">
                 <span class="shrink-0"><%= t('expenses.participants') %>：</span>
                 <span class="flex-1"><%= expense.participants.map(&:nickname).join(', ') %></span>
               </div>
-              <p class="text-sm text-text-light"><%= l(expense.paid_at, format: :expense_date) %></p>
+
+              <%# 支払日とアイコン %>
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex text-sm text-text-light">
+                  <span class="shrink-0"><%= t('expenses.paid_at') %>：</span>
+                  <span class="flex-1"><%= l(expense.paid_at, format: :expense_date) %></span>
+                </div>
+                <% if expense.paid_by?(@current_membership) %>
+                  <div class="flex gap-1">
+                    <%= link_to edit_group_expense_path(@group, expense), class: "inline-flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100" do %>
+                      <%= render "shared/icon/form_icon_edit" %>
+                    <% end %>
+                    <%= button_to group_expense_path(@group, expense),
+                        method: :delete,
+                        form: { class: "contents" },
+                        data: { turbo: false },
+                        onclick: "return confirm('#{t('expenses.delete_confirm')}')",
+                        class: "inline-flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100" do %>
+                      <%= render "shared/icon/form_icon_delete" %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
             </div>
           <% end %>
         </div>
