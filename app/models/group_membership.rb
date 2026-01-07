@@ -40,6 +40,11 @@ class GroupMembership < ApplicationRecord
 
   enum :role, { member: "member", owner: "owner" }
 
+  # グループ内でのニックネーム
+  def nickname
+    group_nickname
+  end
+
   # ゲストトークンの生成
   def generate_guest_token
     self.guest_token ||= SecureRandom.urlsafe_base64(32)
