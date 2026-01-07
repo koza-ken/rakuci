@@ -460,3 +460,15 @@ ja:
         memo: メモ
         title: しおり詳細
       spot_count_message: 件のスポットを追加します
+  expenses:
+    page_title: 旅費の精算
+    no_schedule: しおりがまだ作成されていません
+    back_to_group: グループへ
+    back_to_schedule: しおりにもどる
+    add_expense: 支払いを追加する
+    form_placeholder: 形式のプレースホルダー（Issue 4で実装予定）
+    history: 支出履歴
+    paid_by: 支払った人
+    no_expenses: 支出はまだありません
+    settlement_summary: 精算額
+    no_members: メンバーがまだいません
