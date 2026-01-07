@@ -110,18 +110,24 @@
       <% if @group.group_memberships.any? %>
         <div class="space-y-2">
           <% @group.group_memberships.each do |membership| %>
-            <% settlement_amount = @settlements[membership.id] || 0 %>
-            <div class="p-4 bg-white rounded border border-gray-200 flex items-center justify-between">
-              <p class="text-text font-semibold"><%= membership.nickname %></p>
-              <p class="text-text">
-                <% if settlement_amount > 0 %>
-                  <span class="text-green-600">+ <%= number_to_currency(settlement_amount, unit: '¥', format: '%u%n') %></span>
-                <% elsif settlement_amount < 0 %>
-                  <span class="text-red-600"><%= number_to_currency(settlement_amount, unit: '¥', format: '%u%n') %></span>
-                <% else %>
-                  <span class="text-gray-500"><%= number_to_currency(0, unit: '¥', format: '%u%n') %></span>
-                <% end %>
-              </p>
+            <% settlement = @settlements[membership.id] || { paid: 0, participation: 0, settlement: 0 } %>
+            <div class="p-4 bg-white rounded border border-gray-200">
+              <div class="flex items-center justify-between mb-2">
+                <p class="text-text font-semibold"><%= membership.nickname %></p>
+                <p class="text-text">
+                  <% if settlement[:settlement] > 0 %>
+                    <span class="text-green-600">+ <%= number_to_currency(settlement[:settlement], unit: '¥', format: '%u%n') %></span>
+                  <% elsif settlement[:settlement] < 0 %>
+                    <span class="text-red-600"><%= number_to_currency(settlement[:settlement], unit: '¥', format: '%u%n') %></span>
+                  <% else %>
+                    <span class="text-gray-500"><%= number_to_currency(0, unit: '¥', format: '%u%n') %></span>
+                  <% end %>
+                </p>
+              </div>
+              <div class="text-sm text-gray-600 space-y-1">
+                <p>支払額：<%= number_to_currency(settlement[:paid], unit: '¥', format: '%u%n') %></p>
+                <p>負担額：<%= number_to_currency(settlement[:participation], unit: '¥', format: '%u%n') %></p>
+              </div>
             </div>
           <% end %>
         </div>

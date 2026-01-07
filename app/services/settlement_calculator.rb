@@ -3,20 +3,23 @@ class SettlementCalculator
     @group = group
   end
 
-  # グループメンバーごとの精算額を計算
-  # 戻り値: { group_membership_id => settlement_amount } のハッシュ
+  # グループメンバーごとの精算詳細を計算
+  # 戻り値: { group_membership_id => { paid: 支払額, participation: 負担額, settlement: 精算額 } } のハッシュ
+  # paid - participation = settlement
   # 正数 = 受け取る、負数 = 支払う
   def calculate
     result = {}
 
     @group.group_memberships.each do |membership|
-      paid_amount = paid_total(membership)
-      participation_amount = participation_total(membership)
+      paid = paid_total(membership)
+      participation = participation_total(membership)
+      settlement = paid - participation
 
-      # 支払った額 - 参加分の支出額 = 精算額
-      # 正数なら受け取る（立て替えた分が返ってくる）
-      # 負数なら支払う（支出分を払う）
-      result[membership.id] = paid_amount - participation_amount
+      result[membership.id] = {
+        paid: paid,
+        participation: participation,
+        settlement: settlement
+      }
     end
 
     result
