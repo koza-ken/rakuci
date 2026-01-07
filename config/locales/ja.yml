@@ -48,6 +48,11 @@ ja:
         spot: スポット
         start_time: 到着時刻
         updated_at: 更新日時
+      expense:
+        amount: 金額
+        name: 内容
+        paid_at: 支払日
+        paid_by_membership_id: 支払った人
       spot:
         address: 住所
         category: カテゴリ
@@ -302,6 +307,8 @@ ja:
     comments:
       created: コメントを投稿しました
       destroyed: コメントを削除しました
+    expenses:
+      created: 支払いを追加しました
     group_schedule_spots:
       created_multiple: '%{count}件のスポットを追加しました'
       created_partial: '%{added}件追加しました。%{failed}件失敗しました'
@@ -466,7 +473,13 @@ ja:
     back_to_group: グループへ
     back_to_schedule: しおりにもどる
     add_expense: 支払いを追加する
-    form_placeholder: 形式のプレースホルダー（Issue 4で実装予定）
+    select_payer: 支払った人を選択してください
+    participants: 対象者
+    description: 内容
+    name_placeholder: タクシー代など
+    amount: 金額
+    paid_at: 支払日
+    add_button: 追加する
     history: 支出履歴
     paid_by: 支払った人
     no_expenses: 支出はまだありません
