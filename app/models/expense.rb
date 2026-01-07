@@ -38,14 +38,10 @@ class Expense < ApplicationRecord
 
   # カスタムバリデーション
   validate :paid_by_membership_belongs_to_group
+  validate :participants_must_exist, on: :create
 
   # スコープ
   scope :ordered_by_paid_at, -> { order(paid_at: :desc) }
-
-  # 表示用メソッド：金額を小数第1位で表示
-  def amount_decimal
-    (amount / 10.0).round(1)
-  end
 
   private
 
@@ -54,6 +50,13 @@ class Expense < ApplicationRecord
     return if paid_by_membership.blank?
     unless paid_by_membership.group_id == group_id
       errors.add(:paid_by_membership, "はこのグループに属していません")
+    end
+  end
+
+  # 対象者が選択されているか確認
+  def participants_must_exist
+    if expense_participants.empty?
+      errors.add(:base, "対象者を選択してください")
     end
   end
 end
