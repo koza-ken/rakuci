@@ -6,29 +6,76 @@
     <%# ページタイトル %>
     <h1 class="text-xl font-bold text-text mb-6"><%= t('expenses.page_title') %></h1>
 
-    <%# グループ情報 %>
-    <div class="mb-6">
-      <p class="text-text mb-2"><%= t('schedules.show.group_name') %>：<%= @group.name %></p>
-      <p class="text-text mb-4">
-        <span><%= t('schedules.show.schedule_dates') %>：</span>
-        <% if @group.schedule.present? %>
-          <span><%= @group.schedule.formatted_date_range %></span>
-        <% else %>
-          <span class="text-gray-500"><%= t('expenses.no_schedule') %></span>
-        <% end %>
-      </p>
-    </div>
-
-    <%# 戻るボタン %>
-    <div class="mb-6">
-      <%= link_to t('expenses.back_to_group'), group_path(@group), class: "btn-sub text-center px-4" %>
-    </div>
-
-    <%# 清算を追加する（スケルトン） %>
+    <%# 清算を追加する %>
     <div class="mb-8 p-4 bg-white rounded">
       <h2 class="text-lg font-bold text-text mb-4"><%= t('expenses.add_expense') %></h2>
-      <%# 追加ロジックはIssue 4で実装 %>
-      <p class="text-gray-500 text-sm"><%= t('expenses.form_placeholder') %></p>
+
+      <%= form_with model: [@group, @expense], local: true, data: { turbo: false }, class: "space-y-4" do |f| %>
+        <%# 支払った人 %>
+        <div>
+          <%= f.label :paid_by_membership_id, t('expenses.paid_by'), class: "block text-sm font-semibold text-text mb-2" %>
+          <%= f.collection_select :paid_by_membership_id,
+              @group.group_memberships,
+              :id,
+              :nickname,
+              { prompt: t('expenses.select_payer') },
+              { class: "form-text-field w-full" } %>
+          <% if @expense.errors[:paid_by_membership_id].any? %>
+            <p class="text-red-600 text-sm mt-1"><%= @expense.errors.full_messages_for(:paid_by_membership_id).first %></p>
+          <% end %>
+        </div>
+
+        <%# 対象者チェックボックス %>
+        <div>
+          <p class="text-sm font-semibold text-text mb-2"><%= t('expenses.participants') %></p>
+          <div class="space-y-2">
+            <% @group.group_memberships.each do |membership| %>
+              <label class="flex items-center gap-2">
+                <%= check_box_tag "expense[participant_ids][]", membership.id, false, { class: "form-checkbox" } %>
+                <span class="text-text"><%= membership.nickname %></span>
+              </label>
+            <% end %>
+          </div>
+          <% if @expense.errors[:base].any? %>
+            <p class="text-red-600 text-sm mt-1"><%= @expense.errors[:base].first %></p>
+          <% end %>
+        </div>
+
+        <%# 説明 %>
+        <div>
+          <%= f.label :name, t('expenses.description'), class: "block text-sm font-semibold text-text mb-2" %>
+          <%= f.text_field :name, placeholder: t('expenses.name_placeholder'), class: "form-text-field w-full" %>
+          <% if @expense.errors[:name].any? %>
+            <p class="text-red-600 text-sm mt-1"><%= @expense.errors.full_messages_for(:name).first %></p>
+          <% end %>
+        </div>
+
+        <%# 金額 %>
+        <div>
+          <%= f.label :amount, t('expenses.amount'), class: "block text-sm font-semibold text-text mb-2" %>
+          <div class="flex items-center gap-2">
+            <%= f.number_field :amount, placeholder: "0", min: "1", class: "form-text-field flex-1 [&::-webkit-outer-spin-button]:hidden [&::-webkit-inner-spin-button]:hidden" %>
+            <span class="text-text">円</span>
+          </div>
+          <% if @expense.errors[:amount].any? %>
+            <p class="text-red-600 text-sm mt-1"><%= @expense.errors.full_messages_for(:amount).first %></p>
+          <% end %>
+        </div>
+
+        <%# 支払日 %>
+        <div>
+          <%= f.label :paid_at, t('expenses.paid_at'), class: "block text-sm font-semibold text-text mb-2" %>
+          <%= f.date_field :paid_at, value: @expense.paid_at || Date.current, class: "form-text-field w-full" %>
+          <% if @expense.errors[:paid_at].any? %>
+            <p class="text-red-600 text-sm mt-1"><%= @expense.errors.full_messages_for(:paid_at).first %></p>
+          <% end %>
+        </div>
+
+        <%# 送信ボタン %>
+        <div class="flex gap-2 mt-6">
+          <%= f.submit t('expenses.add_button'), class: "btn-main flex-1" %>
+        </div>
+      <% end %>
     </div>
 
     <%# 支出一覧 %>
@@ -40,11 +87,16 @@
             <div class="p-4 bg-white rounded border border-gray-200">
               <div class="flex items-center justify-between mb-2">
                 <p class="font-semibold text-text"><%= expense.name %></p>
-                <p class="text-text"><%= number_to_currency(expense.amount_decimal, unit: '¥', format: '%n%u') %></p>
+                <p class="text-text"><%= number_to_currency(expense.amount, unit: '¥', format: '%u%n') %></p>
               </div>
-              <p class="text-sm text-gray-600 mb-1">
-                <%= t('expenses.paid_by') %>：<%= expense.paid_by_membership.user&.display_name || expense.paid_by_membership.group_nickname %>
-              </p>
+              <div class="flex text-sm text-text-light mb-1">
+                <span class="shrink-0"><%= t('expenses.paid_by') %>：</span>
+                <span class="flex-1"><%= expense.paid_by_membership.nickname %></span>
+              </div>
+              <div class="flex text-sm text-text-light mb-1">
+                <span class="shrink-0"><%= t('expenses.participants') %>：</span>
+                <span class="flex-1"><%= expense.participants.map(&:nickname).join(', ') %></span>
+              </div>
               <p class="text-sm text-gray-500"><%= l(expense.paid_at, format: :short) %></p>
             </div>
           <% end %>
@@ -60,9 +112,18 @@
       <% if @group.group_memberships.any? %>
         <div class="space-y-2">
           <% @group.group_memberships.each do |membership| %>
+            <% settlement_amount = @settlements[membership.id] || 0 %>
             <div class="p-4 bg-white rounded border border-gray-200 flex items-center justify-between">
-              <p class="text-text font-semibold"><%= membership.user&.display_name || membership.group_nickname %></p>
-              <p class="text-text"><%= number_to_currency(0, unit: '¥', format: '%n%u') %></p>
+              <p class="text-text font-semibold"><%= membership.nickname %></p>
+              <p class="text-text">
+                <% if settlement_amount > 0 %>
+                  <span class="text-green-600">+ <%= number_to_currency(settlement_amount, unit: '¥', format: '%u%n') %></span>
+                <% elsif settlement_amount < 0 %>
+                  <span class="text-red-600"><%= number_to_currency(settlement_amount, unit: '¥', format: '%u%n') %></span>
+                <% else %>
+                  <span class="text-gray-500"><%= number_to_currency(0, unit: '¥', format: '%u%n') %></span>
+                <% end %>
+              </p>
             </div>
           <% end %>
         </div>
