@@ -34,10 +34,12 @@ class Expense < ApplicationRecord
   validates :name, presence: true, length: { maximum: 100 }
   validates :amount, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :paid_at, presence: true
+  validates :paid_by_membership_id, presence: true
   validates :memo, length: { maximum: 1000 }, allow_blank: true
 
   # カスタムバリデーション
   validate :paid_by_membership_belongs_to_group
+  validate :participants_must_exist, on: :create
 
   # スコープ
   scope :ordered_by_paid_at, -> { order(paid_at: :desc) }
@@ -49,6 +51,13 @@ class Expense < ApplicationRecord
     return if paid_by_membership.blank?
     unless paid_by_membership.group_id == group_id
       errors.add(:paid_by_membership, "はこのグループに属していません")
+    end
+  end
+
+  # 対象者が選択されているか確認
+  def participants_must_exist
+    if expense_participants.empty?
+      errors.add(:base, "対象者を選択してください")
     end
   end
 end
