@@ -112,7 +112,7 @@ Rails.application.routes.draw do
       resources :group_memberships, only: %i[destroy]
 
       # 旅費精算
-      resources :expenses, only: %i[index create update destroy]
+      resources :expenses, only: %i[index create edit update destroy]
     end
   end
 
