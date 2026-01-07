@@ -73,6 +73,11 @@ crumb :group_schedule_item_list do |group|
   parent :group_schedule, group
 end
 
+crumb :group_expenses do |group|
+  link "精算", group_expenses_path(group)
+  parent :group_schedule, group
+end
+
 # ====== 個人用しおり系 ======
 crumb :schedules do
   link "しおり", schedules_path

@@ -21,9 +21,14 @@
     <div class="mt-8">
       <div class="flex items-center justify-between gap-3 mb-8">
         <%= link_to t('groups.schedules.show.back_to_group'), group_path(@group), class: "btn-sub text-center px-4" %>
-        <%= link_to group_schedule_item_list_path(group), class: "btn-main p-2 w-auto" do %>
-          <%= render "shared/icon/footer_icon_backpack", icon_class: "text-text-light" %>
-        <% end %>
+        <div class="flex gap-3">
+          <%= link_to group_expenses_path(group), class: "btn-main p-2 w-auto" do %>
+            <%= render "shared/icon/expense_icon", icon_class: "text-text-light" %>
+          <% end %>
+          <%= link_to group_schedule_item_list_path(group), class: "btn-main p-2 w-auto" do %>
+            <%= render "shared/icon/footer_icon_backpack", icon_class: "text-text-light" %>
+          <% end %>
+        </div>
       </div>
 
       <% (1..schedule.days).each do |day| %>

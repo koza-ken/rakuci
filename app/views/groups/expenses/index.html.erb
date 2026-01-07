@@ -1,0 +1,79 @@
+<% content_for(:title, t('expenses.page_title')) %>
+<% breadcrumb :group_expenses, @group %>
+
+<main id="main" class="flex flex-col items-center justify-center px-8 py-6 mb-12">
+  <div class="w-full max-w-2xl">
+    <%# ページタイトル %>
+    <h1 class="text-xl font-bold text-text mb-6"><%= t('expenses.page_title') %></h1>
+
+    <%# グループ情報 %>
+    <div class="mb-6">
+      <p class="text-text mb-2"><%= t('schedules.show.group_name') %>：<%= @group.name %></p>
+      <p class="text-text mb-4">
+        <span><%= t('schedules.show.schedule_dates') %>：</span>
+        <% if @group.schedule.present? %>
+          <span><%= @group.schedule.formatted_date_range %></span>
+        <% else %>
+          <span class="text-gray-500"><%= t('expenses.no_schedule') %></span>
+        <% end %>
+      </p>
+    </div>
+
+    <%# 戻るボタン %>
+    <div class="mb-6">
+      <%= link_to t('expenses.back_to_group'), group_path(@group), class: "btn-sub text-center px-4" %>
+    </div>
+
+    <%# 清算を追加する（スケルトン） %>
+    <div class="mb-8 p-4 bg-white rounded">
+      <h2 class="text-lg font-bold text-text mb-4"><%= t('expenses.add_expense') %></h2>
+      <%# 追加ロジックはIssue 4で実装 %>
+      <p class="text-gray-500 text-sm"><%= t('expenses.form_placeholder') %></p>
+    </div>
+
+    <%# 支出一覧 %>
+    <div class="mb-8">
+      <h2 class="text-lg font-bold text-text mb-4"><%= t('expenses.history') %></h2>
+      <% if @expenses.any? %>
+        <div class="space-y-2">
+          <% @expenses.each do |expense| %>
+            <div class="p-4 bg-white rounded border border-gray-200">
+              <div class="flex items-center justify-between mb-2">
+                <p class="font-semibold text-text"><%= expense.name %></p>
+                <p class="text-text"><%= number_to_currency(expense.amount_decimal, unit: '¥', format: '%n%u') %></p>
+              </div>
+              <p class="text-sm text-gray-600 mb-1">
+                <%= t('expenses.paid_by') %>：<%= expense.paid_by_membership.user&.display_name || expense.paid_by_membership.group_nickname %>
+              </p>
+              <p class="text-sm text-gray-500"><%= l(expense.paid_at, format: :short) %></p>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-500 text-center py-8"><%= t('expenses.no_expenses') %></p>
+      <% end %>
+    </div>
+
+    <%# 参加者ごとの精算額 %>
+    <div class="mb-8">
+      <h2 class="text-lg font-bold text-text mb-4"><%= t('expenses.settlement_summary') %></h2>
+      <% if @group.group_memberships.any? %>
+        <div class="space-y-2">
+          <% @group.group_memberships.each do |membership| %>
+            <div class="p-4 bg-white rounded border border-gray-200 flex items-center justify-between">
+              <p class="text-text font-semibold"><%= membership.user&.display_name || membership.group_nickname %></p>
+              <p class="text-text"><%= number_to_currency(0, unit: '¥', format: '%n%u') %></p>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-500 text-center py-8"><%= t('expenses.no_members') %></p>
+      <% end %>
+    </div>
+
+    <%# しおりページに戻るボタン %>
+    <div class="mt-12">
+      <%= link_to t('expenses.back_to_schedule'), group_schedule_path(@group), class: "btn-sub block text-center" %>
+    </div>
+  </div>
+</main>
