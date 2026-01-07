@@ -42,11 +42,6 @@ class Expense < ApplicationRecord
   # スコープ
   scope :ordered_by_paid_at, -> { order(paid_at: :desc) }
 
-  # 表示用メソッド：金額を小数第1位で表示
-  def amount_decimal
-    (amount / 10.0).round(1)
-  end
-
   private
 
   # paid_by_membership（立替える人）がグループに属しているか確認
