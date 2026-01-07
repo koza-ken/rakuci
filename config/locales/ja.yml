@@ -168,6 +168,8 @@ ja:
       create_failed: コメントの投稿に失敗しました
       unauthorized_access: このカードにアクセスする権限がありません
       unauthorized_delete: このコメントを削除する権限がありません
+    expenses:
+      unauthorized: この支払いを編集する権限がありません
     group_schedule_spots:
       create_failed: スポット追加に失敗しました
     groups:
@@ -310,6 +312,8 @@ ja:
       destroyed: コメントを削除しました
     expenses:
       created: 支払いを追加しました
+      updated: 支払いを更新しました
+      destroyed: 支払いを削除しました
     group_schedule_spots:
       created_multiple: '%{count}件のスポットを追加しました'
       created_partial: '%{added}件追加しました。%{failed}件失敗しました'
@@ -474,6 +478,7 @@ ja:
     back_to_group: グループへ
     back_to_schedule: しおりにもどる
     add_expense: 支払いを追加する
+    edit_expense: 支払いを編集する
     select_payer: 選択してください
     participants: 対象者
     description: 内容
@@ -481,6 +486,10 @@ ja:
     amount: 金額
     paid_at: 支払日
     add_button: 追加する
+    update_button: 更新
+    delete_button: 削除する
+    delete_confirm: この支払いを削除しますか
+    back_to_expenses: キャンセル
     history: 支出履歴
     paid_by: 立替え
     no_expenses: 支出はまだありません

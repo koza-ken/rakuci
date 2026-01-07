@@ -43,6 +43,11 @@ class Expense < ApplicationRecord
   # スコープ
   scope :ordered_by_paid_at, -> { order(paid_at: :desc) }
 
+  # 指定されたメンバーシップがこの支出を支払った人か判定
+  def paid_by?(membership)
+    membership && paid_by_membership_id == membership.id
+  end
+
   private
 
   # paid_by_membership（立替える人）がグループに属しているか確認
