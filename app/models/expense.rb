@@ -34,7 +34,6 @@ class Expense < ApplicationRecord
   validates :name, presence: true, length: { maximum: 100 }
   validates :amount, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :paid_at, presence: true
-  validates :paid_by_membership_id, presence: true
   validates :memo, length: { maximum: 1000 }, allow_blank: true
 
   # カスタムバリデーション
