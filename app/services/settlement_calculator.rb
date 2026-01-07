@@ -39,7 +39,7 @@ class SettlementCalculator
 
     @group.expenses.joins(:expense_participants)
           .where(expense_participants: { group_membership_id: membership.id })
-          .each do |expense|
+          .find_each do |expense|
       # 支出額を参加人数で割る（小数第1位で切り捨て）
       participant_count = expense.expense_participants.count
       total_participation += (expense.amount.to_f / participant_count).floor(1)
