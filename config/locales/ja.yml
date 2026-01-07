@@ -52,7 +52,7 @@ ja:
         amount: 金額
         name: 内容
         paid_at: 支払日
-        paid_by_membership_id: 支払った人
+        paid_by_membership: 立替えた人
       spot:
         address: 住所
         category: カテゴリ

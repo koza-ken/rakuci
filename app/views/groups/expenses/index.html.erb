@@ -11,21 +11,28 @@
       <%= form_with model: [@group, @expense], local: true, data: { turbo: false }, class: "space-y-4" do |f| %>
         <%# 支払った人 %>
         <div>
-          <%= f.label :paid_by_membership_id, t('expenses.paid_by'), class: "block text-sm font-semibold text-text mb-2" %>
+          <div class="flex items-center justify-start gap-2 mb-2">
+            <%= f.label :paid_by_membership_id, t('expenses.paid_by'), class: "text-sm font-semibold text-text" %>
+            <% if @expense.errors[:paid_by_membership].any? %>
+              <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:paid_by_membership).first %></p>
+            <% end %>
+          </div>
           <%= f.collection_select :paid_by_membership_id,
               @group.group_memberships,
               :id,
               :nickname,
               { prompt: t('expenses.select_payer') },
               { class: "form-text-field w-full" } %>
-          <% if @expense.errors[:paid_by_membership_id].any? %>
-            <p class="text-red-600 text-sm mt-1"><%= @expense.errors.full_messages_for(:paid_by_membership_id).first %></p>
-          <% end %>
         </div>
 
         <%# 対象者チェックボックス %>
         <div>
-          <p class="text-sm font-semibold text-text mb-2"><%= t('expenses.participants') %></p>
+          <div class="flex items-center justify-start gap-2 mb-2">
+            <p class="text-sm font-semibold text-text"><%= t('expenses.participants') %></p>
+            <% if @expense.errors[:base].any? %>
+              <p class="text-red-600 text-xs">※<%= @expense.errors[:base].first %></p>
+            <% end %>
+          </div>
           <div class="space-y-2">
             <% @group.group_memberships.each do |membership| %>
               <label class="flex items-center gap-2">
@@ -34,39 +41,42 @@
               </label>
             <% end %>
           </div>
-          <% if @expense.errors[:base].any? %>
-            <p class="text-red-600 text-sm mt-1"><%= @expense.errors[:base].first %></p>
-          <% end %>
         </div>
 
         <%# 説明 %>
         <div>
-          <%= f.label :name, t('expenses.description'), class: "block text-sm font-semibold text-text mb-2" %>
+          <div class="flex items-center justify-start gap-2 mb-2">
+            <%= f.label :name, t('expenses.description'), class: "text-sm font-semibold text-text" %>
+            <% if @expense.errors[:name].any? %>
+              <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:name).first %></p>
+            <% end %>
+          </div>
           <%= f.text_field :name, placeholder: t('expenses.name_placeholder'), class: "form-text-field w-full" %>
-          <% if @expense.errors[:name].any? %>
-            <p class="text-red-600 text-sm mt-1"><%= @expense.errors.full_messages_for(:name).first %></p>
-          <% end %>
         </div>
 
         <%# 金額 %>
         <div>
-          <%= f.label :amount, t('expenses.amount'), class: "block text-sm font-semibold text-text mb-2" %>
+          <div class="flex items-center justify-start gap-2 mb-2">
+            <%= f.label :amount, t('expenses.amount'), class: "text-sm font-semibold text-text" %>
+            <% if @expense.errors[:amount].any? %>
+              <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:amount).first %></p>
+            <% end %>
+          </div>
           <div class="flex items-center gap-2">
             <%= f.number_field :amount, placeholder: "0", min: "1", class: "form-text-field flex-1 [&::-webkit-outer-spin-button]:hidden [&::-webkit-inner-spin-button]:hidden" %>
             <span class="text-text">円</span>
           </div>
-          <% if @expense.errors[:amount].any? %>
-            <p class="text-red-600 text-sm mt-1"><%= @expense.errors.full_messages_for(:amount).first %></p>
-          <% end %>
         </div>
 
         <%# 支払日 %>
         <div>
-          <%= f.label :paid_at, t('expenses.paid_at'), class: "block text-sm font-semibold text-text mb-2" %>
+          <div class="flex items-center justify-start gap-2 mb-2">
+            <%= f.label :paid_at, t('expenses.paid_at'), class: "text-sm font-semibold text-text" %>
+            <% if @expense.errors[:paid_at].any? %>
+              <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:paid_at).first %></p>
+            <% end %>
+          </div>
           <%= f.date_field :paid_at, value: @expense.paid_at || Date.current, class: "form-text-field w-full" %>
-          <% if @expense.errors[:paid_at].any? %>
-            <p class="text-red-600 text-sm mt-1"><%= @expense.errors.full_messages_for(:paid_at).first %></p>
-          <% end %>
         </div>
 
         <%# 送信ボタン %>
