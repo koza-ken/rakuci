@@ -4,12 +4,10 @@
 <main id="main" class="flex flex-col items-center justify-center px-8 py-6 mb-12">
   <div class="w-full max-w-2xl">
     <%# ページタイトル %>
-    <h1 class="text-xl font-bold text-text mb-6"><%= t('expenses.page_title') %></h1>
+    <h1 class="text-xl font-bold text-text mb-4"><%= t('expenses.page_title') %></h1>
 
-    <%# 清算を追加する %>
-    <div class="mb-8 p-4 bg-white rounded">
-      <h2 class="text-lg font-bold text-text mb-4"><%= t('expenses.add_expense') %></h2>
-
+    <%# 支払いを追加する %>
+    <div class="mb-8 p-4">
       <%= form_with model: [@group, @expense], local: true, data: { turbo: false }, class: "space-y-4" do |f| %>
         <%# 支払った人 %>
         <div>
@@ -85,7 +83,7 @@
         <div class="space-y-2">
           <% @expenses.each do |expense| %>
             <div class="p-4 bg-white rounded border border-gray-200">
-              <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center justify-between mb-2 gap-2">
                 <p class="font-semibold text-text"><%= expense.name %></p>
                 <p class="text-text"><%= number_to_currency(expense.amount, unit: '¥', format: '%u%n') %></p>
               </div>
@@ -97,7 +95,7 @@
                 <span class="shrink-0"><%= t('expenses.participants') %>：</span>
                 <span class="flex-1"><%= expense.participants.map(&:nickname).join(', ') %></span>
               </div>
-              <p class="text-sm text-gray-500"><%= l(expense.paid_at, format: :short) %></p>
+              <p class="text-sm text-gray-500"><%= l(expense.paid_at, format: :expense_date) %></p>
             </div>
           <% end %>
         </div>
