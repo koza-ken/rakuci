@@ -45,7 +45,8 @@ class Expense < ApplicationRecord
 
   # 指定されたメンバーシップがこの支出を支払った人か判定
   def paid_by?(membership)
-    membership && paid_by_membership_id == membership.id
+    return false if membership.nil?
+    paid_by_membership_id == membership.id
   end
 
   private
