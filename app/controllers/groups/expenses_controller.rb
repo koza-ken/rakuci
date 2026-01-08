@@ -33,7 +33,7 @@ class Groups::ExpensesController < ApplicationController
     else
       @expenses = @group.expenses.ordered_by_paid_at
       @settlements = SettlementCalculator.new(@group).calculate
-      render :index
+      render :index, status: :unprocessable_entity
     end
   end
 
@@ -55,7 +55,7 @@ class Groups::ExpensesController < ApplicationController
       end
       redirect_to group_expenses_path(@group), notice: t("notices.expenses.updated")
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
