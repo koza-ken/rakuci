@@ -29,7 +29,7 @@ gem "jbuilder"
 
 gem "devise"
 gem 'omniauth-google-oauth2'
-gem 'omniauth-rails_csrf_protection', '1.0.2'
+gem 'omniauth-rails_csrf_protection', '2.0.1'
 gem "acts_as_list"
 gem "gretel", '5.0.1'
 
