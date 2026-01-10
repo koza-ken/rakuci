@@ -165,20 +165,27 @@ RSpec.describe Expense, type: :model do
     let(:group) { create(:group, created_by_user_id: user.id) }
     let(:membership) { create(:group_membership, group: group, user: user) }
 
-    before do
-      @expense1 = create(:expense, group: group, paid_by_membership_id: membership.id,
-                         paid_at: Date.new(2024, 1, 1), expense_participants_list: [ membership ])
-      @expense2 = create(:expense, group: group, paid_by_membership_id: membership.id,
-                         paid_at: Date.new(2024, 1, 3), expense_participants_list: [ membership ])
-      @expense3 = create(:expense, group: group, paid_by_membership_id: membership.id,
-                         paid_at: Date.new(2024, 1, 2), expense_participants_list: [ membership ])
+    let(:expense1) do
+      create(:expense, group: group, paid_by_membership_id: membership.id,
+             paid_at: Date.new(2024, 1, 1), expense_participants_list: [ membership ])
+    end
 
-      # expense_participants が正しく作成されることを確認
-      expect(@expense1.expense_participants).not_to be_empty
+    let(:expense2) do
+      create(:expense, group: group, paid_by_membership_id: membership.id,
+             paid_at: Date.new(2024, 1, 3), expense_participants_list: [ membership ])
+    end
+
+    let(:expense3) do
+      create(:expense, group: group, paid_by_membership_id: membership.id,
+             paid_at: Date.new(2024, 1, 2), expense_participants_list: [ membership ])
     end
 
     it '支払日の降順で並ぶこと' do
-      expect(described_class.ordered_by_paid_at.pluck(:id)).to eq([ @expense2.id, @expense3.id, @expense1.id ])
+      expect(described_class.ordered_by_paid_at.pluck(:id)).to eq([ expense2.id, expense3.id, expense1.id ])
+    end
+
+    it 'expense_participants が正しく作成されること' do
+      expect(expense1.expense_participants).not_to be_empty
     end
   end
 
