@@ -38,14 +38,15 @@ class Expense < ApplicationRecord
 
   # カスタムバリデーション
   validate :paid_by_membership_belongs_to_group
-  validate :participants_must_exist, on: :create
+  validate :participants_must_exist, on: [ :create, :update ]
 
   # スコープ
   scope :ordered_by_paid_at, -> { order(paid_at: :desc) }
 
   # 指定されたメンバーシップがこの支出を支払った人か判定
   def paid_by?(membership)
-    membership && paid_by_membership_id == membership.id
+    return false if membership.nil?
+    paid_by_membership_id == membership.id
   end
 
   private

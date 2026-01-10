@@ -25,8 +25,8 @@ FactoryBot.define do
     association :creator, factory: :user, strategy: :create
 
     trait :with_members do
-      after(:create) do |group, evaluator|
-        create_list(:group_membership, 3, group: group)
+      after(:create) do |group|
+        FactoryBot.create_list(:group_membership, 3, group: group)
       end
     end
   end

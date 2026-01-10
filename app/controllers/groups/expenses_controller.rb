@@ -33,7 +33,7 @@ class Groups::ExpensesController < ApplicationController
     else
       @expenses = @group.expenses.ordered_by_paid_at
       @settlements = SettlementCalculator.new(@group).calculate
-      render :index
+      render :index, status: :unprocessable_entity
     end
   end
 
@@ -47,15 +47,23 @@ class Groups::ExpensesController < ApplicationController
   def update
     participant_ids = params[:expense][:participant_ids]&.reject(&:blank?) || []
 
-    if @expense.update(expense_params)
-      # 参加者を更新
-      @expense.expense_participants.destroy_all
+    # 既存参加者を削除してから新しい参加者をbuild
+    @expense.expense_participants.destroy_all
+    participant_ids.each do |participant_id|
+      @expense.expense_participants.build(group_membership_id: participant_id)
+    end
+
+    # 属性を割り当て
+    @expense.attributes = expense_params
+
+    if @expense.save
+      # 参加者を永続化（既存は destroy_all で削除済み）
       participant_ids.each do |participant_id|
         @expense.expense_participants.create(group_membership_id: participant_id)
       end
       redirect_to group_expenses_path(@group), notice: t("notices.expenses.updated")
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

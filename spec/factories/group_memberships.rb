@@ -29,7 +29,7 @@ FactoryBot.define do
     association :user, strategy: :create
     association :group, strategy: :create
     role { "member" }
-    group_nickname { "DefaultNickname" }
+    sequence(:group_nickname) { |n| "ニックネーム#{n}" }
 
     trait :owner do
       role { "owner" }
