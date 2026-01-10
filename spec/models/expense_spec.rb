@@ -182,7 +182,7 @@ RSpec.describe Expense, type: :model do
 
     it '支払日の降順で並ぶこと' do
       # let の lazy evaluation を回避するため明示的に参照
-      [expense1, expense2, expense3].each(&:id)
+      [ expense1, expense2, expense3 ].each(&:id)
 
       expect(described_class.ordered_by_paid_at.pluck(:id)).to eq([ expense2.id, expense3.id, expense1.id ])
     end
