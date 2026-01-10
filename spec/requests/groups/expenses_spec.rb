@@ -53,7 +53,8 @@ RSpec.describe 'Groups::Expenses', type: :request do
       it '自分が支払った支出のアイコンが表示されること' do
         get group_expenses_path(group)
         # expense1 (user が支払い) のアイコンが表示されることを確認
-        # 他の支出 (other_user が支払い) のアイコンは表示されないことを確認
+        expect(response.body).to include('編集')
+        expect(response.body).to include('削除')
       end
 
       it '精算額が表示されること' do
