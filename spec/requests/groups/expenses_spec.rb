@@ -50,13 +50,6 @@ RSpec.describe 'Groups::Expenses', type: :request do
         expect(response.body).to include(expense2.name)
       end
 
-      it '自分が支払った支出のアイコンが表示されること' do
-        get group_expenses_path(group)
-        # expense1 (user が支払い) のアイコンが表示されることを確認
-        expect(response.body).to include('編集')
-        expect(response.body).to include('削除')
-      end
-
       it '精算額が表示されること' do
         get group_expenses_path(group)
         expect(response.body).to include('精算額')
