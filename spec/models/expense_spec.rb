@@ -102,7 +102,7 @@ RSpec.describe Expense, type: :model do
       context '対象者が1人以上選択されている場合' do
         it '有効であること' do
           expense = build(:expense, group: group, paid_by_membership_id: membership.id,
-                          expense_participants_list: [membership])
+                          expense_participants_list: [ membership ])
           expect(expense).to be_valid
         end
       end
@@ -138,7 +138,7 @@ RSpec.describe Expense, type: :model do
     let(:membership2) { create(:group_membership, group: group, user: user2) }
     let(:expense) do
       create(:expense, group: group, paid_by_membership_id: membership1.id,
-             expense_participants_list: [membership1])
+             expense_participants_list: [ membership1 ])
     end
 
     context '指定されたメンバーシップが支出を支払った人の場合' do
@@ -167,18 +167,18 @@ RSpec.describe Expense, type: :model do
 
     before do
       @expense1 = create(:expense, group: group, paid_by_membership_id: membership.id,
-                         paid_at: Date.new(2024, 1, 1), expense_participants_list: [membership])
+                         paid_at: Date.new(2024, 1, 1), expense_participants_list: [ membership ])
       @expense2 = create(:expense, group: group, paid_by_membership_id: membership.id,
-                         paid_at: Date.new(2024, 1, 3), expense_participants_list: [membership])
+                         paid_at: Date.new(2024, 1, 3), expense_participants_list: [ membership ])
       @expense3 = create(:expense, group: group, paid_by_membership_id: membership.id,
-                         paid_at: Date.new(2024, 1, 2), expense_participants_list: [membership])
+                         paid_at: Date.new(2024, 1, 2), expense_participants_list: [ membership ])
 
       # expense_participants が正しく作成されることを確認
       expect(@expense1.expense_participants).not_to be_empty
     end
 
     it '支払日の降順で並ぶこと' do
-      expect(Expense.ordered_by_paid_at.pluck(:id)).to eq([@expense2.id, @expense3.id, @expense1.id])
+      expect(described_class.ordered_by_paid_at.pluck(:id)).to eq([ @expense2.id, @expense3.id, @expense1.id ])
     end
   end
 
@@ -189,25 +189,25 @@ RSpec.describe Expense, type: :model do
 
     it 'groupに属すること' do
       expense = create(:expense, group: group, paid_by_membership_id: membership.id,
-                       expense_participants_list: [membership])
+                       expense_participants_list: [ membership ])
       expect(expense.group).to eq(group)
     end
 
     it 'paid_by_membershipに属すること' do
       expense = create(:expense, group: group, paid_by_membership_id: membership.id,
-                       expense_participants_list: [membership])
+                       expense_participants_list: [ membership ])
       expect(expense.paid_by_membership).to eq(membership)
     end
 
     it 'expense_participantsを持つこと' do
       expense = create(:expense, group: group, paid_by_membership_id: membership.id,
-                       expense_participants_list: [membership])
+                       expense_participants_list: [ membership ])
       expect(expense.expense_participants).not_to be_empty
     end
 
     it 'participantsを通じてグループメンバーを取得できること' do
       expense = create(:expense, group: group, paid_by_membership_id: membership.id,
-                       expense_participants_list: [membership])
+                       expense_participants_list: [ membership ])
       expect(expense.participants).to include(membership)
     end
   end

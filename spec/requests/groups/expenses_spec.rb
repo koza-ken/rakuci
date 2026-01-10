@@ -20,12 +20,12 @@ RSpec.describe 'Groups::Expenses', type: :request do
   describe 'GET /groups/:group_id/expenses' do
     let!(:expense1) do
       create(:expense, group: group, paid_by_membership_id: membership.id,
-             paid_at: Date.new(2024, 1, 2), expense_participants_list: [membership])
+             paid_at: Date.new(2024, 1, 2), expense_participants_list: [ membership ])
     end
     let!(:expense2) do
       # デフォルトで other_membership を participant として作成
       create(:expense, group: group, paid_by_membership_id: other_membership.id,
-             paid_at: Date.new(2024, 1, 1), expense_participants_list: [other_membership])
+             paid_at: Date.new(2024, 1, 1), expense_participants_list: [ other_membership ])
     end
 
     before do
@@ -91,7 +91,7 @@ RSpec.describe 'Groups::Expenses', type: :request do
       {
         expense: {
           paid_by_membership_id: membership.id,
-          participant_ids: [membership.id.to_s, other_membership.id.to_s],
+          participant_ids: [ membership.id.to_s, other_membership.id.to_s ],
           name: 'テスト支出',
           amount: 5000,
           paid_at: Date.current
@@ -132,7 +132,7 @@ RSpec.describe 'Groups::Expenses', type: :request do
       it '参加者が正確に保存されること' do
         post group_expenses_path(group), params: valid_params
         expense = Expense.last
-        expect(expense.participants.pluck(:id)).to match_array([membership.id, other_membership.id])
+        expect(expense.participants.pluck(:id)).to contain_exactly(membership.id, other_membership.id)
       end
     end
 
@@ -187,7 +187,7 @@ RSpec.describe 'Groups::Expenses', type: :request do
   describe 'GET /groups/:group_id/expenses/:id/edit' do
     let(:expense) do
       create(:expense, group: group, paid_by_membership_id: membership.id,
-             expense_participants_list: [membership])
+             expense_participants_list: [ membership ])
     end
 
     before do
@@ -244,7 +244,7 @@ RSpec.describe 'Groups::Expenses', type: :request do
         # user は other_group のメンバーではないため、check_group_member で groups_path にリダイレクトされる
         other_membership = other_group.group_memberships.first
         other_expense = create(:expense, group: other_group, paid_by_membership_id: other_membership.id,
-                               expense_participants_list: [other_membership])
+                               expense_participants_list: [ other_membership ])
         get edit_group_expense_path(other_group, other_expense)
         expect(response).to redirect_to(groups_path)
       end
@@ -263,28 +263,19 @@ RSpec.describe 'Groups::Expenses', type: :request do
   describe 'PATCH /groups/:group_id/expenses/:id' do
     let(:expense) do
       create(:expense, group: group, paid_by_membership_id: membership.id,
-             expense_participants_list: [membership])
+             expense_participants_list: [ membership ])
     end
-
-    before do
-      # expense が作成されることを確認
-      expense
-      # other_membership を明示的に作成
-      other_membership
-    end
-
     let(:valid_params) do
       {
         expense: {
           paid_by_membership_id: membership.id,
-          participant_ids: [membership.id.to_s, other_membership.id.to_s],
+          participant_ids: [ membership.id.to_s, other_membership.id.to_s ],
           name: '更新されたタイトル',
           amount: 8000,
           paid_at: Date.current
         }
       }
     end
-
     let(:invalid_params) do
       {
         expense: {
@@ -297,6 +288,15 @@ RSpec.describe 'Groups::Expenses', type: :request do
       }
     end
 
+    before do
+      # expense が作成されることを確認
+      expense
+      # other_membership を明示的に作成
+      other_membership
+    end
+
+
+
     context '支出の作成者が有効なパラメータで更新する場合' do
       it '支出が更新されること' do
         patch group_expense_path(group, expense), params: valid_params
@@ -308,7 +308,7 @@ RSpec.describe 'Groups::Expenses', type: :request do
       it '参加者が更新されること' do
         patch group_expense_path(group, expense), params: valid_params
         expense.reload
-        expect(expense.participants.pluck(:id)).to match_array([membership.id, other_membership.id])
+        expect(expense.participants.pluck(:id)).to contain_exactly(membership.id, other_membership.id)
       end
 
       it 'expensesページにリダイレクトされること' do
@@ -367,7 +367,7 @@ RSpec.describe 'Groups::Expenses', type: :request do
         # user は other_group のメンバーではないため、check_group_member で groups_path にリダイレクトされる
         other_membership = other_group.group_memberships.first
         other_expense = create(:expense, group: other_group, paid_by_membership_id: other_membership.id,
-                               expense_participants_list: [other_membership])
+                               expense_participants_list: [ other_membership ])
         patch group_expense_path(other_group, other_expense), params: valid_params
         expect(response).to redirect_to(groups_path)
       end
@@ -386,7 +386,7 @@ RSpec.describe 'Groups::Expenses', type: :request do
   describe 'DELETE /groups/:group_id/expenses/:id' do
     let!(:expense) do
       create(:expense, group: group, paid_by_membership_id: membership.id,
-             expense_participants_list: [membership])
+             expense_participants_list: [ membership ])
     end
 
     before do
@@ -450,7 +450,7 @@ RSpec.describe 'Groups::Expenses', type: :request do
         # user は other_group のメンバーではないため、check_group_member で groups_path にリダイレクトされる
         other_membership = other_group.group_memberships.first
         other_expense = create(:expense, group: other_group, paid_by_membership_id: other_membership.id,
-                               expense_participants_list: [other_membership])
+                               expense_participants_list: [ other_membership ])
         delete group_expense_path(other_group, other_expense)
         expect(response).to redirect_to(groups_path)
       end

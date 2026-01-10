@@ -18,9 +18,9 @@ RSpec.describe SettlementCalculator, type: :service do
     context '支出がない場合' do
       it '全メンバーの精算額が0になること' do
         # ensure all memberships are created (let is lazy-evaluated)
-        [membership1, membership2, membership3].each(&:id)
+        [ membership1, membership2, membership3 ].each(&:id)
 
-        calculator = SettlementCalculator.new(group)
+        calculator = described_class.new(group)
         result = calculator.calculate
 
         expect(result).to have_key(membership1.id)
@@ -33,11 +33,11 @@ RSpec.describe SettlementCalculator, type: :service do
     context '1つの支出を3人で均等に割る場合' do
       before do
         create(:expense, group: group, paid_by_membership_id: membership1.id, amount: 3000,
-               expense_participants_list: [membership1, membership2, membership3])
+               expense_participants_list: [ membership1, membership2, membership3 ])
       end
 
       it 'user1が支払い、user2とuser3が負担を持つこと' do
-        calculator = SettlementCalculator.new(group)
+        calculator = described_class.new(group)
         result = calculator.calculate
 
         # user1: 3000支払い - 1000負担 = 2000受け取る
@@ -61,15 +61,15 @@ RSpec.describe SettlementCalculator, type: :service do
       before do
         # 支出1: user1が3000円支払い、3人で均等割
         create(:expense, group: group, paid_by_membership_id: membership1.id, amount: 3000,
-               expense_participants_list: [membership1, membership2, membership3])
+               expense_participants_list: [ membership1, membership2, membership3 ])
 
         # 支出2: user2が2000円支払い、2人で均等割
         create(:expense, group: group, paid_by_membership_id: membership2.id, amount: 2000,
-               expense_participants_list: [membership2, membership3])
+               expense_participants_list: [ membership2, membership3 ])
       end
 
       it '各メンバーの累積精算額が正確に計算されること' do
-        calculator = SettlementCalculator.new(group)
+        calculator = described_class.new(group)
         result = calculator.calculate
 
         # user1: 3000支払い - 1000負担 = 2000受け取る
@@ -93,11 +93,11 @@ RSpec.describe SettlementCalculator, type: :service do
       before do
         # 10000円を3人で割る = 3333.3... → 3333.3に切り捨て
         create(:expense, group: group, paid_by_membership_id: membership1.id, amount: 10000,
-               expense_participants_list: [membership1, membership2, membership3])
+               expense_participants_list: [ membership1, membership2, membership3 ])
       end
 
       it '小数第1位で切り捨てされること' do
-        calculator = SettlementCalculator.new(group)
+        calculator = described_class.new(group)
         result = calculator.calculate
 
         # 10000 / 3 = 3333.333... → 3333.3に切り捨て
@@ -116,11 +116,11 @@ RSpec.describe SettlementCalculator, type: :service do
       before do
         # 1000円を2人で割る = 500
         create(:expense, group: group, paid_by_membership_id: membership1.id, amount: 1000,
-               expense_participants_list: [membership1, membership2])
+               expense_participants_list: [ membership1, membership2 ])
       end
 
       it '正確に2分の1が計算されること' do
-        calculator = SettlementCalculator.new(group)
+        calculator = described_class.new(group)
         result = calculator.calculate
 
         expect(result[membership1.id][:paid]).to eq(1000)
@@ -137,15 +137,15 @@ RSpec.describe SettlementCalculator, type: :service do
       before do
         # 支出1: user1が5000円支払い、user1とuser2が参加
         create(:expense, group: group, paid_by_membership_id: membership1.id, amount: 5000,
-               expense_participants_list: [membership1, membership2])
+               expense_participants_list: [ membership1, membership2 ])
 
         # 支出2: user2が3000円支払い、user1とuser2が参加
         create(:expense, group: group, paid_by_membership_id: membership2.id, amount: 3000,
-               expense_participants_list: [membership1, membership2])
+               expense_participants_list: [ membership1, membership2 ])
       end
 
       it '累積の支払いと負担が正確に計算されること' do
-        calculator = SettlementCalculator.new(group)
+        calculator = described_class.new(group)
         result = calculator.calculate
 
         # user1: (5000 + 0)支払い - (2500 + 1500)負担 = 1000
@@ -167,11 +167,11 @@ RSpec.describe SettlementCalculator, type: :service do
 
         # user1とuser2だけが参加する支出
         create(:expense, group: group, paid_by_membership_id: membership1.id, amount: 2000,
-               expense_participants_list: [membership1, membership2])
+               expense_participants_list: [ membership1, membership2 ])
       end
 
       it '参加していないメンバーの負担が0になること' do
-        calculator = SettlementCalculator.new(group)
+        calculator = described_class.new(group)
         result = calculator.calculate
 
         # user3は参加していない

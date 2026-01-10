@@ -38,7 +38,7 @@ FactoryBot.define do
 
     after(:build) do |expense, evaluator|
       # validation チェック用に in-memory の participants を設定
-      memberships = evaluator.expense_participants_list || [expense.paid_by_membership]
+      memberships = evaluator.expense_participants_list || [ expense.paid_by_membership ]
       memberships.each do |membership|
         expense.expense_participants.build(group_membership: membership)
       end
@@ -46,7 +46,7 @@ FactoryBot.define do
 
     after(:create) do |expense, evaluator|
       # DB に participants を作成（build で既に participants は in-memory に存在）
-      memberships = evaluator.expense_participants_list || [expense.paid_by_membership]
+      memberships = evaluator.expense_participants_list || [ expense.paid_by_membership ]
 
       # 既存の expense_participants を削除
       expense.expense_participants.destroy_all

@@ -38,7 +38,7 @@ class Expense < ApplicationRecord
 
   # カスタムバリデーション
   validate :paid_by_membership_belongs_to_group
-  validate :participants_must_exist, on: [:create, :update]
+  validate :participants_must_exist, on: [ :create, :update ]
 
   # スコープ
   scope :ordered_by_paid_at, -> { order(paid_at: :desc) }
