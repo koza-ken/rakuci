@@ -1,4 +1,177 @@
-# 開発設定
+# CLAUDE.md
+
+このファイルは Claude Code でこのリポジトリのコードを扱う際のガイダンスを提供します。
+
+## プロジェクト概要
+
+**RakuCi（ラクシィ）**は、グループ旅行の計画をスムーズに進めるアプリです。旅行の候補地をカードにして検討し、行き先が決まったらそのまましおりにまとめられます。
+
+- **技術スタック**: Rails 7.2 + Hotwire（Turbo + Stimulus）+ Tailwind CSS + PostgreSQL
+- **認証**: Devise + OmniAuth（Google）
+- **テスト**: RSpec + factory_bot_rails + Capybara
+
+## 開発ワークフロー
+
+### Docker Compose での開発
+
+```bash
+# サービス起動（Rails、PostgreSQL、アセットコンパイル）
+docker-compose up
+
+# Rails コンソールアクセス
+docker-compose exec web bundle exec rails console
+
+# テスト実行
+docker-compose exec web bundle exec rspec spec/requests/groups/expenses_spec.rb
+
+# 特定のテストを実行
+docker-compose exec web bundle exec rspec spec/requests/groups/expenses_spec.rb -e "テスト名"
+
+# リント・フォーマット
+docker-compose exec web bundle exec rubocop -a  # スタイル自動修正
+docker-compose exec web bundle exec brakeman   # セキュリティスキャン
+```
+
+## アプリケーション構造
+
+### コアアーキテクチャ：二つの名前空間パターン
+
+アプリケーションは 2 つの独立したリソーススコープを使用しています：
+
+- **Users 名前空間** (`scope module: "users"`): 個人用カード管理、個人用しおり
+- **Groups 名前空間** (`resources :groups` with `scope module: "groups"`): 協調機能、共有計画
+
+**主要なモデル**:
+- `User`: Devise による認証
+- `Group`: `group_memberships` を持つ協調ワークスペース
+- `Card`: 目的地を格納するコンテナ（ポリモーフィック：User または Group に属する `cardable`）
+- `Spot`: Card 内の場所詳細
+- `Schedule`: しおり（ポリモーフィック：User または Group に属する）
+- `Expense`: 精算・支出管理（グループ専用）
+
+### ルーティングパターン：Concerns と Shallow ルーティング
+
+```ruby
+# 移動可能な Concern（acts_as_list 統合）
+concern :movable do
+  member do
+    patch :move_higher
+    patch :move_lower
+  end
+end
+
+# Shallow ルーティングはネスト深度を減らす
+# 例: /groups/:id/cards/:id/spots → /group/spots/:id
+```
+
+### コントローラーパターン
+
+**名前空間別のネストされたコントローラー**:
+- `Users::CardsController` → `/cards`
+- `Groups::CardsController` → `/groups/:group_id/cards`
+- `Groups::ExpensesController` → `/groups/:group_id/expenses`
+
+**一般的なパターン**:
+- before_action: `set_resource`、`check_authorization`
+- Turbo Stream サポート: AJAX 更新用 `format.turbo_stream`
+- 認可: Pundit ではなく custom メソッド
+- I18n: `rails-i18n` gem を使用
+
+### 精算機能アーキテクチャ
+
+- `Groups::ExpensesController`: グループ支出の CRUD
+- `Expense` モデル: `expense_participants` 経由で参加者をバリデート
+- `SettlementCalculator`: 残高を計算（支払額 vs. 負担額）
+- ビュー: `app/views/groups/expenses/index.html.erb`（作成 + 一覧表示 + 計算を処理）
+
+## 開発規約
+
+### コードスタイル
+
+- **Ruby**: RuboCop Omakase variant（自動チェック）
+- **命名**: `snake_case`（Ruby/DB）、`camelCase`（JavaScript）
+- **コメント**: 日本語推奨、UTF-8 エンコーディング
+- **テスト**: 新機能時は必須（RSpec + factory_bot）
+
+### 重要な要件
+
+1. **Learning Mode**: 段階的な理解を促すティーチング志向の説明
+2. **完全な実装**: TODO や部分的な機能は不可 - 始めたら完成させる
+3. **セキュリティ優先**: リスク検出時は事前に明示・対策を含める
+4. **リファクタリングガイダンス**: `/docs/memo.md` を参照
+5. **UI 規約**: ユーザーの明確な指示がない限りアイコン不使用
+6. **自動コミット禁止**: Git 操作はユーザーが手動で実施
+
+### よくある開発タスク
+
+**Card に新機能を追加する**:
+1. `app/models/card.rb` を修正（アソシエーション/バリデーション追加）
+2. 必要に応じてマイグレーション作成
+3. 両方のコントローラーを更新: `users/cards_controller.rb` + `groups/cards_controller.rb`
+4. ビューを更新: `app/views/users/cards/` + `app/views/groups/cards/`
+5. 両方のコンテキストで RSpec テストを作成
+6. `bundle exec rspec spec/` で確認
+
+**グループ専用機能を追加する**:
+1. `app/controllers/groups/` 内にコントローラーを作成
+2. `resources :groups` → `scope module: "groups"` 下にルートを追加
+3. 複雑な場合は Expense 機能パターンに従う
+4. `/groups/:id/` URL 構造でテスト
+
+**認証・認可を修正する**:
+- `ApplicationController` の `before_action` フィルターを確認
+- ユーザーセッション: `current_user`（Devise）
+- グループメンバーシップチェック: `current_user.member_of?(@group)`
+- ゲストアクセス: `guest_token_for()` メソッド
+
+## コミットメッセージプレフィックス
+
+- add: 新規機能実装やファイルの追加
+- fix: バグの修正
+- remove: ファイルなどの削除
+- style: 動作が変わらない、ビューやコードの修正
+- refactor: コードのリファクタリング
+- test: テストの実装、テストによる修正（lint）
+- docs: ドキュメントの変更
+
+## プルリクエストテンプレート
+
+```
+## 概要
+[変更内容の 1-2 行のサマリー]
+
+## 実装理由
+[なぜこの変更が必要か - 問題背景とソリューション]
+
+## 作業内容
+1. [最初の変更の説明]
+2. [次の変更の説明]
+...
+
+## 作業結果
+1. [最初の変更の結果 - ユーザー観点での影響]
+2. [次の変更の結果]
+[テスト結果を含める]
+
+## 未実施項目
+[関連するが今回のプルリクで実装しなかった作業]
+
+## 課題・備考
+[レビューの際に特に見てほしい点、セキュリティ懸念、参考リンク]
+```
+
+## 重要なファイル
+
+- `config/routes.rb`: Concerns パターンを含む完全なルーティング構造
+- `app/models/`: 15 個の主要モデル（`app/models/` ディレクトリを参照）
+- `app/views/groups/expenses/index.html.erb`: 複雑なフォーム + 表示パターンの例
+- `spec/requests/groups/expenses_spec.rb`: CRUD テストの包括的な例
+- `spec/factories/`: factory_bot 定義（全モデル）
+- `.rubocop.yml`: スタイル強制設定
+
+## ブラウザサポート
+
+⚠️ **注意**: `ApplicationController` の `allow_browser versions: :modern` はモダンブラウザ機能を強制しています。Playwright などのテスト自動化ツールでテスト時は一時的な調整が必要な場合があります。
 
 ## 開発において遵守すること
 
@@ -13,48 +186,3 @@
 - コミットは手動で行うため、"git add"や"git commit"コマンドは実行しないこと。
 - リファクタリングの際は、/docs/memo.mdを参考にして行うこと。
 - 以上の内容を確認したら、"ベストプラクティスに従い、タスクを細かく一つずつlearningモードで実装を進めていきます"と出力し、確実にこのファイルの内容を把握した旨を示すこと。
-
-## コミットメッセージ／プルリクエストタイトルのプレフィックス
-
-- add: 新規機能実装やファイルの追加
-- fix: バグの修正
-- remove: ファイルなどの削除
-- style: 動作が変わらない、ビューやコードの修正
-- refactor: コードのリファクタリング
-- test: テストの実装、テストによる修正（lint）
-- docs: ドキュメントの変更
-
-
-## プルリクエストのコメント案のテンプレート
-
-```
-## 概要
-* 概要をみればどんな作業をして、どうなるかがわかるように1～2行程度
-* 関連するissueやプルリクエスト
-
-## 実装理由
-* この実装をなぜ行う必要があるのか（これまでの開発の前提知識がなくても理解できるように背景や課題を）
-
-## 作業内容
-* プルリクで何をしたのか、概要を具体化した内容（手順、考え方）
-* 作業ごとに数字を振って、下記の作業結果と結びつけるように記載する
-
-## 作業結果
-* 作業内容を行った結果、なにがどう変わったのか（ユーザー目線、開発者目線）
-* 作業ごとに数字を振って、上記の作業結果と結びつけるように記載する
-* テストの結果も記載
-
-
-## 未実施項目
-* 関連する実装で今回のプルリクでは実装しなかったこと、それはどのissueでやるか
-
-## 課題・備考
-* 特にレビューしてほしいところ、実装上の懸念、追記事項
-* 実装で参考にした外部リンク
-
-
-```
-
-## フロント（ビュー）を生成するときの注意点
-
-- 開発者が明確に指示したとき以外はアイコンは使用しない
