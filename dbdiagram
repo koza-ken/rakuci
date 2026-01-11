@@ -1,13 +1,13 @@
 Table users {
-  id int [pk, increment]
+  id bigint [pk, increment]
   display_name varchar(20) [note: "マイページで表示されるだけの名前"]
-  email varchar(255) [unique, not null, note: "ログイン用アドレス"]
-  encrypted_password varchar(255) [not null, note: "暗号化済みのパスワード"]
-  reset_password_token varchar(255) [note: "パスワードリセット時のトークン"]
+  email varchar [unique, not null, note: "ログイン用アドレス"]
+  encrypted_password varchar [not null, note: "暗号化済みのパスワード"]
+  reset_password_token varchar [note: "パスワードリセット時のトークン"]
   reset_password_sent_at timestamp [note: "リセットメール送信日時"]
   remember_created_at timestamp [note: "ログインを保持する期限"]
   provider varchar(64) [note: "外部認証サービスの識別"]
-  uid varchar(255) [note: "外部サービスのユーザー固有ID"]
+  uid varchar [note: "外部サービスのユーザー固有ID"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
@@ -24,7 +24,7 @@ Table users {
 }
 
 Table groups {
-  id int [pk, increment]
+  id bigint [pk, increment]
   created_by_user_id int [not null, ref: > users.id, note: "グループ作成者"]
   name varchar(30) [not null]
   invite_token varchar(64) [not null, unique, note: "招待リンク用トークン"]
@@ -45,9 +45,9 @@ Table groups {
 }
 
 Table group_memberships {
-  id int [pk, increment]
-  user_id int [null, ref: > users.id, note: "登録ユーザーのみ値あり"]
-  group_id int [not null, ref: > groups.id, note: "所属グループ"]
+  id bigint [pk, increment]
+  user_id bigint [null, ref: > users.id, note: "登録ユーザーのみ値あり"]
+  group_id bigint [not null, ref: > groups.id, note: "所属グループ"]
   group_nickname varchar(20) [note: "グループ内での表示名"]
   role varchar [not null, default: "member", note: "member or owner"]
   guest_token varchar(64) [note: "ゲスト認証用トークン（user_id=nullの場合のみ）"]
@@ -71,39 +71,39 @@ Table group_memberships {
 }
 
 Table cards {
-  id int [pk, increment]
-  user_id int [null, ref: > users.id, note: "個人用カードの場合のユーザーID"]
-  group_id int [null, ref: > groups.id, note: "グループ用カードの場合のグループID"]
+  id bigint [pk, increment]
   name varchar(50) [not null]
   memo text
+  cardable_type varchar [not null, note: "'User' or 'Group'"]
+  cardable_id bigint [not null, note: "user_id or group_id（ポリモーフィック）"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
   Indexes {
-    user_id [name: "index_cards_on_user_id"]
-    group_id [name: "index_cards_on_group_id"]
+    (cardable_type, cardable_id) [name: "index_cards_on_cardable_type_and_cardable_id"]
   }
 
   Note: '''
-  CHECK制約:
-  (user_id IS NOT NULL AND group_id IS NULL)
-  OR
-  (user_id IS NULL AND group_id IS NOT NULL)
+  個人用・グループ用カード（ポリモーフィック関連付け）
+  cardable_type='User' → 個人用カード
+  cardable_type='Group' → グループ用カード
+
+  マイグレーション: 20251209050509_add_polymorphic_columns_to_cards.rb で実装
 
   データ例:
   # 個人用カード
-  id=1, user_id=10, group_id=NULL
+  id=1, name="京都", cardable_type='User', cardable_id=10
   # グループ用カード
-  id=2, user_id=NULL, group_id=5
+  id=2, name="沖縄", cardable_type='Group', cardable_id=5
   '''
 
 }
 
 Table spots {
-  id int [pk, increment]
-  card_id int [not null, ref: > cards.id, note: "所属カード"]
-  category_id int [not null, ref: > categories.id]
-  google_place_id varchar(255) [note: "Google Place ID"]
+  id bigint [pk, increment]
+  card_id bigint [not null, ref: > cards.id, note: "所属カード"]
+  category_id bigint [not null, ref: > categories.id]
+  google_place_id varchar [note: "Google Place ID"]
   name varchar(50) [not null, note: "スポット名"]
   address text [note: "住所"]
   phone_number varchar(20) [note: "電話番号"]
@@ -125,7 +125,7 @@ Table spots {
 }
 
 Table categories {
-  id int [pk, increment]
+  id bigint [pk, increment]
   name varchar(20) [not null, note: "カテゴリ名"]
   display_order int [not null, unique, note: "表示順"]
   created_at timestamp [not null]
@@ -149,9 +149,9 @@ Table categories {
 }
 
 Table schedules {
-  id int [pk, increment]
+  id bigint [pk, increment]
   schedulable_type varchar [not null, note: "'User' or 'Group'"]
-  schedulable_id int [not null, note: "user_id or group_id"]
+  schedulable_id bigint [not null, note: "user_id or group_id（ポリモーフィック）"]
   name varchar [not null, note: "しおりの名前"]
   start_date date [note: "旅行開始日"]
   end_date date [note: "旅行終了日"]
@@ -160,37 +160,41 @@ Table schedules {
   updated_at timestamp [not null]
 
   Indexes {
-    (schedulable_type, schedulable_id) [unique, name: "index_schedules_on_polymorphic", note: "schedulable_type='Group'の場合のみユニーク制約"]
+    (schedulable_type, schedulable_id) [unique, name: "index_schedules_on_polymorphic", note: "WHERE (schedulable_type='Group') → Groupのみユニーク制約"]
   }
 
   Note: '''
   ユーザーとグループの両方がしおり（旅行計画）を持つことができる。
-  - User：複数のスケジュール作成可能
+  - User：複数のスケジュール作成可能（ユニーク制約なし）
   - Group：1つのスケジュールのみ（DB制約とバリデーションで制御）
+
+  【注意】name は DBカラムに制限がないが、モデルのバリデーションで max 50文字に制限している。
+  DBのユニーク制約は schedulable_type='Group' のレコードのみに適用される。
   '''
 }
 
 Table schedule_spots {
-  id int [pk, increment]
-  schedule_id int [not null, ref: > schedules.id, note: "しおりID"]
-  spot_id int [null, ref: > spots.id, note: "スポットID（カスタム入力時はNULL）"]
+  id bigint [pk, increment]
+  schedule_id bigint [not null, ref: > schedules.id, note: "しおりID"]
+  spot_id bigint [null, ref: > spots.id, note: "スポットID（カスタム入力時はNULL）"]
   global_position int [not null, note: "全体での順番（acts_as_listで管理）"]
   day_number int [not null, note: "何日目（1日目,2日目...区切り線表示用）"]
   start_time time [note: "開始時刻（到着時刻）"]
   end_time time [note: "終了時刻（出発時刻）"]
   is_custom_entry boolean [not null, default: false, note: "true: カスタム入力, false: Spotからの参照"]
-  snapshot_name varchar(50) [note: "スポット名のスナップショット"]
+  snapshot_name varchar [note: "スポット名のスナップショット"]
   snapshot_category_id int [note: "カテゴリIDのスナップショット（外部キー制約なし）"]
-  snapshot_address varchar(255) [note: "住所のスナップショット"]
-  snapshot_phone_number varchar(20) [note: "電話番号のスナップショット"]
-  snapshot_website_url varchar(500) [note: "WebサイトURLのスナップショット"]
-  google_place_id varchar(255) [note: "Google Place IDのスナップショット"]
+  snapshot_address varchar [note: "住所のスナップショット"]
+  snapshot_phone_number varchar [note: "電話番号のスナップショット"]
+  snapshot_website_url varchar [note: "WebサイトURLのスナップショット"]
+  google_place_id varchar [note: "Google Place IDのスナップショット"]
   memo text [note: "メモ"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
   Indexes {
     (schedule_id, day_number) [name: "index_ss_on_schedule_and_day"]
+    schedule_id [name: "index_schedule_spots_on_schedule_id"]
     spot_id [name: "index_schedule_spots_on_spot_id"]
   }
 
@@ -210,9 +214,9 @@ Table schedule_spots {
 }
 
 Table comments {
-  id int [pk, increment]
-  card_id int [not null, ref: > cards.id, note: "コメント対象のカード"]
-  group_membership_id int [not null, ref: > group_memberships.id, note: "コメント投稿者"]
+  id bigint [pk, increment]
+  card_id bigint [not null, ref: > cards.id, note: "コメント対象のカード"]
+  group_membership_id bigint [not null, ref: > group_memberships.id, note: "コメント投稿者"]
   content text [not null, note: "コメント内容"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
@@ -231,9 +235,9 @@ Table comments {
 }
 
 Table item_lists {
-  id int [pk, increment]
+  id bigint [pk, increment]
   listable_type varchar [not null, note: "'User' or 'Schedule'"]
-  listable_id int [not null, note: "user_id or schedule_id"]
+  listable_id integer [not null, note: "user_id or schedule_id（ポリモーフィック）"]
   name varchar(100) [note: "リスト名"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
@@ -253,15 +257,17 @@ Table item_lists {
   - グループしおり: listable_type == 'Schedule' && schedule.schedulable_type == 'Group'
 
   マスターリストからしおり用リストへのコピーが可能。
+
+  【注意】listable_id は integer（int）で定義。他のほとんどのテーブルは bigint を使用。
   '''
 }
 
 Table items {
-  id int [pk, increment]
-  item_list_id int [not null, ref: > item_lists.id, note: "所属リスト"]
+  id bigint [pk, increment]
+  item_list_id integer [not null, ref: > item_lists.id, note: "所属リスト"]
   name varchar(100) [not null, note: "持ち物名"]
   checked boolean [not null, default: false, note: "準備済みか"]
-  position int [note: "並び順（acts_as_listで管理）"]
+  position integer [note: "並び順（acts_as_listで管理）"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
@@ -274,13 +280,15 @@ Table items {
   個別の持ち物アイテム。
   - acts_as_listでpositionを管理（スコープ: item_list_id）
   - checked: 準備完了フラグ（Ajax更新）
+
+  【注意】item_list_id は integer（int）で定義。他のほとんどのテーブルは bigint を使用。
   '''
 }
 
 Table likes {
-  id int [pk, increment]
-  card_id int [not null, ref: > cards.id, note: "いいねされたカード"]
-  group_membership_id int [not null, ref: > group_memberships.id, note: "いいねした人"]
+  id bigint [pk, increment]
+  card_id bigint [not null, ref: > cards.id, note: "いいねされたカード"]
+  group_membership_id bigint [not null, ref: > group_memberships.id, note: "いいねした人"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
@@ -298,9 +306,9 @@ Table likes {
 }
 
 Table expenses {
-  id int [pk, increment]
-  group_id int [not null, ref: > groups.id]
-  paid_by_membership_id int [not null, ref: > group_memberships.id, note: "立て替えた人"]
+  id bigint [pk, increment]
+  group_id bigint [not null, ref: > groups.id]
+  paid_by_membership_id bigint [not null, ref: > group_memberships.id, note: "立て替えた人"]
   name varchar(100) [not null, note: "項目名（ホテル代、交通費等）"]
   amount int [not null, note: "支払額（円、整数で保存）"]
   memo text [note: "支出に関する自由記述メモ"]
@@ -310,19 +318,21 @@ Table expenses {
 
   Indexes {
     group_id [name: "index_expenses_on_group_id"]
+    paid_by_membership_id [name: "index_expenses_on_paid_by_membership_id"]
   }
 
   Note: '''
   グループの支出を記録。
-  金額は整数で保存される。割り勘計算時の端数処理はアプリケーション層で実施。
+  金額は正の整数のみで保存される。割り勘計算時の端数処理はアプリケーション層で実施。
   メモフィールドで支出の詳細や理由を記録可能。
+  SettlementCalculator で支出から精算額を計算。
   '''
 }
 
 Table expense_participants {
-  id int [pk, increment]
-  expense_id int [not null, ref: > expenses.id]
-  group_membership_id int [not null, ref: > group_memberships.id, note: "この支出の参加者"]
+  id bigint [pk, increment]
+  expense_id bigint [not null, ref: > expenses.id]
+  group_membership_id bigint [not null, ref: > group_memberships.id, note: "この支出の参加者"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 

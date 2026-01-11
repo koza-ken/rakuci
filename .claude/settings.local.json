@@ -1,9 +1,9 @@
 {
-  "includeCoAuthoredBy": "false",
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Read(*)",
-      "Edit()",
+      "Edit(*)",
       "Bash(git:*)",
       "Bash(npm:*)",
       "Bash(npx expo prebuild:*)",
@@ -30,13 +30,20 @@
       "Bash(tail:*)",
       "Bash(docker compose exec web bundle exec rubocop)",
       "Bash(docker compose exec web bundle exec rspec)",
-      "Bash(docker compose exec web bundle exec brakeman)"
+      "Bash(docker compose exec web bundle exec brakeman)",
+      "mcp__playwright__browser_fill_form",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_network_requests"
     ],
     "deny": []
   },
-  "outputStyle": "Learning",
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "serena"
   ],
-  "enableAllProjectMcpServers": true
+  "outputStyle": "Learning"
 }
