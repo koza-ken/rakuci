@@ -47,3 +47,6 @@
 
 # simplecovのhtmlとか
 coverage
+
+# Serena local development cache
+/.serena
