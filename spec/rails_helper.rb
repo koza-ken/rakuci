@@ -75,4 +75,7 @@ RSpec.configure do |config|
 
   # Devise の統合テストヘルパー
   config.include Devise::Test::IntegrationHelpers, type: :request
+
+  # Devise の統合テストヘルパー（システムスペック用）
+  config.include Devise::Test::IntegrationHelpers, type: :system
 end
