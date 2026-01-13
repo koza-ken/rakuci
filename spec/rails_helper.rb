@@ -7,6 +7,10 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 # Uncomment the line below in case you have `--require rails_helper` in the `.rspec` file
 # that will avoid rails generators crashing because migrations haven't been run yet
 # return unless Rails.env.test?
+
+# Capybara設定を早期にロード（rspec/railsより前に必須）
+require_relative 'support/capybara'
+
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -78,4 +82,10 @@ RSpec.configure do |config|
 
   # Devise の統合テストヘルパー（システムスペック用）
   config.include Devise::Test::IntegrationHelpers, type: :system
+
+  # システムスペック用のドライバー設定（カスタム設定のため独自のドライバー名）
+  # ドライバー詳細設定は spec/support/capybara.rb に一元化
+  config.before(:each, type: :system) do
+    driven_by(:cuprite_docker)
+  end
 end
