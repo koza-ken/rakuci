@@ -17,6 +17,7 @@ services: # コンテナの定義開始
       start_period: 10s # 初回チェック開始までの待機時間
 
   web: # Railsアプリケーションの設定
+    init: true # tiniを使用してゾンビプロセスを回収（システムスペックのChromium対策）
     build: # Dockerイメージのビルド設定
       context: . # ビルドコンテキストはカレントディレクトリ
       dockerfile: Dockerfile.dev # 開発用Dockerfileを使用
