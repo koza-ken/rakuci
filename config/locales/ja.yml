@@ -148,6 +148,9 @@ ja:
     form:
       placeholder: コメントを入力（200字以内）
       submit: 投稿
+  likes:
+    add: いいね
+    remove: いいね済み
   date:
     day_names:
       - 日
