@@ -169,6 +169,38 @@ end
 - `spec/factories/`: factory_bot 定義（全モデル）
 - `.rubocop.yml`: スタイル強制設定
 
+## システムスペック（E2Eテスト）
+
+### テスト実装の方針
+
+**システムスペックで検証すべき機能**:
+- Stimulus/Turbo が関わっている機能
+- モーダル表示・フォーム送信（Turbo Frame）
+- リアルタイムDOM更新（Turbo Stream）
+- ドラッグ&ドロップなどのUI操作
+- 複雑な条件分岐を含むUIワークフロー
+
+**リクエストスペックで十分な機能**:
+- 単純なCRUD操作
+- APIのみのエンドポイント
+- HTML静的レンダリング
+- リダイレクト確認
+
+### ドキュメント
+
+E2Eテストに関する詳細は `/docs/` に管理：
+- `SYSTEM_SPEC_PLAN.md` - 実装済みテストの詳細・学習ポイント
+- `SYSTEM_SPEC_STRATEGY.md` - テスト戦略・優先度分析
+- `SYSTEM_SPEC_IMPLEMENTATION_GUIDE.md` - 実装ハウツー
+- `ARCHITECTURE_DIAGRAM.md` - システムアーキテクチャ図
+
+### Capybara/Cuprite 設定
+
+- **ドライバー**: Cuprite（Chrome DevTools Protocol）
+- **ブラウザ**: Chromium（コンテナ内インストール済み）
+- **設定ファイル**: `spec/support/capybara.rb`
+- **ヘルパー**: `spec/support/system_spec_helpers.rb`
+
 ## ブラウザサポート
 
 ⚠️ **注意**: `ApplicationController` の `allow_browser versions: :modern` はモダンブラウザ機能を強制しています。Playwright などのテスト自動化ツールでテスト時は一時的な調整が必要な場合があります。
