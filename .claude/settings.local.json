@@ -4,7 +4,11 @@
     "allow": [
       "Read(*)",
 
-      "Bash(git:*)",
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git branch:*)",
+      "Bash(git show:*)",
       "Bash(npm:*)",
       "Bash(npx expo prebuild:*)",
       "Bash(npx expo run:ios:*)",
