@@ -3,6 +3,11 @@
   <%# フラッシュメッセージを表示 %>
   <%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
 
+  <%# 最初のコメント追加時に「まだコメントがありません」を削除 %>
+  <% if @card.comments.count == 1 %>
+    <%= turbo_stream.remove "no-comments-message" %>
+  <% end %>
+
   <%# 成功時：コメントを追加 %>
   <%= turbo_stream.append "comments_list" do %>
     <%= render "comments/comment", comment: @comment %>
