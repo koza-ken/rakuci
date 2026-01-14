@@ -42,6 +42,7 @@
     <% if @cards.any? %>
       <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
         <%= link_to new_card_path, data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
+                    title: t('cards.index_content.create_card'),
                     class: "group bg-primary hover:opacity-80 text-text-light w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
           <%= render "shared/icon/add_card_icon" %>
         <% end %>
