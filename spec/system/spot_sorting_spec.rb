@@ -3,10 +3,12 @@ require "rails_helper"
 RSpec.describe "スポット並び替えフロー", type: :system do
   let(:user) { create(:user) }
   let(:schedule) { create(:schedule, :for_user, schedulable: user, name: "東京旅行") }
-  let!(:schedule_spot1) { create(:schedule_spot, schedule: schedule, snapshot_name: "スポット1", global_position: 1) }
-  let!(:schedule_spot2) { create(:schedule_spot, schedule: schedule, snapshot_name: "スポット2", global_position: 2) }
+  let(:schedule_spot1) { create(:schedule_spot, schedule: schedule, snapshot_name: "スポット1", global_position: 1) }
+  let(:schedule_spot2) { create(:schedule_spot, schedule: schedule, snapshot_name: "スポット2", global_position: 2) }
 
   before do
+    schedule_spot1
+    schedule_spot2
     login_as_user(user)
   end
 
@@ -41,9 +43,11 @@ RSpec.describe "スポット並び替えフロー", type: :system do
   end
 
   describe "複数スポットの並び替え" do
+    let(:schedule_spot3) { create(:schedule_spot, schedule: schedule, snapshot_name: "スポット3", global_position: 3) }
+
     it "複数のスポットを順番にドラッグ&ドロップで並び替えられること" do
-      # 追加のスポットを作成
-      schedule_spot3 = create(:schedule_spot, schedule: schedule, snapshot_name: "スポット3", global_position: 3)
+      # schedule_spot3 を明示的に参照して作成
+      expect(schedule_spot3).to be_persisted
 
       visit schedule_path(schedule)
 

@@ -6,12 +6,15 @@ RSpec.describe "グループ支出精算管理", type: :system do
   let(:group_member2) { create(:user) }
   let(:group) { create(:group, creator: group_creator) }
   let(:schedule) { create(:schedule, :for_group, schedulable: group) }
+  let(:membership_creator) { group.group_memberships.create!(user: group_creator, group_nickname: "太郎") }
+  let(:membership_member1) { group.group_memberships.create!(user: group_member1, group_nickname: "花子") }
+  let(:membership_member2) { group.group_memberships.create!(user: group_member2, group_nickname: "次郎") }
 
   before do
     schedule
-    @membership_creator = group.group_memberships.create!(user: group_creator, group_nickname: "太郎")
-    @membership_member1 = group.group_memberships.create!(user: group_member1, group_nickname: "花子")
-    @membership_member2 = group.group_memberships.create!(user: group_member2, group_nickname: "次郎")
+    membership_creator
+    membership_member1
+    membership_member2
   end
 
   describe "複数支出追加時の精算額計算と表示" do
@@ -55,25 +58,31 @@ RSpec.describe "グループ支出精算管理", type: :system do
   end
 
   describe "支出編集時の精算額更新と表示" do
-    before do
-      @expense = create(:expense,
+    let(:expense) do
+      create(:expense,
         group: group,
-        paid_by_membership_id: @membership_creator.id,
+        paid_by_membership_id: membership_creator.id,
         amount: 3000,
         name: "旅館代",
-        expense_participants_list: [ @membership_creator, @membership_member1, @membership_member2 ]
+        expense_participants_list: [ membership_creator, membership_member1, membership_member2 ]
       )
+    end
+
+    before do
       login_as_user(group_creator)
     end
 
     it "支出の金額を編集すると、精算額が再計算・再表示されること" do
+      # expense を明示的に参照して作成
+      expect(expense).to be_persisted
+
       visit group_expenses_path(group)
 
       # 編集前：太郎 +2000
       expect(page).to have_text("+¥2,000")
 
       # 編集ボタンをクリック
-      click_link "", href: edit_group_expense_path(group, @expense)
+      click_link "", href: edit_group_expense_path(group, expense)
 
       # 金額を3000から6000に変更
       fill_in "expense_amount", with: "6000"
@@ -87,21 +96,29 @@ RSpec.describe "グループ支出精算管理", type: :system do
   end
 
   describe "支出削除時の精算額更新と表示" do
-    before do
-      @expense1 = create(:expense,
+    let(:expense1) do
+      create(:expense,
         group: group,
-        paid_by_membership_id: @membership_creator.id,
+        paid_by_membership_id: membership_creator.id,
         amount: 3000,
         name: "旅館代",
-        expense_participants_list: [ @membership_creator, @membership_member1, @membership_member2 ]
+        expense_participants_list: [ membership_creator, membership_member1, membership_member2 ]
       )
-      @expense2 = create(:expense,
+    end
+
+    let(:expense2) do
+      create(:expense,
         group: group,
-        paid_by_membership_id: @membership_member1.id,
+        paid_by_membership_id: membership_member1.id,
         amount: 600,
         name: "夜間食事代",
-        expense_participants_list: [ @membership_creator, @membership_member1, @membership_member2 ]
+        expense_participants_list: [ membership_creator, membership_member1, membership_member2 ]
       )
+    end
+
+    before do
+      expense1
+      expense2
       login_as_user(group_creator)
     end
 
