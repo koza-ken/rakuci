@@ -98,7 +98,7 @@
           <%# ボタン %>
           <div class="flex gap-3">
             <%= f.submit t('cards.form.submit'), class: "btn-main flex-1" %>
-            <%= link_to t('cards.form.cancel'), (@card.group_card? ? group_card_path(@card.group, @card) : card_path(@card)), class: "btn-sub flex-1 text-center" %>
+            <%= link_to t('cards.form.cancel'), (@card.group_card? ? group_card_path(@card.group, @card) : card_path(@card)), data: { action: "click->modal#close" }, class: "btn-sub flex-1 text-center" %>
           </div>
         <% end %>
       </main>

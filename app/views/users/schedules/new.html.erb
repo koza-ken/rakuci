@@ -49,9 +49,7 @@
 
           <div class="flex gap-2">
             <%= f.submit t('users.schedules.form.submit'), class: "btn-main px-4 py-2 flex-1" %>
-            <button type="button" class="btn-sub px-4 py-2 flex-1" data-action="click->modal#close">
-              <%= t('users.schedules.form.cancel') %>
-            </button>
+            <%= link_to t('users.schedules.form.cancel'), :back, data: { action: "click->modal#close" }, class: "btn-sub px-4 py-2 flex-1 text-center" %>
           </div>
         <% end %>
       </main>
