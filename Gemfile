@@ -28,6 +28,7 @@ gem "jbuilder"
 # gem "bcrypt", "~> 3.1.7"
 
 gem "devise"
+gem 'resend'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection', '1.0.2'
 gem "acts_as_list"
