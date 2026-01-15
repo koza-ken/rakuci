@@ -33,9 +33,9 @@
         </div>
       <% end %>
 
-      <%# 新規登録リンク %>
-      <div class="mb-8 text-center text-text">
-        <%= t('.sign_up') %><%= link_to t('.sign_up_link'), new_registration_path(resource_name), class: "text-secondary font-bold underline hover:opacity-80" %>
+      <%# パスワード忘れリンク %>
+      <div class="mb-8 text-center text-text text-sm">
+        <%= t('.forgot_password') %><%= link_to t('.forgot_password_link'), new_password_path(resource_name), class: "text-secondary font-bold underline hover:opacity-80" %>
       </div>
 
       <%# 区切り線と「または」 %>
@@ -46,7 +46,7 @@
       </div>
 
       <%# Googleログインボタン %>
-      <div>
+      <div class="mb-16">
         <%= button_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false }, class: "w-full flex items-center justify-center gap-3 btn-sub" do %>
           <svg class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -56,6 +56,11 @@
           </svg>
           <%= t('.google_login') %>
         <% end %>
+      </div>
+
+            <%# 新規登録リンク %>
+      <div class="text-center text-text">
+        <%= t('.sign_up') %><%= link_to t('.sign_up_link'), new_registration_path(resource_name), class: "text-secondary font-bold underline hover:opacity-80" %>
       </div>
     </div>
   </main>
