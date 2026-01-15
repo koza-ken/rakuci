@@ -12,17 +12,16 @@
 
 <%# ページタイトル（h1）を表示 %>
 <%= turbo_stream.replace "groups-page-title" do %>
-  <h1 class="text-2xl text-text font-bold"><%= t('groups.index.title') %></h1>
+  <h1 class="text-xl text-text font-bold"><%= t('groups.index.title') %></h1>
 <% end %>
 
 <%# FABボタンを表示 %>
 <%= turbo_stream.replace "groups-fab-container" do %>
   <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
     <%= link_to new_group_path, data: {turbo_frame: "group-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
+                title: t('groups.index.create_group'),
                 class: "group bg-primary hover:opacity-80 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
-      <%# +アイコン %>
-      <span class="block w-6 h-[3px] bg-text-light rounded absolute transition-all duration-300"></span>
-      <span class="block w-6 h-[3px] bg-text-light rounded absolute rotate-90 transition-all duration-300"></span>
+      <%= render "shared/icon/add_group_icon"%>
     <% end %>
   </div>
 <% end %>

@@ -130,6 +130,11 @@ jobs:
           RAILS_ENV: test
         run: bin/rails assets:precompile
 
+      - name: Install Chromium for system tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
+
       - name: Run tests
         env:
           RAILS_ENV: test
@@ -147,5 +152,5 @@ jobs:
         if: failure()
         with:
           name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
+          path: ${{ github.workspace }}/tmp/capybara
           if-no-files-found: ignore

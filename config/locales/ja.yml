@@ -143,10 +143,14 @@ ja:
     show:
       title: カード詳細
   comments:
+    delete: 削除
     confirm_delete: コメントを削除しますか
     form:
       placeholder: コメントを入力（200字以内）
       submit: 投稿
+  likes:
+    add: いいね
+    remove: いいね済み
   date:
     day_names:
       - 日

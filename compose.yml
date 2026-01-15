@@ -17,6 +17,7 @@ services: # コンテナの定義開始
       start_period: 10s # 初回チェック開始までの待機時間
 
   web: # Railsアプリケーションの設定
+    init: true # tiniを使用してゾンビプロセスを回収（システムスペックのChromium対策）
     build: # Dockerイメージのビルド設定
       context: . # ビルドコンテキストはカレントディレクトリ
       dockerfile: Dockerfile.dev # 開発用Dockerfileを使用
@@ -30,6 +31,8 @@ services: # コンテナの定義開始
 
     tty: true # 疑似ターミナルを割り当て
     stdin_open: true # 標準入力を保持
+    mem_limit: 2g # システムスペック（Chromium）用にメモリ上限を2GBに設定
+    memswap_limit: 2500m # スワップを含めた上限を設定
     volumes: # ボリュームマウントの設定
       - .:/myapp # ソースコードのマウント
       - bundle_data:/usr/local/bundle:cached # gemの永続化
