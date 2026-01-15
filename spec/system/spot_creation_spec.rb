@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "スポット追加フロー", type: :system do
   let(:user) { create(:user) }
+  let(:category) { Category.first }
   let(:card) { create(:card, :for_user, cardable: user) }
 
   before do
@@ -10,7 +11,6 @@ RSpec.describe "スポット追加フロー", type: :system do
     login_as_user(user)
   end
 
-  let(:category) { Category.first }
 
   describe "カード内にスポットを追加する" do
     it "スポット追加フォームで新しいスポットを作成できること" do

@@ -61,7 +61,7 @@ RSpec.describe "グループ支出精算管理", type: :system do
         paid_by_membership_id: @membership_creator.id,
         amount: 3000,
         name: "旅館代",
-        expense_participants_list: [@membership_creator, @membership_member1, @membership_member2]
+        expense_participants_list: [ @membership_creator, @membership_member1, @membership_member2 ]
       )
       login_as_user(group_creator)
     end
@@ -93,14 +93,14 @@ RSpec.describe "グループ支出精算管理", type: :system do
         paid_by_membership_id: @membership_creator.id,
         amount: 3000,
         name: "旅館代",
-        expense_participants_list: [@membership_creator, @membership_member1, @membership_member2]
+        expense_participants_list: [ @membership_creator, @membership_member1, @membership_member2 ]
       )
       @expense2 = create(:expense,
         group: group,
         paid_by_membership_id: @membership_member1.id,
         amount: 600,
         name: "夜間食事代",
-        expense_participants_list: [@membership_creator, @membership_member1, @membership_member2]
+        expense_participants_list: [ @membership_creator, @membership_member1, @membership_member2 ]
       )
       login_as_user(group_creator)
     end
