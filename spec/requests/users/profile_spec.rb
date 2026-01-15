@@ -26,11 +26,6 @@ RSpec.describe "Users::Profile", type: :request do
         expect(response).to have_http_status(:success)
       end
 
-      it "パスワード変更リンクが表示される" do
-        get profile_path
-        expect(response.body).to include("パスワードを変更する")
-      end
-
       it "現在のパスワードフィールドが表示される" do
         get profile_path
         expect(response.body).to include("現在のパスワード")

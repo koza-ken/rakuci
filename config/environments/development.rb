@@ -43,6 +43,9 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
+  # Resend API設定（開発環境）
+  config.action_mailer.delivery_method = :resend
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

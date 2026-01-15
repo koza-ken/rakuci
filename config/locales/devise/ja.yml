@@ -18,7 +18,13 @@ ja:
       confirmation_instructions:
         subject: "確認方法について"
       reset_password_instructions:
-        subject: "パスワードリセット方法について"
+        subject: "【RakuCi】パスワードのリセットについて"
+        hello: "%{email} さま"
+        greet: "いつもRakuCiをお使いいただきありがとうございます。"
+        message: "パスワードをリセットするためのリンクをお送りします。"
+        link_text: "パスワードをリセットする"
+        password_won_t_change: "パスワードは上記のリンクにアクセスして新しいパスワードを設定するまで変更されません。"
+        ignore_notice: "このメールに心当たりがない場合は、このメールを削除してください。"
       unlock_instructions:
         subject: "アカウント解除方法について"
       email_changed:
@@ -32,19 +38,22 @@ ja:
       no_token: "このページにアクセスすることはできません。パスワード再設定メール内のリンクから選択してください。"
       send_instructions: "パスワード再設定方法をメールでお送りしました。"
       send_paranoid_instructions: "メールアドレスが見つかった場合、パスワード再設定方法をメールでお送りします。"
-      updated: "パスワードが正常に変更されました。ログインしています。"
+      updated: "パスワードが正常に変更されました。"
       updated_not_active: "パスワードが正常に変更されました。"
       new:
-        title: "パスワード再設定"
+        title: "パスワードの再設定"
         email: "メールアドレス"
-        submit: "再設定メールを送信"
+        submit: "メールを送信"
+        send_instructions_confirmation: "入力したメールアドレスに送信します"
         sign_in: "ログインページへ"
       edit:
-        title: "新しいパスワード設定"
+        title: "新しいパスワードの設定"
         password: "新しいパスワード"
         password_confirmation: "パスワード（確認）"
         password_hint: "%{count}文字以上"
+        minimum_password_length: "%{count}文字以上"
         submit: "パスワードを変更"
+        change_password_confirmation: "新しいパスワードに変更してよろしいですか。"
         sign_in: "ログインページへ"
     registrations:
       destroyed: "アカウントを削除しました。またのご利用をお待ちしています。"
