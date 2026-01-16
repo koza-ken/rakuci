@@ -115,7 +115,7 @@ ja:
       edit: 編集
       memo: メモ
       name: カード名
-      name_placeholder: カード名を記入してください
+      name_placeholder: カードにする旅行先を記入してください
       submit: 作成
       update: 更新
     index_content:
