@@ -210,7 +210,7 @@ ja:
     details:
       delete_button: 削除
       delete_confirm: を削除しますか
-      delete_member_title: メンバーを削除
+      delete_member_title: グループ作成者はメンバーを削除できます
     edit:
       title: グループ編集
     form:
