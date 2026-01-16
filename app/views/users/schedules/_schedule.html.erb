@@ -16,10 +16,10 @@
       <%# グループしおりの場合、グループ名と人数を表示 %>
       <% if schedule.schedule_type == :group %>
         <div class="flex items-center justify-between">
-          <span class="text-sm text-text-light"><%= schedule.group.name %></span>
+          <span class="text-sm text-text-light"><%= schedule.schedulable.name %></span>
           <div class="flex items-center gap-1">
             <%= render "shared/icon/schedule_icon_member" %>
-            <span class="text-sm text-text-light"><%= schedule.group.members.count %>人</span>
+            <span class="text-sm text-text-light"><%= schedule.schedulable.group_memberships.size %>人</span>
           </div>
         </div>
       <% else %>
