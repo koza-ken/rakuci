@@ -4,7 +4,9 @@ class Users::SchedulesController < ApplicationController
   def index
     @user = current_user
     personal_schedules = @user.schedules
-    group_schedules = @user.groups.map(&:schedule).compact
+    group_schedule_ids = @user.groups.pluck(:id)
+    group_schedules = Schedule.where(schedulable_type: "Group", schedulable_id: group_schedule_ids)
+                               .includes(schedulable: :group_memberships)
     @schedules = (personal_schedules + group_schedules).sort_by { |s| s.start_date.presence || Date.new(1, 1, 1) }.reverse
   end
 
