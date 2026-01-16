@@ -6,7 +6,7 @@
 <%= turbo_frame_tag "schedule-create-modal", data: { controller: "modal" } %>
 
 <div class="min-h-screen bg-main-bg">
-  <main class="flex flex-col items-center justify-center px-8 py-6">
+  <main class="flex flex-col items-center justify-center px-8 py-6" data-controller="guide">
     <div class="w-full max-w-md mb-6">
       <%# グループ名セクション（表示/編集を切り替え） %>
       <div id="group-name-section" data-controller="card-edit" class="mb-4">
@@ -63,7 +63,12 @@
     <div class="w-full max-w-md">
       <div class="mb-4 flex justify-between items-start gap-3">
         <div class="flex-1">
-          <h2 class="text-xl font-bold text-text mb-1"><%= t('groups.show.travel_candidates') %></h2>
+          <div class="flex items-center gap-2 mb-1">
+            <h2 class="text-xl font-bold text-text"><%= t('groups.show.travel_candidates') %></h2>
+            <button class="bg-secondary hover:opacity-80 transition shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-sm font-semibold" data-action="click->guide#toggleModal" title="<%= t('cards.index_content.guide_button') %>">
+              ?
+            </button>
+          </div>
           <%# しおり作成メッセージ %>
           <div id="schedule-create-message">
             <% if @group.schedule.blank? %>
@@ -119,6 +124,43 @@
       <%= button_to group_path(@group), method: :delete, form_class: "inline", class: "btn-danger", data: { turbo_confirm: t('groups.show.delete_confirm') } do %>
         <%= t('groups.show.delete_group') %>
       <% end %>
+    </div>
+
+    <%# カードガイドモーダル %>
+    <div id="group-card-guide-modal" class="fixed inset-0 z-50 bg-black/50 hidden" data-guide-target="modal">
+        <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+          <div class="p-8">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-xl font-bold text-text"><%= t('cards.index_content.guide_title') %></h2>
+              <button class="text-2xl text-text-light hover:text-text transition" data-action="click->guide#toggleModal">×</button>
+            </div>
+
+          <div class="space-y-6">
+            <p class="text-text-light leading-relaxed"><%= t('cards.index_content.guide_description') %></p>
+
+            <div class="flex justify-center gap-3">
+              <div class="flex-1 min-w-0">
+                <div class="w-full h-auto">
+                  <%= image_tag "card_guide_summary.svg", alt: "Card summary view", class: "rounded-lg border border-border w-full h-auto object-cover" %>
+                </div>
+                <p class="text-xs text-text-light text-center mt-2 break-words"><%= t('cards.index_content.guide_card_label') %></p>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="w-full h-auto">
+                  <%= image_tag "card_guide_detail.svg", alt: "Card detail view", class: "rounded-lg border border-border w-full h-auto object-cover" %>
+                </div>
+                <p class="text-xs text-text-light text-center mt-2 break-words"><%= t('cards.index_content.guide_spots_label') %></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 flex justify-center">
+            <button class="btn-main px-6 py-2" data-action="click->guide#toggleModal">
+              <%= t('cards.index_content.guide_close') %>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </div>
