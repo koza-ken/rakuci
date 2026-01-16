@@ -7,7 +7,7 @@
   <div id="card-name-section" data-controller="card-edit">
     <%# 表示モード：エラーがあれば非表示 %>
     <div id="card-name-display" class="<%= 'hidden' if @card.errors.any? %> flex items-start gap-6 mb-4" data-card-edit-target="display">
-      <h1 class="text-2xl font-bold text-text"><%= @card.name %></h1>
+      <h1 class="text-xl font-bold text-text"><%= @card.name %></h1>
       <%# 編集アイコン（サイズ固定） %>
       <button class="shrink-0 text-text hover:opacity-70 transition pt-1" data-action="click->card-edit#toggleForm">
         <%= render "shared/icon/form_icon_edit" %>
@@ -43,7 +43,7 @@
     <%# 表示モード：エラーがあれば非表示 %>
     <div id="memo-display" data-memo-edit-target="display" class="<%= 'hidden' if @card.errors.any? %> cursor-pointer">
       <%= form_with model: @card, url: (@card.group_card? ? group_card_path(@card.group, @card) : card_path(@card)), class: "w-full" do |f| %>
-        <%= f.label :memo, t('cards.form.memo'), class: "block text-2xl font-bold text-text mb-2" %>
+        <%= f.label :memo, t('cards.form.memo'), class: "block text-xl font-bold text-text mb-2" %>
         <%= f.text_area :memo, class: "form-text-field bg-gray-100 cursor-pointer", readonly: true, data: { action: "click->memo-edit#toggleForm" } %>
       <% end %>
     </div>
@@ -51,7 +51,7 @@
     <%# 編集モード：エラーがなければ hidden、あればを表示 %>
     <div id="memo-form" data-memo-edit-target="form" class="<%= 'hidden' unless @card.errors.any? %> w-full">
       <%= form_with model: @card, url: (@card.group_card? ? group_card_path(@card.group, @card) : card_path(@card)), local: true, class: "w-full" do |f| %>
-        <%= f.label :memo, t('cards.form.memo'), class: "block text-2xl font-bold text-text mb-2" %>
+        <%= f.label :memo, t('cards.form.memo'), class: "block text-xl font-bold text-text mb-2" %>
         <%= f.text_area :memo, class: "form-text-field flex-1 resize-none min-h-[100px]", placeholder: "メモを入力してください" %>
         <div class="flex gap-2 mt-2">
           <%= f.submit t('cards.form.update'), class: "btn-main px-4 py-2 w-auto" %>

@@ -72,7 +72,7 @@
 
   <%# 削除モード（非表示） %>
   <div id="members-delete-mode" data-member-delete-target="deleteMode" class="hidden">
-    <h3 class="block text-sm font-medium text-text mb-2"><%= t('groups.details.delete_member_title') %></h3>
+    <h3 class="block text-xs font-medium text-text mb-2"><%= t('groups.details.delete_member_title') %></h3>
     <div id="members-list" class="space-y-2 mb-4 max-h-[200px] overflow-y-auto border border-gray-300 rounded p-2 bg-white">
       <% @group.group_memberships.each do |membership| %>
         <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">

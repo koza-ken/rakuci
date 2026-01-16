@@ -6,7 +6,7 @@
     <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
       <main class="flex flex-col items-center justify-center px-8 py-12">
         <div class="w-full max-w-md">
-          <h1 class="text-2xl font-bold text-text mb-8"><%= t('spots.new.title') %></h1>
+          <h1 class="text-xl font-bold text-text mb-8"><%= t('spots.new.title') %></h1>
         </div>
 
         <%= form_with model: @spot, url: (@card.group_card? ? group_card_spots_path(@card.group, @card) : card_spots_path(@card)), class: "w-full max-w-md", data: { controller: "autocomplete" } do |f| %>

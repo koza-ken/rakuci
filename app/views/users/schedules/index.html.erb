@@ -3,37 +3,35 @@
 
 <%= turbo_frame_tag "schedule-create-modal", data: { controller: "modal" } %>
 
-<main class="flex flex-col items-center justify-center px-8 py-6">
+<main class="flex flex-col items-center justify-center px-8 py-6 mb-20">
   <div id="schedules-page-title">
     <% if @schedules.any? %>
-      <h1 class="text-xl text-text font-bold mb-8"><%= t('users.schedules.index.title') %></h1>
+      <h1 class="text-xl text-text font-bold"><%= t('users.schedules.index.title') %></h1>
     <% end %>
   </div>
 
-  <div class="w-full max-w-2xl">
-    <div id="schedules_list" class="w-full space-y-4">
-      <% if @schedules.any? %>
-        <%= render @schedules %>
-      <% else %>
-        <div id="schedules_empty_state" class="flex justify-center py-8 mt-6 px-4">
-          <div class="w-full max-w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-8 py-10 space-y-8 text-center animate-fade-in-up">
-            <div class="mx-auto w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
-              <%= render "shared/icon/footer_icon_schedule", icon_class: "text-text-light/40" %>
-            </div>
-            <div class="space-y-6">
-              <p class="text-xl font-semibold text-text"><%= t('users.schedules.index.no_schedules') %></p>
-              <p class="text-sm text-text-light leading-relaxed"><%= t('users.schedules.index.create_schedule_caption') %></p>
-            </div>
-            <div>
-              <%= link_to new_schedule_path, data: {turbo_frame: "schedule-create-modal"}, class: "first-create-btn" do %>
-                <span class="text-xl">+</span>
-                <span><%= t('users.schedules.index.create_schedule') %></span>
-              <% end %>
-            </div>
+  <div id="schedules_list" class="w-full space-y-4 mt-8">
+    <% if @schedules.any? %>
+      <%= render @schedules %>
+    <% else %>
+      <div id="schedules_empty_state" class="flex justify-center py-8 mt-6 px-4">
+        <div class="w-full max-w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-4 py-10 space-y-8 text-center animate-fade-in-up">
+          <div class="mx-auto w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
+            <%= render "shared/icon/footer_icon_schedule", icon_class: "text-text-light/40" %>
+          </div>
+          <div class="space-y-6">
+            <p class="text-lg font-semibold text-text"><%= t('users.schedules.index.no_schedules') %></p>
+            <p class="text-sm text-text-light leading-relaxed"><%= t('users.schedules.index.create_schedule_caption') %></p>
+          </div>
+          <div>
+            <%= link_to new_schedule_path, data: {turbo_frame: "schedule-create-modal"}, class: "first-create-btn" do %>
+              <%= render "shared/icon/group_card_icon_add" %>
+              <span><%= t('users.schedules.index.create_schedule') %></span>
+            <% end %>
           </div>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 
   <%# FAB ボタン %>
