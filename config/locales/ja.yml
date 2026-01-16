@@ -118,16 +118,16 @@ ja:
       name_placeholder: カード名を記入してください
       submit: 作成
       update: 更新
-    index:
-      new_card: 新規作成
-      no_cards: まだカードがありません
-      title: あなたの旅のカード
     index_content:
       create_card: カードを作成
-      lets_create_card: 行きたい旅行先をカードにしよう
-      no_cards: まだカードがありません
+      guide_button: くわしく
+      guide_card_label: 旅行先のカード
+      guide_close: とじる
+      guide_description: カードには、観光地・グルメ・体験・買い物のカテゴリごとにスポットを追加できます。
+      guide_spots_label: 追加したスポット
+      guide_title: カードの使い方
+      lets_create_card: 旅行先のカードをつくろう
       personal_card_page: このページはあなた専用のカードをつくることができます
-      personal_or_group: グループで旅行を計画する場合はグループページに移動しよう
       title: あなたの旅のカード
     memo_input_placeholder: メモを入力してください
     messages:
