@@ -252,13 +252,13 @@ ja:
       new_user_link: こちら
       new_user_text: 新規ユーザー登録は
       note: ユーザー名は参加するグループ「
-      note_suffix: 」でのみ有効です
+      note_suffix: でのみ有効です
       past_users_text: 前回参加したときのユーザー名を選んでください
       past_users_text_login_user: ログインして参加する場合は過去に参加したユーザー名を選んでください
       past_users_text_sub: ゲストユーザーのメンバーの名前が表示されます
       past_users_title: すでに
       past_users_title_suffix: に参加している
-      select_placeholder: 参加メンバー一覧
+      select_placeholder: 参加メンバー（ゲスト）一覧
       sign_in: ログイン
       signed_up_users_text: ログイン／新規登録後にこのページに戻ってきます
       signed_up_users_text_sub: 過去にゲスト参加した場合はログインしてから入りなおすこともできます
