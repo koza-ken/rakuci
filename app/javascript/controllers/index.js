@@ -48,3 +48,6 @@ application.register("item-edit", ItemEditController);
 
 import DropdownController from "./dropdown_controller";
 application.register("dropdown", DropdownController);
+
+import GuideController from "./guide_controller";
+application.register("guide", GuideController);
