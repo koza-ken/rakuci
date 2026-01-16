@@ -115,7 +115,7 @@ ja:
       edit: 編集
       memo: メモ
       name: カード名
-      name_placeholder: カードにする旅行先を記入してください
+      name_placeholder: 例：東京都
       submit: 作成
       update: 更新
     index_content:
@@ -216,8 +216,8 @@ ja:
     form:
       cancel: キャンセル
       end_date: 旅行終了日
-      group_nickname: グループでの名前
-      group_nickname_placeholder: グループのメンバーに表示されます
+      group_nickname: グループでのあなたの名前
+      group_nickname_placeholder: グループ内で表示されます
       name: グループ名
       name_placeholder: グループ名を入力してください
       start_date: 旅行開始日
@@ -229,7 +229,7 @@ ja:
       update: 更新
     index:
       create_group: グループを作成
-      create_group_caption: グループを作って仲間を招待しよう
+      create_group_caption: グループをつくって仲間を招待しよう
       created_groups: 作成したグループ
       new_group: 新規作成
       no_groups: まだグループがありません
@@ -304,7 +304,7 @@ ja:
     show:
       add_item_button: もちものを追加
       back_to_schedule: しおりにもどる
-      empty_message: 旅行のもちものを追加しよう
+      empty_message: 旅行のもちものを整理しよう
       title: もちものリスト
   notices:
     cards:
