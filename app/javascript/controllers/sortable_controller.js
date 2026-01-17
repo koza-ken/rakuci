@@ -32,7 +32,10 @@ export default class extends Controller {
       new Sortable(list, {
         animation: 150,
         ghostClass: "sortable-ghost",
-        handle: "[data-sortable-handle]",
+        // ドラッグのハンドルをクラスで指定
+        handle: ".drag-handle",
+        // items全体をグループと指定することで並び替えができる
+        group: "items",
         onEnd: (evt) => this.handleItemsSortEnd(evt),
       })
     })
