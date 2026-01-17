@@ -6,14 +6,14 @@
       <%= form_with model: @schedule, class: "w-full" do |f| %>
         <div class="flex gap-6">
           <%# 開始日 %>
-          <div class="mb-6 cursor-pointer">
+          <div class="flex-1 mb-6 cursor-pointer">
             <%= f.label :start_date, t('groups.form.start_date'), class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.date_field :start_date, readonly: true, class: "form-text-field bg-gray-100 cursor-pointer", data: { action: "click->memo-edit#toggleForm" } %>
+            <%= f.date_field :start_date, readonly: true, class: "form-text-field bg-gray-100 cursor-pointer w-full", data: { action: "click->memo-edit#toggleForm" } %>
           </div>
           <%# 終了日 %>
-          <div class="mb-6 cursor-pointer">
+          <div class="flex-1 mb-6 cursor-pointer">
             <%= f.label :end_date, t('groups.form.end_date'), class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.date_field :end_date, readonly: true, class: "form-text-field bg-gray-100 cursor-pointer", data: { action: "click->memo-edit#toggleForm" } %>
+            <%= f.date_field :end_date, readonly: true, class: "form-text-field bg-gray-100 cursor-pointer w-full", data: { action: "click->memo-edit#toggleForm" } %>
           </div>
         </div>
       <% end %>
@@ -47,7 +47,7 @@
           </div>
         <% end %>
         <%# ボタン %>
-        <div class="flex gap-2 mt-2 justify-end">
+        <div class="flex gap-2 mt-2 mb-6 justify-end">
           <%= f.submit t('groups.form.update'), class: "btn-main px-4 py-2 w-auto" %>
           <button type="button" class="btn-sub px-4 py-2 w-auto" data-action="click->memo-edit#toggleForm">
             ×
@@ -63,8 +63,20 @@
   <%# 通常表示モード %>
   <div id="members-display" data-member-delete-target="display">
     <div class="mb-6 cursor-pointer">
-      <div id="members-count">
-        <%= label_tag :member, "#{t('groups.show.members')}（#{@group.group_memberships.count.to_s}名）", class: "block text-sm font-medium text-text mb-2" %>
+      <div id="members-count" class="flex items-center gap-6 mb-2">
+        <label for="members-textarea-content" class="block text-sm font-medium text-text">
+          <%= t('groups.show.members') %>（<%= @group.group_memberships.count.to_s %>名）
+        </label>
+        <button
+          data-controller="clipboard"
+          data-clipboard-text-value="<%= new_membership_url(@group.invite_token) %>"
+          data-action="click->clipboard#copy"
+          title="<%= t('groups.show.invite_button') %>"
+          class="btn-main w-auto p-1 shrink-0 flex items-center justify-center">
+          <div class="size-8 text-text-light flex items-center justify-center">
+            <%= render "shared/icon/add_membership_icon" %>
+          </div>
+        </button>
       </div>
       <%= text_area_tag :member, @group.group_memberships.map(&:group_nickname).join("\n"), id: "members-textarea-content", readonly: true, class: "form-text-field bg-gray-100 resize-none min-h-[90px] cursor-pointer", data: { action: "click->member-delete#toggleDelete" } %>
     </div>
