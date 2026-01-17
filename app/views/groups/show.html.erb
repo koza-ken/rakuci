@@ -11,7 +11,7 @@
       <%# グループ名セクション（表示/編集を切り替え） %>
       <div id="group-name-section" data-controller="card-edit" class="mb-4">
         <%# 表示モード %>
-        <div id="group-name-display" class="flex items-start gap-3 mb-4" data-card-edit-target="display">
+        <div id="group-name-display" class="flex items-start gap-3 mb-8" data-card-edit-target="display">
           <h2 class="text-xl font-bold text-text"><%= @group.name %></h2>
           <%# 編集アイコン（サイズ固定） %>
           <button class="shrink-0 text-text hover:opacity-70 transition pt-1" data-action="click->card-edit#toggleForm">
@@ -39,19 +39,6 @@
             <% end %>
           <% end %>
         </div>
-      </div>
-      <%# 招待ボタン %>
-      <div class="flex item-center justify-end mb-8">
-        <button
-          data-controller="clipboard"
-          data-clipboard-text-value="<%= new_membership_url(@group.invite_token) %>"
-          data-action="click->clipboard#copy"
-          title="<%= t('groups.show.invite_button') %>"
-          class="btn-main w-auto p-2">
-          <div class="flex items-center justify-center size-8 text-text-light">
-            <%= render "shared/icon/add_membership_icon" %>
-          </div>
-        </button>
       </div>
 
       <div id="group_details">
