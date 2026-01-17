@@ -6,14 +6,14 @@
       <%= form_with model: @schedule, class: "w-full" do |f| %>
         <div class="flex gap-6">
           <%# 開始日 %>
-          <div class="mb-6 cursor-pointer">
+          <div class="flex-1 mb-6 cursor-pointer">
             <%= f.label :start_date, t('groups.form.start_date'), class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.date_field :start_date, readonly: true, class: "form-text-field bg-gray-100 cursor-pointer", data: { action: "click->memo-edit#toggleForm" } %>
+            <%= f.date_field :start_date, readonly: true, class: "form-text-field bg-gray-100 cursor-pointer w-full", data: { action: "click->memo-edit#toggleForm" } %>
           </div>
           <%# 終了日 %>
-          <div class="mb-6 cursor-pointer">
+          <div class="flex-1 mb-6 cursor-pointer">
             <%= f.label :end_date, t('groups.form.end_date'), class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.date_field :end_date, readonly: true, class: "form-text-field bg-gray-100 cursor-pointer", data: { action: "click->memo-edit#toggleForm" } %>
+            <%= f.date_field :end_date, readonly: true, class: "form-text-field bg-gray-100 cursor-pointer w-full", data: { action: "click->memo-edit#toggleForm" } %>
           </div>
         </div>
       <% end %>
@@ -47,7 +47,7 @@
           </div>
         <% end %>
         <%# ボタン %>
-        <div class="flex gap-2 mt-2 justify-end">
+        <div class="flex gap-2 mt-2 mb-6 justify-end">
           <%= f.submit t('groups.form.update'), class: "btn-main px-4 py-2 w-auto" %>
           <button type="button" class="btn-sub px-4 py-2 w-auto" data-action="click->memo-edit#toggleForm">
             ×
