@@ -66,13 +66,13 @@
         <div id="schedule-button" class="">
           <% if @group.schedule.present? %>
             <%# グループにしおりがあればしおり詳細に遷移 %>
-            <%= link_to group_schedule_path(@group), class: "btn-main w-auto p-2 inline-flex items-center justify-center", title: t('groups.show.schedule_detail') do %>
+            <%= link_to group_schedule_path(@group), class: "btn-main w-auto p-1 inline-flex items-center justify-center", title: t('groups.show.schedule_detail') do %>
               <div class="size-8">
                 <%= render "shared/icon/footer_icon_schedule", icon_class: "text-text-light" %>
               </div>
             <% end %>
           <% else %>
-            <%= link_to new_group_schedule_path(@group), data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" }, class: "btn-main w-auto p-2 inline-flex items-center justify-center", title: t('groups.show.schedule_create') do %>
+            <%= link_to new_group_schedule_path(@group), data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" }, class: "btn-main w-auto p-1 inline-flex items-center justify-center", title: t('groups.show.schedule_create') do %>
               <div class="size-8">
                 <%= render "shared/icon/add_schedule_icon" %>
               </div>

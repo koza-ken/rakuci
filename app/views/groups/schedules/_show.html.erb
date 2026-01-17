@@ -22,11 +22,15 @@
       <div class="flex items-center justify-between gap-3 mb-8">
         <%= link_to t('groups.schedules.show.back_to_group'), group_path(@group), class: "btn-sub text-center px-4" %>
         <div class="flex gap-3">
-          <%= link_to group_expenses_path(group), class: "btn-main p-2 w-auto" do %>
-            <%= render "shared/icon/expense_icon", icon_class: "text-text-light" %>
+          <%= link_to group_expenses_path(group), class: "btn-main p-1 w-auto inline-flex items-center justify-center" do %>
+            <div class="size-8">
+              <%= render "shared/icon/expense_icon", icon_class: "text-text-light" %>
+            </div>
           <% end %>
-          <%= link_to group_schedule_item_list_path(group), class: "btn-main p-2 w-auto" do %>
-            <%= render "shared/icon/footer_icon_backpack", icon_class: "text-text-light" %>
+          <%= link_to group_schedule_item_list_path(group), class: "btn-main p-1 w-auto inline-flex items-center justify-center" do %>
+            <div class="size-8">
+              <%= render "shared/icon/footer_icon_backpack", icon_class: "text-text-light" %>
+            </div>
           <% end %>
         </div>
       </div>
