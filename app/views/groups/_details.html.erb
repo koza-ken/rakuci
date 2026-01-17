@@ -63,7 +63,7 @@
   <%# 通常表示モード %>
   <div id="members-display" data-member-delete-target="display">
     <div class="mb-6 cursor-pointer">
-      <div id="members-count" class="flex items-center justify-between mb-2">
+      <div id="members-count" class="flex items-center gap-6 mb-2">
         <label for="members-textarea-content" class="block text-sm font-medium text-text">
           <%= t('groups.show.members') %>（<%= @group.group_memberships.count.to_s %>名）
         </label>
@@ -72,8 +72,10 @@
           data-clipboard-text-value="<%= new_membership_url(@group.invite_token) %>"
           data-action="click->clipboard#copy"
           title="<%= t('groups.show.invite_button') %>"
-          class="btn-main w-auto px-4 py-2 text-sm shrink-0">
-          <%= t('groups.show.invite_member_button') %>
+          class="btn-main w-auto p-1 shrink-0 flex items-center justify-center">
+          <div class="size-8 text-text-light flex items-center justify-center">
+            <%= render "shared/icon/add_membership_icon" %>
+          </div>
         </button>
       </div>
       <%= text_area_tag :member, @group.group_memberships.map(&:group_nickname).join("\n"), id: "members-textarea-content", readonly: true, class: "form-text-field bg-gray-100 resize-none min-h-[90px] cursor-pointer", data: { action: "click->member-delete#toggleDelete" } %>
