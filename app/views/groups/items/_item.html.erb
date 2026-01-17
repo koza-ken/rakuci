@@ -1,5 +1,6 @@
 <%# item1個の表示フォーム（グループ用） %>
-<div id="item_<%= item.id %>" class="flex items-center gap-2" data-controller="item-edit" data-item-edit-target="itemRow">
+<div class="sortable-item" data-item-id="<%= item.id %>">
+  <div id="item_<%= item.id %>" class="flex items-center gap-2" data-controller="item-edit" data-item-edit-target="itemRow">
   <%# ドラッグハンドル（並び替え用） %>
   <div class="drag-handle flex items-center justify-center w-8 text-text-light cursor-grab active:cursor-grabbing" data-sortable-handle>
     <span class="text-xl leading-none">⋮⋮</span>
@@ -45,4 +46,5 @@
   <%= button_to group_schedule_item_list_item_path(@group, item), method: :delete, form: { class: "inline" } do %>
     <span class="text-xl cursor-pointer pr-2">×</span>
   <% end %>
+  </div>
 </div>
