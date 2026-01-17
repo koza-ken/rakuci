@@ -77,8 +77,8 @@ export default class extends Controller {
   // もちものリストのアイテム並び替え後に実行
   handleItemsSortEnd(evt) {
     const item = evt.item
-    const itemId = item.id.replace("item_", "")
-    const newPosition = Array.from(item.parentElement.children).indexOf(item) + 1
+    const itemId = item.dataset.itemId
+    const newPosition = evt.newIndex + 1
 
     // バックエンドに更新を送信
     this.updateItemPosition(itemId, newPosition)
