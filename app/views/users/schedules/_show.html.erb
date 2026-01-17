@@ -17,7 +17,7 @@
     <%# スポット %>
     <div class="mt-8">
       <div class="flex items-center justify-between gap-3 mb-8">
-        <%= link_to t('users.schedules.show.back'), schedules_path, class: "btn-sub text-center px-4" %>
+        <%= link_to t('users.schedules.show.back'), schedules_path, class: "btn-sub text-center px-4 py-2" %>
         <%= link_to schedule_item_list_path(schedule), class: "btn-main p-1 w-auto inline-flex items-center justify-center" do %>
           <div class="size-8">
             <%= render "shared/icon/footer_icon_backpack", icon_class: "text-text-light" %>
