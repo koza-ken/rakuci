@@ -11,28 +11,28 @@
     <% end %>
   </div>
 
-  <div id="cards_list" class="w-full grid grid-cols-2 gap-4 mt-8">
+  <div id="cards_list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 mt-8">
     <% if @cards.any? %>
       <%= render partial: "cards/card", collection: @cards %>
     <% else %>
-      <div id="cards_empty_state" class="col-span-2 flex flex-col items-center justify-center py-8 mt-6 px-4">
-        <div class="w-full max-w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-4 py-10 space-y-8 text-center animate-fade-in-up">
-          <div class="mx-auto w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
-            <%= render "shared/icon/footer_icon_card", icon_class: "text-text-light/40" %>
+      <div id="cards_empty_state" class="col-span-2 sm:col-span-3 md:col-span-4 flex flex-col items-center justify-center py-8 mt-6 px-4">
+        <div class=" max-w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-4 py-10 space-y-8 text-center animate-fade-in-up">
+          <div class="mx-auto w-16 h-16 md:w-24 md:h-24 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
+            <%= render "shared/icon/footer_icon_card", icon_class: "text-text-light/40 md:size-12" %>
           </div>
           <div class="">
             <div class="flex items-center justify-center gap-2 mb-8">
-              <p class="text-lg text-text font-semibold leading-relaxed"><%= t('cards.index_content.lets_create_card') %></p>
+              <p class="text-lg md:text-xl text-text font-semibold leading-relaxed"><%= t('cards.index_content.lets_create_card') %></p>
               <button class="bg-secondary hover:opacity-80 transition shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-sm font-semibold" data-action="click->guide#toggleModal" title="<%= t('cards.index_content.guide_button') %>">
                 ?
               </button>
             </div>
             <div class="px-6">
-              <p class="text-sm text-text-light leading-relaxed mb-1"><%= t('cards.index_content.personal_card_page') %></p>
+              <p class="text-sm md:text-lg text-text-light leading-relaxed mb-1"><%= t('cards.index_content.personal_card_page') %></p>
             </div>
           </div>
           <div class="space-y-3">
-            <%= link_to new_card_path, data: {turbo_frame: "card-create-modal"}, class: "first-create-btn" do %>
+            <%= link_to new_card_path, data: {turbo_frame: "card-create-modal"}, class: "first-create-btn md:min-w-1/2" do %>
               <%= render "shared/icon/group_card_icon_add" %>
               <span><%= t('cards.index_content.create_card') %></span>
             <% end %>
