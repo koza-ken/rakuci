@@ -7,11 +7,11 @@
     <%# lg以上：ナビゲーションメニュー（タイトルの隣）、lg未満：非表示 %>
     <nav class="hidden lg:flex items-center ml-24 pt-1 gap-12">
       <% if user_signed_in? %>
-        <%= link_to "カード", cards_path, class: "text-text hover:text-secondary transition" %>
-        <%= link_to "グループ", groups_path, class: "text-text hover:text-secondary transition" %>
-        <%= link_to "しおり", schedules_path, class: "text-text hover:text-secondary transition" %>
-        <%= link_to "もちもの", item_list_path, class: "text-text hover:text-secondary transition" %>
-        <%= link_to "設定", profile_path, class: "text-text hover:text-secondary transition" %>
+        <%= link_to "カード", cards_path, class: nav_link_class("cards") %>
+        <%= link_to "グループ", groups_path, class: nav_link_class("groups") %>
+        <%= link_to "しおり", schedules_path, class: nav_link_class("schedules") %>
+        <%= link_to "もちもの", item_list_path, class: nav_link_class("item_list") %>
+        <%= link_to "設定", profile_path, class: nav_link_class("profile") %>
       <% end %>
     </nav>
 
