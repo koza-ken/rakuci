@@ -466,6 +466,7 @@ ja:
         title: しおり作成
       no_schedules_message: まだしおりがありません
       not_group: あなたのしおり
+      no_date_set: 日程が設定されていません
       select_message: しおりを選択
       show:
         add_spot_button: スポットを追加
