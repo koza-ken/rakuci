@@ -41,23 +41,25 @@ module ApplicationHelper
 
     is_active = case menu_type
                 when "cards"
-                  # カード判定：
-                  # - /cardsを含む（ただし/group/で始まらない）、または
-                  # - /user/で始まり、かつspotsを含む（ただしschedule関連は除外）
-                  path.include?("cards") && !path.start_with?("/group") ||
-                  (path.start_with?("/user/") && path.include?("spots") && !path.include?("schedule"))
+                  # カード判定：ユーザーカード または ユーザーカードスポット
+                  is_user_cards = path.include?("cards") && !path.start_with?("/group")
+                  is_user_card_spots = path.start_with?("/user/") && path.include?("spots") && !path.include?("schedule")
+                  is_user_cards || is_user_card_spots
                 when "groups"
-                  # グループ判定：
-                  # - /groupsを含む、または/group/で始まる
-                  # - ただしschedule関連とexpensesは除外
-                  (path.include?("groups") || path.start_with?("/group/")) &&
-                  !path.include?("schedule") && !path.include?("expenses")
+                  # グループ判定：グループ系ページ、ただしschedule/expenses除外
+                  is_group_page = path.include?("groups") || path.start_with?("/group/")
+                  is_not_schedule_or_expenses = !path.include?("schedule") && !path.include?("expenses")
+                  is_group_page && is_not_schedule_or_expenses
                 when "schedules"
-                  # しおり判定：schedule, schedules, schedule_spots, expenses のいずれかを含む
-                  path.include?("schedule") || path.include?("expenses")
+                  # しおり判定：schedule関連 または 精算ページ（グループしおりのみなので）
+                  is_schedule_related = path.include?("schedule")
+                  is_expenses = path.include?("expenses")
+                  is_schedule_related || is_expenses
                 when "item_list"
-                  # もちもの判定：item_listを含む、ただしschedule配下は除外
-                  path.include?("item_list") && !path.include?("schedule")
+                  # もちもの判定：item_list、ただしschedule配下は除外
+                  is_item_list = path.include?("item_list")
+                  is_not_schedule = !path.include?("schedule")
+                  is_item_list && is_not_schedule
                 when "profile"
                   path.include?("profile")
                 else
@@ -65,9 +67,9 @@ module ApplicationHelper
                 end
 
     if is_active
-      "text-secondary border-b-2 border-secondary font-semibold"
+      "text-lg text-secondary border-b-2 border-secondary font-semibold"
     else
-      "text-text hover:text-secondary transition"
+      "text-lg text-text hover:text-secondary transition"
     end
   end
 end
