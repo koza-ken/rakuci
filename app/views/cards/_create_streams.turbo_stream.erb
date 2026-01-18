@@ -14,15 +14,15 @@
   <%# ユーザーページの場合のみ（ページタイトルとFABボタンを表示） %>
   <%# ページタイトル（h1）を表示 %>
   <%= turbo_stream.replace "cards-page-title" do %>
-    <h1 class="text-xl text-text font-bold"><%= t('cards.index_content.title') %></h1>
+    <h1 class="text-xl md:text-2xl text-text font-bold"><%= t('cards.index_content.title') %></h1>
   <% end %>
   <%# FABボタンを表示 %>
   <%= turbo_stream.replace "cards-fab-container" do %>
-    <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
+    <div class="fixed bottom-22 right-4 md:right-6 lg:left-[calc(50%+412px)] lg:right-auto z-50" data-controller="modal">
       <%= link_to new_card_path, data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
                   title: t('cards.index_content.create_card'),
-                  class: "group bg-primary hover:opacity-80 text-text-light w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
-        <%= render "shared/icon/add_card_icon" %>
+                  class: "group bg-primary hover:opacity-80 text-text-light w-14 h-14 lg:w-18 lg:h-18 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
+        <%= render "shared/icon/add_card_icon", icon_class: "w-10 h-10 lg:w-12 lg:h-12" %>
       <% end %>
     </div>
   <% end %>
