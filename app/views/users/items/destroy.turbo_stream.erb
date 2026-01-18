@@ -5,7 +5,7 @@
 <% if @item_list.items.empty? %>
   <%= turbo_stream.update "empty-state" do %>
     <div id="empty-state" class="">
-      <p class="text-center text-text-light mb-4"><%= t('item_lists.show.empty_message') %></p>
+      <p class="text-text-light mb-4"><%= t('item_lists.show.empty_message') %></p>
     </div>
   <% end %>
 <% end %>
