@@ -1,11 +1,11 @@
 <%# 招待ページ %>
 
 <div class="min-h-screen bg-main-bg">
-  <main class="flex flex-col items-center justify-center px-8 py-12">
-    <div class="w-full max-w-md">
+  <main class="flex flex-col items-center justify-center px-4 md:px-6 lg:px-8 py-12">
+    <div class="w-full max-w-5xl md:max-w-xl lg:max-w-2xl">
       <%# タイトル %>
       <div class="flex items-center justify-between gap-3 mb-12">
-        <h1 class="text-2xl font-bold text-text"><%= t('groups.new_membership.title') %></h1>
+        <h1 class="text-2xl lg:text-3xl  font-bold text-text"><%= t('groups.new_membership.title') %></h1>
         <%# TODO 使い方ページを実装したらモーダル追加 %>
         <%# <div class="relative">
           <button class="text-gray-100 transition" title="RakuCiについて" disabled>
@@ -18,24 +18,24 @@
       <!-- <p class="text-sm text-text-light mb-8"><%= @group.name %><%= t('groups.new_membership.invited_message') %></p> -->
 
       <%# ユーザー登録済み %>
-      <div class="mb-16">
+      <div class="mb-16 ">
         <% if user_signed_in? %>
           <%# ログイン状態：グレーアウト表示 %>
-          <h2 class="text-xl font-semibold text-gray-400 mb-4">1. <%= t('groups.new_membership.signed_up_users_title') %></h2>
-          <p class="text-sm text-gray-400 mb-2"><%= t('groups.new_membership.signed_up_users_text') %></p>
-          <p class="text-xs text-gray-300 mb-4"><%= t('groups.new_membership.signed_up_users_text_sub') %></p>
+          <h2 class="text-xl md:text-2xl font-semibold text-gray-400 mb-4">1. <%= t('groups.new_membership.signed_up_users_title') %></h2>
+          <p class="text-sm md:text-lg text-gray-400 mb-2"><%= t('groups.new_membership.signed_up_users_text') %></p>
+          <p class="text-xs md:text-sm text-gray-300 mb-4"><%= t('groups.new_membership.signed_up_users_text_sub') %></p>
 
-          <div class="text-center">
-            <button disabled class="inline-block btn-main opacity-50 cursor-not-allowed"><%= t('groups.new_membership.sign_in') %></button>
+          <div class="text-center md:mb-4">
+            <button disabled class="inline-block btn-main w-1/2 opacity-50 cursor-not-allowed"><%= t('groups.new_membership.sign_in') %></button>
           </div>
         <% else %>
           <%# 未ログイン状態：通常表示 %>
-          <h2 class="text-xl font-semibold text-secondary mb-4">1. <%= t('groups.new_membership.signed_up_users_title') %></h2>
-          <p class="text-sm text-text mb-2"><%= t('groups.new_membership.signed_up_users_text') %></p>
-          <p class="text-xs text-text-light mb-4"><%= t('groups.new_membership.signed_up_users_text_sub') %></p>
+          <h2 class="text-xl md:text-2xl font-semibold text-secondary mb-4">1. <%= t('groups.new_membership.signed_up_users_title') %></h2>
+          <p class="text-sm md:text-lg text-text mb-2 md:mb-4"><%= t('groups.new_membership.signed_up_users_text') %></p>
+          <p class="text-xs md:text-sm text-text-light mb-4 md:mb-8"><%= t('groups.new_membership.signed_up_users_text_sub') %></p>
 
-          <div class="text-center">
-            <%= link_to t('groups.new_membership.sign_in'), new_user_session_path, class: "inline-block btn-main" %>
+          <div class="text-center md:mb-4">
+            <%= link_to t('groups.new_membership.sign_in'), new_user_session_path, class: "inline-block btn-main w-1/2" %>
           </div>
           <%# 新規登録リンク %>
           <div class="text-center pt-4 mb-6">
@@ -47,31 +47,35 @@
 
       <%# 過去に参加したことがある %>
       <div class="mb-16">
-        <h2 class="text-xl font-semibold text-secondary mb-4">2. <%= t('groups.new_membership.past_users_title') %><%= @group.name %><%= t('groups.new_membership.past_users_title_suffix') %></h2>
-        <p class="text-sm text-text mb-4"><%= t('groups.new_membership.past_users_text') %></p>
+        <h2 class="text-xl md:text-2xl font-semibold text-secondary mb-4">2. <%= t('groups.new_membership.past_users_title') %><%= @group.name %><%= t('groups.new_membership.past_users_title_suffix') %></h2>
+        <p class="text-sm md:text-lg text-text mb-4"><%= t('groups.new_membership.past_users_text') %></p>
         <!-- <p class="text-xs text-text-light mb-4"><%= t('groups.new_membership.past_users_text_login_user') %></p> -->
 
         <%= form_with url: create_membership_path(@group.invite_token), method: :post, local: true do |f| %>
           <%= f.select :group_nickname,
               options_for_select([[t('groups.new_membership.select_placeholder'), ""]] + @member_nicknames.map { |nickname| [nickname, nickname] }),
               {},
-              class: "w-full px-4 py-2 bg-white text-text-light border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary" %>
+              class: "w-full px-4 py-2 md:mb-8 bg-white text-text-light border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary" %>
           <%= f.hidden_field :membership_source, value: "dropdown" %>
           <!-- <p class="text-xs text-text-light mb-4 mt-2"><%= t('groups.new_membership.past_users_text_sub') %></p> -->
-          <%= f.submit t('groups.new_membership.submit'), class: "btn-main w-full mt-4" %>
+          <div class="text-center">
+            <%= f.submit t('groups.new_membership.submit'), class: "btn-main mt-4 w-1/2" %>
+          </div>
         <% end %>
       </div>
 
       <%# はじめて参加する %>
-      <div class="mb-12">
-        <h2 class="text-xl font-semibold text-secondary mb-4">3. <%= t('groups.new_membership.first_time_title') %><%= @group.name %><%= t('groups.new_membership.first_time_title_suffix') %></h2>
-        <p class="text-sm text-text mb-4"><%= t('groups.new_membership.first_time_text') %></p>
+      <div class="mb-16">
+        <h2 class="text-xl md:text-2xl font-semibold text-secondary mb-4">3. <%= t('groups.new_membership.first_time_title') %><%= @group.name %><%= t('groups.new_membership.first_time_title_suffix') %></h2>
+        <p class="text-sm md:text-lg text-text mb-4"><%= t('groups.new_membership.first_time_text') %></p>
 
         <%= form_with url: create_membership_path(@group.invite_token), method: :post, local: true do |f| %>
           <%= f.text_field :group_nickname, placeholder: t('groups.form.group_nickname_placeholder'), class: "form-text-field" %>
-          <p class="text-xs text-text-light mt-2"><%= @group.name %><%= t('groups.new_membership.note_suffix') %></p>
+          <p class="text-xs md:text-base text-text-light mt-2"><%= @group.name %><%= t('groups.new_membership.note_suffix') %></p>
           <%= f.hidden_field :membership_source, value: "text_input" %>
-          <%= f.submit t('groups.new_membership.submit'), class: "btn-main w-full mt-4" %>
+          <div class="text-center">
+            <%= f.submit t('groups.new_membership.submit'), class: "btn-main mt-4 md:mt-8 w-1/2" %>
+          </div>
         <% end %>
       </div>
 
