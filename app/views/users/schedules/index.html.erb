@@ -3,14 +3,14 @@
 
 <%= turbo_frame_tag "schedule-create-modal", data: { controller: "modal" } %>
 
-<main class="flex flex-col items-center justify-center px-8 py-6 mb-20">
-  <div id="schedules-page-title">
+<main class="flex flex-col items-center justify-center px-4 md:px-6 lg:px-8 py-6 mb-20">
+  <div id="schedules-page-title" class="w-full text-center">
     <% if @schedules.any? %>
-      <h1 class="text-xl text-text font-bold"><%= t('users.schedules.index.title') %></h1>
+      <h1 class="text-xl md:text-2xl text-text font-bold"><%= t('users.schedules.index.title') %></h1>
     <% end %>
   </div>
 
-  <div id="schedules_list" class="w-full space-y-4 mt-8">
+  <div id="schedules_list" class="w-full max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-8">
     <% if @schedules.any? %>
       <%= render @schedules %>
     <% else %>
@@ -37,13 +37,11 @@
   <%# FAB ボタン %>
   <div id="schedules-fab-container">
     <% if @schedules.any? %>
-      <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
+      <div class="fixed bottom-22 right-4 md:right-6 lg:left-[calc(50%+412px)] lg:right-auto z-50" data-controller="modal">
         <%= link_to new_schedule_path, data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" },
                     title: t('users.schedules.index.create_schedule'),
-                    class: "group bg-primary hover:opacity-80 text-text-light w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
-          <div class="size-10">
-            <%= render "shared/icon/add_schedule_icon" %>
-          </div>
+                    class: "group bg-primary hover:opacity-80 text-text-light w-14 h-14 lg:w-18 lg:h-18 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
+          <%= render "shared/icon/add_schedule_icon", icon_class: "w-10 h-10 lg:w-12 lg:h-12" %>
         <% end %>
       </div>
     <% end %>
