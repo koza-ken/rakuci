@@ -4,7 +4,7 @@
 <%= turbo_frame_tag "spot-create-modal", data: { controller: "modal" } %>
 <%= turbo_frame_tag "add_new_schedule_spot" %>
 
-<div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md px-6 md:px-0">
+<div class="relative z-20 w-full mx-auto max-w-2xl md:max-w-3xl lg:max-w-4xl bg-main-bg rounded-md px-6 md:px-0">
   <main class="flex flex-col px-4 py-6 bg-main-bg">
 
     <%# カード名セクション（表示/編集を切り替え） %>
@@ -34,10 +34,11 @@
 
     <%# スポット追加ボタン %>
     <div class="flex justify-end mb-2 w-auto" data-controller="modal">
-      <%= link_to new_group_card_spot_path(@card.group, @card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, title: t('cards.add_spot'), class: "btn-main-icon" do %>
-        <div class="flex items-center justify-center size-8">
+      <%= link_to new_group_card_spot_path(@card.group, @card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, title: t('cards.add_spot'), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3" do %>
+        <div class="flex items-center justify-center size-5 lg:size-6">
           <%= render "shared/icon/add_spot_icon" %>
         </div>
+        <span class="hidden lg:inline text-sm lg:text-base"><%= t('cards.add_spot') %></span>
       <% end %>
     </div>
 
@@ -75,12 +76,12 @@
     </div>
 
     <%# メモセクション（表示/編集を切り替え） %>
-    <div id="memo-section" class="w-full max-w-md" data-controller="memo-edit">
+    <div id="memo-section" class="w-full" data-controller="memo-edit">
       <%# 表示モード %>
       <div id="memo-display" data-memo-edit-target="display">
         <%= form_with model: [@group, @card], class: "w-full" do |f| %>
           <%= f.label :memo, t('cards.form.memo'), class: "block text-lg font-bold text-text mb-2" %>
-          <%= f.text_area :memo, class: "form-text-field bg-gray-100 cursor-pointer", readonly: true, data: { action: "click->memo-edit#toggleForm" } %>
+          <%= f.text_area :memo, class: "form-text-field bg-gray-100 cursor-pointer min-h-[100px]", readonly: true, data: { action: "click->memo-edit#toggleForm" } %>
         <% end %>
       </div>
 
