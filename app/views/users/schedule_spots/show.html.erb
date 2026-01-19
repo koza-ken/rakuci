@@ -1,22 +1,35 @@
 <% content_for(:title, @schedule_spot.snapshot_name) %>
 <% breadcrumb :schedule_spot, @schedule_spot %>
 <turbo-frame id="schedule-spot-modal">
-  <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
+  <div class="relative z-20 w-full mx-auto max-w-2xl md:max-w-3xl lg:max-w-4xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
     <%= render "shared/flash_messages", flash: flash %>
-    <main class="flex flex-col justify-center px-8 py-6 bg-main-bg">
+    <main class="flex flex-col justify-center px-4 md:px-6 lg:px-8 py-6 bg-main-bg">
       <div class="flex items-start justify-between gap-3 mb-6">
-        <h1 class="text-xl font-bold text-text mb-2"><%= @schedule_spot.display_name %></h1>
-        <%= render "shared/schedule_spot_kebab_menu" %>
+        <h1 class="text-xl lg:text-2xl font-bold text-text mb-2 flex-1"><%= @schedule_spot.display_name %></h1>
+        <div class="flex gap-2 lg:gap-4 shrink-0">
+          <%= link_to edit_user_schedule_spot_path(@schedule_spot), class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo: false } do %>
+            <div class="flex items-center justify-center size-5 lg:size-6">
+              <%= render "shared/icon/form_icon_edit" %>
+            </div>
+            <span class="hidden lg:inline"><%= t('cards.form.edit') %></span>
+          <% end %>
+          <%= button_to user_schedule_spot_path(@schedule_spot), method: :delete, form_class: "inline", class: "btn-danger p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo_confirm: t('schedule_spots.delete_confirm') } do %>
+            <div class="flex items-center justify-center size-5 lg:size-6">
+              <%= render "shared/icon/form_icon_delete" %>
+            </div>
+            <span class="hidden lg:inline"><%= t('cards.form.delete') %></span>
+          <% end %>
+        </div>
       </div>
 
-      <div class="w-full max-w-md">
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.category') %></label>
+      <div class="w-full grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10 lg:gap-y-4 lg:mt-8">
+        <div class="mb-4 lg:mb-0">
+          <label class="block text-sm lg:text-base font-medium text-text mb-2"><%= t('schedule_spots.show.category') %></label>
           <input type="text" value="<%= @category&.name || "---" %>" readonly class="form-text-field bg-gray-100" />
         </div>
 
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.address') %></label>
+        <div class="mb-4 lg:mb-0">
+          <label class="block text-sm lg:text-base font-medium text-text mb-2"><%= t('schedule_spots.show.address') %></label>
           <div class="flex items-center gap-2">
             <input type="text" value="<%= @schedule_spot.snapshot_address.present? ? @schedule_spot.snapshot_address : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
             <% if @schedule_spot.google_place_id.present? %>
@@ -27,8 +40,8 @@
           </div>
         </div>
 
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.website_url') %></label>
+        <div class="mb-4 lg:mb-0">
+          <label class="block text-sm lg:text-base font-medium text-text mb-2"><%= t('schedule_spots.show.website_url') %></label>
           <div class="flex items-center gap-2">
             <input type="text" value="<%= @schedule_spot.snapshot_website_url.present? ? @schedule_spot.snapshot_website_url : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
             <% if @schedule_spot.snapshot_website_url.present? %>
@@ -40,13 +53,13 @@
           </div>
         </div>
 
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.phone_number') %></label>
+        <div class="mb-4 lg:mb-0">
+          <label class="block text-sm lg:text-base font-medium text-text mb-2"><%= t('schedule_spots.show.phone_number') %></label>
           <input type="text" value="<%= @schedule_spot.snapshot_phone_number.present? ? @schedule_spot.snapshot_phone_number : "---" %>" readonly class="form-text-field bg-gray-100" />
         </div>
 
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2">日程</label>
+        <div class="mb-4 lg:mb-0">
+          <label class="block text-sm lg:text-base font-medium text-text mb-2">日程</label>
           <div class="form-text-field bg-gray-100">
             <% if @schedule.formatted_date_for_day(@schedule_spot.day_number).present? %>
               <%= @schedule.formatted_date_for_day(@schedule_spot.day_number) %>（<%= @schedule_spot.day_number %>日目）
@@ -56,8 +69,8 @@
           </div>
         </div>
 
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.start_time') %></label>
+        <div class="mb-4 lg:mb-0">
+          <label class="block text-sm lg:text-base font-medium text-text mb-2"><%= t('schedule_spots.show.start_time') %></label>
           <div class="form-text-field bg-gray-100 truncate">
             <% if @schedule_spot.start_time.present? && @schedule_spot.end_time.present? %>
               <%= @schedule_spot.start_time.strftime('%H:%M') %> ~ <%= @schedule_spot.end_time.strftime('%H:%M') %>
@@ -71,9 +84,9 @@
           </div>
         </div>
 
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2"><%= t('schedule_spots.show.memo') %></label>
-          <div class="form-text-field bg-gray-100">
+        <div class="mb-4 lg:col-span-2">
+          <label class="block text-sm lg:text-base font-medium text-text mb-2"><%= t('schedule_spots.show.memo') %></label>
+          <div class="form-text-field bg-gray-100 min-h-[100px] lg:min-h-[120px]">
             <% if @schedule_spot.memo.present? %>
               <%= @schedule_spot.memo %>
             <% else %>
@@ -83,8 +96,8 @@
         </div>
       </div>
 
-      <div class="flex gap-3 mt-8">
-        <%= link_to t('cards.form.back'), schedule_path(@schedule), data: {turbo_frame: "_top"}, class: "btn-sub w-full text-center" %>
+      <div class="flex gap-3 mt-8 lg:mt-12 justify-center">
+        <%= link_to t('cards.form.back'), schedule_path(@schedule), data: {turbo_frame: "_top"}, class: "btn-sub w-1/2 text-center px-4 md:px-8 py-2 text-sm lg:text-base" %>
       </div>
     </main>
   </div>
