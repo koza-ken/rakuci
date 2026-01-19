@@ -1,98 +1,96 @@
-<turbo-frame id="schedule-spot-modal">
-  <div class="relative z-20 w-full mx-auto max-w-2xl md:max-w-3xl lg:max-w-4xl max-h-screen overflow-y-auto bg-main-bg rounded-md px-6 md:px-0">
-    <%= render "shared/flash_messages", flash: flash %>
-    <main class="flex flex-col justify-center px-4 md:px-6 lg:px-8 py-6 bg-main-bg">
-      <div class="flex items-center gap-2 mb-6 lg:mb-8">
-        <h1 class="text-xl lg:text-2xl font-bold text-text"><%= t('schedule_spots.edit.title') %></h1>
-      </div>
+<div class="md:max-w-3xl lg:max-w-4xl md:mx-auto px-8 md:px-6 lg:px-8 py-6 bg-main-bg">
+  <%= render "shared/flash_messages", flash: flash %>
+  <main class="flex flex-col justify-center bg-main-bg">
+    <div class="flex items-center gap-2 mb-6 lg:mb-8">
+      <h1 class="text-xl lg:text-2xl font-bold text-text"><%= t('schedule_spots.edit.title') %></h1>
+    </div>
 
-      <%# ルーティングがネストしているとURLが上手く作られないかもしれないのでURLを指定 %>
-      <%= form_with model: @schedule_spot, url: group_schedule_spot_path(@schedule_spot), local: true do |f| %>
-      <div class="w-full grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10 lg:gap-y-4 lg:mt-8">
-          <div class="mb-4 lg:col-span-2">
-            <%= f.label :snapshot_name, class: "block text-sm lg:text-base font-medium text-text mb-2" do %>
-              <%= t('schedule_spots.form.spot_name') %>
-              <span class="text-red-600 font-bold ml-1">*</span>
-            <% end %>
-            <%= f.text_field :snapshot_name, class: "form-text-field w-full", placeholder: t('schedule_spots.form.spot_name') %>
-            <% if @schedule_spot.errors.any? %>
-              <div class="ml-2">
-                <% @schedule_spot.errors.messages[:snapshot_name].each do |message| %>
-                  <p class="text-red-600 text-xs lg:text-sm"><%= t('schedule_spots.form.spot_name') %><%= message %></p>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-
-          <div class="mb-4 lg:mb-0">
-            <%= f.label :snapshot_category_id, class: "block text-sm lg:text-base font-medium text-text mb-2" do %>
-              <%= t('schedule_spots.form.category') %>
-              <span class="text-red-600 font-bold ml-1">*</span>
-            <% end %>
-            <%= f.select :snapshot_category_id, options_from_collection_for_select(Category.all, :id, :name, @schedule_spot.snapshot_category_id), { include_blank: t('schedule_spots.category_placeholder') }, class: "form-text-field w-full" %>
-            <% if @schedule_spot.errors.any? %>
-              <div class="ml-2">
-                <% @schedule_spot.errors.messages[:snapshot_category_id].each do |message| %>
-                  <p class="text-red-600 text-xs lg:text-sm"><%= t('schedule_spots.form.category') %><%= message %></p>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-
-          <div class="mb-4 lg:mb-0">
-            <%= f.label :snapshot_address, t('schedule_spots.form.address'), class: "block text-sm lg:text-base font-medium text-text mb-2" %>
-            <%= f.text_field :snapshot_address, class: "form-text-field w-full", placeholder: t('schedule_spots.form.address') %>
-          </div>
-
-          <div class="mb-4 lg:mb-0">
-            <%= f.label :snapshot_website_url, t('schedule_spots.form.website_url'), class: "block text-sm lg:text-base font-medium text-text mb-2" %>
-            <%= f.url_field :snapshot_website_url, class: "form-text-field w-full", placeholder: t('schedule_spots.form.website_url') %>
-          </div>
-
-          <div class="mb-4 lg:mb-0">
-            <%= f.label :snapshot_phone_number, t('schedule_spots.form.phone_number'), class: "block text-sm lg:text-base font-medium text-text mb-2" %>
-            <%= f.telephone_field :snapshot_phone_number, class: "form-text-field w-full", placeholder: t('schedule_spots.form.phone_number') %>
-          </div>
-
-          <div class="mb-4 lg:mb-0">
-            <%= f.label :day_number, "日程", class: "block text-sm lg:text-base font-medium text-text mb-2" %>
-            <%= f.select :day_number, (1..@schedule.days).map { |d|
-              formatted_date = @schedule.formatted_date_for_day(d)
-              label = formatted_date.present? ? "#{formatted_date}（#{d}日目）" : "#{d}日目"
-              [label, d]
-            }, {}, class: "form-text-field w-full" %>
-          </div>
-
-          <div class="flex flex-col lg:flex-row lg:gap-4 mb-4 lg:mb-0">
-            <div class="flex-1 mb-4 lg:mb-0">
-              <%= f.label :start_time, t('schedule_spots.edit.arrival_time'), class: "block text-sm lg:text-base font-medium text-text mb-2" %>
-              <%= f.time_field :start_time, class: "form-text-field w-full" %>
-            </div>
-
-            <div class="flex-1">
-              <%= f.label :end_time, t('schedule_spots.edit.departure_time'), class: "block text-sm lg:text-base font-medium text-text mb-2" %>
-              <%= f.time_field :end_time, class: "form-text-field w-full" %>
-              <% if @schedule_spot.errors.any? %>
-                <div class="ml-2">
-                  <% @schedule_spot.errors.messages[:end_time].each do |message| %>
-                    <p class="text-red-600 text-xs lg:text-sm"><%= message %></p>
-                  <% end %>
-                </div>
+    <%# ルーティングがネストしているとURLが上手く作られないかもしれないのでURLを指定 %>
+    <%= form_with model: @schedule_spot, url: group_schedule_spot_path(@schedule_spot), local: true do |f| %>
+      <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10 lg:gap-y-4 lg:mt-8">
+        <div class="mb-4 lg:col-span-2">
+          <%= f.label :snapshot_name, class: "block text-sm lg:text-base font-medium text-text mb-2" do %>
+            <%= t('schedule_spots.form.spot_name') %>
+            <span class="text-red-600 font-bold ml-1">*</span>
+          <% end %>
+          <%= f.text_field :snapshot_name, class: "form-text-field w-full", placeholder: t('schedule_spots.form.spot_name') %>
+          <% if @schedule_spot.errors.any? %>
+            <div class="ml-2">
+              <% @schedule_spot.errors.messages[:snapshot_name].each do |message| %>
+                <p class="text-red-600 text-xs lg:text-sm"><%= t('schedule_spots.form.spot_name') %><%= message %></p>
               <% end %>
             </div>
+          <% end %>
+        </div>
+
+        <div class="mb-4 lg:mb-0">
+          <%= f.label :snapshot_category_id, class: "block text-sm lg:text-base font-medium text-text mb-2" do %>
+            <%= t('schedule_spots.form.category') %>
+            <span class="text-red-600 font-bold ml-1">*</span>
+          <% end %>
+          <%= f.select :snapshot_category_id, options_from_collection_for_select(Category.all, :id, :name, @schedule_spot.snapshot_category_id), { include_blank: t('schedule_spots.category_placeholder') }, class: "form-text-field w-full" %>
+          <% if @schedule_spot.errors.any? %>
+            <div class="ml-2">
+              <% @schedule_spot.errors.messages[:snapshot_category_id].each do |message| %>
+                <p class="text-red-600 text-xs lg:text-sm"><%= t('schedule_spots.form.category') %><%= message %></p>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="mb-4 lg:mb-0">
+          <%= f.label :snapshot_address, t('schedule_spots.form.address'), class: "block text-sm lg:text-base font-medium text-text mb-2" %>
+          <%= f.text_field :snapshot_address, class: "form-text-field w-full", placeholder: t('schedule_spots.form.address') %>
+        </div>
+
+        <div class="mb-4 lg:mb-0">
+          <%= f.label :snapshot_website_url, t('schedule_spots.form.website_url'), class: "block text-sm lg:text-base font-medium text-text mb-2" %>
+          <%= f.url_field :snapshot_website_url, class: "form-text-field w-full", placeholder: t('schedule_spots.form.website_url') %>
+        </div>
+
+        <div class="mb-4 lg:mb-0">
+          <%= f.label :snapshot_phone_number, t('schedule_spots.form.phone_number'), class: "block text-sm lg:text-base font-medium text-text mb-2" %>
+          <%= f.telephone_field :snapshot_phone_number, class: "form-text-field w-full", placeholder: t('schedule_spots.form.phone_number') %>
+        </div>
+
+        <div class="mb-4 lg:mb-0">
+          <%= f.label :day_number, "日程", class: "block text-sm lg:text-base font-medium text-text mb-2" %>
+          <%= f.select :day_number, (1..@schedule.days).map { |d|
+            formatted_date = @schedule.formatted_date_for_day(d)
+            label = formatted_date.present? ? "#{formatted_date}（#{d}日目）" : "#{d}日目"
+            [label, d]
+          }, {}, class: "form-text-field w-full" %>
+        </div>
+
+        <div class="flex flex-col lg:flex-row lg:gap-4 mb-4 lg:mb-0">
+          <div class="flex-1 mb-4 lg:mb-0">
+            <%= f.label :start_time, t('schedule_spots.edit.arrival_time'), class: "block text-sm lg:text-base font-medium text-text mb-2" %>
+            <%= f.time_field :start_time, class: "form-text-field w-full" %>
           </div>
 
-          <div class="mb-4 lg:col-span-2">
-            <%= f.label :memo, t('schedule_spots.form.memo'), class: "block text-sm lg:text-base font-medium text-text mb-2" %>
-            <%= f.text_area :memo, class: "form-text-field w-full resize-none min-h-[100px] lg:min-h-[120px]", placeholder: t('schedule_spots.form.memo') %>
+          <div class="flex-1">
+            <%= f.label :end_time, t('schedule_spots.edit.departure_time'), class: "block text-sm lg:text-base font-medium text-text mb-2" %>
+            <%= f.time_field :end_time, class: "form-text-field w-full" %>
+            <% if @schedule_spot.errors.any? %>
+              <div class="ml-2">
+                <% @schedule_spot.errors.messages[:end_time].each do |message| %>
+                  <p class="text-red-600 text-xs lg:text-sm"><%= message %></p>
+                <% end %>
+              </div>
+            <% end %>
           </div>
+        </div>
 
-          <div class="flex gap-3 mt-8 lg:col-span-2 justify-center">
-            <%= f.submit t('schedule_spots.form.update'), class: "btn-main w-1/2 px-4 md:px-8 py-2 text-sm lg:text-base" %>
-            <%= link_to t('schedule_spots.form.cancel'), group_schedule_spot_path(@schedule_spot), class: "btn-sub w-1/2 px-4 md:px-8 py-2 text-sm lg:text-base text-center", data: { turbo: false } %>
-          </div>
-        <% end %>
+        <div class="mb-4 lg:col-span-2">
+          <%= f.label :memo, t('schedule_spots.form.memo'), class: "block text-sm lg:text-base font-medium text-text mb-2" %>
+          <%= f.text_area :memo, class: "form-text-field w-full resize-none min-h-[100px] lg:min-h-[120px]", placeholder: t('schedule_spots.form.memo') %>
+        </div>
+
+        <div class="flex gap-3 mt-8 lg:col-span-2 justify-center">
+          <%= f.submit t('schedule_spots.form.update'), class: "btn-main w-1/2 px-4 md:px-8 py-2 text-sm lg:text-base" %>
+          <%= link_to t('schedule_spots.form.cancel'), group_schedule_spot_path(@schedule_spot), class: "btn-sub w-1/2 px-4 md:px-8 py-2 text-sm lg:text-base text-center", data: { turbo: false } %>
+        </div>
       </div>
-    </main>
-  </div>
-</turbo-frame>
+    <% end %>
+  </main>
+</div>
