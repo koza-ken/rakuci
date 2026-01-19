@@ -1,14 +1,13 @@
 <%# カードからスポット選択してしおり選択 %>
-<main class="flex flex-col items-center px-8 py-6 h-[90vh]">
+<main class="flex flex-col items-center px-12 py-10 h-[90vh]">
   <div class="w-full max-w-2xl">
     <h1 class="text-xl font-bold text-text mb-2">しおりを選択</h1>
-    <p class="text-sm text-text-light mb-8">※グループのしおりには追加できません</p>
+    <p class="text-sm text-text-light mb-6">※グループのしおりには追加できません</p>
   </div>
 
   <%# 追加するスポット情報 %>
-  <div class="w-full max-w-2xl mb-8">
+  <div class="w-full max-w-2xl mb-6">
     <div class="bg-gray-100 rounded-lg p-4">
-      <p class="text-sm text-gray-600 mb-2">追加するスポット</p>
       <% if @spot_ids.present? %>
         <%# 複数スポット %>
         <p class="text-sm font-bold"><%= @spots.size %>件のスポットを追加します</p>
@@ -26,33 +25,42 @@
   </div>
 
   <%# しおり一覧 %>
-  <div class="w-full max-w-2xl flex-1 overflow-y-auto">
+  <div class="w-full max-w-xl md:max-w-2xl lg:max-w-4xl flex-1 overflow-y-auto">
     <% if @schedules.any? %>
       <div class="space-y-4">
         <% @schedules.each do |schedule| %>
           <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-xl font-bold text-text mb-2"><%= schedule.name %></h3>
-            <% if schedule.start_date.present? && schedule.end_date.present? %>
-              <p class="text-text-light mb-3">
-                <%= schedule.start_date %> ~ <%= schedule.end_date %>
-              </p>
-            <% end %>
-            <% if @spot_ids.present? %>
-              <%# 複数スポット用フォーム %>
-              <%= form_with url: card_schedule_spots_path(@card, schedule_id: schedule.id), method: :post, data: { turbo: false } do |f| %>
-                <% @spot_ids.each do |spot_id| %>
-                  <%= f.hidden_field :spot_ids, multiple: true, value: spot_id %>
+            <div class="flex flex-col md:flex-row md:items-start md:gap-4">
+              <%# 左側: しおり名 + 旅行日程 %>
+              <div class="flex-1 mb-4 md:mb-0">
+                <h3 class="text-xl font-bold text-text mb-2"><%= schedule.name %></h3>
+                <% if schedule.start_date.present? && schedule.end_date.present? %>
+                  <p class="text-text-light">
+                    <%= schedule.start_date %> ~ <%= schedule.end_date %>
+                  </p>
                 <% end %>
-                <%= f.submit "このしおりに追加", class: "btn-main w-full" %>
-              <% end %>
-            <% else %>
-              <%# 単一スポット用ボタン %>
-              <%= button_to "このしおりに追加",
-                  card_spot_schedule_spots_path(@card, @spot, schedule_id: schedule.id),
-                  method: :post,
-                  form: { data: { turbo: false } },
-                  class: "btn-main w-full" %>
-            <% end %>
+              </div>
+
+              <%# 右側: 追加ボタン %>
+              <div class="w-full md:w-auto md:shrink-0">
+                <% if @spot_ids.present? %>
+                  <%# 複数スポット用フォーム %>
+                  <%= form_with url: card_schedule_spots_path(@card, schedule_id: schedule.id), method: :post, data: { turbo: false } do |f| %>
+                    <% @spot_ids.each do |spot_id| %>
+                      <%= f.hidden_field :spot_ids, multiple: true, value: spot_id %>
+                    <% end %>
+                    <%= f.submit "このしおりに追加", class: "btn-main w-full md:w-auto" %>
+                  <% end %>
+                <% else %>
+                  <%# 単一スポット用ボタン %>
+                  <%= button_to "このしおりに追加",
+                      card_spot_schedule_spots_path(@card, @spot, schedule_id: schedule.id),
+                      method: :post,
+                      form: { data: { turbo: false } },
+                      class: "btn-main w-full md:w-auto" %>
+                <% end %>
+              </div>
+            </div>
           </div>
         <% end %>
       </div>
@@ -64,9 +72,9 @@
   <%# 戻る %>
   <div class="w-full mt-6">
     <% if @spot_ids.present? %>
-      <%= link_to t('cards.back'), card_path(@card), data: { turbo_frame: "_top" }, class: "btn-sub w-full block text-center" %>
+      <%= link_to t('cards.back'), card_path(@card), data: { turbo_frame: "_top" }, class: "btn-sub lg:w-1/2 mx-auto block text-center" %>
     <% else %>
-      <%= link_to t('cards.back'), user_spot_path(@spot), data: { turbo_frame: "_top" }, class: "btn-sub w-full block text-center" %>
+      <%= link_to t('cards.back'), user_spot_path(@spot), data: { turbo_frame: "_top" }, class: "btn-sub lg:w-1/2 mx-auto block text-center" %>
     <% end %>
   </div>
 </main>
