@@ -274,11 +274,12 @@ ja:
         add_spot_button: スポットを追加
         back_to_group: グループへ
         day_label: 日目
+        delete: 削除
         delete_schedule: しおりを削除
-        memo: メモ
-        no_memo: まだメモはありません
         expenses: 精算
         item_list: もちもの
+        memo: メモ
+        no_memo: まだメモはありません
     show:
       add_card: カードを追加する
       back: もどる
@@ -408,6 +409,7 @@ ja:
       title: しおり作成
     show:
       add_spot_button: スポットを追加
+      delete: 削除
       delete_confirm: このしおりを削除しますか
       delete_schedule: 削除
       edit: 編集
@@ -475,9 +477,10 @@ ja:
         add_spot_button: スポットを追加
         back: しおり一覧
         day_label: 日目
+        delete: 削除
         delete_confirm: このしおりを削除しますか
-        delete_schedule: 削除
         detail: 詳細
+        item_list: もちもの
         memo: メモ
         title: しおり詳細
       spot_count_message: 件のスポットを追加します
