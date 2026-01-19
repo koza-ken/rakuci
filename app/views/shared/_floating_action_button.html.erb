@@ -1,8 +1,8 @@
 <%# 個人・グループしおりページから参照 %>
 <%= link_to path,
     data: { turbo_frame: "spot-create-modal" },
-    class: "fixed bottom-22 right-6 z-50 w-14 h-14 inline-flex items-center justify-center bg-primary text-text-light rounded-full shadow-lg hover:bg-primary-hover hover:shadow-xl transition" do %>
-  <span class="w-10 h-10">
+    class: "fixed bottom-22 right-4 md:right-6 lg:left-[calc(50%+412px)] lg:right-auto z-50 w-14 h-14 lg:w-18 lg:h-18 inline-flex items-center justify-center bg-primary text-text-light rounded-full shadow-lg hover:bg-primary-hover hover:shadow-xl transition" do %>
+  <span class="w-10 h-10 lg:w-12 lg:h-12">
     <%= render icon %>
   </span>
 <% end %>
