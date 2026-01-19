@@ -7,7 +7,7 @@
     <main class="flex flex-col justify-center px-4 md:px-6 lg:px-8 py-6 bg-main-bg">
       <div class="flex items-start justify-between gap-3 mb-6">
         <h1 class="text-xl lg:text-2xl font-bold text-text mb-2 flex-1"><%= @schedule_spot.display_name %></h1>
-        <div class="flex gap-2 lg:gap- shrink-0">
+        <div class="flex gap-4 lg:gap-6 shrink-0">
           <%= link_to edit_group_schedule_spot_path(@schedule_spot), class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo: false } do %>
             <div class="flex items-center justify-center size-5 lg:size-6">
               <%= render "shared/icon/form_icon_edit" %>
