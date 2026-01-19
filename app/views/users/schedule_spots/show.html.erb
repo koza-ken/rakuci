@@ -1,5 +1,6 @@
 <% content_for(:title, @schedule_spot.snapshot_name) %>
 <% breadcrumb :schedule_spot, @schedule_spot %>
+
 <turbo-frame id="schedule-spot-modal">
   <div class="relative z-20 w-full mx-auto max-w-2xl md:max-w-3xl lg:max-w-4xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
     <%= render "shared/flash_messages", flash: flash %>

@@ -5,7 +5,7 @@
 <%= turbo_frame_tag "card-create-modal", data: { controller: "modal" } %>
 <%= turbo_frame_tag "schedule-create-modal", data: { controller: "modal" } %>
 
-<div class="relative z-20 w-full mx-auto max-w-2xl md:max-w-3xl lg:max-w-4xl bg-main-bg rounded-md mb-10 lg:mb-16">
+<div class="relative z-20 w-full mx-auto max-w-2xl md:max-w-3xl lg:max-w-4xl bg-main-bg rounded-md mb-10 lg:mb-16 px-3 md:px-0">
   <main class="flex flex-col px-4 md:px-6 lg:px-8 py-6 bg-main-bg" data-controller="guide">
     <%# グループ名セクション（表示/編集を切り替え） %>
     <div id="group-name-section" data-controller="card-edit" class="mb-4 lg:mb-6">
