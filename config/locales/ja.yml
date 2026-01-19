@@ -276,6 +276,9 @@ ja:
         day_label: 日目
         delete_schedule: しおりを削除
         memo: メモ
+        no_memo: まだメモはありません
+        expenses: 精算
+        item_list: もちもの
     show:
       add_card: カードを追加する
       back: もどる
