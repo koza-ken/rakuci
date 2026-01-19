@@ -17,7 +17,7 @@ RSpec.describe "スポット追加フロー", type: :system do
       visit card_path(card)
 
       # スポット追加ボタンをクリック（Turbo Frameでモーダル表示）
-      click_link title: I18n.t("cards.add_spot")
+      find("a[data-turbo-frame='spot-create-modal']").click
 
       # Turbo Frameの読み込みを待つ
       expect(page).to have_selector "turbo-frame#spot-create-modal form"
@@ -56,7 +56,7 @@ RSpec.describe "スポット追加フロー", type: :system do
       visit card_path(card)
 
       # 1番目のスポットを追加
-      click_link title: I18n.t("cards.add_spot")
+      find("a[data-turbo-frame='spot-create-modal']").click
       expect(page).to have_selector "turbo-frame#spot-create-modal form"
 
       fill_in "spot_name", with: "浅草寺"
@@ -68,7 +68,7 @@ RSpec.describe "スポット追加フロー", type: :system do
       expect(page).to have_content("浅草寺")
 
       # 2番目のスポットを追加
-      click_link title: I18n.t("cards.add_spot")
+      find("a[data-turbo-frame='spot-create-modal']").click
       expect(page).to have_selector "turbo-frame#spot-create-modal form"
 
       fill_in "spot_name", with: "スカイツリー"
