@@ -3,7 +3,6 @@
   "permissions": {
     "allow": [
       "Read(*)",
-
       "Bash(git status:*)",
       "Bash(git log:*)",
       "Bash(git diff:*)",
@@ -14,13 +13,11 @@
       "Bash(npx expo run:ios:*)",
       "Bash(npx expo start:*)",
       "Bash(node:*)",
-      "Bash(rm:*)",
       "Bash(mkdir:*)",
       "Bash(grep:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
       "Bash(cp:*)",
-      "Bash(mv:*)",
       "Bash(chmod:*)",
       "Bash(bash:*)",
       "Bash(npx prisma generate:*)",
@@ -43,7 +40,14 @@
       "mcp__playwright__browser_console_messages",
       "mcp__playwright__browser_network_requests"
     ],
-    "deny": []
+    "ask":[
+      "Bash(rm:*)",
+      "Bash(mv:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [
+      "Read(~/.ssh/**)"
+    ]
   },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
