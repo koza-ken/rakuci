@@ -1,24 +1,49 @@
 <% content_for(:title, @spot.name) %>
 
 <turbo-frame id="spot-edit-modal">
-  <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
+  <div class="relative z-20 w-full mx-auto max-w-2xl md:max-w-3xl lg:max-w-4xl bg-main-bg rounded-md px-6 md:px-0">
     <%= render "shared/flash_messages", flash: flash %>
-    <main class="flex flex-col justify-center px-8 py-6 bg-main-bg">
-      <div class="flex items-start justify-between gap-3 mb-6">
-        <h1 class="text-xl font-bold text-text"><%= @spot.name %></h1>
-        <%= render "spots/kebab_menu" %>
+    <main class="flex flex-col justify-center px-4 md:px-6 lg:px-8 py-6 bg-main-bg">
+      <div class="flex items-start justify-between gap-3 mb-6 md:mb-8">
+        <h1 class="text-xl md:text-2xl font-bold text-text flex-1"><%= @spot.name %></h1>
+        <%# ケバブメニュー：スマホのみ表示 %>
+        <div class="md:hidden">
+          <%= render "spots/kebab_menu" %>
+        </div>
+        <%# 編集・削除ボタン：md以上のみ表示 %>
+        <div class="hidden md:flex items-center gap-4">
+          <% if @card.group_card? %>
+            <%= link_to edit_group_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-3", data: { turbo: false } do %>
+              <%= render "shared/icon/form_icon_edit" %>
+              <span class="text-sm"><%= t('cards.form.edit') %></span>
+            <% end %>
+            <%= button_to group_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete'), turbo_frame: "_top" }, class: "btn-main-icon p-2 flex items-center gap-3" do %>
+              <%= render "shared/icon/form_icon_delete" %>
+              <span class="text-sm"><%= t('cards.form.delete') %></span>
+            <% end %>
+          <% else %>
+            <%= link_to edit_user_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-3", data: { turbo: false } do %>
+              <%= render "shared/icon/form_icon_edit" %>
+              <span class="text-sm"><%= t('cards.form.edit') %></span>
+            <% end %>
+            <%= button_to user_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete'), turbo_frame: "_top" }, class: "btn-main-icon p-2 flex items-center gap-3" do %>
+              <%= render "shared/icon/form_icon_delete" %>
+              <span class="text-sm"><%= t('cards.form.delete') %></span>
+            <% end %>
+          <% end %>
+        </div>
       </div>
 
-      <div class="w-full max-w-md">
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2"><%= t('spots.form.category') %></label>
-          <input type="text" value="<%= @spot.category&.name || "---" %>" readonly class="form-text-field bg-gray-100" />
+      <div class="w-full">
+        <div class="mb-4 md:mb-6">
+          <label class="block text-sm md:text-base font-medium text-text mb-2 md:mb-3"><%= t('spots.form.category') %></label>
+          <input type="text" value="<%= @spot.category&.name || "---" %>" readonly class="form-text-field bg-gray-100 text-sm md:text-base" />
         </div>
 
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2"><%= t('spots.form.address') %></label>
+        <div class="mb-4 md:mb-6">
+          <label class="block text-sm md:text-base font-medium text-text mb-2 md:mb-3"><%= t('spots.form.address') %></label>
           <div class="flex items-center gap-2">
-            <input type="text" value="<%= @spot.address.present? ? @spot.address : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
+            <input type="text" value="<%= @spot.address.present? ? @spot.address : "---" %>" readonly class="form-text-field bg-gray-100 flex-1 text-sm md:text-base" />
             <% if @spot.google_place_id.present? %>
               <%= link_to "https://www.google.com/maps/search/?api=1&query=7-Elevan&query_place_id=#{@spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('Googleマップに移動します')" do %>
                 <%= render "shared/icon/map_icon_google" %>
@@ -27,10 +52,10 @@
           </div>
         </div>
 
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2"><%= t('spots.form.website_url') %></label>
+        <div class="mb-4 md:mb-6">
+          <label class="block text-sm md:text-base font-medium text-text mb-2 md:mb-3"><%= t('spots.form.website_url') %></label>
           <div class="flex items-center gap-2">
-            <input type="text" value="<%= @spot.website_url.present? ? @spot.website_url : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
+            <input type="text" value="<%= @spot.website_url.present? ? @spot.website_url : "---" %>" readonly class="form-text-field bg-gray-100 flex-1 text-sm md:text-base" />
             <% if @spot.website_url.present? %>
               <%# website_url は Spot モデルでバリデーション済み（HTTP/HTTPS のみ） %>
               <%= link_to @spot.website_url, target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('外部サイトに移動しますか？')" do %>
@@ -40,21 +65,21 @@
           </div>
         </div>
 
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-text mb-2"><%= t('spots.form.phone_number') %></label>
-          <input type="text" value="<%= @spot.phone_number.present? ? @spot.phone_number : "---" %>" readonly class="form-text-field bg-gray-100" />
+        <div class="mb-4 md:mb-6">
+          <label class="block text-sm md:text-base font-medium text-text mb-2 md:mb-3"><%= t('spots.form.phone_number') %></label>
+          <input type="text" value="<%= @spot.phone_number.present? ? @spot.phone_number : "---" %>" readonly class="form-text-field bg-gray-100 text-sm md:text-base" />
         </div>
       </div>
 
 
-      <div class="mt-12">
+      <div class="mt-12 flex flex-col md:flex-row gap-3 md:gap-8 md:justify-center md:items-center">
         <%# グループのカード か ユーザーのカード か判定 %>
         <% if @card.group_card? %>
           <% if @card.group.schedule.present? %>
             <%# グループのカード → 直接作成（postなのでbutton_to）  %>
             <%= button_to t('spots.show.add_to_group_schedule'),
                 group_card_spot_schedule_spots_path(@card.group, @card, @spot),
-                method: :post, class: "btn-main w-full" %>
+                method: :post, class: "btn-main md:min-w-[150px]" %>
           <% end %>
         <% else %>
           <%# ユーザーのカード → ユーザーがしおりを持つ場合のみ表示 %>
@@ -62,16 +87,15 @@
             <%= link_to t('spots.show.add_to_user_schedule'),
                 new_card_spot_schedule_spot_path(@card, @spot),
                 data: {turbo_frame: "add_new_schedule_spot"},
-                class: "btn-main w-full block text-center" %>
+                class: "btn-main text-center md:min-w-[150px]" %>
           <% end %>
         <% end %>
-      </div>
 
-      <div class="flex gap-3 mt-8">
+        <%# 戻るボタン %>
         <% if @card.group_card? %>
-          <%= link_to t('cards.form.back'), group_card_path(@card.group, @card), data: {turbo_frame: "_top"}, class: "btn-sub w-full text-center" %>
+          <%= link_to t('cards.form.back'), group_card_path(@card.group, @card), data: {turbo_frame: "_top"}, class: "btn-sub text-center md:min-w-[150px]" %>
         <% else %>
-          <%= link_to t('cards.form.back'), card_path(@card), data: {turbo_frame: "_top"}, class: "btn-sub w-full text-center" %>
+          <%= link_to t('cards.form.back'), card_path(@card), data: {turbo_frame: "_top"}, class: "btn-sub text-center md:min-w-[150px]" %>
         <% end %>
       </div>
     </main>

@@ -4,7 +4,7 @@
 <%= turbo_frame_tag "spot-create-modal", data: { controller: "modal" } %>
 
 <%# stimulusからリクエストを投げるために必要なidを取得するときにハッシュ化されている必要があるのでhashidを使う %>
-<main id="main" class="flex flex-col items-center justify-center px-8 py-6 mb-12" data-controller="sortable" data-schedule-id="<%= @schedule.hashid %>">
+<main id="main" class="flex flex-col items-center justify-center px-4 md:px-6 lg:px-8 py-6 mb-12" data-controller="sortable" data-schedule-id="<%= @schedule.hashid %>">
   <%= render partial: "users/schedules/show", locals: { schedule: @schedule } %>
 </main>
 

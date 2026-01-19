@@ -11,7 +11,7 @@
     data-dropdown-target="menu"
   >
     <% if @card.group_card? %>
-      <%= link_to edit_group_spot_path(@spot), class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline", data: { turbo_frame: "spot-edit-modal", action: "click->dropdown#close" } do %>
+      <%= link_to edit_group_spot_path(@spot), class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline", data: { turbo: false, action: "click->dropdown#close" } do %>
         <%= render "shared/icon/form_icon_edit" %>
         <span><%= t('cards.form.edit') %></span>
       <% end %>
@@ -20,7 +20,7 @@
         <span><%= t('cards.form.delete') %></span>
       <% end %>
     <% else %>
-      <%= link_to edit_user_spot_path(@spot), class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline", data: { turbo_frame: "spot-edit-modal", action: "click->dropdown#close" } do %>
+      <%= link_to edit_user_spot_path(@spot), class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline", data: { turbo: false, action: "click->dropdown#close" } do %>
         <%= render "shared/icon/form_icon_edit" %>
         <span><%= t('cards.form.edit') %></span>
       <% end %>

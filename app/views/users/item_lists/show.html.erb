@@ -3,10 +3,10 @@
   <% breadcrumb :schedule_item_list, @schedule %>
 <% end %>
 
-<main class="flex flex-col items-center justify-center px-8 py-6" data-controller="item-list-form sortable">
-  <div class="w-full max-w-2xl">
+<main class="flex flex-col items-center justify-center px-8 md:px-6 lg:px-8 py-6" data-controller="item-list-form sortable">
+  <div class="w-full max-w-[480px] md:max-w-xl lg:max-w-2xl">
     <%# タイトル %>
-    <h1 class="text-xl font-bold text-text mb-6"><%= t('item_lists.show.title') %></h1>
+    <h1 class="text-xl md:text-2xl font-bold text-text mb-6"><%= t('item_lists.show.title') %></h1>
 
     <%# 空状態メッセージ %>
     <div id="empty-state" class="<%= @items.any? ? 'hidden' : '' %>">

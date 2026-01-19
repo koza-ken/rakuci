@@ -1,4 +1,4 @@
-<%= link_to (card.group_card? ? group_card_path(card.group, card) : card_path(card)), class: "block" do %>
+<%= link_to (card.group_card? ? group_card_path(card.group, card) : card_path(card)), class: "block w-[170px] mx-auto" do %>
   <div id="<%= dom_id(card) %>" class="relative w-full aspect-[1/1.4] rounded-lg shadow-[2px_2px_6px_rgba(0,0,0,0.25)]
               px-2 py-2 border-[6px] border-[#ecebe8] bg-[#fffee7] overflow-hidden
               before:absolute before:inset-0 before:z-10
@@ -35,7 +35,7 @@
     </div>
 
     <%# 作成日・最終更新日・いいね %>
-    <div class="mt-3 mb-1 ml-2 text-xs text-text-light relative z-10 flex justify-between items-end">
+    <div class="mt-3 mb-1 ml-2 text-sm text-text-light relative z-10 flex justify-between items-end">
       <div class="space-y-2">
         <p>作成日 : <%= card.created_at.strftime("%Y/%m/%d") %></p>
         <p>更新日 : <%= card.updated_at.strftime("%Y/%m/%d") %></p>

@@ -3,28 +3,28 @@
 
 <%= turbo_frame_tag "group-create-modal", data: { controller: "modal" }  %>
 
-<main class="flex flex-col items-center justify-center px-8 py-6 mb-20">
-  <div id="groups-page-title">
+<main class="flex flex-col items-center justify-center px-8 md:px-6 lg:px-8 py-6 mb-20 ">
+  <div id="groups-page-title" class="w-full text-center">
     <% if @groups.any? %>
-      <h1 class="text-xl text-text font-bold"><%= t('.title') %></h1>
+      <h1 class="text-xl md:text-2xl text-text font-bold"><%= t('.title') %></h1>
     <% end %>
   </div>
 
-  <div id="groups_list" class="w-full text-center space-y-4 mt-8">
+  <div id="groups_list" class="w-full max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-8">
     <% if @groups.any? %>
       <%= render @groups %>
     <% else %>
-      <div id="groups_empty_state" class="flex justify-center py-8 mt-6 px-4">
+      <div id="groups_empty_state" class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center py-8 mt-6 px-4">
         <div class="w-full max-w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-4 py-10 space-y-8 text-center animate-fade-in-up">
-          <div class="mx-auto w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
-            <%= render "shared/icon/footer_icon_group", icon_class: "text-text-light/40" %>
+          <div class="mx-auto w-16 h-16 md:w-24 md:h-24 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
+            <%= render "shared/icon/footer_icon_group", icon_class: "text-text-light/40 md:size-12" %>
           </div>
           <div class="space-y-6">
-            <p class="text-lg font-semibold text-text"><%= t('.no_groups') %></p>
-            <p class="text-sm text-text-light leading-relaxed"><%= t('.create_group_caption') %></p>
+            <p class="text-lg md:text-xl font-semibold text-text"><%= t('.no_groups') %></p>
+            <p class="text-sm md:text-lg text-text-light leading-relaxed"><%= t('.create_group_caption') %></p>
           </div>
           <div>
-            <%= link_to new_group_path, data: {turbo_frame: "group-create-modal"}, class: "first-create-btn" do %>
+            <%= link_to new_group_path, data: {turbo_frame: "group-create-modal"}, class: "first-create-btn md:min-w-1/2" do %>
               <%= render "shared/icon/group_card_icon_add" %>
               <span><%= t('.create_group') %></span>
             <% end %>
@@ -37,11 +37,11 @@
   <%# 右下の+ボタン（新規作成ページへのリンク） %>
   <div id="groups-fab-container">
     <% if @groups.any? %>
-      <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
+      <div class="fixed bottom-22 right-4 md:right-6 lg:left-[calc(50%+412px)] lg:right-auto z-50" data-controller="modal">
         <%= link_to new_group_path, data: {turbo_frame: "group-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
                     title: t('groups.index.create_group'),
-                    class: "group bg-primary hover:opacity-80 text-text-light w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
-          <%= render "shared/icon/add_group_icon"%>
+                    class: "group bg-primary hover:opacity-80 text-text-light w-14 h-14 lg:w-18 lg:h-18 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
+          <%= render "shared/icon/add_group_icon", icon_class: "w-10 h-10 lg:w-12 lg:h-12" %>
         <% end %>
       </div>
     <% end %>

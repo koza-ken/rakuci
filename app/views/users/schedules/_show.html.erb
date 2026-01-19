@@ -1,34 +1,48 @@
-<div class="w-full max-w-2xl">
+<div class="w-full max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto px-4 md:px-6 lg:px-8">
   <% if schedule.present? %>
     <%# しおり名 %>
-    <div class="flex items-start justify-between mb-4 gap-1">
-      <h1 class="text-xl text-text font-bold"><%= schedule.name %></h1>
-      <%= render partial: "users/schedules/kebab_menu", locals: { schedule: schedule } %>
+    <div class="flex items-start justify-between mb-4 lg:mb-6 gap-1 lg:gap-3">
+      <h1 class="text-xl lg:text-2xl text-text font-bold flex-1"><%= schedule.name %></h1>
+      <div class="flex gap-2 lg:gap-4 shrink-0">
+        <%= link_to edit_schedule_path(schedule), class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo: false } do %>
+          <div class="flex items-center justify-center size-5 lg:size-6">
+            <%= render "shared/icon/form_icon_edit" %>
+          </div>
+          <span class="hidden lg:inline"><%= t('schedules.show.edit') %></span>
+        <% end %>
+        <%= button_to schedule_path(schedule), method: :delete, form_class: "inline", class: "btn-danger p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo_confirm: t('schedules.delete_confirm') } do %>
+          <div class="flex items-center justify-center size-5 lg:size-6">
+            <%= render "shared/icon/form_icon_delete" %>
+          </div>
+          <span class="hidden lg:inline"><%= t('schedules.show.delete') %></span>
+        <% end %>
+      </div>
     </div>
 
     <%# スケジュール日程 %>
-    <div class="mb-2">
-      <p class="text-text">
+    <div class="mb-2 lg:mb-6">
+      <p class="text-sm lg:text-base text-text">
         <span ><%= t('schedules.show.schedule_dates')%>：</span>
         <span ><%= schedule.formatted_date_range %></span>
       </p>
     </div>
 
     <%# スポット %>
-    <div class="mt-8">
-      <div class="flex items-center justify-between gap-3 mb-8">
-        <%= link_to t('users.schedules.show.back'), schedules_path, class: "btn-sub text-center px-4 py-2" %>
-        <%= link_to schedule_item_list_path(schedule), class: "btn-main p-1 w-auto inline-flex items-center justify-center" do %>
-          <div class="size-8">
+    <div class="mt-8 lg:mt-10">
+      <div class="flex items-start md:items-center justify-between gap-3 md:gap-4 mb-8 lg:mb-10">
+        <%= link_to t('users.schedules.show.back'), schedules_path, class: "btn-sub w-auto text-center px-4 md:px-8 py-2 text-sm lg:text-base" %>
+        <%= link_to schedule_item_list_path(schedule), class: "btn-main-icon p-2 lg:px-4 lg:py-2 lg:min-w-[150px] flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base" do %>
+          <div class="flex items-center justify-center size-5 lg:size-6">
             <%= render "shared/icon/footer_icon_backpack", icon_class: "text-text-light" %>
           </div>
+          <span class="hidden lg:inline"><%= t('users.schedules.show.item_list') %></span>
         <% end %>
       </div>
 
       <% (1..schedule.days).each do |day| %>
         <%# 日目の見出し %>
         <% formatted_date = schedule.formatted_date_for_day(day) %>
-        <h3 class="text-lg font-bold text-text mt-4 mb-2">
+        <h3 class="text-base lg:text-lg font-bold text-gray-700 mt-6 lg:mt-8 mb-3 lg:mb-4">
           <% if formatted_date %>
             <%= formatted_date %>（<%= day %><%= t('users.schedules.show.day_label') %>）
           <% else %>
@@ -53,10 +67,8 @@
   <% end %>
 
   <%# メモ %>
-  <% if schedule.memo.present? %>
-    <h2 class="mt-10"><%= t('schedules.show.memo') %></h2>
-    <div class="mt-2 p-4 bg-white rounded">
-      <p class="text-text"><%= schedule.memo %></p>
-    </div>
-  <% end %>
+  <h2 class="mt-10 lg:mt-14 text-lg lg:text-xl font-bold text-text"><%= t('schedules.show.memo') %></h2>
+  <div class="form-text-field mt-3 lg:mt-4 p-4 lg:p-6 rounded min-h-[100px]">
+    <p class="text-sm lg:text-base text-text"><%= schedule.memo %></p>
+  </div>
 </div>

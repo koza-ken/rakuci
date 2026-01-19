@@ -11,6 +11,8 @@
           <%= render "shared/icon/schedule_icon_date" %>
           <span><%= schedule.formatted_date_range %></span>
         </div>
+      <% else %>
+          <span class="text-text-light text-sm"><%= t('users.schedules.no_date_set') %></span>
       <% end %>
 
       <%# グループしおりの場合、グループ名と人数を表示 %>
