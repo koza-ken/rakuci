@@ -1,67 +1,67 @@
 <turbo-frame id="spot-edit-modal">
-  <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
-    <main class="flex flex-col justify-center px-8 py-12 bg-main-bg">
-      <h1 class="text-xl font-bold text-text mb-8"><%= t('spots.edit.title') %></h1>
+  <div class="relative z-20 w-full mx-auto max-w-2xl md:max-w-3xl lg:max-w-4xl  bg-main-bg rounded-md">
+    <main class="flex flex-col justify-center px-4 md:px-6 lg:px-8 py-8 bg-main-bg">
+      <h1 class="text-xl lg:text-2xl font-bold text-text mb-8 lg:mb-10"><%= t('spots.edit.title') %></h1>
 
-      <%= form_with model: @spot, url: (@card.group_card? ? group_spot_path(@spot) : user_spot_path(@spot)), local: true, class: "w-full max-w-md" do |f| %>
+      <%= form_with model: @spot, url: (@card.group_card? ? group_spot_path(@spot) : user_spot_path(@spot)), local: true, class: "w-full" do |f| %>
         <div class="mb-6">
-          <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
+          <%= f.label :name, class: "block text-sm lg:text-base font-medium text-text mb-2 lg:mb-3" do %>
             <%= t('spots.form.name') %>
             <span class="text-red-600 font-bold ml-1">*</span>
           <% end %>
           <%= f.text_field :name,
               placeholder: t('spots.form.name_placeholder'),
-              class: "form-text-field" %>
+              class: "form-text-field text-sm lg:text-base" %>
           <% if @spot.errors.any? %>
-            <div class="ml-2">
+            <div class="ml-2 lg:ml-3">
               <% @spot.errors.messages[:name].each do |message| %>
-                <p class="text-red-600 text-xs"><%= t('activerecord.attributes.spot.name') %><%= message %></p>
+                <p class="text-red-600 text-xs lg:text-sm"><%= t('activerecord.attributes.spot.name') %><%= message %></p>
               <% end %>
             </div>
           <% end %>
         </div>
 
         <div class="mb-6">
-          <%= f.label :category_id, class: "block text-sm font-medium text-text mb-2" do %>
+          <%= f.label :category_id, class: "block text-sm lg:text-base font-medium text-text mb-2 lg:mb-3" do %>
             <%= t('spots.form.category') %>
             <span class="text-red-600 font-bold ml-1">*</span>
           <% end %>
           <%= f.collection_select :category_id, @categories, :id, :name,
               {include_blank: "--- 選択してください ---"},
-              {class: "form-text-field"} %>
+              {class: "form-text-field text-sm lg:text-base"} %>
           <% if @spot.errors.any? %>
-            <div class="ml-2">
+            <div class="ml-2 lg:ml-3">
               <% @spot.errors.messages[:category_id].each do |message| %>
-                <p class="text-red-600 text-xs"><%= t('activerecord.attributes.spot.category_id') %><%= message %></p>
+                <p class="text-red-600 text-xs lg:text-sm"><%= t('activerecord.attributes.spot.category_id') %><%= message %></p>
               <% end %>
             </div>
           <% end %>
         </div>
 
         <div class="mb-6">
-          <%= f.label :address, t('spots.form.address'), class: "block text-sm font-medium text-text mb-2" %>
+          <%= f.label :address, t('spots.form.address'), class: "block text-sm lg:text-base font-medium text-text mb-2 lg:mb-3" %>
           <%= f.text_field :address,
               placeholder: t('spots.form.address_placeholder'),
-              class: "form-text-field" %>
+              class: "form-text-field text-sm lg:text-base" %>
         </div>
 
         <div class="mb-6">
-          <%= f.label :website_url, t('spots.form.website_url'), class: "block text-sm font-medium text-text mb-2" %>
+          <%= f.label :website_url, t('spots.form.website_url'), class: "block text-sm lg:text-base font-medium text-text mb-2 lg:mb-3" %>
           <%= f.text_field :website_url,
               placeholder: t('spots.form.web_site_url_placeholder'),
-              class: "form-text-field" %>
+              class: "form-text-field text-sm lg:text-base" %>
         </div>
 
         <div class="mb-6">
-          <%= f.label :phone_number, t('spots.form.phone_number'), class: "block text-sm font-medium text-text mb-2" %>
+          <%= f.label :phone_number, t('spots.form.phone_number'), class: "block text-sm lg:text-base font-medium text-text mb-2 lg:mb-3" %>
           <%= f.text_field :phone_number,
               placeholder: t('spots.form.phone_number_placeholder'),
-              class: "form-text-field" %>
+              class: "form-text-field text-sm lg:text-base" %>
         </div>
 
-        <div class="flex gap-3">
-          <%= f.submit t('spots.form.update'), class: "btn-main flex-1" %>
-          <%= link_to t('cards.form.cancel'), (@card.group_card? ? group_spot_path(@spot) : user_spot_path(@spot)), class: "btn-sub flex-1 text-center" %>
+        <div class="flex gap-3 lg:gap-4 mt-8 lg:mt-10">
+          <%= f.submit t('spots.form.update'), class: "btn-main flex-1 lg:px-8" %>
+          <%= link_to t('cards.form.cancel'), (@card.group_card? ? group_spot_path(@spot) : user_spot_path(@spot)), class: "btn-sub flex-1 text-center lg:px-8" %>
         </div>
       <% end %>
     </main>
