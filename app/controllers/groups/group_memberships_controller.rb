@@ -1,4 +1,4 @@
-class Groups::MembershipsController < ApplicationController
+class Groups::GroupMembershipsController < ApplicationController
   before_action :set_group
   before_action :set_membership, only: %i[ destroy ]
   before_action :check_owner_permission, only: %i[ destroy ]
