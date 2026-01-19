@@ -41,7 +41,7 @@ class ScheduleSpot < ApplicationRecord
   # global_position は acts_as_list が自動で管理するためバリデーション不要
   validates :day_number, presence: true,
             numericality: { only_integer: true, greater_than: 0 }
-  validates :snapshot_name, length: { maximum: 50 }
+  validates :snapshot_name, presence: true, length: { maximum: 50 }
   validates :snapshot_address, length: { maximum: 255 }
   validates :snapshot_phone_number, length: { maximum: 20 }
   validates :snapshot_website_url, format: { with: URI::DEFAULT_PARSER.make_regexp([ "http", "https" ]) }, length: { maximum: 500 }, allow_blank: true
