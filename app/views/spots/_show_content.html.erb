@@ -13,7 +13,7 @@
         <%# 編集・削除ボタン：md以上のみ表示 %>
         <div class="hidden md:flex items-center gap-4">
           <% if @card.group_card? %>
-            <%= link_to edit_group_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-3", data: { turbo_frame: "spot-edit-modal" } do %>
+            <%= link_to edit_group_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-3", data: { turbo: false } do %>
               <%= render "shared/icon/form_icon_edit" %>
               <span class="text-sm"><%= t('cards.form.edit') %></span>
             <% end %>
@@ -22,7 +22,7 @@
               <span class="text-sm"><%= t('cards.form.delete') %></span>
             <% end %>
           <% else %>
-            <%= link_to edit_user_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-3", data: { turbo_frame: "spot-edit-modal" } do %>
+            <%= link_to edit_user_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-3", data: { turbo: false } do %>
               <%= render "shared/icon/form_icon_edit" %>
               <span class="text-sm"><%= t('cards.form.edit') %></span>
             <% end %>
