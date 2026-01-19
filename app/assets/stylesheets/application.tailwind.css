@@ -32,9 +32,18 @@ test {
 body {
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
   /* ヘッダーで隠れないようにヘッダー分をあけておく */
-  padding-top: 63px;
+  padding-top: 58px;
 }
-
+@media (min-width: 768px) {
+  body {
+    padding-top: 62px;
+  }
+}
+@media (min-width: 1024px) {
+  body {
+    padding-top: 74px;
+  }
+}
 
 @layer components {
   .btn-main {
