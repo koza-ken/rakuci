@@ -89,7 +89,7 @@
 
           <div class="flex gap-3 mt-8 lg:col-span-2 justify-center">
             <%= f.submit t('schedule_spots.form.update'), class: "btn-main w-1/2 px-4 md:px-8 py-2 text-sm lg:text-base" %>
-            <%= link_to t('schedule_spots.form.cancel'), group_schedule_spot_path(@schedule_spot), class: "btn-sub w-1/2 px-4 md:px-8 py-2 text-sm lg:text-base text-center" %>
+            <%= link_to t('schedule_spots.form.cancel'), group_schedule_spot_path(@schedule_spot), class: "btn-sub w-1/2 px-4 md:px-8 py-2 text-sm lg:text-base text-center", data: { turbo: false } %>
           </div>
         <% end %>
       </div>
