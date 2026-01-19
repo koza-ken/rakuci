@@ -6,8 +6,8 @@
 <%= turbo_stream.replace "card-name-section" do %>
   <div id="card-name-section" data-controller="card-edit">
     <%# 表示モード：エラーがあれば非表示 %>
-    <div id="card-name-display" class="<%= 'hidden' if @card.errors.any? %> flex items-start gap-6 mb-4" data-card-edit-target="display">
-      <h1 class="text-xl font-bold text-text"><%= @card.name %></h1>
+    <div id="card-name-display" class="<%= 'hidden' if @card.errors.any? %> flex items-start gap-6 mb-4 lg:mb-6" data-card-edit-target="display">
+      <h1 class="text-xl lg:text-2xl font-bold text-text"><%= @card.name %></h1>
       <%# 編集アイコン（サイズ固定） %>
       <button class="shrink-0 text-text hover:opacity-70 transition pt-1" data-action="click->card-edit#toggleForm">
         <%= render "shared/icon/form_icon_edit" %>
@@ -15,12 +15,12 @@
     </div>
 
     <%# 編集モード：エラーがなければ hidden、あればを表示 %>
-    <div id="card-name-form" class="<%= 'hidden' unless @card.errors.any? %> mb-4" data-card-edit-target="form">
+    <div id="card-name-form" class="<%= 'hidden' unless @card.errors.any? %> mb-4 lg:mb-6" data-card-edit-target="form">
       <%= form_with model: @card, url: (@card.group_card? ? group_card_path(@card.group, @card) : card_path(@card)), local: true do |f| %>
         <div class="flex items-center gap-2">
-          <%= f.text_field :name, class: "form-text-field flex-1" %>
-          <%= f.submit t('cards.form.update'), class: "btn-main px-4 py-2 w-auto" %>
-          <button type="button" class="btn-sub w-auto px-2 py-1" data-action="click->card-edit#toggleForm">
+          <%= f.text_field :name, class: "form-text-field w-full resize-none min-h-[120px] text-sm lg:text-base" %>
+          <%= f.submit t('cards.form.update'), class: "btn-main px-4 lg:px-8 py-2 w-auto" %>
+          <button type="button" class="btn-sub w-auto px-2 lg:px-4 py-1" data-action="click->card-edit#toggleForm">
             <p class="text-2xl">×</p>
           </button>
         </div>
@@ -39,23 +39,23 @@
 
 <%# メモセクション全体を置き換える %>
 <%= turbo_stream.replace "memo-section" do %>
-  <div id="memo-section" class="w-full max-w-md" data-controller="memo-edit">
+  <div id="memo-section" class="w-full" data-controller="memo-edit">
     <%# 表示モード：エラーがあれば非表示 %>
     <div id="memo-display" data-memo-edit-target="display" class="<%= 'hidden' if @card.errors.any? %> cursor-pointer">
       <%= form_with model: @card, url: (@card.group_card? ? group_card_path(@card.group, @card) : card_path(@card)), class: "w-full" do |f| %>
-        <%= f.label :memo, t('cards.form.memo'), class: "block text-xl font-bold text-text mb-2" %>
-        <%= f.text_area :memo, class: "form-text-field bg-gray-100 cursor-pointer", readonly: true, data: { action: "click->memo-edit#toggleForm" } %>
+        <%= f.label :memo, t('cards.form.memo'), class: "block text-lg lg:text-xl font-bold text-text mb-2 lg:mb-3" %>
+        <%= f.text_area :memo, class: "form-text-field w-full resize-none min-h-[120px] text-sm lg:text-base", readonly: true, data: { action: "click->memo-edit#toggleForm" } %>
       <% end %>
     </div>
 
     <%# 編集モード：エラーがなければ hidden、あればを表示 %>
     <div id="memo-form" data-memo-edit-target="form" class="<%= 'hidden' unless @card.errors.any? %> w-full">
       <%= form_with model: @card, url: (@card.group_card? ? group_card_path(@card.group, @card) : card_path(@card)), local: true, class: "w-full" do |f| %>
-        <%= f.label :memo, t('cards.form.memo'), class: "block text-xl font-bold text-text mb-2" %>
-        <%= f.text_area :memo, class: "form-text-field flex-1 resize-none min-h-[100px]", placeholder: "メモを入力してください" %>
+        <%= f.label :memo, t('cards.form.memo'), class: "block text-lg lg:text-xl font-bold text-text mb-2 lg:mb-3" %>
+        <%= f.text_area :memo, class: "form-text-field w-full resize-none min-h-[120px] text-sm lg:text-base", placeholder: "メモを入力してください" %>
         <div class="flex gap-2 mt-2">
-          <%= f.submit t('cards.form.update'), class: "btn-main px-4 py-2 w-auto" %>
-          <button type="button" class="btn-sub px-4 py-2 w-auto" data-action="click->memo-edit#toggleForm">
+          <%= f.submit t('cards.form.update'), class: "btn-main px-4 lg:px-6 py-2 w-auto" %>
+          <button type="button" class="btn-sub px-4 lg:px-6 py-2 w-auto" data-action="click->memo-edit#toggleForm">
             <%= t('cards.form.cancel') %>
           </button>
         </div>
