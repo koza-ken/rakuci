@@ -35,8 +35,8 @@
     <%# スポット追加ボタン %>
     <div class="flex justify-end mb-2 w-auto" data-controller="modal">
       <%= link_to new_group_card_spot_path(@card.group, @card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, title: t('cards.add_spot'), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3" do %>
-        <div class="flex items-center justify-center size-5 lg:size-6">
-          <%= render "shared/icon/add_spot_icon" %>
+        <div class="flex items-center justify-center">
+          <%= render "shared/icon/add_spot_icon", icon_class: "w-6 h-6 lg:w-8 lg:h-8" %>
         </div>
         <span class="hidden lg:inline text-sm lg:text-base"><%= t('cards.add_spot') %></span>
       <% end %>
