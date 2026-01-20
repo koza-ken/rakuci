@@ -65,17 +65,17 @@
           <% if @group.schedule.present? %>
             <%# グループにしおりがあればしおり詳細に遷移 %>
             <%= link_to group_schedule_path(@group), class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", title: t('groups.show.schedule_detail') do %>
-              <div class="flex items-center justify-center size-5 lg:size-6">
-                <%= render "shared/icon/footer_icon_schedule", icon_class: "text-text-light" %>
+              <div class="flex items-center justify-center">
+                <%= render "shared/icon/footer_icon_schedule", icon_class: "text-text-light w-6 h-6 lg:w-8 lg:h-8" %>
               </div>
-              <span class="hidden lg:inline"><%= t('groups.show.schedule_detail') %></span>
+              <span class="inline"><%= t('groups.show.schedule_detail') %></span>
             <% end %>
           <% else %>
             <%= link_to new_group_schedule_path(@group), data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" }, class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", title: t('groups.show.schedule_create') do %>
-              <div class="flex items-center justify-center size-5 lg:size-6">
-                <%= render "shared/icon/add_schedule_icon" %>
+              <div class="flex items-center justify-center">
+                <%= render "shared/icon/add_schedule_icon", icon_class: "w-6 h-6 lg:w-8 lg:h-8" %>
               </div>
-              <span class="hidden lg:inline"><%= t('groups.show.schedule_create') %></span>
+              <span class="inline"><%= t('groups.show.schedule_create') %></span>
             <% end %>
           <% end %>
         </div>
