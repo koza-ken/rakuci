@@ -9,7 +9,7 @@
     <div id="card-name-display" class="<%= 'hidden' if @card.errors.any? %> flex items-start gap-6 mb-4 lg:mb-6" data-card-edit-target="display">
       <h1 class="text-xl lg:text-2xl font-bold text-text"><%= @card.name %></h1>
       <%# 編集アイコン（サイズ固定） %>
-      <button class="shrink-0 text-text hover:opacity-70 transition pt-1" data-action="click->card-edit#toggleForm">
+      <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
         <%= render "shared/icon/form_icon_edit" %>
       </button>
     </div>
