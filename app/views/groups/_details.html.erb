@@ -72,11 +72,11 @@
           data-clipboard-text-value="<%= new_membership_url(@group.invite_token) %>"
           data-action="click->clipboard#copy"
           title="<%= t('groups.show.invite_button') %>"
-          class="btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base shrink-0">
-          <div class="flex items-center justify-center size-5 lg:size-6 text-text-light">
-            <%= render "shared/icon/add_membership_icon" %>
+          class="btn-main w-auto p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base shrink-0">
+          <div class="flex items-center justify-center">
+            <%= render "shared/icon/add_membership_icon", icon_class: "w-6 h-6 lg:w-8 lg:h-8" %>
           </div>
-          <span class="hidden lg:inline"><%= t('groups.show.invite_button') %></span>
+          <span class="inline"><%= t('groups.show.invite_button') %></span>
         </button>
       </div>
       <%= text_area_tag :member, @group.group_memberships.map(&:group_nickname).join("\n"), id: "members-textarea-content", readonly: true, class: "form-text-field bg-gray-100 resize-none min-h-[90px] cursor-pointer text-sm lg:text-base", data: { action: "click->member-delete#toggleDelete" } %>
