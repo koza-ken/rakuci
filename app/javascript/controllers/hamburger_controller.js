@@ -16,6 +16,7 @@ export default class extends Controller {
     this.hamburgerTarget.classList.toggle("open");
     this.overlayTarget.classList.toggle("hidden");
     this.menuTarget.classList.toggle("translate-x-full");
+    document.body.classList.toggle("overflow-hidden");
   }
 
   close() {
@@ -24,6 +25,7 @@ export default class extends Controller {
       this.hamburgerTarget.classList.remove("open");
       this.overlayTarget.classList.add("hidden");
       this.menuTarget.classList.add("translate-x-full");
+      document.body.classList.remove("overflow-hidden");
     }
   }
 }
