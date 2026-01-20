@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get "/privacy", to: "static_pages#privacy", as: :privacy
   # 利用規約
   get "/terms", to: "static_pages#terms", as: :terms
+  # 使い方ガイド
+  get "/guide", to: "guides#show", as: :guide
 
   # Routing Concerns（共通パターン）
 
