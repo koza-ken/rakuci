@@ -19,8 +19,9 @@
 
     <%= button_to schedule_path(schedule),
         method: :delete,
-        class: "flex items-center justify-start gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline bg-transparent border-none cursor-pointer",
-        data: { turbo_confirm: t('schedules.show.delete_confirm'), action: "click->dropdown#close" } do %>
+        form: { class: "contents" },
+        data: { turbo_confirm: t('users.schedules.show.delete_confirm'), action: "click->dropdown#close" },
+        class: "flex items-center justify-start gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline w-full text-left" do %>
       <span class="inline-flex items-center justify-center w-6 h-6">
         <%= render "shared/icon/form_icon_delete" %>
       </span>
