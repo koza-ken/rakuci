@@ -41,7 +41,7 @@
         <%= link_to new_schedule_path, data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" },
                     title: t('users.schedules.index.create_schedule'),
                     class: "group bg-primary hover:opacity-80 text-text-light w-14 h-14 lg:w-18 lg:h-18 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
-          <%= render "shared/icon/add_schedule_icon", icon_class: "w-8 h-8 lg:w-10 lg:h-10" %>
+          <%= render IconComponent.new(name: "add_schedule_icon", size: 8, breakpoints: { lg: 10 }, color: "text-text-light") %>
         <% end %>
       </div>
     <% end %>
