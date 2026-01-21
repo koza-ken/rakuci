@@ -123,9 +123,19 @@ ja:
       guide_button: くわしく
       guide_card_label: 旅行先のカード
       guide_close: とじる
-      guide_description: カードには、観光地・グルメ・体験・買い物のカテゴリごとにスポットを追加できます。
+      card_guide_description: カードには、観光地・グルメ・体験・買い物のカテゴリごとに行きたい場所を追加できます。
       guide_spots_label: 追加したスポット
-      guide_title: カードの使い方
+      card_guide_title: カードの使い方
+      guide_slide_1_title: カードに行きたい場所を追加
+      guide_slide_1_description: あなたが行ってみたい場所をカードに追加できます。次の旅行に向けていろいろな場所を追加していきましょう。
+      guide_slide_2_title: グループで一緒に計画
+      guide_slide_2_description: グループに友人や家族を招待することで、旅行の計画を一緒に進められます。行きたい場所をカードに追加していきましょう。
+      guide_slide_3_title: しおりをつくる
+      guide_slide_3_description: 旅行先が決まったらしおりを作成しましょう。カードに記録した場所をしおりに追加することができます。
+      guide_slide_4_title: もちものを整理
+      guide_slide_4_description: 旅行のもちものを整理できます。あなたのもちものページに、いつも持っていくものを追加することで忘れ物を防ぐことができます。
+      guide_slide_5_title: 費用を精算する
+      guide_slide_5_description: 旅行中の費用を記録しておくことで、旅費の精算ができます。
       lets_create_card: 旅行先のカードをつくろう
       personal_card_page: このページはあなた専用のカードをつくることができます
       title: あなたの旅のカード
