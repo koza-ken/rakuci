@@ -123,19 +123,20 @@ export default class extends Controller {
       this.previousButtonTarget.classList.remove("opacity-50", "cursor-not-allowed")
     }
 
-    // 次へボタン制御（最後のスライドで無効化・「RakuCiをつかう」に切り替え）
+    // 次へボタン制御（最後のスライドで無効化）
     if (isLastSlide) {
       this.nextButtonTarget.disabled = true
       this.nextButtonTarget.classList.add("opacity-50", "cursor-not-allowed")
-      if (this.hasStartButtonTarget) {
-        this.startButtonTarget.classList.remove("hidden")
-      }
+      // 「RakuCiをつかう」ボタンはいったんコメントアウト
+      // if (this.hasStartButtonTarget) {
+      //   this.startButtonTarget.classList.remove("hidden")
+      // }
     } else {
       this.nextButtonTarget.disabled = false
       this.nextButtonTarget.classList.remove("opacity-50", "cursor-not-allowed")
-      if (this.hasStartButtonTarget) {
-        this.startButtonTarget.classList.add("hidden")
-      }
+      // if (this.hasStartButtonTarget) {
+      //   this.startButtonTarget.classList.add("hidden")
+      // }
     }
   }
 }
