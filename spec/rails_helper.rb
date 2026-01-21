@@ -12,6 +12,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require_relative 'support/capybara'
 
 require 'rspec/rails'
+require 'view_component/test_helpers'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -82,6 +83,9 @@ RSpec.configure do |config|
 
   # Devise の統合テストヘルパー（システムスペック用）
   config.include Devise::Test::IntegrationHelpers, type: :system
+
+  # ViewComponent テストヘルパー
+  config.include ViewComponent::TestHelpers, type: :component
 
   # システムスペック用のドライバー設定（カスタム設定のため独自のドライバー名）
   # ドライバー詳細設定は spec/support/capybara.rb に一元化
