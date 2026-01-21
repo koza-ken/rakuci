@@ -1,3 +1,9 @@
-<div class="<%= size_class %> <%= @color %>">
-  <%= render "shared/icon/#{@name}" %>
-</div>
+<% if @inline %>
+  <span class="<%= size_class %> <%= @color %>">
+    <%= render "shared/icon/#{@name}" %>
+  </span>
+<% else %>
+  <div class="<%= size_class %> <%= @color %> flex items-center">
+    <%= render "shared/icon/#{@name}" %>
+  </div>
+<% end %>

@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class IconComponent < ViewComponent::Base
-  def initialize(name:, size: 6,  breakpoints: {}, color: "text-text-light")
+  def initialize(name:, size: 6,  breakpoints: {}, color: "text-text-light", inline: false)
     @name = name                  # 部分テンプレートのファイル名
     @size = size
     @breakpoints = breakpoints
     @color = color
+    @inline = inline              # true: <span>, false: <div>
   end
 
   def size_class
