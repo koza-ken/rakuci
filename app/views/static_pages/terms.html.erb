@@ -60,9 +60,7 @@
         本規約に関するお問い合わせについては、
         <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", target: "_blank", rel: "noopener noreferrer", class: "text-secondary hover:text-secondary underline inline-flex items-center" do %>
           お問い合わせフォーム
-          <span class="text-secondary underline">
-            <%= render "shared/icon/new_window_icon" %>
-          </span>
+          <%= render IconComponent.new(name: "new_window_icon", size: 4, color: "text-secondary", inline: true) %>
         <% end %>
         よりご連絡ください。
       </p>
