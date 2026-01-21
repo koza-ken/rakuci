@@ -29,6 +29,6 @@ module Myapp
 
     config.assets.paths << Rails.root.join("app/assets/builds")
 
-    config.time_zone = 'Tokyo'
+    config.time_zone = "Tokyo"
   end
 end
