@@ -81,7 +81,7 @@
         <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", class: "flex items-center justify-between px-6 py-2 lg:mb-6 text-text hover:bg-gray-100 transition", target: "_blank", rel: "noopener noreferrer" do %>
           <span class="flex items-center gap-1">
             お問い合わせ
-            <%= render "shared/icon/new_window_icon" %>
+            <%= render IconComponent.new(name: "new_window_icon", size: 4, color: "text-text", inline: true) %>
           </span>
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -139,7 +139,7 @@
         <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", class: "flex items-center justify-between px-6 py-2 lg:mb-6 text-text hover:bg-gray-100 transition", target: "_blank", rel: "noopener noreferrer" do %>
           <span class="flex items-center gap-1">
             お問い合わせ
-            <%= render "shared/icon/new_window_icon" %>
+            <%= render IconComponent.new(name: "new_window_icon", size: 4, color: "text-text", inline: true) %>
           </span>
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
