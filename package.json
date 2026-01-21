@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@hotwired/turbo-rails": "^8.0.12",
+    "@hotwired/turbo-rails": "^8.0.21",
     "sortablejs": "^1.15.6"
   },
   "devDependencies": {
