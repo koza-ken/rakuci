@@ -7,16 +7,33 @@ export default class extends Controller {
   connect() {
     // スライド機能が必要か判定（slide target が存在するか）
     if (this.hasSlideTargets) {
-      this.currentSlideValue = 0
-      this.slideDirection = "right" // "right" = 次へ, "left" = 戻る
-
-      // 初期状態：すべてのスライドを hidden で初期化
-      this.slideTargets.forEach((slide) => {
-        slide.classList.add("hidden")
-      })
-
-      this.updateDisplay()
+      this.initializeSlides()
+    } else {
+      // Turbo Stream で動的追加される場合、DOM を手動で確認して初期化
+      const slideElements = this.element.querySelectorAll("[data-guide-target='slide']")
+      if (slideElements.length > 0) {
+        this.initializeSlides()
+      } else {
+        // さらに待つ必要がある場合
+        setTimeout(() => {
+          if (this.hasSlideTargets) {
+            this.initializeSlides()
+          }
+        }, 100)
+      }
     }
+  }
+
+  initializeSlides() {
+    this.currentSlideValue = 0
+    this.slideDirection = "right" // "right" = 次へ, "left" = 戻る
+
+    // 初期状態：すべてのスライドを hidden で初期化
+    this.slideTargets.forEach((slide) => {
+      slide.classList.add("hidden")
+    })
+
+    this.updateDisplay()
   }
 
   // カードガイド用：モーダル toggle
@@ -110,11 +127,15 @@ export default class extends Controller {
     if (isLastSlide) {
       this.nextButtonTarget.disabled = true
       this.nextButtonTarget.classList.add("opacity-50", "cursor-not-allowed")
-      this.startButtonTarget.classList.remove("hidden")
+      if (this.hasStartButtonTarget) {
+        this.startButtonTarget.classList.remove("hidden")
+      }
     } else {
       this.nextButtonTarget.disabled = false
       this.nextButtonTarget.classList.remove("opacity-50", "cursor-not-allowed")
-      this.startButtonTarget.classList.add("hidden")
+      if (this.hasStartButtonTarget) {
+        this.startButtonTarget.classList.add("hidden")
+      }
     }
   }
 }
