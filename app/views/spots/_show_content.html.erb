@@ -13,21 +13,23 @@
         <%# 編集・削除ボタン：md以上のみ表示 %>
         <div class="hidden md:flex items-center gap-4">
           <% if @card.group_card? %>
+          <%# グループカードのスポット %>
             <%= link_to edit_group_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-3", data: { turbo: false } do %>
-              <%= render "shared/icon/form_icon_edit" %>
+              <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { md: 6 }, color:"text-text") %>
               <span class="text-sm"><%= t('cards.form.edit') %></span>
             <% end %>
-            <%= button_to group_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete'), turbo_frame: "_top" }, class: "btn-main-icon p-2 flex items-center gap-3" do %>
-              <%= render "shared/icon/form_icon_delete" %>
+            <%= button_to group_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete'), turbo_frame: "_top" }, class: "btn-danger p-2 flex items-center gap-3" do %>
+              <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { md: 6 }, color:"text-white") %>
               <span class="text-sm"><%= t('cards.form.delete') %></span>
             <% end %>
           <% else %>
+          <%# 個人カードのスポット %>
             <%= link_to edit_user_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-3", data: { turbo: false } do %>
-              <%= render "shared/icon/form_icon_edit" %>
+              <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { md: 6 }, color:"text-text") %>
               <span class="text-sm"><%= t('cards.form.edit') %></span>
             <% end %>
-            <%= button_to user_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete'), turbo_frame: "_top" }, class: "btn-main-icon p-2 flex items-center gap-3" do %>
-              <%= render "shared/icon/form_icon_delete" %>
+            <%= button_to user_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete'), turbo_frame: "_top" }, class: "btn-danger p-2 flex items-center gap-3" do %>
+              <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { md: 6 }, color:"text-white") %>
               <span class="text-sm"><%= t('cards.form.delete') %></span>
             <% end %>
           <% end %>
