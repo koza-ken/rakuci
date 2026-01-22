@@ -14,7 +14,7 @@
         <h2 class="text-xl lg:text-2xl font-bold text-text"><%= @group.name %></h2>
         <%# 編集アイコン（サイズ固定） %>
         <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
-          <%= render "shared/icon/form_icon_edit" %>
+          <%= render IconComponent.new(name: "form_icon_edit", size: 6, color: "text-text-light") %>
         </button>
       </div>
 
@@ -66,14 +66,14 @@
             <%# グループにしおりがあればしおり詳細に遷移 %>
             <%= link_to group_schedule_path(@group), class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", title: t('groups.show.schedule_detail') do %>
               <div class="flex items-center justify-center">
-                <%= render "shared/icon/footer_icon_schedule", icon_class: "text-text-light w-6 h-6 lg:w-8 lg:h-8" %>
+                <%= render IconComponent.new(name: "footer_icon_schedule", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
               </div>
               <span class="inline"><%= t('groups.show.schedule_detail') %></span>
             <% end %>
           <% else %>
             <%= link_to new_group_schedule_path(@group), data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" }, class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", title: t('groups.show.schedule_create') do %>
               <div class="flex items-center justify-center">
-                <%= render "shared/icon/add_schedule_icon", icon_class: "w-6 h-6 lg:w-8 lg:h-8" %>
+                <%= render IconComponent.new(name: "add_schedule_icon", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
               </div>
               <span class="inline"><%= t('groups.show.schedule_create') %></span>
             <% end %>
@@ -91,7 +91,7 @@
             <div class="py-2">
               <div class="flex items-center justify-center gap-2 mb-2 lg:mb-3">
                 <%= link_to new_group_card_path(@group), data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId"}, class: "flex items-center justify-center gap-2" do %>
-                  <%= render "shared/icon/group_card_icon_add" %>
+                  <%= render IconComponent.new(name: "group_card_icon_add", size: 6, color: "text-text") %>
                   <p class="text-lg lg:text-xl text-text"><%= t('groups.show.add_card') %></p>
                 <% end %>
               </div>
@@ -99,7 +99,7 @@
             </div>
           <% else %>
             <%= link_to new_group_card_path(@group), data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId"}, class: "flex items-center justify-center gap-2" do %>
-              <%= render "shared/icon/group_card_icon_add" %>
+              <%= render IconComponent.new(name: "group_card_icon_add", size: 6, color: "text-text") %>
               <p class="text-sm lg:text-base"><%= t('groups.show.add_card') %></p>
             <% end %>
           <% end %>
