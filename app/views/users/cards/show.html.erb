@@ -14,7 +14,7 @@
         <h1 class="text-xl lg:text-2xl font-bold text-text"><%= @card.name %></h1>
         <%# 編集アイコン（サイズ固定） %>
         <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
-          <%= render "shared/icon/form_icon_edit" %>
+          <%= render IconComponent.new(name: "form_icon_edit", size: 6, color: "text-text-light") %>
         </button>
       </div>
 
@@ -36,7 +36,7 @@
     <div class="flex justify-end mb-2 lg:mb-3 w-auto" data-controller="modal">
       <%= link_to new_card_spot_path(@card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, class: "btn-main-icon p-2 lg:px-6 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base" do %>
         <div class="flex items-center justify-center">
-          <%= render "shared/icon/add_spot_icon", icon_class: "w-6 h-6 lg:w-8 lg:h-8" %>
+          <%= render IconComponent.new(name: "add_spot_icon", size: 6, breakpoints: { lg: 8 }) %>
         </div>
         <span class="hidden lg:inline"><%= t('cards.add_spot') %></span>
       <% end %>
