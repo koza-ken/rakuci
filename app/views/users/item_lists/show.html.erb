@@ -34,7 +34,7 @@
         data-action="click->item-list-form#toggleForm"
         data-item-list-form-target="addButton"
       >
-        <%= render "shared/icon/group_card_icon_add" %>
+        <%= render IconComponent.new(name: "group_card_icon_add", size: 6, color: "text-text") %>
         <%= t('item_lists.show.add_item_button') %>
       </button>
     </div>

@@ -7,8 +7,8 @@
 
       <%# 日付 %>
       <% if schedule.formatted_date_range.present? %>
-        <div class="flex items-center text-text-light text-sm">
-          <%= render "shared/icon/schedule_icon_date" %>
+        <div class="flex items-center text-text-light text-sm gap-2">
+          <%= render IconComponent.new(name: "schedule_icon_date", size: 4, color: "text-secondary") %>
           <span><%= schedule.formatted_date_range %></span>
         </div>
       <% else %>
@@ -19,13 +19,13 @@
       <% if schedule.schedule_type == :group %>
         <div class="flex items-center justify-between">
           <span class="text-sm text-text-light"><%= schedule.schedulable.name %></span>
-          <div class="flex items-center gap-1">
-            <%= render "shared/icon/schedule_icon_member" %>
+          <div class="flex items-center gap-2">
+            <%= render IconComponent.new(name: "schedule_icon_member", size: 4, color: "text-secondary") %>
             <span class="text-sm text-text-light"><%= schedule.schedulable.group_memberships.size %>人</span>
           </div>
         </div>
       <% else %>
-        <span class="text-sm text-gray-400"><%= t('users.schedules.not_group') %></span>
+        <span class="text-sm text-text-light"><%= t('users.schedules.not_group') %></span>
       <% end %>
     </div>
   </div>

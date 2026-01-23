@@ -124,7 +124,7 @@ mb-12">
                 <% if expense.paid_by?(@current_membership) %>
                   <div class="flex gap-1">
                     <%= link_to edit_group_expense_path(@group, expense), class: "inline-flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100" do %>
-                      <%= render "shared/icon/form_icon_edit" %>
+                      <%= render IconComponent.new(name: "form_icon_edit", size: 6, color: "text-text-light") %>
                     <% end %>
                     <%= button_to group_expense_path(@group, expense),
                         method: :delete,
@@ -132,7 +132,7 @@ mb-12">
                         data: { turbo: false },
                         onclick: "return confirm('#{t('expenses.delete_confirm')}')",
                         class: "inline-flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100" do %>
-                      <%= render "shared/icon/form_icon_delete" %>
+                      <%= render IconComponent.new(name: "form_icon_delete", size: 6, color: "text-text-light") %>
                     <% end %>
                   </div>
                 <% end %>

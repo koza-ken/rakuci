@@ -30,10 +30,7 @@
           <a href="#problems" class="flex flex-col items-center text-text-light text-sm gap-2 hero-fade-up hero-delay-4">
             <span class="sm:text-lg">どんなアプリ？</span>
             <span class="chevron-bounce text-secondary">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-7" fill="none" viewBox="0 0 24 28" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m6 8 6 6 6-6"/>
-                <path stroke-linecap="round" stroke-linejoin="round" d="m6 16 6 6 6-6"/>
-              </svg>
+              <%= render IconComponent.new(name: "top_icon_down_arrow", size: 8, color: "text-text-secondary") %>
             </span>
           </a>
         </div>
@@ -47,8 +44,8 @@
       <%# 課題提起セクション %>
       <div class="px-4">
         <h2 class="flex items-start gap-2 font-bold text-text-light hero-fade-up mb-6 leading-none">
-          <span class="inline-flex items-center justify-center size-8 shrink-0">
-            <%= render "shared/icon/top_icon_alert" %>
+          <span class="inline-flex items-center justify-center shrink-0">
+            <%= render IconComponent.new(name: "top_icon_alert", size: 8, color: "text-text-light") %>
           </span>
           <span class="font-logo text-xl sm:text-2xl">旅行を計画するとき・・・</span>
         </h2>
@@ -66,8 +63,8 @@
       <%# 解決提案セクション %>
       <div class="text-left px-4 max-w-3xl mb-8">
         <div class="flex items-center gap-2 text-secondary mb-4">
-          <span class="inline-flex items-center justify-center size-6 sm:size-8 shrink-0">
-            <%= render "shared/icon/favicon" %>
+          <span class="inline-flex items-center justify-center shrink-0">
+            <%= render IconComponent.new(name: "favicon", size: 8, color: "text-text-color") %>
           </span>
           <span class="font-logo text-3xl sm:text-4xl font-semibold">RakuCi<span class="text-2xl sm:text-3xl">なら</span></span>
         </div>
@@ -121,8 +118,8 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
         <div class="bg-white border border-border rounded-lg p-5 shadow-sm gap-3 opacity-0" data-controller="reveal">
           <div class="flex items-center gap-4 mb-4">
-            <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg sm:text-xl sm:w-12 sm:h-12">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square"><path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1"/></svg>
+            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-secondary/10 flex items-center justify-center text-lg sm:text-xl">
+              <%= render IconComponent.new(name: "top_icon_reaction", size: 6, breakpoints: { sm: 10 }, color: "text-secondary") %>
             </div>
             <p class="sm:text-xl font-bold text-text">リアクション</p>
           </div>
@@ -132,8 +129,8 @@
         </div>
         <div class="bg-white border border-border rounded-lg p-5 shadow-sm gap-3 opacity-0" data-controller="reveal" data-reveal-delay-value="320">
           <div class="flex items-center gap-4 mb-4">
-            <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg sm:text-xl sm:w-12 sm:h-12">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-luggage-icon lucide-luggage"><path d="M6 20a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2"/><path d="M8 18V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14"/><path d="M10 20h4"/><circle cx="16" cy="20" r="2"/><circle cx="8" cy="20" r="2"/></svg>
+            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-secondary/10 flex items-center justify-center text-lg sm:text-xl">
+              <%= render IconComponent.new(name: "top_icon_luggage", size: 6, breakpoints: { sm: 10 }, color: "text-secondary") %>
             </div>
             <p class="sm:text-xl font-bold text-text mb-1">もちもの管理</p>
           </div>
@@ -143,8 +140,8 @@
         </div>
         <div class="bg-white border border-border rounded-lg p-5 shadow-sm gap-3 opacity-0" data-controller="reveal" data-reveal-delay-value="260">
           <div class="flex items-center gap-4 mb-4">
-            <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg sm:text-xl sm:w-12 sm:h-12">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-coins-icon lucide-hand-coins"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>
+            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-secondary/10 flex items-center justify-center text-lg sm:text-xl">
+              <%= render IconComponent.new(name: "top_icon_expense", size: 6, breakpoints: { sm: 10 }, color: "text-secondary") %>
             </div>
             <p class="sm:text-xl font-bold text-text mb-1">精算・割り勘</p>
           </div>
@@ -186,7 +183,7 @@
           <%= link_to "プライバシーポリシー", privacy_path, class: "hover:text-secondary transition" %>
           <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", target: "_blank", rel: "noopener noreferrer", class: "hover:text-secondary transition inline-flex items-center" do %>
             お問い合わせ
-            <span class="w-4 h-4"><%= render "shared/icon/new_window_icon" %></span>
+            <span class="w-4 h-4"><%= render IconComponent.new(name: "new_window_icon", size: 4, color: "text-text-light") %></span>
           <% end %>
         </div>
       </div>

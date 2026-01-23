@@ -24,7 +24,7 @@ RSpec.describe "カード名・メモ編集", type: :system do
 
         # 編集ボタンをクリック
         within("#card-name-section") do
-          find("button[data-action='click->card-edit#toggleForm']").click
+          find("button[data-action='click->card-edit#toggleForm']").trigger("click")
         end
 
         # フォームが表示される
@@ -56,7 +56,7 @@ RSpec.describe "カード名・メモ編集", type: :system do
 
         # 編集ボタンをクリック
         within("#card-name-section") do
-          find("button[data-action='click->card-edit#toggleForm']").click
+          find("button[data-action='click->card-edit#toggleForm']").trigger("click")
         end
 
         # カード名を変更
@@ -156,7 +156,7 @@ RSpec.describe "カード名・メモ編集", type: :system do
 
         # 編集ボタンをクリック
         within("#card-name-section") do
-          find("button[data-action='click->card-edit#toggleForm']").click
+          find("button[data-action='click->card-edit#toggleForm']").trigger("click")
         end
 
         # フォームが表示される
@@ -188,7 +188,7 @@ RSpec.describe "カード名・メモ編集", type: :system do
 
         # 編集ボタンをクリック
         within("#card-name-section") do
-          find("button[data-action='click->card-edit#toggleForm']").click
+          find("button[data-action='click->card-edit#toggleForm']").trigger("click")
         end
 
         # カード名を変更

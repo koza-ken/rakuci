@@ -5,8 +5,8 @@
       <h1 class="text-xl lg:text-2xl text-text font-bold flex-1"><%= schedule.name %></h1>
       <%# 編集ボタン（ケバブメニュー廃止） %>
       <%= link_to edit_group_schedule_path(group), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base shrink-0", data: { turbo: false } do %>
-        <div class="flex items-center justify-center size-5 lg:size-6">
-          <%= render "shared/icon/form_icon_edit" %>
+        <div class="flex items-center justify-center">
+          <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
         </div>
         <span class="hidden lg:inline"><%= t('schedules.show.edit') %></span>
       <% end %>
@@ -30,13 +30,13 @@
         <div class="flex gap-3 lg:gap-4">
           <%= link_to group_expenses_path(group), class: "btn-main w-auto p-2 lg:px-4 lg:py-2 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base" do %>
             <div class="flex items-center justify-center">
-              <%= render "shared/icon/expense_icon", icon_class: "text-text-light w-6 h-6 lg:w-8 lg:h-8" %>
+              <%= render IconComponent.new(name: "expense_icon", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
             </div>
             <span class="hidden lg:inline"><%= t('groups.schedules.show.expenses') %></span>
           <% end %>
           <%= link_to group_schedule_item_list_path(group), class: "btn-main w-auto p-2 lg:px-4 lg:py-2 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base" do %>
             <div class="flex items-center justify-center">
-              <%= render "shared/icon/footer_icon_backpack", icon_class: "text-text-light w-6 h-6 lg:w-8 lg:h-8" %>
+              <%= render IconComponent.new(name: "footer_icon_backpack", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
             </div>
             <span class="hidden lg:inline"><%= t('groups.schedules.show.item_list') %></span>
           <% end %>

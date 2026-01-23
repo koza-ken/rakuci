@@ -18,7 +18,7 @@
       <div id="cards_empty_state" class="col-span-2 sm:col-span-3 md:col-span-4 flex flex-col items-center justify-center py-8 mt-6 px-4">
         <div class=" max-w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-4 py-10 space-y-8 text-center animate-fade-in-up">
           <div class="mx-auto w-16 h-16 md:w-24 md:h-24 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
-            <%= render "shared/icon/footer_icon_card", icon_class: "text-text-light/40 md:size-12" %>
+            <%= render IconComponent.new(name: "footer_icon_card", size: 8, breakpoints: { md: 12 }, color: "text-text-light/40") %>
           </div>
           <div class="">
             <div class="flex items-center justify-center gap-2 mb-8">
@@ -33,7 +33,7 @@
           </div>
           <div class="space-y-3">
             <%= link_to new_card_path, data: {turbo_frame: "card-create-modal"}, class: "first-create-btn md:min-w-1/2" do %>
-              <%= render "shared/icon/group_card_icon_add" %>
+              <%= render IconComponent.new(name: "group_card_icon_add", size: 6, color: "text-text") %>
               <span><%= t('cards.index_content.create_card') %></span>
             <% end %>
           </div>
@@ -49,7 +49,7 @@
         <%= link_to new_card_path, data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
                     title: t('cards.index_content.create_card'),
                     class: "group bg-primary hover:opacity-80 text-text-light w-14 h-14 lg:w-18 lg:h-18 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
-          <%= render "shared/icon/add_card_icon", icon_class: "w-8 h-8 lg:w-10 lg:h-10" %>
+          <%= render IconComponent.new(name: "add_card_icon", size: 8, breakpoints: { lg: 10 }, color: "text-text-light") %>
         <% end %>
       </div>
     <% end %>

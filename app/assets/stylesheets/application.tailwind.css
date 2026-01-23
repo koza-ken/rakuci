@@ -59,7 +59,7 @@ body {
     @apply w-auto p-1 bg-white border-1 border-border text-text-light font-semibold rounded-lg hover:bg-gray-50 transition shadow-[0_2px_2px_rgba(0,0,0,0.1)] inline-flex items-center justify-center;
   }
   .btn-danger {
-    @apply w-auto px-8 py-3 bg-[#ff8181] text-white font-semibold rounded-lg hover:opacity-80 transition cursor-pointer shadow-[0_2px_2px_rgba(0,0,0,0.12)];
+    @apply w-auto px-6 py-3 bg-[#ff8181] text-white font-semibold rounded-lg hover:opacity-80 transition cursor-pointer shadow-[0_2px_2px_rgba(0,0,0,0.12)];
   }
   .hamburger-to-close {
     @apply block w-8 h-[3px] bg-secondary rounded transition-all duration-300 ease-in-out origin-center
