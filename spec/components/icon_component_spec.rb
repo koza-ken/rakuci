@@ -6,17 +6,17 @@ describe IconComponent, type: :component do
   context "renders correctly" do
     it "renders with default size and color" do
       # IconComponent.new → described_class.newが適当（rubocop）
-      render_inline described_class.new(name: "favicon")
+      render_inline described_class.new(name: "favicon", size: 6, color: "text-text-light")
       expect(page).to have_css(".w-6.h-6.text-text-light")
     end
 
     it "renders with custom size" do
-      render_inline described_class.new(name: "favicon", size: 8)
+      render_inline described_class.new(name: "favicon", size: 8, color: "text-text-light")
       expect(page).to have_css(".w-8.h-8")
     end
 
     it "renders with custom color" do
-      render_inline described_class.new(name: "favicon", color: "text-secondary")
+      render_inline described_class.new(name: "favicon", size: 6, color: "text-secondary")
       expect(page).to have_css(".text-secondary")
     end
 
@@ -24,6 +24,7 @@ describe IconComponent, type: :component do
       html = render_inline(described_class.new(
         name: "favicon",
         size: 6,
+        color: "text-text-light",
         breakpoints: { md: 8, lg: 10 }
       )).to_s
       # Tailwind classes with responsive prefixes
@@ -33,7 +34,7 @@ describe IconComponent, type: :component do
     end
 
     it "renders the SVG icon" do
-      render_inline described_class.new(name: "favicon")
+      render_inline described_class.new(name: "favicon", size: 6, color: "text-text-light")
       expect(page).to have_css("svg")
     end
   end
