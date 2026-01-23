@@ -36,7 +36,7 @@
           <% end %>
           <%= link_to group_schedule_item_list_path(group), class: "btn-main w-auto p-2 lg:px-4 lg:py-2 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base" do %>
             <div class="flex items-center justify-center">
-              <%= render IconComponent.new(name: "footer_icon_backpack", size: 6, breakpoints: { lg: 8 , color: "text-text-light"}) %>
+              <%= render IconComponent.new(name: "footer_icon_backpack", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
             </div>
             <span class="hidden lg:inline"><%= t('groups.schedules.show.item_list') %></span>
           <% end %>
