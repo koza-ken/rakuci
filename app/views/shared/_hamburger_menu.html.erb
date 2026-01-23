@@ -14,41 +14,31 @@
       <li class="block lg:hidden border-b border-gray-200">
         <%= link_to cards_path, class: "flex items-center justify-between px-6 py-4 text-text hover:bg-gray-100 transition" do %>
           <span>カード一覧</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
       <li class="block lg:hidden border-b border-gray-200">
         <%= link_to groups_path, class: "flex items-center justify-between px-6 py-4 text-text hover:bg-gray-100 transition" do %>
           <span>グループ一覧</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
       <li class="block lg:hidden border-b border-gray-200">
         <%= link_to schedules_path, class: "flex items-center justify-between px-6 py-4 text-text hover:bg-gray-100 transition" do %>
           <span>しおり一覧</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
       <li class="block lg:hidden border-b border-gray-200">
         <%= link_to item_list_path, class: "flex items-center justify-between px-6 py-4 text-text hover:bg-gray-100 transition" do %>
           <span>もちもの</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
       <li class="block lg:hidden border-b border-gray-200">
         <%= link_to profile_path, class: "flex items-center justify-between px-6 py-4 text-text hover:bg-gray-100 transition" do %>
           <span>ユーザー設定</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
 
@@ -56,25 +46,19 @@
       <li class="lg:mt-8 mt-20">
         <%= link_to guide_path, class: "flex items-center justify-between px-6 py-2 lg:mb-6 text-text hover:bg-gray-100 transition", data: { turbo_stream: true, action: "click->hamburger#close" } do %>
           <span>使い方</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
       <li>
         <%= link_to terms_path, class: "flex items-center justify-between px-6 py-2 lg:mb-6 text-text hover:bg-gray-100 transition" do %>
           <span>利用規約</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
       <li>
         <%= link_to privacy_path, class: "flex items-center justify-between px-6 py-2 lg:mb-6 text-text hover:bg-gray-100 transition" do %>
           <span>プライバシーポリシー</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
       <li>
@@ -83,17 +67,13 @@
             お問い合わせ
             <%= render IconComponent.new(name: "new_window_icon", size: 4, color: "text-text", inline: true) %>
           </span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
       <li>
         <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "flex items-center justify-between px-6 py-2 text-text hover:bg-gray-100 transition" do %>
           <span>ログアウト</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
     </ul>
@@ -106,33 +86,25 @@
       <li class="border-b border-gray-200 mb-12">
         <%= link_to new_user_session_path, class: "flex items-center justify-between px-6 py-4 text-text hover:bg-gray-100 transition" do %>
           <span>ログイン</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
       <li class="mt-8">
         <%= link_to guide_path, class: "flex items-center justify-between px-6 py-2 lg:mb-6 text-text hover:bg-gray-100 transition", data: { turbo_stream: true, action: "click->hamburger#close" } do %>
           <span>使い方</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
       <li>
         <%= link_to terms_path, class: "flex items-center justify-between px-6 py-2 lg:mb-6 text-text hover:bg-gray-100 transition" do %>
           <span>利用規約</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
       <li>
         <%= link_to privacy_path, class: "flex items-center justify-between px-6 py-2 lg:mb-6 text-text hover:bg-gray-100 transition" do %>
           <span>プライバシーポリシー</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
       <li>
@@ -141,9 +113,7 @@
             お問い合わせ
             <%= render IconComponent.new(name: "new_window_icon", size: 4, color: "text-text", inline: true) %>
           </span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+          <%= render IconComponent.new(name: "hamburger_menu_arrow_icon", size: 5, color: "text-text-light") %>
         <% end %>
       </li>
     </ul>
