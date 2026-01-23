@@ -1,7 +1,7 @@
 <div class="flex gap-1 items-stretch mb-2">
   <%# ドラッグハンドル %>
-  <div class="drag-handle flex items-center justify-center w-8 text-text-light/70 cursor-grab active:cursor-grabbing">
-    <%= render "shared/icon/menu_icon_drag" %>
+  <div class="drag-handle flex items-center justify-center cursor-grab active:cursor-grabbing">
+    <%= render IconComponent.new(name: "menu_icon_drag", size: 8, color: "text-text-light/70") %>
   </div>
 
   <%# スポット情報 %>
