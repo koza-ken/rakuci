@@ -9,14 +9,14 @@
         <h1 class="text-xl lg:text-2xl font-bold text-text mb-2 flex-1"><%= @schedule_spot.display_name %></h1>
         <div class="flex gap-2 lg:gap-4 shrink-0">
           <%= link_to edit_user_schedule_spot_path(@schedule_spot), class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo: false } do %>
-            <div class="flex items-center justify-center size-5 lg:size-6">
-              <%= render "shared/icon/form_icon_edit" %>
+            <div class="flex items-center justify-center">
+              <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
             </div>
             <span class="hidden lg:inline"><%= t('cards.form.edit') %></span>
           <% end %>
           <%= button_to user_schedule_spot_path(@schedule_spot), method: :delete, form_class: "inline", class: "btn-danger p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo_confirm: t('schedule_spots.delete_confirm') } do %>
-            <div class="flex items-center justify-center size-5 lg:size-6">
-              <%= render "shared/icon/form_icon_delete" %>
+            <div class="flex items-center justify-center">
+              <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-white") %>
             </div>
             <span class="hidden lg:inline"><%= t('cards.form.delete') %></span>
           <% end %>
@@ -35,8 +35,7 @@
             <input type="text" value="<%= @schedule_spot.snapshot_address.present? ? @schedule_spot.snapshot_address : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
             <% if @schedule_spot.google_place_id.present? %>
               <%= link_to "https://www.google.com/maps/search/?api=1&query=#{@schedule_spot.snapshot_name}&query_place_id=#{@schedule_spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition flex-shrink-0", onclick: "return confirm('Googleマップに移動します')" do %>
-                <%= render "shared/icon/map_icon_google" %>
-              <% end %>
+                <%= render IconComponent.new(name: "map_icon_google", size: 8, color: "text-text-light") %>              <% end %>
             <% end %>
           </div>
         </div>
@@ -48,7 +47,7 @@
             <% if @schedule_spot.snapshot_website_url.present? %>
               <%# snapshot_website_url は ScheduleSpot モデルでバリデーション済み（HTTP/HTTPS のみ） %>
               <%= link_to @schedule_spot.snapshot_website_url, target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('外部サイトに移動しますか？')" do %>
-                <%= render "shared/icon/jump_homepage_icon" %>
+                <%= render IconComponent.new(name: "jump_homepage_icon", size: 8, color: "text-text-light") %>
               <% end %>
             <% end %>
           </div>
