@@ -48,7 +48,7 @@
             <input type="text" value="<%= @spot.address.present? ? @spot.address : "---" %>" readonly class="form-text-field bg-gray-100 flex-1 text-sm md:text-base" />
             <% if @spot.google_place_id.present? %>
               <%= link_to "https://www.google.com/maps/search/?api=1&query=7-Elevan&query_place_id=#{@spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('Googleマップに移動します')" do %>
-                <%= render "shared/icon/map_icon_google" %>
+                <%= render IconComponent.new(name: "map_icon_google", size: 8, color: "text-text-light") %>
               <% end %>
             <% end %>
           </div>
@@ -61,7 +61,7 @@
             <% if @spot.website_url.present? %>
               <%# website_url は Spot モデルでバリデーション済み（HTTP/HTTPS のみ） %>
               <%= link_to @spot.website_url, target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('外部サイトに移動しますか？')" do %>
-                <%= render "shared/icon/jump_homepage_icon" %>
+                <%= render IconComponent.new(name: "jump_homepage_icon", size: 8, color: "text-text-light") %>
               <% end %>
             <% end %>
           </div>
