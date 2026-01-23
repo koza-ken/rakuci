@@ -11,7 +11,7 @@
       <% if schedule_spot.start_time.present? || schedule_spot.end_time.present? %>
         <p class="text-sm text-text-light">
           <% if schedule_spot.start_time.present? && schedule_spot.end_time.present? %>
-            <%= schedule_spot.start_time.strftime("%H:%M") %> ~ <%= schedule_spot.end_time.strftime("%H:%M") %>
+            <%= schedule_spot.start_time.strftime("%H:%M") %> ～ <%= schedule_spot.end_time.strftime("%H:%M") %>
           <% elsif schedule_spot.start_time.present? %>
             <%= schedule_spot.start_time.strftime("%H:%M") %>から
           <% elsif schedule_spot.end_time.present? %>

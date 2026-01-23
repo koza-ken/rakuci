@@ -74,11 +74,11 @@
           <label class="block text-sm lg:text-base font-medium text-text mb-2"><%= t('schedule_spots.show.start_time') %></label>
           <div class="form-text-field bg-gray-100 truncate">
             <% if @schedule_spot.start_time.present? && @schedule_spot.end_time.present? %>
-              <%= @schedule_spot.start_time.strftime('%H:%M') %> ~ <%= @schedule_spot.end_time.strftime('%H:%M') %>
+              <%= @schedule_spot.start_time.strftime('%H:%M') %> ～ <%= @schedule_spot.end_time.strftime('%H:%M') %>
             <% elsif @schedule_spot.start_time.present? %>
               <%= @schedule_spot.start_time.strftime('%H:%M') %>
             <% elsif @schedule_spot.end_time.present? %>
-              ~ <%= @schedule_spot.end_time.strftime('%H:%M') %>
+              ～ <%= @schedule_spot.end_time.strftime('%H:%M') %>
             <% else %>
               ---
             <% end %>
