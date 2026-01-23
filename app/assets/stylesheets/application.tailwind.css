@@ -31,18 +31,6 @@ test {
 
 body {
   font-family: "BIZ UDGothic", "Noto Sans JP", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-  /* ヘッダーで隠れないようにヘッダー分をあけておく */
-  padding-top: 58px;
-}
-@media (min-width: 768px) {
-  body {
-    padding-top: 62px;
-  }
-}
-@media (min-width: 1024px) {
-  body {
-    padding-top: 74px;
-  }
 }
 
 @layer components {
