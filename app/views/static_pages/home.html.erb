@@ -30,10 +30,7 @@
           <a href="#problems" class="flex flex-col items-center text-text-light text-sm gap-2 hero-fade-up hero-delay-4">
             <span class="sm:text-lg">どんなアプリ？</span>
             <span class="chevron-bounce text-secondary">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-7" fill="none" viewBox="0 0 24 28" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m6 8 6 6 6-6"/>
-                <path stroke-linecap="round" stroke-linejoin="round" d="m6 16 6 6 6-6"/>
-              </svg>
+              <%= render IconComponent.new(name: "top_icon_down_arrow", size: 8, color: "text-text-secondary") %>
             </span>
           </a>
         </div>
