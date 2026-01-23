@@ -111,13 +111,18 @@ RSpec.describe "スポット送信ボタン", type: :system do
 
         # 複数のスポットをチェック
         check "spot_#{spot1.id}"
+        sleep 0.5  # JavaScript 処理待ち
         check "spot_#{spot3.id}"
+        sleep 0.5  # JavaScript 処理待ち
 
         # ボタンをクリック
         click_button I18n.t('cards.add_spots_to_schedule'), id: "group-submit-button"
 
         # ページはリロードされている
         expect(page).to have_current_path(group_card_path(group, card))
+
+        # データベースをリロードして最新の状態を取得
+        schedule.reload
 
         # 複数のスポットがスケジュールに追加されている
         expect(schedule.schedule_spots.map(&:spot_id)).to include(spot1.id, spot3.id)
