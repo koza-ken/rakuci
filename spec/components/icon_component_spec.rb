@@ -5,22 +5,23 @@ require "rails_helper"
 describe IconComponent, type: :component do
   context "renders correctly" do
     it "renders with default size and color" do
-      render_inline IconComponent.new(name: "favicon")
+      # IconComponent.new → described_class.newが適当（rubocop）
+      render_inline described_class.new(name: "favicon")
       expect(page).to have_css(".w-6.h-6.text-text-light")
     end
 
     it "renders with custom size" do
-      render_inline IconComponent.new(name: "favicon", size: 8)
+      render_inline described_class.new(name: "favicon", size: 8)
       expect(page).to have_css(".w-8.h-8")
     end
 
     it "renders with custom color" do
-      render_inline IconComponent.new(name: "favicon", color: "text-secondary")
+      render_inline described_class.new(name: "favicon", color: "text-secondary")
       expect(page).to have_css(".text-secondary")
     end
 
     it "renders with responsive breakpoints" do
-      html = render_inline(IconComponent.new(
+      html = render_inline(described_class.new(
         name: "favicon",
         size: 6,
         breakpoints: { md: 8, lg: 10 }
@@ -32,14 +33,14 @@ describe IconComponent, type: :component do
     end
 
     it "renders the SVG icon" do
-      render_inline IconComponent.new(name: "favicon")
+      render_inline described_class.new(name: "favicon")
       expect(page).to have_css("svg")
     end
   end
 
   context "with color and size combinations" do
     it "renders with multiple custom parameters" do
-      html = render_inline(IconComponent.new(
+      html = render_inline(described_class.new(
         name: "favicon",
         size: 4,
         color: "text-primary",
