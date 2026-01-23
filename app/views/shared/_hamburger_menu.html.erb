@@ -1,10 +1,10 @@
 <%# 背景オーバーレイ %>
 <%# メニューパネルと、application.html.erbで空白を調整 %>
-<div class="fixed top-[57px] md:top-[61px] lg:top-[74px] left-0 right-0 bottom-0 bg-black/50 z-45 hidden" data-hamburger-target="overlay" data-action="click->hamburger#toggle"></div>
+<div class="fixed top-[57px] md:top-[61px] lg:top-[74px] left-0 right-0 bottom-0 bg-black/50 z-55 hidden" data-hamburger-target="overlay" data-action="click->hamburger#toggle"></div>
 
 
 <%# メニューパネル（ログイン状態で判定） %>
-<nav class="fixed top-[57px] md:top-[61px] lg:top-[74px] right-0 w-64 bg-white shadow-lg z-50 transition-transform duration-300 translate-x-full" data-hamburger-target="menu" style="height: calc(100vh - 58px); @media (min-width: 768px) { height: calc(100vh - 62px); } @media (min-width: 1024px) { height: calc(100vh - 74px); }">
+<nav class="fixed top-[57px] md:top-[61px] lg:top-[74px] right-0 w-64 bg-white shadow-lg z-60 transition-transform duration-300 translate-x-full" data-hamburger-target="menu" style="height: calc(100vh - 58px); @media (min-width: 768px) { height: calc(100vh - 62px); } @media (min-width: 1024px) { height: calc(100vh - 74px); }">
   <% if user_signed_in? %>
     <%# ログイン後のメニュー %>
     <div class="px-6 py-6">
