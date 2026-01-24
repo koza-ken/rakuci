@@ -10,11 +10,11 @@
     <%# カード名セクション（表示/編集を切り替え） %>
     <div id="card-name-section" data-controller="card-edit">
       <%# 表示モード %>
-      <div id="card-name-display" class="flex items-start gap-6 mb-4" data-card-edit-target="display">
+      <div id="card-name-display" class="flex items-center gap-6 mb-4" data-card-edit-target="display">
         <h1 class="text-xl font-bold text-text"><%= @card.name %></h1>
-        <%# 編集アイコン（サイズ固定） %>
+        <%# 編集アイコン %>
         <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
-          <%= render IconComponent.new(name: "form_icon_edit", size: 6, color: "text-text-light") %>
+          <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
         </button>
       </div>
 

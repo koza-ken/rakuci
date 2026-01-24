@@ -10,11 +10,11 @@
     <%# グループ名セクション（表示/編集を切り替え） %>
     <div id="group-name-section" data-controller="card-edit" class="mb-4 lg:mb-6">
       <%# 表示モード %>
-      <div id="group-name-display" class="flex items-start gap-3 mb-8" data-card-edit-target="display">
+      <div id="group-name-display" class="flex items-center gap-3 mb-8" data-card-edit-target="display">
         <h2 class="text-xl lg:text-2xl font-bold text-text"><%= @group.name %></h2>
-        <%# 編集アイコン（サイズ固定） %>
+        <%# 編集アイコン %>
         <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
-          <%= render IconComponent.new(name: "form_icon_edit", size: 6, color: "text-text-light") %>
+          <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
         </button>
       </div>
 

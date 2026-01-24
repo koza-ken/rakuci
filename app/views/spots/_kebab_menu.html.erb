@@ -12,20 +12,20 @@
   >
     <% if @card.group_card? %>
       <%= link_to edit_group_spot_path(@spot), class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline", data: { turbo: false, action: "click->dropdown#close" } do %>
-        <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { md: 6 }, color: "text-text") %>
+        <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
         <span><%= t('cards.form.edit') %></span>
       <% end %>
       <%= button_to group_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete'), turbo_frame: "_top" }, class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline w-full text-left" do %>
-        <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { md: 6 }, color: "text-text") %>
+        <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
         <span><%= t('cards.form.delete') %></span>
       <% end %>
     <% else %>
       <%= link_to edit_user_spot_path(@spot), class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline", data: { turbo: false, action: "click->dropdown#close" } do %>
-        <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { md: 6 }, color: "text-text") %>
+        <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
         <span><%= t('cards.form.edit') %></span>
       <% end %>
       <%= button_to user_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete'), turbo_frame: "_top" }, class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline w-full text-left" do %>
-        <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { md: 6 }, color: "text-text") %>
+        <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
         <span><%= t('cards.form.delete') %></span>
       <% end %>
     <% end %>
