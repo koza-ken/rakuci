@@ -4,16 +4,14 @@
     <div class="flex items-start justify-between mb-4 lg:mb-6 gap-1 lg:gap-3">
       <h1 class="text-xl lg:text-2xl text-text font-bold flex-1"><%= schedule.name %></h1>
       <div class="flex gap-2 lg:gap-4 shrink-0">
+        <%# 編集ボタン %>
         <%= link_to edit_schedule_path(schedule), class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo: false } do %>
-          <div class="flex items-center justify-center">
-            <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
-          </div>
+          <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
           <span class="hidden lg:inline"><%= t('schedules.show.edit') %></span>
         <% end %>
+        <%# 削除ボタン %>
         <%= button_to schedule_path(schedule), method: :delete, form: { class: "contents" }, class: "btn-danger p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo_confirm: t('users.schedules.show.delete_confirm') } do %>
-          <div class="flex items-center justify-center">
-            <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-white") %>
-          </div>
+          <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-white") %>
           <span class="hidden lg:inline"><%= t('schedules.show.delete') %></span>
         <% end %>
       </div>
@@ -32,9 +30,7 @@
       <div class="flex items-start md:items-center justify-between gap-3 md:gap-4 mb-8 lg:mb-10">
         <%= link_to t('users.schedules.show.back'), schedules_path, class: "btn-sub w-auto text-center px-4 md:px-8 py-2 md:py-3 text-sm lg:text-base" %>
         <%= link_to schedule_item_list_path(schedule), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base" do %>
-          <div class="flex items-center justify-center">
-            <%= render IconComponent.new(name: "footer_icon_backpack", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
-          </div>
+          <%= render IconComponent.new(name: "footer_icon_backpack", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
           <span class="hidden lg:inline"><%= t('users.schedules.show.item_list') %></span>
         <% end %>
       </div>

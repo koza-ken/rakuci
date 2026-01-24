@@ -4,20 +4,18 @@
 <turbo-frame id="schedule-spot-modal">
   <div class="relative z-20 w-full mx-auto max-w-2xl md:max-w-3xl lg:max-w-4xl max-h-screen overflow-y-auto bg-main-bg rounded-md px-4 md:px-0">
     <%= render "shared/flash_messages", flash: flash %>
+
     <main class="flex flex-col justify-center px-4 md:px-6 lg:px-8 py-6 bg-main-bg">
       <div class="flex items-start justify-between gap-3 mb-6">
+        <%# スポット名 %>
         <h1 class="text-xl lg:text-2xl font-bold text-text mb-2 flex-1"><%= @schedule_spot.display_name %></h1>
         <div class="flex gap-2 lg:gap-4 shrink-0">
           <%= link_to edit_user_schedule_spot_path(@schedule_spot), class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo: false } do %>
-            <div class="flex items-center justify-center">
-              <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
-            </div>
+            <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
             <span class="hidden lg:inline"><%= t('cards.form.edit') %></span>
           <% end %>
           <%= button_to user_schedule_spot_path(@schedule_spot), method: :delete, form_class: "inline", class: "btn-danger p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo_confirm: t('schedule_spots.delete_confirm') } do %>
-            <div class="flex items-center justify-center">
-              <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-white") %>
-            </div>
+            <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-white") %>
             <span class="hidden lg:inline"><%= t('cards.form.delete') %></span>
           <% end %>
         </div>
