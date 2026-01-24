@@ -1,0 +1,51 @@
+<%# ガイドモーダル（ガイド・カードガイド用、Turbo Stream で動的に追加） %>
+<div id="guide-modal" class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center" data-controller="guide" data-guide-target="modal">
+  <div class="bg-white rounded-2xl max-w-xl lg:max-w-2xl w-full mx-4 lg:p-6 flex flex-col max-h-[90vh]">
+    <!-- 上部：タイトル and × ボタン -->
+    <div class="flex justify-between items-center px-8 py-6 pb-0">
+      <h3 class="text-2xl font-bold text-text">RakuCiでできること</h3>
+      <button class="text-3xl text-text-light hover:text-text transition" data-action="click->guide#closeAndRemove" title="閉じる">
+        ×
+      </button>
+    </div>
+
+    <!-- 中央：スライドコンテンツ（高さ固定） -->
+    <div class="px-8 py-6 overflow-y-auto h-[430px] md:h-[480px]">
+      <%# slidesは、GuideModalComponentで定義 %>
+      <% slides.each do |slide_number| %>
+        <%# 使い方ガイドのスライド枚数分をレンダリング %>
+        <%= render GuideSlideComponent.new(slide_number: slide_number) %>
+      <% end %>
+    </div>
+
+    <!-- 下部：ナビゲーション -->
+    <div class="border-t border-border px-8 py-6 space-y-4">
+      <!-- ナビゲーション: 戻る | インジケータ（ドット） | 次へ（常時表示・無効化切り替え） -->
+      <div class="flex items-center justify-between gap-4">
+        <button class="btn-sub px-4 py-2" data-action="click->guide#previousSlide" data-guide-target="previousButton">
+          戻る
+        </button>
+
+        <!-- インジケータ（中央・常に固定） -->
+        <div class="flex justify-center gap-2">
+          <button class="w-3 h-3 rounded-full bg-secondary transition-colors" data-guide-target="indicator"></button>
+          <button class="w-3 h-3 rounded-full bg-gray-300 transition-colors" data-guide-target="indicator"></button>
+          <button class="w-3 h-3 rounded-full bg-gray-300 transition-colors" data-guide-target="indicator"></button>
+          <button class="w-3 h-3 rounded-full bg-gray-300 transition-colors" data-guide-target="indicator"></button>
+          <button class="w-3 h-3 rounded-full bg-gray-300 transition-colors" data-guide-target="indicator"></button>
+        </div>
+
+        <!-- 次へボタン（最後のスライドでは無効化） -->
+        <button class="btn-main px-4 py-2" data-action="click->guide#nextSlide" data-guide-target="nextButton">
+          次へ
+        </button>
+      </div>
+
+      <%# いったんコメントアウト %>
+      <!-- 最後のスライド時のみ表示：「RakuCiをつかう」ボタン（フルサイズ） -->
+      <%# <button class="btn-main w-full py-3 hidden" data-action="click->guide#closeAndRemove" data-guide-target="startButton">
+        RakuCiをつかう
+      </button> %>
+    </div>
+  </div>
+</div>
