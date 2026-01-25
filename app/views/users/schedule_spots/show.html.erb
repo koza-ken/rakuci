@@ -10,7 +10,7 @@
         <%# スポット名 %>
         <h1 class="text-xl lg:text-2xl font-bold text-text mb-2 flex-1"><%= @schedule_spot.display_name %></h1>
         <div class="flex gap-2 lg:gap-4 shrink-0">
-          <%= link_to edit_user_schedule_spot_path(@schedule_spot), class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo: false } do %>
+          <%= link_to edit_user_schedule_spot_path(@schedule_spot), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo: false } do %>
             <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
             <span class="hidden lg:inline"><%= t('cards.form.edit') %></span>
           <% end %>
