@@ -15,7 +15,7 @@
         <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
         <span><%= t('cards.form.edit') %></span>
       <% end %>
-      <%= button_to group_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete'), turbo_frame: "_top" }, class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline w-full text-left" do %>
+      <%= button_to group_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete') }, class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline w-full text-left" do %>
         <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
         <span><%= t('cards.form.delete') %></span>
       <% end %>
@@ -24,7 +24,7 @@
         <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
         <span><%= t('cards.form.edit') %></span>
       <% end %>
-      <%= button_to user_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete'), turbo_frame: "_top" }, class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline w-full text-left" do %>
+      <%= button_to user_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete') }, class: "flex items-center gap-3 px-6 py-4 hover:bg-gray-50 text-text no-underline w-full text-left" do %>
         <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
         <span><%= t('cards.form.delete') %></span>
       <% end %>
