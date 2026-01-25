@@ -10,12 +10,19 @@
     <%# カード名セクション（表示/編集を切り替え） %>
     <div id="card-name-section" data-controller="card-edit">
       <%# 表示モード %>
-      <div id="card-name-display" class="flex items-center gap-6 mb-4" data-card-edit-target="display">
-        <h1 class="text-xl font-bold text-text"><%= @card.name %></h1>
-        <%# 編集アイコン %>
-        <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
-          <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
-        </button>
+      <div id="card-name-display" class="flex items-center justify-between gap-6 mb-4" data-card-edit-target="display">
+        <div class="flex items-center gap-6">
+          <h1 class="text-xl font-bold text-text"><%= @card.name %></h1>
+          <%# 編集アイコン %>
+          <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
+            <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
+          </button>
+        </div>
+        <%# 削除ボタン %>
+        <%= button_to group_card_path(@card.group, @card), method: :delete, data: { turbo_confirm: t("cards.delete_confirm") }, class: "btn-danger p-2 inline-flex items-center gap-2 lg:gap-3" do %>
+          <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-white") %>
+          <span class="hidden lg:inline text-sm"><%= t('cards.delete_button') %></span>
+        <% end %>
       </div>
 
       <%# 編集モード（非表示） %>
@@ -108,15 +115,10 @@
       </div>
     </div>
 
-    <%# 戻るボタンと削除ボタン %>
+    <%# 戻るボタン %>
     <div class="mt-8">
       <%= link_to group_path(@card.group), class: "btn-sub block text-center" do %>
         <%= t("cards.form.back") %>
-      <% end %>
-    </div>
-    <div class="flex justify-center mt-18">
-      <%= button_to group_card_path(@card.group, @card), method: :delete, data: { turbo_confirm: t("cards.delete_confirm") }, class: "btn-danger" do %>
-        <%= t("cards.delete_button") %>
       <% end %>
     </div>
   </main>
