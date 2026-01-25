@@ -5,31 +5,25 @@
   <main class="flex flex-col justify-center px-4 md:px-6 lg:px-8 py-6 bg-main-bg">
       <div class="flex items-start justify-between gap-3 mb-6 md:mb-8">
         <h1 class="text-xl md:text-2xl font-bold text-text flex-1"><%= @spot.name %></h1>
-        <%# ケバブメニュー：スマホのみ表示 %>
-        <div class="md:hidden">
-          <%= render "spots/kebab_menu" %>
-        </div>
-        <%# 編集・削除ボタン：md以上のみ表示 %>
-        <div class="hidden md:flex items-center gap-4">
+        <%# 編集・削除ボタン %>
+        <div class="flex items-center gap-2 md:gap-4">
           <% if @card.group_card? %>
-          <%# グループカードのスポット %>
-            <%= link_to edit_group_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-3", data: { turbo: false } do %>
+            <%= link_to edit_group_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-2 md:gap-3", data: { turbo: false } do %>
               <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color:"text-text-light") %>
-              <span class="text-sm"><%= t('cards.form.edit') %></span>
+              <span class="hidden md:inline text-sm"><%= t('cards.form.edit') %></span>
             <% end %>
-            <%= button_to group_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete') }, class: "btn-danger p-2 flex items-center gap-3" do %>
+            <%= button_to group_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete') }, class: "btn-danger p-2 flex items-center gap-2 md:gap-3" do %>
               <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color:"text-white") %>
-              <span class="text-sm"><%= t('cards.form.delete') %></span>
+              <span class="hidden md:inline text-sm"><%= t('cards.form.delete') %></span>
             <% end %>
           <% else %>
-          <%# 個人カードのスポット %>
-            <%= link_to edit_user_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-3", data: { turbo: false } do %>
+            <%= link_to edit_user_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-2 md:gap-3", data: { turbo: false } do %>
               <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color:"text-text-light") %>
-              <span class="text-sm"><%= t('cards.form.edit') %></span>
+              <span class="hidden md:inline text-sm"><%= t('cards.form.edit') %></span>
             <% end %>
-            <%= button_to user_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete') }, class: "btn-danger p-2 flex items-center gap-3" do %>
+            <%= button_to user_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete') }, class: "btn-danger p-2 flex items-center gap-2 md:gap-3" do %>
               <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color:"text-white") %>
-              <span class="text-sm"><%= t('cards.form.delete') %></span>
+              <span class="hidden md:inline text-sm"><%= t('cards.form.delete') %></span>
             <% end %>
           <% end %>
         </div>
