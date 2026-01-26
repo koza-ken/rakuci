@@ -1,5 +1,5 @@
 <%# pathはコンポーネントから受け取る %>
-<%= button_to delete_path, method: :delete, form: { class: "contents" }, data: { turbo_confirm: confirm_message }, class: IconButtonStyling::DANGER_ICON_BUTTON_CLASSES do %>
+<%= button_to delete_path, method: :delete, form: { class: "contents" }, data: { turbo_frame: "_top", turbo_confirm: confirm_message }, class: IconButtonStyling::DANGER_ICON_BUTTON_CLASSES do %>
   <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-white") %>
   <% if show_label? %>
     <span class="<%= IconButtonStyling::LABEL_STYLE_CLASSES %>"><%= label %></span>
