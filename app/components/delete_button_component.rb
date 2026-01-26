@@ -1,12 +1,12 @@
 class DeleteButtonComponent < ViewComponent::Base
   include IconButtonStyling
 
-  def initialize(resource:, scope:, label: nil, confirm_message: nil, show_label: true)
+  def initialize(resource:, scope:, label: nil, show_label: true, confirm_message: nil)
     @resource = resource
     @scope = scope  # :group or :user
     @label = label || I18n.t('components.icon_buttons.delete')
-    @confirm_message = confirm_message || I18n.t('cards.form.confirm_delete')
-    @show_label = show_label
+    @show_label = show_label  # ボタンにテキストを表示するか
+    @confirm_message = confirm_message || I18n.t('components.icon_buttons.delete_confirm')
   end
 
   private
@@ -14,11 +14,15 @@ class DeleteButtonComponent < ViewComponent::Base
   def delete_path
     path_method = "#{@scope.class.name.underscore}_#{@resource.class.name.underscore}_path"
 
-    # グループしおりのパスは、groups/:id/scheduleなので、groupを渡す
-    if @scope.class.name == "Group" && @resource.class.name == "Schedule"
+    case
+    # グループしおり（singular resource）：groupのみ渡す
+    when @scope.class.name == "Group" && @resource.class.name == "Schedule"
       send(path_method, @scope)
+    # グループ配下の複数形リソース（card, expense, spot等）：groupとresourceを渡す
+    when @scope.class.name == "Group"
+      send(path_method, @scope, @resource)
     else
-      # それ以外は通常どおりリソースを渡す
+      # ユーザーのリソース：resourceのみ渡す
       send(path_method, @resource)
     end
   end
