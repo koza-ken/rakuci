@@ -13,11 +13,15 @@ class EditButtonComponent < ViewComponent::Base
   def edit_path
     path_method = "edit_#{@scope.class.name.underscore}_#{@resource.class.name.underscore}_path"
 
-    # グループしおりのパスは、groups/:id/scheduleなので、groupを渡す
-    if @scope.class.name == "Group" && @resource.class.name == "Schedule"
+    case
+    # グループしおり（singular resource）：groupのみ渡す
+    when @scope.class.name == "Group" && @resource.class.name == "Schedule"
       send(path_method, @scope)
+    # グループ配下の複数形リソース（card, expense, spot等）：groupとresourceを渡す
+    when @scope.class.name == "Group"
+      send(path_method, @scope, @resource)
     else
-      # それ以外は通常どおりresourceを渡す
+      # ユーザーのリソース：resourceのみ渡す
       send(path_method, @resource)
     end
   end
