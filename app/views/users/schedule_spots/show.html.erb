@@ -10,14 +10,8 @@
         <%# スポット名 %>
         <h1 class="text-xl lg:text-2xl font-bold text-text mb-2 flex-1"><%= @schedule_spot.display_name %></h1>
         <div class="flex gap-2 lg:gap-4 shrink-0">
-          <%= link_to edit_user_schedule_spot_path(@schedule_spot), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo: false } do %>
-            <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
-            <span class="hidden lg:inline"><%= t('cards.form.edit') %></span>
-          <% end %>
-          <%= button_to user_schedule_spot_path(@schedule_spot), method: :delete, form_class: "inline", class: "btn-danger p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo_confirm: t('schedule_spots.delete_confirm') } do %>
-            <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-white") %>
-            <span class="hidden lg:inline"><%= t('cards.form.delete') %></span>
-          <% end %>
+          <%= render EditButtonComponent.new(resource: @schedule_spot, scope: current_user, label: t('cards.form.edit')) %>
+          <%= render DeleteButtonComponent.new(resource: @schedule_spot, scope: current_user, label: t('cards.form.delete'), confirm_message: t('schedule_spots.delete_confirm')) %>
         </div>
       </div>
 
