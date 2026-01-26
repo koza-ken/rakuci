@@ -5,15 +5,9 @@
       <h1 class="text-xl lg:text-2xl text-text font-bold flex-1"><%= schedule.name %></h1>
       <div class="flex gap-2 lg:gap-4 shrink-0">
         <%# 編集ボタン %>
-        <%= link_to edit_schedule_path(schedule), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo: false } do %>
-          <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
-          <span class="hidden lg:inline"><%= t('schedules.show.edit') %></span>
-        <% end %>
+        <%= render EditButtonComponent.new(resource: schedule, scope: current_user, label: t('schedules.show.edit')) %>
         <%# 削除ボタン %>
-        <%= button_to schedule_path(schedule), method: :delete, form: { class: "contents" }, class: "btn-danger p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", data: { turbo_confirm: t('users.schedules.show.delete_confirm') } do %>
-          <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-white") %>
-          <span class="hidden lg:inline"><%= t('schedules.show.delete') %></span>
-        <% end %>
+        <%= render DeleteButtonComponent.new(resource: schedule, scope: current_user, label: t('schedules.show.delete'), confirm_message: t('users.schedules.show.delete_confirm')) %>
       </div>
     </div>
 
