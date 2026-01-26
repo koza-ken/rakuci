@@ -3,11 +3,7 @@
     <%# しおり名 %>
     <div class="flex items-start justify-between mb-4 lg:mb-6 gap-1 lg:gap-3">
       <h1 class="text-xl lg:text-2xl text-text font-bold flex-1"><%= schedule.name %></h1>
-      <%# 編集ボタン %>
-      <%= link_to edit_group_schedule_path(group), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base shrink-0", data: { turbo: false } do %>
-        <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
-        <span class="hidden lg:inline"><%= t('schedules.show.edit') %></span>
-      <% end %>
+      <%= render EditButtonComponent.new(resource: schedule, scope: group) %>
     </div>
 
     <%# グループ名 %>
