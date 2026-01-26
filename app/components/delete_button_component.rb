@@ -12,10 +12,15 @@ class DeleteButtonComponent < ViewComponent::Base
   private
 
   def delete_path
-    # scope と resource から動的にパスメソッド名を組み立てる
-    # 例: scope=:group, resource=Spot → "group_spot_path"
-    path_method = "#{@scope}_#{@resource.class.name.underscore}_path"
-    send(path_method, @resource)
+    path_method = "#{@scope.class.name.underscore}_#{@resource.class.name.underscore}_path"
+
+    # グループしおりのパスは、groups/:id/scheduleなので、groupを渡す
+    if @scope.class.name == "Group" && @resource.class.name == "Schedule"
+      send(path_method, @scope)
+    else
+      # それ以外は通常どおりリソースを渡す
+      send(path_method, @resource)
+    end
   end
 
   def show_label?

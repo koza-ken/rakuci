@@ -3,17 +3,22 @@ class EditButtonComponent < ViewComponent::Base
 
   def initialize(resource:, scope:, label: nil)
     @resource = resource
-    @scope = scope  # :group or :user
+    @scope = scope
     @label = label || I18n.t('components.icon_buttons.edit')
   end
 
   private
 
   def edit_path
-    # scope と resource から動的にパスメソッド名を組み立てる
-    # 例: scope=:group, resource=Spot → "edit_group_spot_path"
-    path_method = "edit_#{@scope}_#{@resource.class.name.underscore}_path"
-    send(path_method, @resource)
+    path_method = "edit_#{@scope.class.name.underscore}_#{@resource.class.name.underscore}_path"
+
+    # グループしおりのパスは、groups/:id/scheduleなので、groupを渡す
+    if @scope.class.name == "Group" && @resource.class.name == "Schedule"
+      send(path_method, @scope)
+    else
+      # それ以外は通常どおりresourceを渡す
+      send(path_method, @resource)
+    end
   end
 
   def label
