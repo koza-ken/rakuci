@@ -1,10 +1,11 @@
 class EditButtonComponent < ViewComponent::Base
   include IconButtonStyling
 
-  def initialize(resource:, scope:, label: nil)
+  def initialize(resource:, scope:, label: nil, show_label: true)
     @resource = resource
     @scope = scope
     @label = label || I18n.t('components.icon_buttons.edit')
+    @show_label = show_label  # ボタンにテキストを表示するか
   end
 
   private
@@ -19,6 +20,10 @@ class EditButtonComponent < ViewComponent::Base
       # それ以外は通常どおりresourceを渡す
       send(path_method, @resource)
     end
+  end
+
+  def show_label?
+    @show_label
   end
 
   def label
