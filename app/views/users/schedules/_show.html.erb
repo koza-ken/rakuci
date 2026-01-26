@@ -4,9 +4,7 @@
     <div class="flex items-start justify-between mb-4 lg:mb-6 gap-1 lg:gap-3">
       <h1 class="text-xl lg:text-2xl text-text font-bold flex-1"><%= schedule.name %></h1>
       <div class="flex gap-2 lg:gap-4 shrink-0">
-        <%# 編集ボタン %>
         <%= render EditButtonComponent.new(resource: schedule, scope: current_user, label: t('schedules.show.edit')) %>
-        <%# 削除ボタン %>
         <%= render DeleteButtonComponent.new(resource: schedule, scope: current_user, label: t('schedules.show.delete'), confirm_message: t('users.schedules.show.delete_confirm')) %>
       </div>
     </div>

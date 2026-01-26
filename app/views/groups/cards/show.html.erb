@@ -18,7 +18,6 @@
             <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
           </button>
         </div>
-        <%# 削除ボタン %>
         <%= render DeleteButtonComponent.new(resource: @card, scope: @card.group, label: t('cards.delete_button'), confirm_message: t("cards.delete_confirm")) %>
       </div>
 
