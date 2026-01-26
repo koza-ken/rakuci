@@ -116,24 +116,15 @@ mb-12">
               </div>
 
               <%# 支払日とアイコン %>
-              <div class="flex items-center justify-between gap-2">
+              <div class="flex items-start justify-between gap-2">
                 <div class="flex text-sm text-text-light">
                   <span class="shrink-0"><%= t('expenses.paid_at') %>：</span>
                   <span class="flex-1"><%= l(expense.paid_at, format: :expense_date) %></span>
                 </div>
                 <% if expense.paid_by?(@current_membership) %>
-                  <div class="flex gap-1">
-                    <%= link_to edit_group_expense_path(@group, expense), class: "inline-flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100" do %>
-                      <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 } , color: "text-text-light") %>
-                    <% end %>
-                    <%= button_to group_expense_path(@group, expense),
-                        method: :delete,
-                        form: { class: "contents" },
-                        data: { turbo: false },
-                        onclick: "return confirm('#{t('expenses.delete_confirm')}')",
-                        class: "inline-flex items-center justify-center w-8 h-8 rounded hover:bg-gray-100" do %>
-                      <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
-                    <% end %>
+                  <div class="flex gap-2 lg:gap-3 mt-2 lg:mt-4">
+                    <%= render EditButtonComponent.new(resource: expense, scope: @group, show_label: false) %>
+                    <%= render DeleteButtonComponent.new(resource: expense, scope: @group, confirm_message: t('expenses.delete_confirm'), show_label: false) %>
                   </div>
                 <% end %>
               </div>
