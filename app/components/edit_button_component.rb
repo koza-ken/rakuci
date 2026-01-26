@@ -4,7 +4,7 @@ class EditButtonComponent < ViewComponent::Base
   def initialize(resource:, scope:, label: nil)
     @resource = resource
     @scope = scope  # :group or :user
-    @label = label || I18n.t('cards.form.edit')
+    @label = label || I18n.t('components.icon_buttons.edit')
   end
 
   private

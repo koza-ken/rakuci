@@ -4,7 +4,7 @@ class DeleteButtonComponent < ViewComponent::Base
   def initialize(resource:, scope:, label: nil, confirm_message: nil, show_label: true)
     @resource = resource
     @scope = scope  # :group or :user
-    @label = label || I18n.t('cards.form.delete')
+    @label = label || I18n.t('components.icon_buttons.delete')
     @confirm_message = confirm_message || I18n.t('cards.form.confirm_delete')
     @show_label = show_label
   end
