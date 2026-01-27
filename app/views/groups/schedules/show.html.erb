@@ -5,74 +5,7 @@
 
 <%# stimulusからリクエストを投げるために必要なidを取得するときにハッシュ化されている必要があるのでhashidを使う %>
 <main id="main" class="flex flex-col items-center justify-center px-4 py-6 mb-12" data-controller="sortable" data-group-id="<%= @group.hashid %>" data-schedule-id="<%= @schedule.hashid %>">
-  <div class="w-full max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-6 pb-10 lg:pb-20">
-    <% if @schedule.present? %>
-      <%# しおり名 %>
-      <div class="flex items-start justify-between mb-4 lg:mb-6 gap-1 lg:gap-3">
-        <h1 class="text-xl lg:text-2xl text-text font-bold flex-1"><%= @schedule.name %></h1>
-        <%= render EditButtonComponent.new(resource: @schedule, scope: @group) %>
-      </div>
-
-      <%# グループ名 %>
-      <p class="text-sm lg:text-base text-text mb-2 lg:mb-3"><%= t('schedules.show.group_name') %>：<%= @group.name %></p>
-
-      <%# スケジュール日程 %>
-      <div class="mb-2 lg:mb-6">
-        <p class="text-text">
-          <span class=""><%= t('schedules.show.schedule_dates') %>：</span>
-          <span class=""><%= @schedule.formatted_date_range %></span>
-        </p>
-      </div>
-
-      <%# スポット %>
-      <div class="mt-8 lg:mt-10">
-        <div class="flex items-start md:items-center justify-between gap-3 md:gap-4 mb-8 lg:mb-10">
-          <%= link_to t('groups.schedules.show.back_to_group'), group_path(@group), class: "btn-sub w-auto text-center px-4 md:px-8 py-2 text-sm lg:text-base" %>
-          <div class="flex gap-3 lg:gap-4">
-            <%= link_to group_expenses_path(@group), class: "btn-main w-auto p-2 lg:px-4 lg:py-2 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base" do %>
-              <%= render IconComponent.new(name: "expense_icon", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
-              <span class="hidden lg:inline"><%= t('groups.schedules.show.expenses') %></span>
-            <% end %>
-            <%= link_to group_schedule_item_list_path(@group), class: "btn-main w-auto p-2 lg:px-4 lg:py-2 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base" do %>
-              <%= render IconComponent.new(name: "footer_icon_backpack", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
-              <span class="hidden lg:inline"><%= t('groups.schedules.show.item_list') %></span>
-            <% end %>
-          </div>
-        </div>
-
-        <% (1..@schedule.days).each do |day| %>
-          <%# 日目の見出し %>
-          <% formatted_date = @schedule.formatted_date_for_day(day) %>
-          <h3 class="text-base lg:text-lg font-bold text-gray-700 mt-6 lg:mt-8 mb-3 lg:mb-4">
-            <% if formatted_date %>
-              <%= formatted_date %>（<%= day %><%= t('groups.schedules.show.day_label') %>）
-            <% else %>
-              <%= day %><%= t('groups.schedules.show.day_label') %>
-            <% end %>
-          </h3>
-          <div id="sortable-day-list-<%= day %>" class="sortable-day-list space-y-2" data-day-number="<%= day %>" data-schedule-id="<%= @schedule.hashid %>">
-            <% day_spots = @schedule.schedule_spots.where(day_number: day).order(:global_position) %>
-            <% if day_spots.any? %>
-              <% day_spots.each do |schedule_spot| %>
-                <div class="sortable-item" data-spot-id="<%= schedule_spot.hashid %>">
-                  <%= render "shared/schedules/schedule_spot", schedule_spot: schedule_spot, scope: :group %>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-    <% else %>
-      <p class="text-text text-center mt-8"><%= t('activerecord.models.schedule') %><%= t('schedules.show.no_schedule_message') %></p>
-    <% end %>
-
-
-    <%# メモ %>
-    <h2 class="mt-10 lg:mt-14 text-lg lg:text-xl font-bold text-text"><%= t('schedules.show.memo') %></h2>
-    <div class=" form-text-field mt-3 lg:mt-4 p-4 lg:p-6 rounded min-h-[100px]">
-      <p class="text-sm lg:text-base text-text"><%= @schedule.memo %></p>
-    </div>
-  </div>
+  <%= render partial: "groups/schedules/show", locals: { group: @group, schedule: @schedule } %>
 </main>
 
 <%# スポット追加FAB %>
