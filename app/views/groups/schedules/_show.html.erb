@@ -48,7 +48,7 @@
           <% if day_spots.any? %>
             <% day_spots.each do |schedule_spot| %>
               <div class="sortable-item" data-spot-id="<%= schedule_spot.hashid %>">
-                <%= render "schedule_spots/schedule_spot", schedule_spot: schedule_spot, scope: :group %>
+                <%= render "shared/schedules/schedule_spot", schedule_spot: schedule_spot, scope: :group %>
               </div>
             <% end %>
           <% end %>

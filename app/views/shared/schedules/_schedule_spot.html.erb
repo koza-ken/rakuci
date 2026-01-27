@@ -9,9 +9,9 @@
   <%= link_to (scope == :group ? group_schedule_spot_path(schedule_spot) : user_schedule_spot_path(schedule_spot)), class: "flex-1" do %>
     <div class="<%= schedule_spot.category_background_color %> rounded-sm shadow p-2">
       <%# 時間帯 %>
-      <% if schedule_spot.start_time.present? || schedule_spot.end_time.present? %>
+      <% if schedule_spot.formatted_time_range != '---' %>
         <p class="text-sm text-text-light">
-          <%= "#{schedule_spot.start_time&.strftime("%H:%M")} ～ #{schedule_spot.end_time&.strftime("%H:%M")}" %>
+          <%= schedule_spot.formatted_time_range %>
         </p>
       <% end %>
       <%# スポット名 %>

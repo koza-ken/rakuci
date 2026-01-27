@@ -13,7 +13,7 @@
   <%# 新しいスポットを該当日のリストに追加（Sortableインスタンスを保持） %>
   <%= turbo_stream.append "sortable-day-list-#{@schedule_spot.day_number}" do %>
     <div class="sortable-item" data-spot-id="<%= @schedule_spot.hashid %>">
-      <%= render "schedule_spots/schedule_spot", schedule_spot: @schedule_spot, scope: :group %>
+      <%= render "shared/schedules/schedule_spot", schedule_spot: @schedule_spot, scope: :group %>
     </div>
   <% end %>
 <% end %>
