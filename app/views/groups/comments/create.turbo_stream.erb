@@ -10,15 +10,19 @@
 
   <%# 成功時：コメントを追加 %>
   <%= turbo_stream.append "comments_list" do %>
-    <%= render "comments/comment", comment: @comment %>
+    <%= render "groups/comments/comment", comment: @comment %>
   <% end %>
   <%# フォームをクリア %>
   <%= turbo_stream.replace "comment_form" do %>
-    <%= render "comments/form", card: @card, comment: Comment.new %>
+    <div id="comment_form" class="pt-2">
+      <%= render "groups/comments/form", card: @card, comment: Comment.new %>
+    </div>
   <% end %>
 <% else %>
   <%# エラー時：フォームをエラー付きで置き換え %>
   <%= turbo_stream.replace "comment_form" do %>
-    <%= render "comments/form", card: @card, comment: @comment %>
+    <div id="comment_form" class="pt-2">
+      <%= render "groups/comments/form", card: @card, comment: @comment %>
+    </div>
   <% end %>
 <% end %>

@@ -65,7 +65,7 @@
         <% if @comments.present? %>
           <div class="space-y-3 mb-4">
             <% @comments.each do |comment| %>
-              <%= render "comments/comment", comment: comment %>
+              <%= render "groups/comments/comment", comment: comment %>
             <% end %>
           </div>
         <% else %>
@@ -73,8 +73,8 @@
         <% end %>
       </div>
       <%# 新規コメント投稿フォーム %>
-      <div id="comment_form">
-        <%= render "comments/form", card: @card, comment: Comment.new %>
+      <div id="comment_form" class="pt-2">
+        <%= render "groups/comments/form", card: @card, comment: Comment.new %>
       </div>
     </div>
 
