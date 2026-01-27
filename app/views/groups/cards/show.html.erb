@@ -48,7 +48,7 @@
     <%# グループカード: スポット追加フォーム %>
     <div class="mb-4">
       <%= form_with url: group_card_schedule_spots_path(@card.group, @card), method: :post, local: true, data: { controller: "spot-selector" } do |f| %>
-        <%= render "spots/spots", spots: @card.spots, categories: @categories %>
+        <%= render "shared/spots/spots", spots: @card.spots, categories: @categories %>
         <% if @card.group.schedule.present? %>
           <div class="flex gap-2 mt-4">
             <%= f.submit t('cards.add_spots_to_schedule'), class: "btn-main flex-1 opacity-50 cursor-not-allowed", id: "group-submit-button", disabled: true, data: { "spot-selector-target": "submitButton", "enable-text": t('cards.add_spots_to_schedule'), "disabled-text": "スポットを選択してください" } %>
