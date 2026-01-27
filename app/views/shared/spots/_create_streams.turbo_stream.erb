@@ -5,4 +5,4 @@
 <%= turbo_stream.update "spot-create-modal", "" %>
 
 
-<%= turbo_stream.append "category_#{@spot.category_id}_spots", partial: "spots/spot", locals: { spot: @spot } %>
+<%= turbo_stream.append "category_#{@spot.category_id}_spots", partial: "shared/spots/spot", locals: { spot: @spot } %>

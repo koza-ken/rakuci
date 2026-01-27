@@ -14,7 +14,7 @@
       <div class="ml-5 lg:ml-7 mb-2" id="category_<%= category.id %>_spots">
         <% spots.each do |spot| %>
           <% if spot.category_id == category.id %>
-            <%= render "spots/spot", spot: spot %>
+            <%= render "shared/spots/spot", spot: spot %>
           <% end %>
         <% end %>
       </div>
