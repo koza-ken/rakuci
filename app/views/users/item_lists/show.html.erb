@@ -25,8 +25,8 @@
 
     <%# 追加フォーム（最初は非表示） %>
     <div id="item-form" class="hidden mb-6" data-item-list-form-target="form">
-      <% form_url = @schedule.present? ? schedule_item_list_items_path(@schedule) : item_list_items_path(@item_list) %>
-      <%= render "shared/item_lists/item_form", item_list: @item_list, form_url: form_url, input_class: "" %>
+      <% form_url = @schedule.present? ? schedule_item_list_items_path(@schedule) : item_list_items_path %>
+      <%= render "shared/item_lists/item_form", item_list: @item_list, item: @item, form_url: form_url, input_class: "" %>
     </div>
 
     <%# ＋ボタン %>

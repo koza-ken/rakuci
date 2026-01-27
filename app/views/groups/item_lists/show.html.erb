@@ -22,7 +22,7 @@
 
     <%# 追加フォーム（最初は非表示） %>
     <div id="item-form" class="hidden mb-6" data-item-list-form-target="form">
-      <%= render "shared/item_lists/item_form", item_list: @item_list, form_url: group_schedule_item_list_items_path(@group), input_class: "flex-1" %>
+      <%= render "shared/item_lists/item_form", item_list: @item_list, item: @item, form_url: group_schedule_item_list_items_path(@group), input_class: "flex-1" %>
     </div>
 
     <%# ＋ボタン %>
