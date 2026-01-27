@@ -17,14 +17,16 @@
     <div id="items-list" class="space-y-2 mb-4">
       <% if @items.any? %>
         <% @items.each do |item| %>
-          <%= render partial: "users/items/item", locals: { item: item, item_list: @item_list } %>
+          <% delete_path = @schedule.present? ? schedule_item_list_item_path(@schedule, item) : item_list_item_path(item) %>
+          <%= render partial: "shared/items/item", locals: { item: item, item_delete_path: delete_path } %>
         <% end %>
       <% end %>
     </div>
 
     <%# 追加フォーム（最初は非表示） %>
     <div id="item-form" class="hidden mb-6" data-item-list-form-target="form">
-      <%= render "item_form", item_list: @item_list %>
+      <% form_url = @schedule.present? ? schedule_item_list_items_path(@schedule) : item_list_items_path(@item_list) %>
+      <%= render "shared/item_lists/item_form", item_list: @item_list, form_url: form_url, input_class: "" %>
     </div>
 
     <%# ＋ボタン %>
