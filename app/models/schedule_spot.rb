@@ -62,6 +62,22 @@ class ScheduleSpot < ApplicationRecord
     snapshot_name.presence || spot&.name || "予定"
   end
 
+  # 開始時刻と終了時刻をフォーマット（"HH:MM ～ HH:MM" または "HH:MM ～" または "～ HH:MM" の形式）
+  def formatted_time_range
+    start = start_time&.strftime('%H:%M')
+    finish = end_time&.strftime('%H:%M')
+
+    if start && finish
+      "#{start} ～ #{finish}"
+    elsif start
+      "#{start} ～"
+    elsif finish
+      "～ #{finish}"
+    else
+      '---'
+    end
+  end
+
   # カテゴリに応じた背景色のTailwindクラスを返す
   def category_background_color
     category_id = snapshot_category_id || spot&.category_id
