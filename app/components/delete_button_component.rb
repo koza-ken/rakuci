@@ -5,9 +5,9 @@ class DeleteButtonComponent < ViewComponent::Base
   def initialize(resource:, scope:, label: nil, show_label: true, confirm_message: nil)
     @resource = resource
     @scope = scope
-    @label = label || I18n.t('components.icon_buttons.delete')
+    @label = label || I18n.t("components.icon_buttons.delete")
     @show_label = show_label  # ボタンにテキストを表示するか
-    @confirm_message = confirm_message || I18n.t('components.icon_buttons.delete_confirm')
+    @confirm_message = confirm_message || I18n.t("components.icon_buttons.delete_confirm")
   end
 
   private

@@ -64,8 +64,8 @@ class ScheduleSpot < ApplicationRecord
 
   # 開始時刻と終了時刻をフォーマット（"HH:MM ～ HH:MM" または "HH:MM ～" または "～ HH:MM" の形式）
   def formatted_time_range
-    start = start_time&.strftime('%H:%M')
-    finish = end_time&.strftime('%H:%M')
+    start = start_time&.strftime("%H:%M")
+    finish = end_time&.strftime("%H:%M")
 
     if start && finish
       "#{start} ～ #{finish}"
@@ -74,7 +74,7 @@ class ScheduleSpot < ApplicationRecord
     elsif finish
       "～ #{finish}"
     else
-      '---'
+      "---"
     end
   end
 

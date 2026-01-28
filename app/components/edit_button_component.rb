@@ -5,7 +5,7 @@ class EditButtonComponent < ViewComponent::Base
   def initialize(resource:, scope:, label: nil, show_label: true)
     @resource = resource
     @scope = scope
-    @label = label || I18n.t('components.icon_buttons.edit')
+    @label = label || I18n.t("components.icon_buttons.edit")
     @show_label = show_label  # ボタンにテキストを表示するか
   end
 
