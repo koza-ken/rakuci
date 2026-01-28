@@ -25,6 +25,9 @@
                 <% @spot.errors.messages[:name].each do |message| %>
                   <p class="text-red-600 text-xs"><%= t('activerecord.attributes.spot.name') %><%= message %></p>
                 <% end %>
+                <% @spot.errors.messages[:google_place_id].each do |message| %>
+                  <p class="text-red-600 text-xs"><%= message %></p>
+                <% end %>
               </div>
             <% end %>
 

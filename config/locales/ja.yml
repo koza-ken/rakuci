@@ -86,7 +86,7 @@ ja:
         spot:
           attributes:
             google_place_id:
-              taken: この施設は既にこのカードに登録されています
+              taken: このスポットは既にこのカードに登録されています
             name:
               blank: を入力してください
     models:
