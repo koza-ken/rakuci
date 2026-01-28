@@ -73,9 +73,7 @@
           data-action="click->clipboard#copy"
           title="<%= t('groups.show.invite_button') %>"
           class="btn-main w-auto p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base shrink-0">
-          <div class="flex items-center justify-center">
-            <%= render IconComponent.new(name: "add_membership_icon", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
-          </div>
+          <%= render IconComponent.new(name: "add_membership_icon", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
           <span class="inline"><%= t('groups.show.invite_button') %></span>
         </button>
       </div>

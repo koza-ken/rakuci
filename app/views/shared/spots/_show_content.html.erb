@@ -1,37 +1,17 @@
 <% content_for(:title, @spot.name) %>
 
-<turbo-frame id="spot-edit-modal">
-  <div class="relative z-20 w-full mx-auto max-w-2xl md:max-w-3xl lg:max-w-4xl bg-main-bg rounded-md px-6 md:px-0">
-    <%= render "shared/flash_messages", flash: flash %>
-    <main class="flex flex-col justify-center px-4 md:px-6 lg:px-8 py-6 bg-main-bg">
+<div class="relative z-20 w-full mx-auto max-w-2xl md:max-w-3xl lg:max-w-4xl bg-main-bg rounded-md px-6 md:px-0">
+  <%= render "shared/flash_messages", flash: flash %>
+  <main class="flex flex-col justify-center px-4 md:px-6 lg:px-8 py-6 bg-main-bg">
       <div class="flex items-start justify-between gap-3 mb-6 md:mb-8">
         <h1 class="text-xl md:text-2xl font-bold text-text flex-1"><%= @spot.name %></h1>
-        <%# ケバブメニュー：スマホのみ表示 %>
-        <div class="md:hidden">
-          <%= render "spots/kebab_menu" %>
-        </div>
-        <%# 編集・削除ボタン：md以上のみ表示 %>
-        <div class="hidden md:flex items-center gap-4">
+        <div class="flex items-center gap-2 md:gap-4">
           <% if @card.group_card? %>
-          <%# グループカードのスポット %>
-            <%= link_to edit_group_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-3", data: { turbo: false } do %>
-              <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { md: 6 }, color:"text-text") %>
-              <span class="text-sm"><%= t('cards.form.edit') %></span>
-            <% end %>
-            <%= button_to group_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete'), turbo_frame: "_top" }, class: "btn-danger p-2 flex items-center gap-3" do %>
-              <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { md: 6 }, color:"text-white") %>
-              <span class="text-sm"><%= t('cards.form.delete') %></span>
-            <% end %>
+            <%= render EditButtonComponent.new(resource: @spot, scope: @card.group, label: t('cards.form.edit')) %>
+            <%= render DeleteButtonComponent.new(resource: @spot, scope: @card.group, label: t('cards.form.delete'), confirm_message: t('cards.form.confirm_delete')) %>
           <% else %>
-          <%# 個人カードのスポット %>
-            <%= link_to edit_user_spot_path(@spot), class: "btn-main-icon p-2 flex items-center gap-3", data: { turbo: false } do %>
-              <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { md: 6 }, color:"text-text") %>
-              <span class="text-sm"><%= t('cards.form.edit') %></span>
-            <% end %>
-            <%= button_to user_spot_path(@spot), method: :delete, form: { class: "contents" }, data: { turbo_confirm: t('cards.form.confirm_delete'), turbo_frame: "_top" }, class: "btn-danger p-2 flex items-center gap-3" do %>
-              <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { md: 6 }, color:"text-white") %>
-              <span class="text-sm"><%= t('cards.form.delete') %></span>
-            <% end %>
+            <%= render EditButtonComponent.new(resource: @spot, scope: current_user, label: t('cards.form.edit')) %>
+            <%= render DeleteButtonComponent.new(resource: @spot, scope: current_user, label: t('cards.form.delete'), confirm_message: t('cards.form.confirm_delete')) %>
           <% end %>
         </div>
       </div>
@@ -102,6 +82,5 @@
       </div>
     </main>
   </div>
-</turbo-frame>
 
 <%= turbo_frame_tag "add_new_schedule_spot", data: { controller: "modal" }  %>

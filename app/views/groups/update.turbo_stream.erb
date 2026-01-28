@@ -10,7 +10,7 @@
       <h2 class="text-xl lg:text-2xl font-bold text-text"><%= @group.name %></h2>
       <%# 編集アイコン（サイズ固定） %>
       <button class="shrink-0 hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
-        <%= render IconComponent.new(name: "form_icon_edit", size: 6, color: "text-text-light") %>
+        <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
       </button>
     </div>
 

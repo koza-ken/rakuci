@@ -10,12 +10,15 @@
     <%# カード名セクション（表示/編集を切り替え） %>
     <div id="card-name-section" data-controller="card-edit">
       <%# 表示モード %>
-      <div id="card-name-display" class="flex items-start gap-6 mb-4" data-card-edit-target="display">
-        <h1 class="text-xl font-bold text-text"><%= @card.name %></h1>
-        <%# 編集アイコン（サイズ固定） %>
-        <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
-          <%= render IconComponent.new(name: "form_icon_edit", size: 6, color: "text-text-light") %>
-        </button>
+      <div id="card-name-display" class="flex items-center justify-between gap-6 mb-4" data-card-edit-target="display">
+        <div class="flex items-center gap-6">
+          <h1 class="text-xl lg:text-2xl font-bold text-text"><%= @card.name %></h1>
+          <%# 編集アイコン %>
+          <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
+            <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
+          </button>
+        </div>
+        <%= render DeleteButtonComponent.new(resource: @card, scope: @card.group, label: t('cards.delete_button'), confirm_message: t("cards.delete_confirm")) %>
       </div>
 
       <%# 編集モード（非表示） %>
@@ -45,7 +48,7 @@
     <%# グループカード: スポット追加フォーム %>
     <div class="mb-4">
       <%= form_with url: group_card_schedule_spots_path(@card.group, @card), method: :post, local: true, data: { controller: "spot-selector" } do |f| %>
-        <%= render "spots/spots", spots: @card.spots, categories: @categories %>
+        <%= render "shared/spots/spots", spots: @card.spots, categories: @categories %>
         <% if @card.group.schedule.present? %>
           <div class="flex gap-2 mt-4">
             <%= f.submit t('cards.add_spots_to_schedule'), class: "btn-main flex-1 opacity-50 cursor-not-allowed", id: "group-submit-button", disabled: true, data: { "spot-selector-target": "submitButton", "enable-text": t('cards.add_spots_to_schedule'), "disabled-text": "スポットを選択してください" } %>
@@ -62,7 +65,7 @@
         <% if @comments.present? %>
           <div class="space-y-3 mb-4">
             <% @comments.each do |comment| %>
-              <%= render "comments/comment", comment: comment %>
+              <%= render "groups/comments/comment", comment: comment %>
             <% end %>
           </div>
         <% else %>
@@ -70,8 +73,8 @@
         <% end %>
       </div>
       <%# 新規コメント投稿フォーム %>
-      <div id="comment_form">
-        <%= render "comments/form", card: @card, comment: Comment.new %>
+      <div id="comment_form" class="pt-2">
+        <%= render "groups/comments/form", card: @card, comment: Comment.new %>
       </div>
     </div>
 
@@ -108,15 +111,10 @@
       </div>
     </div>
 
-    <%# 戻るボタンと削除ボタン %>
+    <%# 戻るボタン %>
     <div class="mt-8">
       <%= link_to group_path(@card.group), class: "btn-sub block text-center" do %>
         <%= t("cards.form.back") %>
-      <% end %>
-    </div>
-    <div class="flex justify-center mt-18">
-      <%= button_to group_card_path(@card.group, @card), method: :delete, data: { turbo_confirm: t("cards.delete_confirm") }, class: "btn-danger" do %>
-        <%= t("cards.delete_button") %>
       <% end %>
     </div>
   </main>

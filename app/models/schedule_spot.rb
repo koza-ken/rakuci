@@ -45,10 +45,10 @@ class ScheduleSpot < ApplicationRecord
   validates :snapshot_address, length: { maximum: 255 }
   validates :snapshot_phone_number, length: { maximum: 20 }
   validates :snapshot_website_url, format: { with: URI::DEFAULT_PARSER.make_regexp([ "http", "https" ]) }, length: { maximum: 500 }, allow_blank: true
-  validates :end_time, comparison: { greater_than: :start_time }, allow_blank: true
 
   # カスタムバリデーション
   validate :spot_or_custom_entry_valid
+  validate :end_time_after_start_time
 
   # 並び替えgem acts_as_list
   acts_as_list column: :global_position, scope: [ :schedule_id, :day_number ]
@@ -60,6 +60,22 @@ class ScheduleSpot < ApplicationRecord
   # 表示名を取得（スナップショット > Spot > デフォルト）
   def display_name
     snapshot_name.presence || spot&.name || "予定"
+  end
+
+  # 開始時刻と終了時刻をフォーマット（"HH:MM ～ HH:MM" または "HH:MM ～" または "～ HH:MM" の形式）
+  def formatted_time_range
+    start = start_time&.strftime("%H:%M")
+    finish = end_time&.strftime("%H:%M")
+
+    if start && finish
+      "#{start} ～ #{finish}"
+    elsif start
+      "#{start} ～"
+    elsif finish
+      "～ #{finish}"
+    else
+      "---"
+    end
   end
 
   # カテゴリに応じた背景色のTailwindクラスを返す
@@ -87,6 +103,13 @@ class ScheduleSpot < ApplicationRecord
     end
 
   private
+
+  # 終了時刻が開始時刻より後かをチェック
+  def end_time_after_start_time
+    if start_time.present? && end_time.present? && end_time <= start_time
+      errors.add(:end_time, :greater_than, count: :start_time)
+    end
+  end
 
   # spot_id と is_custom_entry の整合性をチェック
   def spot_or_custom_entry_valid

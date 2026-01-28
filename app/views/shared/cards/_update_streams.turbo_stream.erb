@@ -6,19 +6,28 @@
 <%= turbo_stream.replace "card-name-section" do %>
   <div id="card-name-section" data-controller="card-edit">
     <%# 表示モード：エラーがあれば非表示 %>
-    <div id="card-name-display" class="<%= 'hidden' if @card.errors.any? %> flex items-start gap-6 mb-4 lg:mb-6" data-card-edit-target="display">
-      <h1 class="text-xl lg:text-2xl font-bold text-text"><%= @card.name %></h1>
-      <%# 編集アイコン（サイズ固定） %>
-      <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
-        <%= render IconComponent.new(name: "form_icon_edit", size: 6, color: "text-text-light") %>
-      </button>
+    <div id="card-name-display" class="<%= 'hidden' if @card.errors.any? %> flex items-center justify-between gap-6 mb-4 lg:mb-6" data-card-edit-target="display">
+      <div class="flex items-center gap-6">
+        <h1 class="text-xl lg:text-2xl font-bold text-text"><%= @card.name %></h1>
+        <%# 編集アイコン %>
+        <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
+          <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
+        </button>
+      </div>
+      <%# 削除ボタン %>
+      <%= render DeleteButtonComponent.new(
+        resource: @card,
+        scope: (@card.group_card? ? @card.group : @card.user),
+        label: t('cards.delete_button'),
+        confirm_message: t("cards.delete_confirm")
+      ) %>
     </div>
 
     <%# 編集モード：エラーがなければ hidden、あればを表示 %>
     <div id="card-name-form" class="<%= 'hidden' unless @card.errors.any? %> mb-4 lg:mb-6" data-card-edit-target="form">
       <%= form_with model: @card, url: (@card.group_card? ? group_card_path(@card.group, @card) : card_path(@card)), local: true do |f| %>
         <div class="flex items-center gap-2">
-          <%= f.text_field :name, class: "form-text-field w-full resize-none min-h-[120px] text-sm lg:text-base" %>
+          <%= f.text_field :name, class: "form-text-field w-full resize-none text-sm lg:text-base" %>
           <%= f.submit t('cards.form.update'), class: "btn-main px-4 lg:px-8 py-2 w-auto" %>
           <button type="button" class="btn-sub w-auto px-2 lg:px-4 py-1" data-action="click->card-edit#toggleForm">
             <p class="text-2xl">×</p>

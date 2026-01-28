@@ -5,18 +5,13 @@
   </div>
 
   <%# スポット情報 %>
-  <%= link_to user_schedule_spot_path(schedule_spot), class: "flex-1" do %>
+  <%# グループしおりか個人しおりのスポットか %>
+  <%= link_to (scope == :group ? group_schedule_spot_path(schedule_spot) : user_schedule_spot_path(schedule_spot)), class: "flex-1" do %>
     <div class="<%= schedule_spot.category_background_color %> rounded-sm shadow p-2">
       <%# 時間帯 %>
-      <% if schedule_spot.start_time.present? || schedule_spot.end_time.present? %>
+      <% if schedule_spot.formatted_time_range != '---' %>
         <p class="text-sm text-text-light">
-          <% if schedule_spot.start_time.present? && schedule_spot.end_time.present? %>
-            <%= schedule_spot.start_time.strftime("%H:%M") %> ～ <%= schedule_spot.end_time.strftime("%H:%M") %>
-          <% elsif schedule_spot.start_time.present? %>
-            <%= schedule_spot.start_time.strftime("%H:%M") %>から
-          <% elsif schedule_spot.end_time.present? %>
-            <%= schedule_spot.end_time.strftime("%H:%M") %>まで
-          <% end %>
+          <%= schedule_spot.formatted_time_range %>
         </p>
       <% end %>
       <%# スポット名 %>

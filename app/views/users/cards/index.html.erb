@@ -13,7 +13,7 @@
 
   <div id="cards_list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 mt-8">
     <% if @cards.any? %>
-      <%= render partial: "cards/card", collection: @cards %>
+      <%= render partial: "shared/cards/card", collection: @cards %>
     <% else %>
       <div id="cards_empty_state" class="col-span-2 sm:col-span-3 md:col-span-4 flex flex-col items-center justify-center py-8 mt-6 px-4">
         <div class=" max-w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-4 py-10 space-y-8 text-center animate-fade-in-up">

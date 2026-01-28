@@ -1,4 +1,4 @@
-<%# item1個の表示フォーム（グループ用） %>
+<%# item1個の表示フォーム %>
 <div class="sortable-item" data-item-id="<%= item.id %>">
   <div id="item_<%= item.id %>" class="flex items-center gap-2" data-controller="item-edit" data-item-edit-target="itemRow">
   <%# ドラッグハンドル（並び替え用） %>
@@ -43,7 +43,7 @@
   </div>
 
   <%# 削除ボタン %>
-  <%= button_to group_schedule_item_list_item_path(@group, item), method: :delete, form: { class: "inline" } do %>
+  <%= button_to item_delete_path, method: :delete, form: { class: "inline" } do %>
     <span class="text-xl md:text-3xl cursor-pointer pr-2">×</span>
   <% end %>
   </div>

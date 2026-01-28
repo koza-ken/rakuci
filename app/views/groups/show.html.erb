@@ -10,12 +10,19 @@
     <%# グループ名セクション（表示/編集を切り替え） %>
     <div id="group-name-section" data-controller="card-edit" class="mb-4 lg:mb-6">
       <%# 表示モード %>
-      <div id="group-name-display" class="flex items-start gap-3 mb-8" data-card-edit-target="display">
-        <h2 class="text-xl lg:text-2xl font-bold text-text"><%= @group.name %></h2>
-        <%# 編集アイコン（サイズ固定） %>
-        <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
-          <%= render IconComponent.new(name: "form_icon_edit", size: 6, color: "text-text-light") %>
-        </button>
+      <div id="group-name-display" class="flex items-start justify-between gap-1 lg:gap-3 mb-8" data-card-edit-target="display">
+        <div class="flex items-center gap-3 flex-1">
+          <h2 class="text-xl lg:text-2xl font-bold text-text"><%= @group.name %></h2>
+          <%# 編集アイコン %>
+          <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
+            <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
+          </button>
+        </div>
+        <% if current_user.present? %>
+          <div class="flex gap-2 lg:gap-4 shrink-0">
+            <%= render DeleteButtonComponent.new(resource: @group, scope: current_user, confirm_message: t('groups.show.delete_confirm')) %>
+          </div>
+        <% end %>
       </div>
 
       <%# 編集モード（非表示） %>
@@ -65,16 +72,12 @@
           <% if @group.schedule.present? %>
             <%# グループにしおりがあればしおり詳細に遷移 %>
             <%= link_to group_schedule_path(@group), class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", title: t('groups.show.schedule_detail') do %>
-              <div class="flex items-center justify-center">
-                <%= render IconComponent.new(name: "footer_icon_schedule", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
-              </div>
+              <%= render IconComponent.new(name: "footer_icon_schedule", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
               <span class="inline"><%= t('groups.show.schedule_detail') %></span>
             <% end %>
           <% else %>
             <%= link_to new_group_schedule_path(@group), data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" }, class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", title: t('groups.show.schedule_create') do %>
-              <div class="flex items-center justify-center">
-                <%= render IconComponent.new(name: "add_schedule_icon", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
-              </div>
+              <%= render IconComponent.new(name: "add_schedule_icon", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
               <span class="inline"><%= t('groups.show.schedule_create') %></span>
             <% end %>
           <% end %>
@@ -83,7 +86,7 @@
       <div>
         <div id="group_cards_list" class="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4 lg:mb-6">
           <% @group.cards.each do |card| %>
-            <%= render "cards/card", card: card %>
+            <%= render "shared/cards/card", card: card %>
           <% end %>
         </div>
         <div id="group-create-button" class="card-index border-dashed text-center mt-2" data-controller="modal">
@@ -106,13 +109,6 @@
         </div>
       </div>
     </div>
-    <%# グループ削除ボタン %>
-    <div class="mt-12 lg:mt-16 pt-6 mx-auto">
-      <%= button_to group_path(@group), method: :delete, form_class: "inline", class: "btn-danger text-sm lg:text-base px-4 lg:px-6 py-2 lg:py-3", data: { turbo_confirm: t('groups.show.delete_confirm') } do %>
-        <%= t('groups.show.delete_group') %>
-      <% end %>
-    </div>
-
     <%# カードガイドモーダル %>
     <div id="group-card-guide-modal" class="fixed inset-0 z-50 bg-black/50 hidden" data-guide-target="modal">
       <div class="bg-white rounded-2xl max-w-[480px] md:max-w-lg lg:max-w-xl w-full mx-4 max-h-[90vh] overflow-y-auto">

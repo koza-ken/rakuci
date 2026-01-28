@@ -11,11 +11,11 @@
 
     <!-- 中央：スライドコンテンツ（高さ固定） -->
     <div class="px-8 py-6 overflow-y-auto h-[430px] md:h-[480px]">
-      <%= render "shared/guide_slide_1" %>
-      <%= render "shared/guide_slide_2" %>
-      <%= render "shared/guide_slide_3" %>
-      <%= render "shared/guide_slide_4" %>
-      <%= render "shared/guide_slide_5" %>
+      <%# slidesは、GuideModalComponentで定義 %>
+      <% slides.each do |slide_number| %>
+        <%# 使い方ガイドのスライド枚数分をレンダリング %>
+        <%= render GuideSlideComponent.new(slide_number: slide_number) %>
+      <% end %>
     </div>
 
     <!-- 下部：ナビゲーション -->

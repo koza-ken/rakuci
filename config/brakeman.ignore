@@ -3,76 +3,15 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 4,
-      "fingerprint": "f102e809b7cfbca65227744a85e691f29f147147c09d8b7f7091de3259785e54",
       "check_name": "LinkToHref",
       "message": "Potentially unsafe model attribute in `link_to` href",
-      "file": "app/views/spots/_show_content.html.erb",
-      "line": 36,
-      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
-      "code": "link_to(Card.find(params[:card_id]).spots.find(params[:id]).website_url, :target => \"_blank\", :rel => \"noopener noreferrer\", :class => \"hover:opacity-60 transition flex-shrink-0\", :onclick => \"return confirm('\\u5916\\u90E8\\u30B5\\u30A4\\u30C8\\u306B\\u79FB\\u52D5\\u3057\\u307E\\u3059\\u304B\\uFF1F')\")",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Groups::SpotsController",
-          "method": "show",
-          "line": 9,
-          "file": "app/controllers/groups/spots_controller.rb",
-          "rendered": {
-            "name": "groups/spots/show",
-            "file": "app/views/groups/spots/show.html.erb"
-          }
-        },
-        {
-          "type": "template",
-          "name": "groups/spots/show",
-          "line": 2,
-          "file": "app/views/groups/spots/show.html.erb",
-          "rendered": {
-            "name": "spots/_show_content",
-            "file": "app/views/spots/_show_content.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "spots/_show_content"
-      },
-      "user_input": "Card.find(params[:card_id]).spots.find(params[:id]).website_url",
-      "confidence": "Weak",
-      "cwe_id": [
-        79
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 4,
-      "fingerprint": "16afdfcc03b40c18bad2fb8ee6bab38cadf3cd427d61b7d8fe9ccfa2b16deaf0",
-      "check_name": "LinkToHref",
-      "message": "Potentially unsafe model attribute in `link_to` href",
-      "file": "app/views/users/schedule_spots/show.html.erb",
-      "line": 36,
+      "file": "app/views/shared/schedule_spots/_schedule_spot_details.html.erb",
+      "line": 39,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "confidence": "Weak",
-      "cwe_id": [
-        79
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 4,
-      "fingerprint": "40d25b902e549acd777b68ad7ac4cdd77e144a5ce99beeccf171820cac2f98d6",
-      "check_name": "LinkToHref",
-      "message": "Potentially unsafe model attribute in `link_to` href",
-      "file": "app/views/groups/schedule_spots/show.html.erb",
-      "line": 37,
-      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
-      "confidence": "Weak",
-      "cwe_id": [
-        79
-      ],
-      "note": ""
+      "cwe_id": [79],
+      "fingerprint": "a0c672072b4965edc1f74fcbe910a0fd6f2e8bc959ae6eccd2554b086b95cd4a",
+      "note": "snapshot_website_url is validated in ScheduleSpot model (HTTP/HTTPS only)"
     }
   ],
   "brakeman_version": "7.1.2"

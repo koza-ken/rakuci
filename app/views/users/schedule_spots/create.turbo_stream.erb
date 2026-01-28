@@ -1,19 +1,12 @@
 <%# フラッシュメッセージを表示 %>
 <%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
 
-<% if params[:spot_ids].present? || params[:spot_id].present? %>
-  <%# Path 1: カードからしおりにスポット追加 %>
-  <%# しおり選択モーダルを閉じる %>
-  <%= turbo_stream.update "add_new_schedule_spot", "" %>
-<% else %>
-  <%# Path 2: しおり詳細から直接スポット追加 %>
-  <%# スポット作成モーダルを閉じる %>
-  <%= turbo_stream.update "spot-create-modal", "" %>
+<%# スポット作成モーダルを閉じる %>
+<%= turbo_stream.update "spot-create-modal", "" %>
 
-  <%# 新しいスポットを該当日のリストに追加（Sortableインスタンスを保持） %>
-  <%= turbo_stream.append "sortable-day-list-#{@schedule_spot.day_number}" do %>
-    <div class="sortable-item" data-spot-id="<%= @schedule_spot.hashid %>">
-      <%= render @schedule_spot %>
-    </div>
-  <% end %>
+<%# 新しいスポットを該当日のリストに追加（Sortableインスタンスを保持） %>
+<%= turbo_stream.append "sortable-day-list-#{@schedule_spot.day_number}" do %>
+  <div class="sortable-item" data-spot-id="<%= @schedule_spot.hashid %>">
+    <%= render "shared/schedules/schedule_spot", schedule_spot: @schedule_spot, scope: :user %>
+  </div>
 <% end %>

@@ -98,6 +98,11 @@ ja:
       schedule: しおり
       schedule_spot: スケジュール
       spot: スポット
+  components:
+    icon_buttons:
+      edit: 編集
+      delete: 削除
+      delete_confirm: 削除してもよろしいですか
   cards:
     add_spot: スポット追加
     add_spots_to_schedule: 選択したスポットをしおりに追加

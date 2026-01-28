@@ -1,15 +1,10 @@
+<%# 並び替えのturboでレンダリングするために切り出し %>
 <div class="w-full max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-6 pb-10 lg:pb-20">
   <% if schedule.present? %>
     <%# しおり名 %>
     <div class="flex items-start justify-between mb-4 lg:mb-6 gap-1 lg:gap-3">
       <h1 class="text-xl lg:text-2xl text-text font-bold flex-1"><%= schedule.name %></h1>
-      <%# 編集ボタン（ケバブメニュー廃止） %>
-      <%= link_to edit_group_schedule_path(group), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base shrink-0", data: { turbo: false } do %>
-        <div class="flex items-center justify-center">
-          <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
-        </div>
-        <span class="hidden lg:inline"><%= t('schedules.show.edit') %></span>
-      <% end %>
+      <%= render EditButtonComponent.new(resource: schedule, scope: group) %>
     </div>
 
     <%# グループ名 %>
@@ -29,15 +24,11 @@
         <%= link_to t('groups.schedules.show.back_to_group'), group_path(@group), class: "btn-sub w-auto text-center px-4 md:px-8 py-2 text-sm lg:text-base" %>
         <div class="flex gap-3 lg:gap-4">
           <%= link_to group_expenses_path(group), class: "btn-main w-auto p-2 lg:px-4 lg:py-2 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base" do %>
-            <div class="flex items-center justify-center">
-              <%= render IconComponent.new(name: "expense_icon", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
-            </div>
+            <%= render IconComponent.new(name: "expense_icon", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
             <span class="hidden lg:inline"><%= t('groups.schedules.show.expenses') %></span>
           <% end %>
           <%= link_to group_schedule_item_list_path(group), class: "btn-main w-auto p-2 lg:px-4 lg:py-2 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base" do %>
-            <div class="flex items-center justify-center">
-              <%= render IconComponent.new(name: "footer_icon_backpack", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
-            </div>
+            <%= render IconComponent.new(name: "footer_icon_backpack", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
             <span class="hidden lg:inline"><%= t('groups.schedules.show.item_list') %></span>
           <% end %>
         </div>
@@ -58,7 +49,7 @@
           <% if day_spots.any? %>
             <% day_spots.each do |schedule_spot| %>
               <div class="sortable-item" data-spot-id="<%= schedule_spot.hashid %>">
-                <%= render 'groups/schedule_spots/schedule_spot', schedule_spot: schedule_spot %>
+                <%= render "shared/schedules/schedule_spot", schedule_spot: schedule_spot, scope: :group %>
               </div>
             <% end %>
           <% end %>

@@ -14,6 +14,7 @@
   <%= f.text_area :content,
       placeholder: t('comments.form.placeholder'),
       rows: 3,
-      class: "form-text-field w-full" %>
+      class: "form-text-field w-full",
+      value: comment.content.presence || "" %>
   <%= f.submit t('comments.form.submit'), class: "btn-main mt-2" %>
 <% end %>
