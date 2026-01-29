@@ -97,6 +97,9 @@ GEM
     brakeman (7.1.2)
       racc
     builder (3.3.0)
+    bullet (8.1.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     capybara (3.40.0)
       addressable
       matrix
@@ -264,7 +267,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.4.0)
+    prism (1.9.0)
     psych (5.2.6)
       date
       stringio
@@ -273,6 +276,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.1.18)
+    rack-mini-profiler (4.0.1)
+      rack (>= 1.2.0)
     rack-protection (4.2.1)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
@@ -418,6 +423,7 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
+    uniform_notifier (1.18.0)
     uri (1.1.1)
     useragent (0.16.11)
     version_gem (1.1.9)
@@ -460,6 +466,7 @@ DEPENDENCIES
   binding_of_caller
   bootsnap
   brakeman
+  bullet
   capybara
   cssbundling-rails
   cuprite
@@ -475,6 +482,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection (= 1.0.2)
   pg (~> 1.1)
   puma (>= 5.0)
+  rack-mini-profiler
   rails (~> 7.2.2, >= 7.2.2.2)
   rails-i18n (~> 7.0.0)
   resend
