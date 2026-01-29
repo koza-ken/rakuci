@@ -76,6 +76,7 @@ group :development do
   gem "binding_of_caller"
   gem "ruby-lsp", require: false
   gem "annotate"
+  gem 'rack-mini-profiler', require: false
 end
 
 group :test do
