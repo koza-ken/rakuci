@@ -77,6 +77,7 @@ group :development do
   gem "ruby-lsp", require: false
   gem "annotate"
   gem 'rack-mini-profiler', require: false
+  gem 'bullet'
 end
 
 group :test do
