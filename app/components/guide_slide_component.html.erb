@@ -1,0 +1,13 @@
+<div data-guide-target="slide">
+  <div>
+    <h2 class="text-lg font-bold text-text mb-2"><%= t(slide_data[:title_key]) %></h2>
+
+    <p class="md:text-lg text-text-light leading-relaxed mb-4">
+      <%= t(slide_data[:description_key]) %>
+    </p>
+
+    <div class="flex justify-center">
+      <%= image_tag slide_data[:image], alt: "Guide illustration", class: "w-full h-auto rounded-lg" %>
+    </div>
+  </div>
+</div>

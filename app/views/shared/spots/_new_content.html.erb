@@ -1,0 +1,110 @@
+<turbo-frame id="spot-create-modal">
+  <%# モーダルのラッパー %>
+  <div role="dialog" tabindex="-1" class="fixed inset-0 z-60 flex items-center justify-center w-full h-screen p-2">
+    <%# 背景（クリックでモーダルを閉じる） %>
+    <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-pointer bg-gray-900/30"></div>
+    <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
+      <main class="flex flex-col items-center justify-center px-4 md:px-6 lg:px-8 py-12">
+        <div class="w-full max-w-md">
+          <h1 class="text-xl font-bold text-text mb-8"><%= t('spots.new.title') %></h1>
+        </div>
+
+        <%= form_with model: @spot, url: (@card.group_card? ? group_card_spots_path(@card.group, @card) : card_spots_path(@card)), class: "w-full max-w-md", data: { controller: "autocomplete" } do |f| %>
+          <%# スポット名 %>
+          <div class="mb-6">
+            <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
+              <%=  t('spots.form.name') %>
+              <span class="text-red-600 font-bold ml-1">*</span>
+            <% end %>
+            <%= f.text_field :name,
+                data: { autocomplete_target: "nameField" },
+                placeholder: t('spots.form.name_placeholder'),
+                class: "form-text-field" %>
+            <% if @spot.errors.any? %>
+              <div class="ml-2">
+                <% @spot.errors.messages[:name].each do |message| %>
+                  <p class="text-red-600 text-xs"><%= t('activerecord.attributes.spot.name') %><%= message %></p>
+                <% end %>
+                <% @spot.errors.messages[:google_place_id].each do |message| %>
+                  <p class="text-red-600 text-xs"><%= message %></p>
+                <% end %>
+              </div>
+            <% end %>
+
+            <%# オートコンプリートは補助として表示 %>
+            <div class="mt-2 text-xs text-gray-600">
+              または下から施設を検索して選択：
+            </div>
+            <gmp-place-autocomplete
+              id="spot-auto-input"
+              data-autocomplete-target="autocomplete"
+              country="jp"
+              class="form-text-field p-0 mt-1">
+            </gmp-place-autocomplete>
+
+
+            <%# 自動入力失敗時のエラーメッセージ %>
+            <div id="autocomplete-error" class="hidden mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded text-sm text-yellow-700" data-autocomplete-target="errorMessage">
+              施設情報の自動入力に失敗しました。下記のフィールドに手動で入力してください。
+            </div>
+          </div>
+
+          <%# カテゴリ %>
+          <div class="mb-6">
+            <%= f.label :category_id, class: "block text-sm font-medium text-text mb-2" do %>
+              <%= t('spots.form.category') %>
+              <span class="text-red-600 font-bold ml-1">*</span>
+            <% end %>
+            <%= f.collection_select :category_id, @categories, :id, :name,
+                {include_blank: "--- 選択してください ---"},
+                {class: "form-text-field"} %>
+            <% if @spot.errors.any? %>
+              <div class="ml-2">
+                <% @spot.errors.messages[:category_id].each do |message| %>
+                  <p class="text-red-600 text-xs"><%= t('activerecord.attributes.spot.category_id') %><%= message %></p>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+
+          <%# 住所 %>
+          <div class="mb-6">
+            <%= f.label :address, t('spots.form.address'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.text_field :address,
+                data: { autocomplete_target: "addressField" },
+                placeholder: t('spots.form.address_placeholder'),
+                class: "form-text-field resize-vertical" %>
+          </div>
+
+          <%# URL %>
+          <div class="mb-6">
+            <%= f.label :website_url, t('spots.form.website_url'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.text_field :website_url,
+                data: { autocomplete_target: "websiteField" },
+                placeholder: t('spots.form.web_site_url_placeholder'),
+                class: "form-text-field resize-vertical" %>
+          </div>
+
+          <%# 電話番号 %>
+          <div class="mb-6">
+            <%= f.label :phone_number, t('spots.form.phone_number'), class: "block text-sm font-medium text-text mb-2" %>
+            <%= f.text_field :phone_number,
+                data: { autocomplete_target: "phoneField" },
+                placeholder: t('spots.form.phone_number_placeholder'),
+                class: "form-text-field resize-vertical" %>
+          </div>
+
+          <%# place_id %>
+          <%= f.hidden_field :google_place_id, data: { autocomplete_target: "idField" } %>
+
+
+          <%# ボタン %>
+          <div class="flex gap-3">
+            <%= f.submit t('cards.form.submit'), class: "btn-main flex-1" %>
+            <%= link_to t('cards.form.cancel'), (@card.group_card? ? group_card_path(@card.group, @card) : card_path(@card)), data: { action: "click->modal#close" }, class: "btn-sub flex-1 text-center" %>
+          </div>
+        <% end %>
+      </main>
+    </div>
+  </div>
+</turbo-frame>

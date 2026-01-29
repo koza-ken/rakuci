@@ -1,8 +1,0 @@
-<%# フラッシュメッセージを表示 %>
-<%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
-
-<%# モーダルを閉じる（中身を空にする） %>
-<%= turbo_stream.update "spot-create-modal", "" %>
-
-
-<%= turbo_stream.append "category_#{@spot.category_id}_spots", partial: "spots/spot", locals: { spot: @spot } %>

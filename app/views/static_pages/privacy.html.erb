@@ -1,6 +1,6 @@
-<div class="max-w-4xl mx-auto px-6 py-12 space-y-8">
+<div class="max-w-4xl mx-auto px-12 py-12 space-y-8">
   <div class="text-center space-y-2">
-    <h1 class="text-2xl font-bold text-text">プライバシーポリシー</h1>
+    <h1 class="text-xl font-bold text-text">プライバシーポリシー</h1>
     <h2 class="text-text mb-2">（最終更新日：2025年12月20日）</h2>
     <p class="text-left text-sm text-text-light">「RakuCi」（以下、本サービスという）における個人情報等の取扱いについて定めます。</p>
   </div>
@@ -69,9 +69,7 @@
         登録情報・投稿データの確認・訂正・削除、退会が可能です。法令に基づき、開示・利用停止等を求めることができます。詳細は
         <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", target: "_blank", rel: "noopener noreferrer", class: "text-secondary hover:text-secondary underline inline-flex items-center" do %>
           お問い合わせフォーム
-          <span class="text-secondary">
-            <%= render "shared/icon/new_window_icon" %>
-          </span>
+          <%= render IconComponent.new(name: "new_window_icon", size: 4, color: "text-secondary", inline: true) %>
         <% end %>
         よりご連絡ください。
       </p>
@@ -88,9 +86,7 @@
         本プライバシーポリシーに関するお問い合わせについては、
         <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", target: "_blank", rel: "noopener noreferrer", class: "text-secondary hover:text-secondary underline inline-flex items-center" do %>
           お問い合わせフォーム
-          <span class="text-secondary">
-            <%= render "shared/icon/new_window_icon" %>
-          </span>
+          <%= render IconComponent.new(name: "new_window_icon", size: 4, color: "text-secondary", inline: true) %>
         <% end %>
         よりご連絡ください。
       </p>

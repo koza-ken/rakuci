@@ -1,23 +1,26 @@
 <% if @saved_item.present? %>
   <%# 新規アイテムをリストに追加 %>
+  <% delete_path = @schedule.present? ? schedule_item_list_item_path(@schedule, @saved_item) : item_list_item_path(@saved_item) %>
   <%= turbo_stream.append "items-list" do %>
-    <%= render "users/items/item", item: @saved_item, item_list: @item_list %>
+    <%= render "shared/items/item", item: @saved_item, item_delete_path: delete_path %>
   <% end %>
 
   <%# 空状態メッセージを削除（最初のアイテム追加時） %>
   <%= turbo_stream.remove "empty-state" %>
 
   <%# フォームをリセット＆非表示化 %>
+  <% form_url = @schedule.present? ? schedule_item_list_items_path(@schedule) : item_list_items_path %>
   <%= turbo_stream.replace "item-form" do %>
     <div id="item-form" class="hidden mb-6" data-item-list-form-target="form">
-      <%= render "users/item_lists/item_form", item_list: @item_list %>
+      <%= render "shared/item_lists/item_form", item_list: @item_list, item: @item, form_url: form_url, input_class: "" %>
     </div>
   <% end %>
 <% else %>
   <%# エラー時はフォームを表示してエラーメッセージを表示 %>
+  <% form_url = @schedule.present? ? schedule_item_list_items_path(@schedule) : item_list_items_path %>
   <%= turbo_stream.replace "item-form" do %>
     <div id="item-form" class="mb-6" data-item-list-form-target="form">
-      <%= render "users/item_lists/item_form", item_list: @item_list %>
+      <%= render "shared/item_lists/item_form", item_list: @item_list, item: @item, form_url: form_url, input_class: "" %>
     </div>
   <% end %>
 <% end %>

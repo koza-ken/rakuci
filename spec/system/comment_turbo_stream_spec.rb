@@ -121,7 +121,7 @@ RSpec.describe "コメント Turbo Stream リアルタイム更新", type: :syst
       # コメント div の中の削除ボタン（ゴミ箱アイコン）を探して クリック
       comment_div = find("div#comment_#{comment.id}")
       delete_button = comment_div.find_button(class: "p-0")
-      delete_button.click
+      delete_button.trigger("click")
 
       # turbo_confirm ダイアログは自動確認される
 
@@ -148,7 +148,7 @@ RSpec.describe "コメント Turbo Stream リアルタイム更新", type: :syst
 
       # 削除するコメントの削除ボタンをクリック（comment2 のコメント内に限定）
       within("div#comment_#{comment2.id}") do
-        find_button(title: I18n.t("comments.delete")).click
+        find_button(title: I18n.t("comments.delete")).trigger("click")
       end
 
       # comment2 が削除される

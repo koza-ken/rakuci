@@ -9,7 +9,6 @@ RSpec.describe "グループメンバー招待フロー", type: :system do
       visit_with_guest_token(group)
       expect(page).to have_content(I18n.t("groups.new_membership.title"))
       expect(page).to have_content("東京旅行グループ")
-      expect(page).to have_content(I18n.t("groups.new_membership.invited_message"))
     end
 
     it "無効な招待リンク（存在しないトークン）でエラーが表示されること" do

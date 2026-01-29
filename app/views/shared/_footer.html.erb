@@ -1,27 +1,28 @@
 <% if user_signed_in? %>
-  <footer class="fixed bottom-0 left-0 right-0 bg-header-bg border-y border-gray-300 z-40">
-    <nav class="flex justify-around items-center h-16">
-      <%= link_to cards_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity" do %>
-        <%= render "shared/icon/footer_icon_card" %>
-        <span class="text-xs text-secondary font-bold">カード</span>
+  <footer class="md:hidden fixed bottom-0 left-0 right-0 bg-header-bg border-y border-gray-300 z-40">
+    <nav class="flex justify-around items-center h-14 max-w-[480px] mx-auto">
+      <%= link_to cards_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity scale-90" do %>
+        <%= render IconComponent.new(name: "footer_icon_card", size: 8, color: "text-secondary") %>
+        <span class="text-[0.6rem] text-secondary font-bold">カード</span>
       <% end %>
 
-      <%= link_to groups_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity" do %>
-        <%= render "shared/icon/footer_icon_group" %>
-        <span class="text-xs text-secondary font-bold">グループ</span>
+      <%= link_to groups_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity scale-90" do %>
+        <%= render IconComponent.new(name: "footer_icon_group", size: 8, color: "text-secondary") %>
+        <span class="text-[0.6rem] text-secondary font-bold">グループ</span>
       <% end %>
 
-      <%= link_to schedules_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity" do %>
-        <%= render "shared/icon/footer_icon_schedule" %>
-        <span class="text-xs text-secondary font-bold">しおり</span>
+      <%= link_to schedules_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity scale-90" do %>
+        <%= render IconComponent.new(name: "footer_icon_schedule", size: 8, color: "text-secondary") %>
+        <span class="text-[0.6rem] text-secondary font-bold">しおり</span>
       <% end %>
 
-      <%= link_to item_list_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity" do %>
-        <%= render "shared/icon/footer_icon_backpack" %>
-        <span class="text-xs text-secondary font-bold">もちもの</span>
+      <%= link_to item_list_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity scale-90" do %>
+        <%# もちもののアイコンが少し小さい気がするのでsize=9に %>
+        <%= render IconComponent.new(name: "footer_icon_backpack", size: 9, color: "text-secondary") %>
+        <span class="text-[0.6rem] text-secondary font-bold">もちもの</span>
       <% end %>
     </nav>
   </footer>
-  <%# ページ最下部がfooterで隠れないように %>
-  <div class="h-16"></div>
+  <%# ページ最下部がfooterで隠れないように（md未満のみ） %>
+  <div class="md:hidden h-16"></div>
 <% end %>

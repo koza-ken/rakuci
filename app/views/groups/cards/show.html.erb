@@ -4,18 +4,21 @@
 <%= turbo_frame_tag "spot-create-modal", data: { controller: "modal" } %>
 <%= turbo_frame_tag "add_new_schedule_spot" %>
 
-<div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
-  <main class="flex flex-col px-8 py-6 bg-main-bg">
+<div class="relative z-20 w-full mx-auto max-w-2xl md:max-w-3xl lg:max-w-4xl bg-main-bg rounded-md px-6 md:px-0">
+  <main class="flex flex-col px-4 py-6 bg-main-bg">
 
     <%# カード名セクション（表示/編集を切り替え） %>
     <div id="card-name-section" data-controller="card-edit">
       <%# 表示モード %>
-      <div id="card-name-display" class="flex items-start gap-6 mb-4" data-card-edit-target="display">
-        <h1 class="text-xl font-bold text-text"><%= @card.name %></h1>
-        <%# 編集アイコン（サイズ固定） %>
-        <button class="shrink-0 text-text hover:opacity-70 transition pt-1" data-action="click->card-edit#toggleForm">
-          <%= render "shared/icon/form_icon_edit" %>
-        </button>
+      <div id="card-name-display" class="flex items-center justify-between gap-6 mb-4" data-card-edit-target="display">
+        <div class="flex items-center gap-6">
+          <h1 class="text-xl lg:text-2xl font-bold text-text"><%= @card.name %></h1>
+          <%# 編集アイコン %>
+          <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
+            <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
+          </button>
+        </div>
+        <%= render DeleteButtonComponent.new(resource: @card, scope: @card.group, label: t('cards.delete_button'), confirm_message: t("cards.delete_confirm")) %>
       </div>
 
       <%# 編集モード（非表示） %>
@@ -34,17 +37,18 @@
 
     <%# スポット追加ボタン %>
     <div class="flex justify-end mb-2 w-auto" data-controller="modal">
-      <%= link_to new_group_card_spot_path(@card.group, @card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, title: t('cards.add_spot'), class: "btn-main w-auto p-2" do %>
-        <div class="flex items-center justify-center size-8">
-          <%= render "shared/icon/add_spot_icon" %>
+      <%= link_to new_group_card_spot_path(@card.group, @card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, title: t('cards.add_spot'), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3" do %>
+        <div class="flex items-center justify-center">
+          <%= render IconComponent.new(name: "add_spot_icon", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
         </div>
+        <span class="hidden lg:inline text-sm lg:text-base"><%= t('cards.add_spot') %></span>
       <% end %>
     </div>
 
     <%# グループカード: スポット追加フォーム %>
     <div class="mb-4">
       <%= form_with url: group_card_schedule_spots_path(@card.group, @card), method: :post, local: true, data: { controller: "spot-selector" } do |f| %>
-        <%= render "spots/spots", spots: @card.spots, categories: @categories %>
+        <%= render "shared/spots/spots", spots: @card.spots, categories: @categories %>
         <% if @card.group.schedule.present? %>
           <div class="flex gap-2 mt-4">
             <%= f.submit t('cards.add_spots_to_schedule'), class: "btn-main flex-1 opacity-50 cursor-not-allowed", id: "group-submit-button", disabled: true, data: { "spot-selector-target": "submitButton", "enable-text": t('cards.add_spots_to_schedule'), "disabled-text": "スポットを選択してください" } %>
@@ -61,7 +65,7 @@
         <% if @comments.present? %>
           <div class="space-y-3 mb-4">
             <% @comments.each do |comment| %>
-              <%= render "comments/comment", comment: comment %>
+              <%= render "groups/comments/comment", comment: comment %>
             <% end %>
           </div>
         <% else %>
@@ -69,25 +73,25 @@
         <% end %>
       </div>
       <%# 新規コメント投稿フォーム %>
-      <div id="comment_form">
-        <%= render "comments/form", card: @card, comment: Comment.new %>
+      <div id="comment_form" class="pt-2">
+        <%= render "groups/comments/form", card: @card, comment: Comment.new %>
       </div>
     </div>
 
     <%# メモセクション（表示/編集を切り替え） %>
-    <div id="memo-section" class="w-full max-w-md" data-controller="memo-edit">
+    <div id="memo-section" class="w-full" data-controller="memo-edit">
       <%# 表示モード %>
       <div id="memo-display" data-memo-edit-target="display">
         <%= form_with model: [@group, @card], class: "w-full" do |f| %>
           <%= f.label :memo, t('cards.form.memo'), class: "block text-lg font-bold text-text mb-2" %>
-          <%= f.text_area :memo, class: "form-text-field bg-gray-100 cursor-pointer", readonly: true, data: { action: "click->memo-edit#toggleForm" } %>
+          <%= f.text_area :memo, class: "form-text-field bg-gray-100 cursor-pointer min-h-[100px]", readonly: true, data: { action: "click->memo-edit#toggleForm" } %>
         <% end %>
       </div>
 
       <%# 編集モード（非表示） %>
       <div id="memo-form" data-memo-edit-target="form" class="hidden">
         <%= form_with model: [@group, @card], local: true, class: "w-full" do |f| %>
-          <%= f.label :memo, t('cards.form.memo'), class: "block text-2xl font-bold text-text mb-2" %>
+          <%= f.label :memo, t('cards.form.memo'), class: "block text-xl font-bold text-text mb-2" %>
           <%= f.text_area :memo, class: "form-text-field flex-1 resize-none min-h-[100px]", placeholder: t('cards.memo_input_placeholder') %>
           <div class="flex gap-2 mt-2">
             <%= f.submit t('cards.form.update'), class: "btn-main px-4 py-2 w-auto" %>
@@ -107,15 +111,10 @@
       </div>
     </div>
 
-    <%# 戻るボタンと削除ボタン %>
+    <%# 戻るボタン %>
     <div class="mt-8">
       <%= link_to group_path(@card.group), class: "btn-sub block text-center" do %>
         <%= t("cards.form.back") %>
-      <% end %>
-    </div>
-    <div class="flex justify-center mt-18">
-      <%= button_to group_card_path(@card.group, @card), method: :delete, data: { turbo_confirm: t("cards.delete_confirm") }, class: "btn-danger" do %>
-        <%= t("cards.delete_button") %>
       <% end %>
     </div>
   </main>

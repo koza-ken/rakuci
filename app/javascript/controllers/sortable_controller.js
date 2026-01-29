@@ -32,7 +32,10 @@ export default class extends Controller {
       new Sortable(list, {
         animation: 150,
         ghostClass: "sortable-ghost",
-        handle: "[data-sortable-handle]",
+        // ドラッグのハンドルをクラスで指定
+        handle: ".drag-handle",
+        // items全体をグループと指定することで並び替えができる
+        group: "items",
         onEnd: (evt) => this.handleItemsSortEnd(evt),
       })
     })
@@ -77,8 +80,8 @@ export default class extends Controller {
   // もちものリストのアイテム並び替え後に実行
   handleItemsSortEnd(evt) {
     const item = evt.item
-    const itemId = item.id.replace("item_", "")
-    const newPosition = Array.from(item.parentElement.children).indexOf(item) + 1
+    const itemId = item.dataset.itemId
+    const newPosition = evt.newIndex + 1
 
     // バックエンドに更新を送信
     this.updateItemPosition(itemId, newPosition)

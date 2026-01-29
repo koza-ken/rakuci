@@ -1,28 +1,28 @@
 <% content_for(:title, t('item_lists.show.title')) %>
 <% breadcrumb :group_schedule_item_list, @group %>
 
-<main class="flex flex-col items-center justify-center px-8 py-6" data-controller="item-list-form sortable">
-  <div class="w-full max-w-2xl">
+<main class="flex flex-col items-center justify-center px-8 md:px-6 lg:px-8 py-6" data-controller="item-list-form sortable">
+  <div class="w-full max-w-[480px] md:max-w-xl lg:max-w-2xl">
     <%# タイトル %>
-    <h1 class="text-xl font-bold text-text mb-6"><%= t('item_lists.show.title') %></h1>
+    <h1 class="text-xl md:text-2xl font-bold text-text mb-6"><%= t('item_lists.show.title') %></h1>
 
     <%# 空状態メッセージ %>
     <div id="empty-state" class="<%= @items.any? ? 'hidden' : '' %>">
-      <p class="text-center text-text-light mb-4"><%= t('item_lists.show.empty_message') %></p>
+      <p class="pl-2 text-text-light mb-4"><%= t('item_lists.show.empty_message') %></p>
     </div>
 
     <%# アイテムリスト %>
     <div id="items-list" class="space-y-2 mb-4">
       <% if @items.any? %>
         <% @items.each do |item| %>
-          <%= render partial: "groups/items/item", locals: { item: item, item_list: @item_list } %>
+          <%= render partial: "shared/items/item", locals: { item: item, item_delete_path: group_schedule_item_list_item_path(@group, item) } %>
         <% end %>
       <% end %>
     </div>
 
     <%# 追加フォーム（最初は非表示） %>
     <div id="item-form" class="hidden mb-6" data-item-list-form-target="form">
-      <%= render partial: "groups/item_lists/item_form", locals: { item_list: @item_list } %>
+      <%= render "shared/item_lists/item_form", item_list: @item_list, item: @item, form_url: group_schedule_item_list_items_path(@group), input_class: "flex-1" %>
     </div>
 
     <%# ＋ボタン %>
@@ -32,7 +32,7 @@
         data-action="click->item-list-form#toggleForm"
         data-item-list-form-target="addButton"
       >
-        <%= render "shared/icon/group_card_icon_add" %>
+        <%= render IconComponent.new(name: "group_card_icon_add", size: 6, color: "text-text") %>
         <%= t('item_lists.show.add_item_button') %>
       </button>
     </div>

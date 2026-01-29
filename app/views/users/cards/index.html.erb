@@ -4,31 +4,36 @@
 <%# 作成モーダルの挿入 %>
 <%= turbo_frame_tag "card-create-modal", data: { controller: "modal" } %>
 
-<main class="flex flex-col items-center justify-center px-8 py-6">
+<main class="flex flex-col items-center justify-center px-4 py-6 mb-20" data-controller="guide">
   <div id="cards-page-title">
     <% if @cards.any? %>
-      <h1 class="text-xl text-text font-bold"><%= t('cards.index_content.title') %></h1>
+      <h1 class="text-xl md:text-2xl text-text font-bold"><%= t('cards.index_content.title') %></h1>
     <% end %>
   </div>
 
-  <div id="cards_list" class="w-full grid grid-cols-2 gap-4 mt-8">
+  <div id="cards_list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 mt-8">
     <% if @cards.any? %>
-      <%= render partial: "cards/card", collection: @cards %>
+      <%= render partial: "shared/cards/card", collection: @cards %>
     <% else %>
-      <div id="cards_empty_state" class="col-span-2 flex flex-col items-center justify-center py-8 mt-6 px-4">
-        <div class="w-full max-w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-8 py-10 space-y-8 text-center animate-fade-in-up">
-          <div class="mx-auto w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
-            <%= render "shared/icon/footer_icon_card", icon_class: "text-text-light/40" %>
+      <div id="cards_empty_state" class="col-span-2 sm:col-span-3 md:col-span-4 flex flex-col items-center justify-center py-8 mt-6 px-4">
+        <div class=" max-w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-4 py-10 space-y-8 text-center animate-fade-in-up">
+          <div class="mx-auto w-16 h-16 md:w-24 md:h-24 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
+            <%= render IconComponent.new(name: "footer_icon_card", size: 8, breakpoints: { md: 12 }, color: "text-text-light/40") %>
           </div>
           <div class="">
-            <p class="text-xl font-semibold text-text mb-4"><%= t('cards.index_content.no_cards') %></p>
-            <p class="text-sm text-text-light leading-relaxed mb-8"><%= t('cards.index_content.lets_create_card') %></p>
-            <p class="text-xs text-text-light text-left leading-relaxed mb-1"><%= t('cards.index_content.personal_card_page') %></p>
-            <p class="text-xs text-text-light text-left leading-relaxed mb-1"><%= t('cards.index_content.personal_or_group') %></p>
+            <div class="flex items-center justify-center gap-2 mb-8">
+              <p class="text-lg md:text-xl text-text font-semibold leading-relaxed"><%= t('cards.index_content.lets_create_card') %></p>
+              <button class="bg-secondary hover:opacity-80 transition shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-sm font-semibold" data-action="click->guide#toggleModal" title="<%= t('cards.index_content.guide_button') %>">
+                ?
+              </button>
+            </div>
+            <div class="px-6">
+              <p class="text-sm md:text-lg text-text-light leading-relaxed mb-1"><%= t('cards.index_content.personal_card_page') %></p>
+            </div>
           </div>
           <div class="space-y-3">
-            <%= link_to new_card_path, data: {turbo_frame: "card-create-modal"}, class: "first-create-btn" do %>
-              <span class="text-xl">+</span>
+            <%= link_to new_card_path, data: {turbo_frame: "card-create-modal"}, class: "first-create-btn md:min-w-1/2" do %>
+              <%= render IconComponent.new(name: "group_card_icon_add", size: 6, color: "text-text") %>
               <span><%= t('cards.index_content.create_card') %></span>
             <% end %>
           </div>
@@ -40,13 +45,50 @@
   <%# 右下の+ボタン（新規作成ページへのリンク） %>
   <div id="cards-fab-container">
     <% if @cards.any? %>
-      <div class="fixed bottom-22 right-6 z-50" data-controller="modal">
+      <div class="fixed bottom-22 right-4 md:right-6 lg:left-[calc(50%+412px)] lg:right-auto z-50" data-controller="modal">
         <%= link_to new_card_path, data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
                     title: t('cards.index_content.create_card'),
-                    class: "group bg-primary hover:opacity-80 text-text-light w-14 h-14 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
-          <%= render "shared/icon/add_card_icon" %>
+                    class: "group bg-primary hover:opacity-80 text-text-light w-14 h-14 lg:w-18 lg:h-18 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
+          <%= render IconComponent.new(name: "add_card_icon", size: 8, breakpoints: { lg: 10 }, color: "text-text-light") %>
         <% end %>
       </div>
     <% end %>
+  </div>
+
+  <%# カードガイドモーダル %>
+  <div id="card-guide-modal" class="fixed inset-0 z-50 bg-black/50 hidden" data-guide-target="modal">
+      <div class="bg-white rounded-2xl max-w-[480px] md:max-w-lg lg:max-w-xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <div class="p-8">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold text-text"><%= t('cards.index_content.card_guide_title') %></h2>
+            <button class="text-2xl md:text-3xl text-text-light hover:text-text transition" data-action="click->guide#toggleModal">×</button>
+          </div>
+
+        <div class="space-y-6">
+          <p class="md:text-lg text-text-light leading-relaxed"><%= t('cards.index_content.card_guide_description') %></p>
+
+          <div class="flex justify-center gap-3">
+            <div class="flex-1 min-w-0">
+              <div class="w-full h-auto">
+                <%= image_tag "card_guide_summary.svg", alt: "Card summary view", class: "rounded-lg border border-border w-full h-auto object-cover" %>
+              </div>
+              <p class="text-xs md:text-lg text-text-light text-center mt-2 break-words"><%= t('cards.index_content.guide_card_label') %></p>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="w-full h-auto">
+                <%= image_tag "card_guide_detail.svg", alt: "Card detail view", class: "rounded-lg border border-border w-full h-auto object-cover" %>
+              </div>
+              <p class="text-xs md:text-lg text-text-light text-center mt-2 break-words"><%= t('cards.index_content.guide_spots_label') %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 flex justify-center">
+          <button class="btn-main px-6 py-2" data-action="click->guide#toggleModal">
+            <%= t('cards.index_content.guide_close') %>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </main>

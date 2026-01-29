@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-main-bg">
   <%# Hero %>
-  <section class="relative overflow-hidden bg-hero-surface">
+  <section class="relative overflow-hidden bg-hero-surface py-24">
     <div class="absolute inset-0 pointer-events-none">
       <div class="absolute -left-10 top-10 w-32 h-32 bg-primary/60 rounded-full blur-3xl opacity-70 floaty"></div>
       <div class="absolute right-6 bottom-10 w-40 h-40 bg-secondary/40 rounded-full blur-3xl opacity-70 floaty"></div>
@@ -8,32 +8,29 @@
 
     <div class="relative max-w-5xl mx-auto px-6 pt-20 pb-8">
       <div class="text-center space-y-4">
-        <p class="inline-flex items-center justify-center px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-secondary bg-white/70 rounded-full shadow-sm hero-fade-up hero-delay-1">
+        <p class="inline-flex items-center justify-center px-4 sm:px-8 py-2 sm:py-4 text-xs sm:text-base sm:mb-12 font-semibold uppercase tracking-[0.2em] text-secondary bg-white/70 rounded-full shadow-sm hero-fade-up hero-delay-1">
           旅の計画づくりを、もっとラクに
         </p>
-        <h1 class="text-[70px] font-logo font-bold text-secondary hero-fade-up hero-delay-2 leading-none mb-16 logo-drop" aria-label="RakuCi">
+        <h1 class="text-[70px] sm:text-[100px] font-logo font-bold text-secondary hero-fade-up hero-delay-2 leading-none mb-16 sm:mb-24 logo-drop" aria-label="RakuCi">
           <span class="sr-only">RakuCi</span>
           <span class="logo-letter" style="--i:0">R</span><span class="logo-letter" style="--i:1">a</span><span class="logo-letter" style="--i:2">k</span><span class="logo-letter" style="--i:3">u</span><span class="logo-letter" style="--i:4">C</span><span class="logo-letter" style="--i:5">i</span>
         </h1>
-        <p class="text-sm text-left text-text-light max-w-3xl mx-auto leading-relaxed hero-fade-up hero-delay-3">
+        <p class="text-s sm:text-lg text-center text-text-light max-w-3xl mx-auto sm:mb-6 md:mb-16 leading-relaxed hero-fade-up hero-delay-3">
           RakuCi（ラクシィ）は、目的地のカードを使って旅行を計画するアプリです。<br>旅行先が決まればそのまま計画を進められます。
         </p>
-        <div class="flex flex-col gap-5 justify-center items-center pt-4 hero-fade-up hero-delay-4">
-          <%= link_to new_user_registration_path, class: "btn-main w-full", data: { turbo: false } do %>
+        <div class="flex flex-col sm:flex-row gap-5 sm:gap-12 justify-center items-center pt-4 hero-fade-up hero-delay-4">
+          <%= link_to new_user_registration_path, class: "btn-main", data: { turbo: false } do %>
             登録する
           <% end %>
-          <%= link_to new_user_session_path, class: "btn-sub w-full", data: { turbo: false } do %>
+          <%= link_to new_user_session_path, class: "btn-sub", data: { turbo: false } do %>
             ログイン
           <% end %>
         </div>
-        <div class="flex justify-center pt-16">
+        <div class="flex justify-center pt-16 sm:pt-24">
           <a href="#problems" class="flex flex-col items-center text-text-light text-sm gap-2 hero-fade-up hero-delay-4">
-            <span>どんなアプリ？</span>
+            <span class="sm:text-lg">どんなアプリ？</span>
             <span class="chevron-bounce text-secondary">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-7" fill="none" viewBox="0 0 24 28" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m6 8 6 6 6-6"/>
-                <path stroke-linecap="round" stroke-linejoin="round" d="m6 16 6 6 6-6"/>
-              </svg>
+              <%= render IconComponent.new(name: "top_icon_down_arrow", size: 8, color: "text-text-secondary") %>
             </span>
           </a>
         </div>
@@ -42,137 +39,153 @@
   </section>
 
   <%# 課題の問いかけ＋解決イメージ＋テキスト %>
-  <section id="problems" class="max-w-5xl mx-auto px-6 py-16 space-y-10 bg-[#e2f4f9]">
-    <%# 課題提起セクション %>
-    <div class="text-left px-4">
-      <h2 class="flex items-start gap-2 font-bold text-text-light hero-fade-up mb-6 leading-none">
-        <span class="inline-flex items-center justify-center size-8 shrink-0">
-          <%= render "shared/icon/top_icon_alert" %>
-        </span>
-        <span class="font-logo text-xl">旅行の計画のときこんなことしてませんか？</span>
-      </h2>
-      <div class="pb-6 max-w-3xl" data-controller="reveal">
-        <div class="pl-6 text-text-light mb-2">
-          <ul class="space-y-3">
-            <li class="list-disc">チャットをさかのぼって「どんな案が出ていたか」を拾い集める</li>
-            <li class="list-disc">行き先や観光地をしおりに整理しなおす</li>
-            <li class="list-disc">スケジュールを別のフォーマットに転記して、共有しなおす</li>
-          </ul>
+  <section id="problems" class="bg-[#e2f4f9]">
+    <div class="max-w-5xl mx-auto px-6 py-16 sm:py-24 space-y-10">
+      <%# 課題提起セクション %>
+      <div class="px-4">
+        <h2 class="flex items-start gap-2 font-bold text-text-light hero-fade-up mb-6 leading-none">
+          <span class="inline-flex items-center justify-center shrink-0">
+            <%= render IconComponent.new(name: "top_icon_alert", size: 8, color: "text-text-light") %>
+          </span>
+          <span class="font-logo text-xl sm:text-2xl">旅行を計画するとき・・・</span>
+        </h2>
+        <div class="pb-6 max-w-3xl" data-controller="reveal">
+          <div class="pl-6 text-text-light mb-2">
+            <ul class="space-y-3 sm:text-xl">
+              <li class="list-disc">チャットをさかのぼって「どんな案が出ていたか」を拾い集める</li>
+              <li class="list-disc">行き先や観光地をしおりに整理しなおす</li>
+              <li class="list-disc">スケジュールを別のフォーマットに転記して、共有しなおす</li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
 
-    <%# 解決提案セクション %>
-    <div class="text-left px-4 max-w-3xl mb-8">
-      <div class="flex items-center gap-2 text-secondary mb-4">
-        <span class="inline-flex items-center justify-center size-6 shrink-0">
-          <%= render "shared/icon/favicon" %>
-        </span>
-        <span class="font-logo text-3xl font-semibold">RakuCi<span class="text-2xl">なら</span></span>
-      </div>
-      <div class="pl-6 text-lg text-text font-semibold">
-        <ul class="space-y-3">
-          <li class="list-disc">旅行先の案が「カード」として残る</li>
-          <li class="list-disc">そのカードを見れば、内容かすぐにわかる</li>
-          <li class="list-disc">すでに情報が整理されているので、やり直しがいらない</li>
-        </ul>
+      <%# 解決提案セクション %>
+      <div class="text-left px-4 max-w-3xl mb-8">
+        <div class="flex items-center gap-2 text-secondary mb-4">
+          <span class="inline-flex items-center justify-center shrink-0">
+            <%= render IconComponent.new(name: "favicon", size: 8, color: "text-text-color") %>
+          </span>
+          <span class="font-logo text-3xl sm:text-4xl font-semibold">RakuCi<span class="text-2xl sm:text-3xl">なら</span></span>
+        </div>
+        <div class="pl-6 text-lg text-text font-semibold">
+          <ul class="space-y-3 sm:text-xl">
+            <li class="list-disc">旅行先の案が「カード」として残る</li>
+            <li class="list-disc">そのカードを見れば、内容かすぐにわかる</li>
+            <li class="list-disc">すでに情報が整理されているので、やり直しがいらない</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
   <%# 主な使い方 %>
-  <section class="max-w-5xl mx-auto px-6 py-14 bg-[#f4fdff]">
-    <div class="text-center mb-10">
-      <p class="mb-2 text-xl font-semibold text-secondary tracking-wide hero-fade-up">How to use</p>
-      <h3 class="text-2xl font-bold text-text hero-fade-up hero-delay-2">
-        <span class="font-logo text-3xl">RakuCi<span class="text-2xl">の使い方
-      </h3>
-    </div>
-    <div class="grid gap-8 mb-12">
-      <div class="bg-white border border-border rounded-xl p-5 shadow-sm opacity-0" data-controller="reveal">
-        <p class="text-xs font-semibold text-secondary mb-1">01 つくる</p>
-        <p class="font-bold text-text mb-2">行き先ごとにカードを作成</p>
-        <p class="text-sm text-text-light leading-relaxed">気になるスポットやメモをカードに追加して、行き先ごとに情報をまとめておく。</p>
+  <section class="bg-[#f4fdff]">
+    <div class="max-w-5xl mx-auto px-6 py-16 sm:py-24">
+      <div class="text-center mb-10 sm:mb-16">
+        <p class="mb-2 sm:mb-4 text-xl sm:text-2xl font-semibold text-secondary tracking-wide hero-fade-up">How to use</p>
+        <h3 class="text-2xl font-bold text-text hero-fade-up hero-delay-2">
+          <span class="font-logo text-3xl sm:text-4xl">RakuCi<span class="text-2xl sm:text-3xl">の使い方
+        </h3>
       </div>
-      <div class="bg-white border border-border rounded-xl p-5 shadow-sm opacity-0" data-controller="reveal" data-reveal-delay-value="260">
-        <p class="text-xs font-semibold text-secondary mb-1">02 計画する</p>
-        <p class="font-bold text-text mb-2">グループでカードを共有</p>
-        <p class="text-sm text-text-light leading-relaxed">カードを共有して、いいねやコメントで反応を見ながら行き先を決める。</p>
-      </div>
-      <div class="bg-white border border-border rounded-xl p-5 shadow-sm opacity-0" data-controller="reveal" data-reveal-delay-value="380">
-        <p class="text-xs font-semibold text-secondary mb-1">03 まとめる</p>
-        <p class="font-bold text-text mb-2">決まったらそのまましおりへ</p>
-        <p class="text-sm text-text-light leading-relaxed">カードを見ながら、整理し直さずにしおりへ進める。</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div class="bg-white border border-border rounded-xl p-5 shadow-sm opacity-0" data-controller="reveal">
+          <p class="text-xs sm:text-base font-semibold text-secondary mb-1 md:mb-3">01 つくる</p>
+          <p class="sm:text-xl font-bold text-text mb-2 md:mb-4 md:block md:min-h-12">行き先ごとにカードを作成</p>
+          <p class="text-sm sm:text-lg text-text-light leading-relaxed">気になるスポットやメモをカードに追加して、行き先ごとに情報をまとめておく。</p>
+        </div>
+        <div class="bg-white border border-border rounded-xl p-5 shadow-sm opacity-0" data-controller="reveal" data-reveal-delay-value="260">
+          <p class="text-xs sm:text-base font-semibold text-secondary mb-1 md:mb-3">02 計画する</p>
+          <p class="sm:text-xl font-bold text-text mb-2 md:mb-4 md:block md:min-h-12">グループでカードを共有</p>
+          <p class="text-sm sm:text-lg text-text-light leading-relaxed">カードを共有して、いいねやコメントで反応を見ながら行き先を決める。</p>
+        </div>
+        <div class="bg-white border border-border rounded-xl p-5 shadow-sm opacity-0" data-controller="reveal" data-reveal-delay-value="380">
+          <p class="text-xs sm:text-base font-semibold text-secondary mb-1 md:mb-3">03 まとめる</p>
+          <p class="sm:text-xl font-bold text-text mb-2 md:mb-4 md:block md:min-h-12">決まったらそのまましおりへ</p>
+          <p class="text-sm sm:text-lg text-text-light leading-relaxed">カードを見ながら、整理し直さずにしおりへ進める。</p>
+        </div>
       </div>
     </div>
   </section>
 
   <%# その他の機能（追加予定含む） %>
-  <section class="max-w-5xl mx-auto px-6 py-16 bg-[#e2f4f9]">
-    <div class="text-center mb-10">
-      <p class="mb-2 text-xl font-semibold text-secondary tracking-wide hero-fade-up">More features</p>
-      <h class="text-2xl font-bold text-text hero-fade-up hero-delay-2">そのほかの機能</h>
-    </div>
-    <div class="space-y-4 mb-10">
-      <div class="bg-white border border-border rounded-lg p-4 shadow-sm flex items-start gap-3 opacity-0" data-controller="reveal">
-        <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square"><path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1"/></svg>
-        </div>
-        <div>
-          <p class="font-bold text-text mb-1">リアクション</p>
-          <p class="text-sm text-text-light">コメントやいいねでみんなの意見を可視化</p>
-        </div>
+  <section class="bg-[#e2f4f9]">
+    <div class="max-w-5xl mx-auto px-6 py-16 sm:py-24">
+      <div class="text-center mb-10 sm:mb-16">
+        <p class="mb-2 sm:mb-4 text-xl sm:text-2xl font-semibold text-secondary tracking-wide hero-fade-up">More features</p>
+        <h class="text-2xl sm:text-3xl font-bold text-text hero-fade-up hero-delay-2">そのほかの機能</h>
       </div>
-      <div class="bg-white border border-border rounded-lg p-4 shadow-sm flex items-start gap-3 opacity-0" data-controller="reveal" data-reveal-delay-value="320">
-        <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-luggage-icon lucide-luggage"><path d="M6 20a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2"/><path d="M8 18V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14"/><path d="M10 20h4"/><circle cx="16" cy="20" r="2"/><circle cx="8" cy="20" r="2"/></svg>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+        <div class="bg-white border border-border rounded-lg p-5 shadow-sm gap-3 opacity-0" data-controller="reveal">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-secondary/10 flex items-center justify-center text-lg sm:text-xl">
+              <%= render IconComponent.new(name: "top_icon_reaction", size: 6, breakpoints: { sm: 10 }, color: "text-secondary") %>
+            </div>
+            <p class="sm:text-xl font-bold text-text">リアクション</p>
+          </div>
+          <div>
+            <p class="text-sm sm:text-lg text-text-light">コメントやいいねでみんなの意見を可視化</p>
+          </div>
         </div>
-        <div>
-          <p class="font-bold text-text mb-1">もちもの管理</p>
-          <p class="text-sm text-text-light">チェックリストで忘れ物を防止</p>
+        <div class="bg-white border border-border rounded-lg p-5 shadow-sm gap-3 opacity-0" data-controller="reveal" data-reveal-delay-value="320">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-secondary/10 flex items-center justify-center text-lg sm:text-xl">
+              <%= render IconComponent.new(name: "top_icon_luggage", size: 6, breakpoints: { sm: 10 }, color: "text-secondary") %>
+            </div>
+            <p class="sm:text-xl font-bold text-text mb-1">もちもの管理</p>
+          </div>
+          <div>
+            <p class="text-sm sm:text-lg text-text-light">チェックリストで忘れ物を防止</p>
+          </div>
         </div>
-      </div>
-      <div class="bg-white border border-border rounded-lg p-4 shadow-sm flex items-start gap-3 opacity-0" data-controller="reveal" data-reveal-delay-value="260">
-        <div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center text-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-coins-icon lucide-hand-coins"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>
-        </div>
-        <div>
-          <p class="font-bold text-text mb-1">精算・割り勘（今後実装予定）</p>
-          <p class="text-sm text-text-light">旅費の共有と精算をスムーズに</p>
+        <div class="bg-white border border-border rounded-lg p-5 shadow-sm gap-3 opacity-0" data-controller="reveal" data-reveal-delay-value="260">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-secondary/10 flex items-center justify-center text-lg sm:text-xl">
+              <%= render IconComponent.new(name: "top_icon_expense", size: 6, breakpoints: { sm: 10 }, color: "text-secondary") %>
+            </div>
+            <p class="sm:text-xl font-bold text-text mb-1">精算・割り勘</p>
+          </div>
+          <div>
+            <p class="text-sm sm:text-lg text-text-light">旅費の共有と精算をスムーズに</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="max-w-5xl mx-auto px-6 py-16 bg-primary/10">
-    <div class="text-center mb-8">
-      <h2 class="font-bold text-text mb-2 hero-fade-up">
-        <span class="font-logo text-3xl">RakuCi<span class="text-2xl">で、<br>ラクに旅行をたのしもう
-      </h2>
-    </div>
-    <div class="flex flex-col items-center justify-center mb-6 gap-5 hero-fade-up hero-delay-4">
-      <%= link_to new_user_registration_path, class: "btn-main w-full text-center", data: { turbo: false } do %>
-        登録する
-      <% end %>
-      <%= link_to new_user_session_path, class: "btn-sub w-full text-center", data: { turbo: false } do %>
-        ログイン
-      <% end %>
+  <section class="bg-[#f4fdff]">
+    <div class="max-w-5xl mx-auto px-6 py-16 sm:py-30">
+      <div class="text-center mb-8">
+        <h2 class="font-bold text-text mb-2 sm:mb-16 hero-fade-up">
+          <span class="font-logo text-3xl sm:text-4xl">RakuCi<span class="text-2xl sm:text-3xl">で、<br>ラクに旅行をたのしもう
+        </h2>
+      </div>
+      <div class="flex flex-col sm:flex-row items-center justify-center mb-6 gap-5 sm:gap-12 hero-fade-up hero-delay-4">
+        <%= link_to new_user_registration_path, class: "btn-main text-center", data: { turbo: false } do %>
+          登録する
+        <% end %>
+        <%= link_to new_user_session_path, class: "btn-sub text-center", data: { turbo: false } do %>
+          ログイン
+        <% end %>
+      </div>
     </div>
   </section>
 
   <%# 利用規約など %>
-  <section class="max-w-5xl mx-auto px-6 py-6">
-    <div class="flex justify-between items-start gap-6">
-      <%# コピーライト %>
-      <p class="text-sm text-text-light">© 2025 RakuCi</p>
+  <section class="bg-[#5e80c3]">
+    <div class="mx-auto px-6 sm:px-10 md:px-24 py-6">
+      <div class="flex justify-between items-start ">
+        <%# コピーライト %>
+        <p class="text-sm text-white font-semibold">© 2025 RakuCi</p>
 
-      <div class="flex flex-col items-start justify-start gap-2 text-sm text-text-light">
-        <%= link_to "利用規約", terms_path, class: "hover:text-secondary transition" %>
-        <%= link_to "プライバシーポリシー", privacy_path, class: "hover:text-secondary transition" %>
-        <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", target: "_blank", rel: "noopener noreferrer", class: "hover:text-secondary transition inline-flex items-center" do %>
-          お問い合わせ
-          <span class="w-4 h-4"><%= render "shared/icon/new_window_icon" %></span>
-        <% end %>
+        <div class="flex flex-col sm:flex-row items-start justify-start gap-2 sm:gap-12 text-sm text-white font-semibold">
+          <%= link_to "利用規約", terms_path, class: "hover:text-secondary transition" %>
+          <%= link_to "プライバシーポリシー", privacy_path, class: "hover:text-secondary transition" %>
+          <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSc8aCMURWec-M9hkZ5YZ_UOo9h4W_m6HCVLPuemQLuVytv-WQ/viewform?usp=dialog", target: "_blank", rel: "noopener noreferrer", class: "hover:text-secondary transition inline-flex items-center" do %>
+            お問い合わせ
+            <span class="w-4 h-4"><%= render IconComponent.new(name: "new_window_icon", size: 4, color: "text-text-light") %></span>
+          <% end %>
+        </div>
       </div>
     </div>
   </section>

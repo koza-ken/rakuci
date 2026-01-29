@@ -1,0 +1,25 @@
+<div>
+  <% categories.each do |category| %>
+    <div class="mb-4 lg:mb-6">
+      <div class="flex items-center gap-2">
+        <% if category.icon_partial %>
+          <div class="mb-2 lg:mb-3 w-5 h-5 lg:w-7 lg:h-7 flex items-center <%= category.text_color_class %>">
+            <%= render category.icon_partial %>
+          </div>
+        <% end %>
+        <div class="mb-2 lg:mb-3 font-bold text-base lg:text-lg <%= category.text_color_class %>">
+          <%= category.name %>
+        </div>
+      </div>
+      <div class="ml-5 lg:ml-7 mb-2" id="category_<%= category.id %>_spots">
+        <% spots.each do |spot| %>
+          <% if spot.category_id == category.id %>
+            <%= render "shared/spots/spot", spot: spot %>
+          <% end %>
+        <% end %>
+      </div>
+      <hr class="border-t border-gray-300 mt-4 lg:mt-6" />
+    </div>
+  <% end %>
+
+</div>

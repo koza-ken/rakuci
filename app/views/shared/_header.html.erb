@@ -1,10 +1,35 @@
-<header class="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 py-3 border-b-3 bg-header-bg border-secondary transition-transform duration-300" data-controller="header-scroll">
-  <h1>
-    <%= link_to "RakuCi", (user_signed_in? ? cards_path : root_path), class: "text-4xl font-bold text-secondary font-logo hover:opacity-70 transition-opacity duration-300" %>
-  </h1>
-  <button class="relative w-8 h-6 flex flex-col justify-between items-center group" data-action="click->hamburger#toggle" data-hamburger-target="hamburger">
-    <span class="hamburger-to-close group-[.open]:translate-y-[12px] group-[.open]:rotate-45"></span>
-    <span class="hamburger-to-close group-[.open]:opacity-0"></span>
-    <span class="hamburger-to-close group-[.open]:-translate-y-[9px] group-[.open]:-rotate-45"></span>
-  </button>
+<header class="fixed top-0 left-0 right-0 z-55 px-4 md:px-6 lg:px-20 py-3 lg:py-4 border-b-3 bg-header-bg border-secondary transition-transform duration-300" data-controller="header-scroll">
+  <div class="flex items-center justify-between">
+    <h1>
+      <%= link_to "RakuCi", (user_signed_in? ? cards_path : root_path), class: "text-2xl md:text-3xl lg:text-4xl font-bold text-secondary font-logo hover:opacity-70 transition-opacity duration-300" %>
+    </h1>
+
+    <% if user_signed_in? %>
+      <%# lg以上：ナビゲーションメニュー（タイトルの隣）、lg未満：非表示 %>
+      <nav class="hidden lg:flex items-center ml-24 pt-1 gap-12">
+        <%= link_to "カード", cards_path, class: nav_link_class("cards") %>
+        <%= link_to "グループ", groups_path, class: nav_link_class("groups") %>
+        <%= link_to "しおり", schedules_path, class: nav_link_class("schedules") %>
+        <%= link_to "もちもの", item_list_path, class: nav_link_class("item_list") %>
+        <%= link_to "設定", profile_path, class: nav_link_class("profile") %>
+      </nav>
+
+      <%# ハンバーガーボタン（ログイン時：常時表示） %>
+      <button class="relative w-8 h-6 flex flex-col justify-between items-center group ml-auto" data-action="click->hamburger#toggle" data-hamburger-target="hamburger">
+        <span class="hamburger-to-close group-[.open]:translate-y-[12px] group-[.open]:rotate-45"></span>
+        <span class="hamburger-to-close group-[.open]:opacity-0"></span>
+        <span class="hamburger-to-close group-[.open]:-translate-y-[9px] group-[.open]:-rotate-45"></span>
+      </button>
+    <% else %>
+      <%# 未ログイン時：lg以上でログインボタン+ハンバーガー、lg未満でハンバーガーのみ %>
+      <div class="ml-auto flex items-center gap-10">
+        <%= link_to "ログイン", new_user_session_path, class: "hidden lg:block px-4 py-2 bg-secondary text-white font-semibold rounded-lg hover:opacity-80 transition" %>
+        <button class="relative w-8 h-6 flex flex-col justify-between items-center group" data-action="click->hamburger#toggle" data-hamburger-target="hamburger">
+          <span class="hamburger-to-close group-[.open]:translate-y-[12px] group-[.open]:rotate-45"></span>
+          <span class="hamburger-to-close group-[.open]:opacity-0"></span>
+          <span class="hamburger-to-close group-[.open]:-translate-y-[9px] group-[.open]:-rotate-45"></span>
+        </button>
+      </div>
+    <% end %>
+  </div>
 </header>

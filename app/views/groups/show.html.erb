@@ -5,120 +5,145 @@
 <%= turbo_frame_tag "card-create-modal", data: { controller: "modal" } %>
 <%= turbo_frame_tag "schedule-create-modal", data: { controller: "modal" } %>
 
-<div class="min-h-screen bg-main-bg">
-  <main class="flex flex-col items-center justify-center px-8 py-6">
-    <div class="w-full max-w-md mb-6">
-      <%# グループ名セクション（表示/編集を切り替え） %>
-      <div id="group-name-section" data-controller="card-edit" class="mb-4">
-        <%# 表示モード %>
-        <div id="group-name-display" class="flex items-start gap-3 mb-4" data-card-edit-target="display">
-          <h2 class="text-xl font-bold text-text"><%= @group.name %></h2>
-          <%# 編集アイコン（サイズ固定） %>
-          <button class="shrink-0 text-text hover:opacity-70 transition pt-1" data-action="click->card-edit#toggleForm">
-            <%= render "shared/icon/form_icon_edit" %>
+<div class="relative z-20 w-full mx-auto max-w-2xl md:max-w-3xl lg:max-w-4xl bg-main-bg rounded-md mb-10 lg:mb-16 px-3 md:px-0">
+  <main class="flex flex-col px-4 md:px-6 lg:px-8 py-6 bg-main-bg" data-controller="guide">
+    <%# グループ名セクション（表示/編集を切り替え） %>
+    <div id="group-name-section" data-controller="card-edit" class="mb-4 lg:mb-6">
+      <%# 表示モード %>
+      <div id="group-name-display" class="flex items-start justify-between gap-1 lg:gap-3 mb-8" data-card-edit-target="display">
+        <div class="flex items-center gap-3 flex-1">
+          <h2 class="text-xl lg:text-2xl font-bold text-text"><%= @group.name %></h2>
+          <%# 編集アイコン %>
+          <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
+            <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
           </button>
         </div>
-
-        <%# 編集モード（非表示） %>
-        <div id="group-name-form" class="hidden mb-4" data-card-edit-target="form">
-          <%= form_with model: @group, local: true do |f| %>
-            <div class="flex items-center gap-2">
-              <%= f.text_field :name, class: "form-text-field flex-1" %>
-              <%= f.submit t('groups.form.update'), class: "btn-main px-4 py-2 w-auto" %>
-              <button type="button" class="btn-sub w-auto px-2 py-1" data-action="click->card-edit#toggleForm">
-                <p class="text-2xl">×</p>
-              </button>
-            </div>
-            <%# バリデーションエラー表示 %>
-            <% if @group.errors.any? %>
-              <div class="mt-2">
-                <% @group.errors.messages[:name].each do |message| %>
-                  <p class="text-red-600 text-xs"><%= t('activerecord.attributes.group.name') %><%= message %></p>
-                <% end %>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-      <%# 招待ボタン %>
-      <div class="flex item-center justify-end mb-8">
-        <button
-          data-controller="clipboard"
-          data-clipboard-text-value="<%= new_membership_url(@group.invite_token) %>"
-          data-action="click->clipboard#copy"
-          title="<%= t('groups.show.invite_button') %>"
-          class="btn-main w-auto p-2">
-          <div class="flex items-center justify-center size-8 text-text-light">
-            <%= render "shared/icon/add_membership_icon" %>
+        <% if current_user.present? %>
+          <div class="flex gap-2 lg:gap-4 shrink-0">
+            <%= render DeleteButtonComponent.new(resource: @group, scope: current_user, confirm_message: t('groups.show.delete_confirm')) %>
           </div>
-        </button>
+        <% end %>
       </div>
 
-      <div id="group_details">
-        <%= render "groups/details", group: @group %>
+      <%# 編集モード（非表示） %>
+      <div id="group-name-form" class="hidden mb-4 lg:mb-6" data-card-edit-target="form">
+        <%= form_with model: @group, local: true do |f| %>
+          <div class="flex items-center gap-2">
+            <%= f.text_field :name, class: "form-text-field flex-1 text-sm lg:text-base" %>
+            <%= f.submit t('groups.form.update'), class: "btn-main px-4 lg:px-8 py-2 w-auto text-sm lg:text-base" %>
+            <button type="button" class="btn-sub w-auto px-2 lg:px-4 py-1" data-action="click->card-edit#toggleForm">
+              <p class="text-2xl">×</p>
+            </button>
+          </div>
+          <%# バリデーションエラー表示 %>
+          <% if @group.errors.any? %>
+            <div class="mt-2">
+              <% @group.errors.messages[:name].each do |message| %>
+                <p class="text-red-600 text-xs lg:text-sm"><%= t('activerecord.attributes.group.name') %><%= message %></p>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
       </div>
-
     </div>
 
-    <div class="w-full max-w-md">
-      <div class="mb-4 flex justify-between items-start gap-3">
+    <div id="group_details">
+      <%= render "groups/details", group: @group %>
+    </div>
+
+
+    <div class="w-full max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto mt-6 md:mt-10">
+      <div class="mb-4 lg:mb-6 flex justify-between items-start gap-3">
         <div class="flex-1">
-          <h2 class="text-xl font-bold text-text mb-1"><%= t('groups.show.travel_candidates') %></h2>
+          <div class="flex items-center gap-2 mb-1 lg:mb-2">
+            <h2 class="text-xl lg:text-2xl font-bold text-text"><%= t('groups.show.travel_candidates') %></h2>
+            <button class="bg-secondary hover:opacity-80 transition shrink-0 w-5 h-5 lg:w-6 lg:h-6 rounded-full flex items-center justify-center text-white text-sm lg:text-base font-semibold" data-action="click->guide#toggleModal" title="<%= t('cards.index_content.guide_button') %>">
+              ?
+            </button>
+          </div>
           <%# しおり作成メッセージ %>
           <div id="schedule-create-message">
             <% if @group.schedule.blank? %>
-              <p class="text-text-light text-xs"><%= t('groups.show.schedule_create_message') %></p>
+              <p class="text-text-light text-xs lg:text-sm"><%= t('groups.show.schedule_create_message') %></p>
             <% end %>
           </div>
         </div>
         <div id="schedule-button" class="">
           <% if @group.schedule.present? %>
             <%# グループにしおりがあればしおり詳細に遷移 %>
-            <%= link_to group_schedule_path(@group), class: "btn-main w-auto p-2 inline-flex items-center justify-center", title: t('groups.show.schedule_detail') do %>
-              <div class="size-8">
-                <%= render "shared/icon/footer_icon_schedule", icon_class: "text-text-light" %>
-              </div>
+            <%= link_to group_schedule_path(@group), class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", title: t('groups.show.schedule_detail') do %>
+              <%= render IconComponent.new(name: "footer_icon_schedule", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
+              <span class="inline"><%= t('groups.show.schedule_detail') %></span>
             <% end %>
           <% else %>
-            <%= link_to new_group_schedule_path(@group), data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" }, class: "btn-main w-auto p-2 inline-flex items-center justify-center", title: t('groups.show.schedule_create') do %>
-              <div class="size-8">
-                <%= render "shared/icon/add_schedule_icon" %>
-              </div>
+            <%= link_to new_group_schedule_path(@group), data: { turbo_frame: "schedule-create-modal", action: "click->modal#setGroupId", modal_target: "fab" }, class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", title: t('groups.show.schedule_create') do %>
+              <%= render IconComponent.new(name: "add_schedule_icon", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
+              <span class="inline"><%= t('groups.show.schedule_create') %></span>
             <% end %>
           <% end %>
         </div>
       </div>
       <div>
-        <div id="group_cards_list" class="w-full grid grid-cols-2 gap-4 mb-4">
+        <div id="group_cards_list" class="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4 lg:mb-6">
           <% @group.cards.each do |card| %>
-            <%= render "cards/card", card: card %>
+            <%= render "shared/cards/card", card: card %>
           <% end %>
         </div>
         <div id="group-create-button" class="card-index border-dashed text-center mt-2" data-controller="modal">
           <% if @group.cards.empty? %>
             <div class="py-2">
-              <div class="flex items-center justify-center gap-2 mb-2">
+              <div class="flex items-center justify-center gap-2 mb-2 lg:mb-3">
                 <%= link_to new_group_card_path(@group), data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId"}, class: "flex items-center justify-center gap-2" do %>
-                  <%= render "shared/icon/group_card_icon_add" %>
-                  <p class="text-lg text-text"><%= t('groups.show.add_card') %></p>
+                  <%= render IconComponent.new(name: "group_card_icon_add", size: 6, color: "text-text") %>
+                  <p class="text-lg lg:text-xl text-text"><%= t('groups.show.add_card') %></p>
                 <% end %>
               </div>
-              <p class="text-sm text-text-light font-semibold"><%= t('groups.show.cards_empty_label') %></p>
+              <p class="text-sm lg:text-base text-text-light font-semibold"><%= t('groups.show.cards_empty_label') %></p>
             </div>
           <% else %>
             <%= link_to new_group_card_path(@group), data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId"}, class: "flex items-center justify-center gap-2" do %>
-              <%= render "shared/icon/group_card_icon_add" %>
-              <p><%= t('groups.show.add_card') %></p>
+              <%= render IconComponent.new(name: "group_card_icon_add", size: 6, color: "text-text") %>
+              <p class="text-sm lg:text-base"><%= t('groups.show.add_card') %></p>
             <% end %>
           <% end %>
         </div>
       </div>
     </div>
-    <%# グループ削除ボタン %>
-    <div class="mt-12 pt-6">
-      <%= button_to group_path(@group), method: :delete, form_class: "inline", class: "btn-danger", data: { turbo_confirm: t('groups.show.delete_confirm') } do %>
-        <%= t('groups.show.delete_group') %>
-      <% end %>
+    <%# カードガイドモーダル %>
+    <div id="group-card-guide-modal" class="fixed inset-0 z-50 bg-black/50 hidden" data-guide-target="modal">
+      <div class="bg-white rounded-2xl max-w-[480px] md:max-w-lg lg:max-w-xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <div class="p-8">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold text-text"><%= t('cards.index_content.card_guide_title') %></h2>
+            <button class="text-2xl md:text-3xl text-text-light hover:text-text transition" data-action="click->guide#toggleModal">×</button>
+          </div>
+
+          <div class="space-y-6">
+            <p class="md:text-lg text-text-light leading-relaxed"><%= t('cards.index_content.card_guide_description') %></p>
+
+            <div class="flex justify-center gap-3">
+              <div class="flex-1 min-w-0">
+                <div class="w-full h-auto">
+                  <%= image_tag "card_guide_summary.svg", alt: "Card summary view", class: "rounded-lg border border-border w-full h-auto object-cover" %>
+                </div>
+                <p class="text-xs md:text-lg text-text-light text-center mt-2 break-words"><%= t('cards.index_content.guide_card_label') %></p>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="w-full h-auto">
+                  <%= image_tag "card_guide_detail.svg", alt: "Card detail view", class: "rounded-lg border border-border w-full h-auto object-cover" %>
+                </div>
+                <p class="text-xs md:text-lg text-text-light text-center mt-2 break-words"><%= t('cards.index_content.guide_spots_label') %></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 flex justify-center">
+            <button class="btn-main px-6 py-2" data-action="click->guide#toggleModal">
+              <%= t('cards.index_content.guide_close') %>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </div>

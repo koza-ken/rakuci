@@ -50,23 +50,23 @@
   </head>
 
   <body data-controller="hamburger turbo" class="bg-main-bg">
-    <div class="max-w-[480px] mx-auto">
-      <%= render "shared/header" %>
+    <%= render "shared/header" %>
 
-      <div class="relative min-h-screen bg-main-bg overflow-hidden">
-          <% if show_breadcrumbs? %>
-            <div class="px-4 pt-4 pb-2 text-sm text-text-light">
-              <%= breadcrumbs separator: " > " %>
-            </div>
-          <% end %>
-          <%= yield %>
-        <%= render "shared/hamburger_menu" %>
-        <div id="flash-container">
-          <%= render "shared/flash_messages", flash: flash %>
+    <div class="relative min-h-screen overflow-hidden pt-[58px] md:pt-[62px] lg:pt-[74px]">
+      <% if show_breadcrumbs? %>
+        <div class="md:max-w-3xl lg:max-w-4xl md:mx-auto px-4 md:px-6 lg:px-8 pt-4 md:pt-5 lg:pt-6 pb-2 md:pb-3 lg:pb-4 text-sm md:text-base text-text-light">
+          <%= breadcrumbs separator: " ／ " %>
         </div>
-      </div>
+      <% end %>
 
-      <%= render "shared/footer" %>
+      <%= yield %>
+      <%= render "shared/hamburger_menu" %>
+      <div id="modals-container"></div>
+      <div id="flash-container">
+        <%= render "shared/flash_messages", flash: flash %>
+      </div>
     </div>
+
+    <%= render "shared/footer" %>
   </body>
 </html>

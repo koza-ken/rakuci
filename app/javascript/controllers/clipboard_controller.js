@@ -31,7 +31,7 @@ export default class extends Controller {
     toast.textContent = message
 
     // スタイルを設定（Tailwind CSS）
-    const baseClasses = "fixed top-4 left-1/2 -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg text-white font-medium transition-opacity duration-300 z-50"
+    const baseClasses = "fixed top-8 left-1/2 -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg text-white font-medium transition-opacity duration-700 z-60"
     const typeClasses = type === "success" ? "bg-green-600" : "bg-red-600"
     toast.className = `${baseClasses} ${typeClasses}`
 

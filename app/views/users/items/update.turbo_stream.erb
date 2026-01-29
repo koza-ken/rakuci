@@ -1,4 +1,5 @@
 <%# 既存のアイテム要素を新しい HTML で置き換え（名前編集時） %>
+<% delete_path = @schedule.present? ? schedule_item_list_item_path(@schedule, @item) : item_list_item_path(@item) %>
 <%= turbo_stream.replace "item_#{@item.id}" do %>
-  <%= render "users/items/item", item: @item, item_list: @item_list %>
+  <%= render "shared/items/item", item: @item, item_delete_path: delete_path %>
 <% end %>

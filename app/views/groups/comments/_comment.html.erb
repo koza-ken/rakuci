@@ -1,0 +1,25 @@
+<div id="comment_<%= comment.id %>" class="mb-4 p-4 bg-white rounded shadow-sm">
+  <div class="flex justify-between items-start mb-2">
+    <span class="text-sm font-semibold text-gray-700">
+      <%= comment.group_membership.group_nickname %>
+    </span>
+    <span class="text-xs text-gray-500">
+      <%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>
+    </span>
+  </div>
+  <div class="flex justify-between items-start">
+    <p class="text-gray-800 whitespace-pre-wrap"><%= comment.content %></p>
+    <%# ユーザーの、このグループにおけるメンバーシップを取得 %>
+    <% current_membership = current_group_membership_for(comment.card.group.id) %>
+    <%# このユーザーが参加しているかと、その場合にメンバーシップidを比較し確認 %>
+    <% if current_membership && current_membership.id == comment.group_membership_id %>
+      <%= button_to group_card_comment_path(comment.card.group, comment.card, comment),
+          method: :delete,
+          data: { turbo_confirm: t("comments.confirm_delete") },
+          title: t("comments.delete"),
+          class: "flex-shrink-0 ml-2 p-0 bg-transparent border-0 cursor-pointer hover:opacity-70" do %>
+        <%= render IconComponent.new(name: "form_icon_delete", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

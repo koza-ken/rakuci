@@ -51,7 +51,7 @@ class Schedule < ApplicationRecord
       Rails.application.routes.url_helpers.schedule_path(self)
     else
       # グループスケジュールは resource（単数形）なので、IDは不要
-      Rails.application.routes.url_helpers.group_schedule_path(group)
+      Rails.application.routes.url_helpers.group_schedule_path(schedulable)
     end
   end
 

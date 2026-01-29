@@ -1,19 +1,19 @@
 <% content_for(:title, t('expenses.edit_expense')) %>
 <% breadcrumb :group_expenses, @group %>
 
-<main id="main" class="flex flex-col items-center justify-center px-8 py-6 mb-12">
-  <div class="w-full max-w-2xl">
+<main id="main" class="flex flex-col items-center justify-center px-4 md:px-6 lg:px-8 py-6 mb-12">
+  <div class="w-full max-w-2xl md:max-w-3xl lg:max-w-4xl">
     <%# ページタイトル %>
-    <h1 class="text-xl font-bold text-text mb-6"><%= t('expenses.edit_expense') %></h1>
+    <h1 class="text-xl lg:text-2xl font-bold text-text mb-6"><%= t('expenses.edit_expense') %></h1>
 
     <%# 支払いを編集する %>
     <%# TODO 支出の追加と編集ページのレイアウトが一緒 %>
-    <div class="mb-8 p-6 pb-10 bg-white rounded border border-gray-200">
+    <div class="mb-8 p-6 pb-10 ">
       <%= form_with model: [@group, @expense], local: true, data: { turbo: false }, class: "space-y-4" do |f| %>
         <%# 支払った人 %>
         <div>
           <div class="flex items-center justify-start gap-2 mb-2">
-            <%= f.label :paid_by_membership_id, t('expenses.paid_by'), class: "text-sm font-semibold text-text" %>
+            <%= f.label :paid_by_membership_id, t('expenses.paid_by'), class: "text-sm lg:text-base font-semibold text-text" %>
             <% if @expense.errors[:paid_by_membership].any? %>
               <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:paid_by_membership).first %></p>
             <% end %>
@@ -29,12 +29,12 @@
         <%# 対象者チェックボックス %>
         <div>
           <div class="flex items-center justify-start gap-2 mb-2">
-            <p class="text-sm font-semibold text-text"><%= t('expenses.participants') %></p>
+            <p class="text-sm lg:text-base font-semibold text-text"><%= t('expenses.participants') %></p>
             <% if @expense.errors[:base].any? %>
               <p class="text-red-600 text-xs">※<%= @expense.errors[:base].first %></p>
             <% end %>
           </div>
-          <div class="space-y-2">
+          <div class="grid grid-cols-1 md:grid-cols-2 md:gap-2">
             <% @group.group_memberships.each do |membership| %>
               <label class="flex items-center gap-2">
                 <%= check_box_tag "expense[participant_ids][]", membership.id, @expense.participants.map(&:id).include?(membership.id), { class: "form-checkbox" } %>
@@ -47,7 +47,7 @@
         <%# 説明 %>
         <div>
           <div class="flex items-center justify-start gap-2 mb-2">
-            <%= f.label :name, t('expenses.description'), class: "text-sm font-semibold text-text" %>
+            <%= f.label :name, t('expenses.description'), class: "text-sm lg:text-base font-semibold text-text" %>
             <% if @expense.errors[:name].any? %>
               <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:name).first %></p>
             <% end %>
@@ -55,35 +55,38 @@
           <%= f.text_field :name, placeholder: t('expenses.name_placeholder'), class: "form-text-field w-full" %>
         </div>
 
-        <%# 金額 %>
-        <div>
-          <div class="flex items-center justify-start gap-2 mb-2">
-            <%= f.label :amount, t('expenses.amount'), class: "text-sm font-semibold text-text" %>
-            <% if @expense.errors[:amount].any? %>
-              <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:amount).first %></p>
-            <% end %>
+        <%# 金額と支払日 %>
+        <div class="flex flex-col md:flex-row md:gap-4">
+          <%# 金額 %>
+          <div class="flex-1 mb-4 md:mb-0">
+            <div class="flex items-center justify-start gap-2 mb-2">
+              <%= f.label :amount, t('expenses.amount'), class: "text-sm lg:text-base font-semibold text-text" %>
+              <% if @expense.errors[:amount].any? %>
+                <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:amount).first %></p>
+              <% end %>
+            </div>
+            <div class="flex items-center gap-2">
+              <%= f.number_field :amount, placeholder: "0", min: "1", class: "form-text-field flex-1 [&::-webkit-outer-spin-button]:hidden [&::-webkit-inner-spin-button]:hidden" %>
+              <span class="text-text">円</span>
+            </div>
           </div>
-          <div class="flex items-center gap-2">
-            <%= f.number_field :amount, placeholder: "0", min: "1", class: "form-text-field flex-1 [&::-webkit-outer-spin-button]:hidden [&::-webkit-inner-spin-button]:hidden" %>
-            <span class="text-text">円</span>
-          </div>
-        </div>
 
-        <%# 支払日 %>
-        <div>
-          <div class="flex items-center justify-start gap-2 mb-2">
-            <%= f.label :paid_at, t('expenses.paid_at'), class: "text-sm font-semibold text-text" %>
-            <% if @expense.errors[:paid_at].any? %>
-              <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:paid_at).first %></p>
-            <% end %>
+          <%# 支払日 %>
+          <div class="flex-1">
+            <div class="flex items-center justify-start gap-2 mb-2">
+              <%= f.label :paid_at, t('expenses.paid_at'), class: "text-sm lg:text-base font-semibold text-text" %>
+              <% if @expense.errors[:paid_at].any? %>
+                <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:paid_at).first %></p>
+              <% end %>
+            </div>
+            <%= f.date_field :paid_at, value: @expense.paid_at || Date.current, class: "form-text-field w-full" %>
           </div>
-          <%= f.date_field :paid_at, value: @expense.paid_at || Date.current, class: "form-text-field w-full" %>
         </div>
 
         <%# ボタン %>
-        <div class="flex gap-2 mt-6">
-          <%= f.submit t('expenses.update_button'), class: "btn-main flex-1" %>
-          <%= link_to t('expenses.back_to_expenses'), group_expenses_path(@group), class: "btn-sub flex-1 text-center" %>
+        <div class="flex gap-2 mt-6 md:mt-12">
+          <%= f.submit t('expenses.update_button'), class: "btn-main flex-1 text-sm lg:text-base" %>
+          <%= link_to t('expenses.back_to_expenses'), group_expenses_path(@group), class: "btn-sub flex-1 text-center text-sm lg:text-base" %>
         </div>
       <% end %>
       </div>

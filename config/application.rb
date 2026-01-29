@@ -28,5 +28,7 @@ module Myapp
     config.i18n.default_locale = :ja
 
     config.assets.paths << Rails.root.join("app/assets/builds")
+
+    config.time_zone = "Tokyo"
   end
 end

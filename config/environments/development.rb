@@ -1,6 +1,15 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.after_initialize do
+    Bullet.enable        = true    # bulletの有効化
+    Bullet.alert         = false   # ポップアップ
+    Bullet.bullet_logger = true    # log/bullet.log
+    Bullet.console       = true    # ブラウザのコンソール
+    Bullet.rails_logger  = true    # ターミナルのログ
+    Bullet.add_footer    = true    # ブラウザにアラート
+  end
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time

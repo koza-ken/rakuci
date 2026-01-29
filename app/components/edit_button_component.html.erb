@@ -1,0 +1,7 @@
+<%# pathはコンポーネントから受け取る %>
+<%= link_to edit_path, data: { turbo: false }, class: IconButtonStyling::PRIMARY_ICON_BUTTON_CLASSES do %>
+  <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
+  <% if show_label? %>
+    <span class="<%= IconButtonStyling::LABEL_STYLE_CLASSES %>"><%= label %></span>
+  <% end %>
+<% end %>

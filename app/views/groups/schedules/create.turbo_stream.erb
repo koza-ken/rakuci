@@ -14,9 +14,10 @@
 
 <%# ボタンのアイコンを更新（"しおり作成" → "しおり詳細"） %>
 <%= turbo_stream.replace "schedule-button" do %>
-  <%= link_to group_schedule_path(@group), class: "btn-main w-auto p-2 inline-flex items-center justify-center", title: t('groups.show.schedule_detail') do %>
-    <div class="size-8">
-      <%= render "shared/icon/footer_icon_schedule", icon_class: "text-text-light" %>
+  <%= link_to group_schedule_path(@group), class: "btn-main w-auto p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", title: t('groups.show.schedule_detail') do %>
+    <div class="flex items-center justify-center">
+      <%= render IconComponent.new(name: "footer_icon_schedule", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
     </div>
+    <span class="inline"><%= t('groups.show.schedule_detail') %></span>
   <% end %>
 <% end %>

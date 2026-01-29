@@ -3,7 +3,6 @@
   "permissions": {
     "allow": [
       "Read(*)",
-
       "Bash(git status:*)",
       "Bash(git log:*)",
       "Bash(git diff:*)",
@@ -14,13 +13,11 @@
       "Bash(npx expo run:ios:*)",
       "Bash(npx expo start:*)",
       "Bash(node:*)",
-      "Bash(rm:*)",
       "Bash(mkdir:*)",
       "Bash(grep:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
       "Bash(cp:*)",
-      "Bash(mv:*)",
       "Bash(chmod:*)",
       "Bash(bash:*)",
       "Bash(npx prisma generate:*)",
@@ -35,6 +32,7 @@
       "Bash(docker compose exec web bundle exec rubocop)",
       "Bash(docker compose exec web bundle exec rspec)",
       "Bash(docker compose exec web bundle exec brakeman)",
+      "Bash(docker-compose exec:*)",
       "mcp__playwright__browser_fill_form",
       "mcp__playwright__browser_click",
       "mcp__playwright__browser_navigate",
@@ -43,7 +41,14 @@
       "mcp__playwright__browser_console_messages",
       "mcp__playwright__browser_network_requests"
     ],
-    "deny": []
+    "deny": [
+      "Read(~/.ssh/**)"
+    ],
+    "ask": [
+      "Bash(rm:*)",
+      "Bash(mv:*)",
+      "Bash(git add:*)"
+    ]
   },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
