@@ -1,7 +1,14 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :authenticate_user!
+  before_action :configure_permitted_parameters
 
   protected
+
+  # User 登録・更新時に許可するパラメータを設定
+  # display_name をカスタム属性として許可
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :display_name ])
+  end
 
   # アカウント更新時のパラメータ処理をカスタマイズ
   def update_resource(resource, params)

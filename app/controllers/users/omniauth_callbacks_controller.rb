@@ -13,7 +13,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def handle_callback(provider_key, provider_name)
-    @user = User.from_omniauth(request.env["omniauth.auth"])
+    @user = Users::OauthAuthenticationService.find_or_create_user(request.env["omniauth.auth"])
 
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication
