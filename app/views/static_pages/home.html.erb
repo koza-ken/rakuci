@@ -19,10 +19,10 @@
           RakuCi（ラクシィ）は、目的地のカードを使って旅行を計画するアプリです。<br>旅行先が決まればそのまま計画を進められます。
         </p>
         <div class="flex flex-col sm:flex-row gap-5 sm:gap-12 justify-center items-center pt-4 hero-fade-up hero-delay-4">
-          <%= link_to new_user_registration_path, class: "btn-main", data: { turbo: false } do %>
+          <%= link_to new_user_registration_path, class: "btn-main md:w-1/3", data: { turbo: false } do %>
             登録する
           <% end %>
-          <%= link_to new_user_session_path, class: "btn-sub", data: { turbo: false } do %>
+          <%= link_to new_user_session_path, class: "btn-sub md:w-1/3", data: { turbo: false } do %>
             ログイン
           <% end %>
         </div>
@@ -161,10 +161,10 @@
         </h2>
       </div>
       <div class="flex flex-col sm:flex-row items-center justify-center mb-6 gap-5 sm:gap-12 hero-fade-up hero-delay-4">
-        <%= link_to new_user_registration_path, class: "btn-main text-center", data: { turbo: false } do %>
+        <%= link_to new_user_registration_path, class: "btn-main md:w-1/3 text-center", data: { turbo: false } do %>
           登録する
         <% end %>
-        <%= link_to new_user_session_path, class: "btn-sub text-center", data: { turbo: false } do %>
+        <%= link_to new_user_session_path, class: "btn-sub md:w-1/3 text-center", data: { turbo: false } do %>
           ログイン
         <% end %>
       </div>
