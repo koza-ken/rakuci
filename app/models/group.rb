@@ -7,7 +7,7 @@
 #  name               :string(30)       not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  created_by_user_id :integer          not null
+#  created_by_user_id :bigint           not null
 #
 # Indexes
 #
