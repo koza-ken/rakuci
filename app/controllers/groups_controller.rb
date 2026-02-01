@@ -8,6 +8,7 @@ class GroupsController < ApplicationController
 
   def index
     @groups = current_user.groups.includes(:group_memberships, :schedule).order(updated_at: :desc)
+    @groups_joined = @groups.any?
   end
 
   def show

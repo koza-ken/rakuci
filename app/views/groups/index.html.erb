@@ -5,13 +5,13 @@
 
 <main class="flex flex-col items-center justify-center px-8 md:px-6 lg:px-8 py-6 mb-20 ">
   <div id="groups-page-title" class="w-full text-center">
-    <% if @groups.any? %>
+    <% if @groups_joined %>
       <h1 class="text-xl md:text-2xl text-text font-bold"><%= t('.title') %></h1>
     <% end %>
   </div>
 
   <div id="groups_list" class="w-full max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-    <% if @groups.any? %>
+    <% if @groups_joined %>
       <%= render @groups %>
     <% else %>
       <div id="groups_empty_state" class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center py-8 mt-6 px-4">
@@ -36,7 +36,7 @@
 
   <%# 右下の+ボタン（新規作成ページへのリンク） %>
   <div id="groups-fab-container">
-    <% if @groups.any? %>
+    <% if @groups_joined %>
       <div class="fixed bottom-22 right-4 md:right-6 lg:left-[calc(50%+412px)] lg:right-auto z-50" data-controller="modal">
         <%= link_to new_group_path, data: {turbo_frame: "group-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
                     title: t('groups.index.create_group'),
