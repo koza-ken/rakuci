@@ -1,9 +1,9 @@
-<% if @schedule.present? %>
+<% if schedule.present? %>
   <%# スケジュール詳細セクション（表示/編集を切り替え） %>
   <div id="schedule-details-section" data-controller="memo-edit" class="w-full mb-6 lg:mb-8">
     <%# 表示モード %>
-    <div id="schedule-details-display" data-memo-edit-target="display" class="<%= 'hidden' if @schedule.errors.any? %>">
-      <%= form_with model: @schedule, class: "w-full" do |f| %>
+    <div id="schedule-details-display" data-memo-edit-target="display" class="<%= 'hidden' if schedule.errors.any? %>">
+      <%= form_with model: schedule, class: "w-full" do |f| %>
         <div class="flex gap-4 md:gap-6">
           <%# 開始日 %>
           <div class="flex-1 mb-4 md:mb-6 cursor-pointer">
@@ -20,8 +20,8 @@
     </div>
 
     <%# 編集モード（非表示） %>
-    <div id="schedule-details-form" data-memo-edit-target="form" class="<%= 'hidden' unless @schedule.errors.any? %>">
-      <%= form_with model: [@group, @schedule], local: true do |f| %>
+    <div id="schedule-details-form" data-memo-edit-target="form" class="<%= 'hidden' unless schedule.errors.any? %>">
+      <%= form_with model: [@group, schedule], local: true do |f| %>
         <%= f.hidden_field :from_page, value: "show" %>
         <div class="flex  gap-4 md:gap-6">
           <%# 開始日 %>
@@ -36,12 +36,12 @@
           </div>
         </div>
         <%# エラーメッセージ表示 %>
-        <% if @schedule.errors.any? %>
+        <% if schedule.errors.any? %>
           <div class="mt-2 lg:mt-3">
-            <% @schedule.errors.messages[:start_date]&.each do |message| %>
+            <% schedule.errors.messages[:start_date]&.each do |message| %>
               <p class="text-red-600 text-xs lg:text-sm"><%= t('activerecord.attributes.schedule.start_date') %><%= message %></p>
             <% end %>
-            <% @schedule.errors.messages[:end_date]&.each do |message| %>
+            <% schedule.errors.messages[:end_date]&.each do |message| %>
               <p class="text-red-600 text-xs lg:text-sm"><%= t('activerecord.attributes.schedule.end_date') %><%= message %></p>
             <% end %>
           </div>

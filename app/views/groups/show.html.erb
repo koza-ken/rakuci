@@ -48,7 +48,7 @@
     </div>
 
     <div id="group_details">
-      <%= render "groups/details", group: @group %>
+      <%= render "groups/details", group: @group, schedule: @schedule %>
     </div>
 
 
@@ -63,13 +63,13 @@
           </div>
           <%# しおり作成メッセージ %>
           <div id="schedule-create-message">
-            <% if @group.schedule.blank? %>
+            <% if @schedule.blank? %>
               <p class="text-text-light text-xs lg:text-sm"><%= t('groups.show.schedule_create_message') %></p>
             <% end %>
           </div>
         </div>
         <div id="schedule-button" class="">
-          <% if @group.schedule.present? %>
+          <% if @schedule.present? %>
             <%# グループにしおりがあればしおり詳細に遷移 %>
             <%= link_to group_schedule_path(@group), class: "btn-main p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3 text-sm lg:text-base", title: t('groups.show.schedule_detail') do %>
               <%= render IconComponent.new(name: "footer_icon_schedule", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
