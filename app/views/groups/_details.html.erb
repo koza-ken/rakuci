@@ -65,7 +65,7 @@
     <div class="mb-4 lg:mb-6 cursor-pointer">
       <div id="members-count" class="flex items-center gap-3 lg:gap-6 mb-2 lg:mb-3">
         <label for="members-textarea-content" class="block text-sm lg:text-base font-medium text-text">
-          <%= t('groups.show.members') %>（<%= @group.group_memberships.count.to_s %>名）
+          <%= t('groups.show.members') %>（<%= @group.group_memberships.size.to_s %>名）
         </label>
         <button
           data-controller="clipboard"
