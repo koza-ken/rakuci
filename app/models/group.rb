@@ -35,6 +35,16 @@ class Group < ApplicationRecord
   validates :name, presence: true, length: { maximum: 30 }
   validates :invite_token, presence: true, length: { maximum: 64 }, uniqueness: true
 
+  # グループが指定されたユーザーによって作成されたかを判定
+  def created_by?(user)
+    created_by_user_id == user&.id
+  end
+
+  # グループが指定されたユーザーによって削除可能かを判定
+  def deletable_by?(user)
+    created_by?(user)
+  end
+
   private
 
   # 招待用トークンの生成
