@@ -18,6 +18,7 @@
             <% end %>
             <%= f.text_field :name, placeholder: t('groups.form.name_placeholder'), autofocus: true, class: "form-text-field" %>
 
+            <%# refactor:エラーメッセージをコンポーネントに %>
             <%# エラーメッセージ %>
             <% if @form.errors.any? %>
               <div class="ml-2">
