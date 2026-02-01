@@ -88,8 +88,7 @@
       <% @group.group_memberships.each do |membership| %>
         <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
           <span class="text-sm lg:text-base text-text"><%= membership.group_nickname %></span>
-          <%# オーナーのみが削除ボタンを表示、かつオーナー本人は削除できない %>
-          <% if current_user&.id == @group.created_by_user_id && !membership.owner? %>
+          <% if membership.deletable_by?(current_user) %>
             <%= button_to group_group_membership_path(@group, membership), method: :delete, form_class: "inline", class: "btn-danger px-3 py-1 text-xs lg:text-sm", data: { turbo_confirm: "#{membership.group_nickname}#{t('groups.details.delete_confirm')}" } do %>
               <%= t('groups.details.delete_button') %>
             <% end %>
