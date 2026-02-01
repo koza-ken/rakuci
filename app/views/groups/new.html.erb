@@ -16,9 +16,9 @@
               <%= t('groups.form.name') %>
               <span class="text-red-600 font-bold ml-1">*</span>
             <% end %>
-            <%= f.text_field :name,
-                placeholder: t('groups.form.name_placeholder'),
-                class: "form-text-field" %>
+            <%= f.text_field :name, placeholder: t('groups.form.name_placeholder'), autofocus: true, class: "form-text-field" %>
+
+            <%# エラーメッセージ %>
             <% if @form.errors.any? %>
               <div class="ml-2">
                 <% @form.errors.messages[:name].each do |message| %>
@@ -34,9 +34,9 @@
               <%= t('groups.form.group_nickname') %>
               <span class="text-red-600 font-bold ml-1">*</span>
             <% end %>
-            <%= f.text_field :group_nickname,
-                placeholder: t('groups.form.group_nickname_placeholder'),
-                class: "form-text-field" %>
+            <%= f.text_field :group_nickname, placeholder: t('groups.form.group_nickname_placeholder'), class: "form-text-field" %>
+
+            <%# エラーメッセージ %>
             <% if @form.errors.any? %>
               <div class="ml-2">
                 <% @form.errors.messages[:group_nickname].each do |message| %>
