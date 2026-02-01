@@ -10,7 +10,18 @@ class DeleteButtonComponent < ViewComponent::Base
     @confirm_message = confirm_message || I18n.t("components.icon_buttons.delete_confirm")
   end
 
+  # コンポーネントを表示すべきかどうかを判定（falseなら非表示になる、ビューでの呼び出しも不要）
+  def render?
+    deletable?
+  end
+
   private
+
+  # リソースが削除可能かを判定
+  def deletable?
+    return true unless @resource.respond_to?(:deletable_by?)  # メソッドの有無を確認
+    @resource.deletable_by?(@scope)  # 各リソースに定義しているメソッドを呼び出す
+  end
 
   def delete_path
     # RoutingPathHelperのメソッドを使用しパスを生成する
