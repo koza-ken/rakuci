@@ -7,8 +7,7 @@ class GroupsController < ApplicationController
   before_action :ensure_group_present!, only: %i[ new_membership create_membership ]
 
   def index
-    @groups = current_user.groups.includes(:group_memberships, :schedule).order(updated_at: :desc)
-    @groups_joined = @groups.any?
+    set_groups
   end
 
   def show
@@ -195,5 +194,11 @@ class GroupsController < ApplicationController
   def guest_token_matches?(membership)
     stored_token = guest_token_for(@group.id)
     stored_token == membership.guest_token
+  end
+
+  # index と create アクションで共通のグループ取得処理
+  def set_groups
+    @groups = current_user.groups.includes(:group_memberships, :schedule).order(updated_at: :desc)
+    @groups_joined = @groups.any?
   end
 end
