@@ -248,6 +248,7 @@ ja:
       created_groups: 作成したグループ
       new_group: 新規作成
       no_groups: まだグループがありません
+      sort_info: 更新日順で表示
       title: 参加しているグループ
     messages:
       create_failed: グループの作成に失敗しました
