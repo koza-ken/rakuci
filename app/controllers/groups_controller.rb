@@ -19,11 +19,10 @@ class GroupsController < ApplicationController
   end
 
   def create
-    # フォームのデータにcurrent_userを追加することで、フォームオブジェクトで扱える（@form.userで参照できる）
-    @form = GroupCreateForm.new(group_form_params.merge(user: current_user))
-    # モデルにコールバックを設定してトークン生成
+    @form = GroupCreateForm.new(user: current_user, **group_form_params)
+
     if @form.save
-      @group = @form.group  # フォームオブジェクトから作成されたグループを取得
+      set_groups
       respond_to do |format|
         format.turbo_stream { flash.now[:notice] = t("notices.groups.created") }
         format.html { redirect_to groups_path, notice: t("notices.groups.created") }
@@ -77,6 +76,8 @@ class GroupsController < ApplicationController
   private
 
   # ストロングパラメータ
+
+  # フォームオブジェクトの属性のみ（userはアクションで渡す）
   def group_form_params
     params.require(:group_create_form).permit(:name, :group_nickname)
   end

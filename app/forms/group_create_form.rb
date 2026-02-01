@@ -9,12 +9,13 @@ class GroupCreateForm
   # GroupMembership 属性
   attribute :group_nickname, :string
 
+  # saveメソッドのvalid?でバリデーションを実行
   validates :name, presence: true, length: { maximum: 30 }
   validates :group_nickname, presence: true, length: { maximum: 20 }
 
-  def initialize(user:, **attributes)
-    super(**attributes)
-    @user = user
+  def initialize(user: nil, **attributes) # **はハッシュをキ－ワード引数として受け取る
+    @user = user  # user は ActiveModel 属性ではなく、直接セット
+    super(**attributes)  # name と group_nickname を設定
   end
 
   # 初期化時に設定されたuser（コントローラーから渡されるcurrent_user）
