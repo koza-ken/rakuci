@@ -28,9 +28,11 @@
       <%= render "group_name_form", group: @group %>
     </div>
 
-    <%# スケジュールとメンバー %>
     <div id="group_details">
-      <%= render "groups/details", group: @group, schedule: @schedule %>
+      <%# スケジュール %>
+      <%= render "schedule_details", group: @group, schedule: @schedule %>
+      <%# グループメンバー %>
+      <%= render "group_members", group: @group %>
     </div>
 
 
