@@ -59,7 +59,7 @@ class GroupsController < ApplicationController
 
   # 現在のユーザーが参加しているグループ一覧を取得
   def set_joined_groups
-    @groups = current_user.groups.includes(:group_memberships, :schedule).order(updated_at: :desc)
+    @groups = current_user.groups.with_memberships_and_schedule.recently_updated
     @groups_joined = @groups.any?
   end
 
