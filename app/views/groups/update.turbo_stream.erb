@@ -1,17 +1,21 @@
 <%# フラッシュメッセージを表示 %>
 <%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
 
-<%# グループ名セクション全体を更新 %>
+<%# グループ詳細ページのグループ名編集用の要素 %>
 <%= turbo_stream.replace "group-name-section" do %>
   <%# グループ名セクション（表示/編集を切り替え） %>
   <div id="group-name-section" data-controller="card-edit" class="mb-4 lg:mb-6">
     <%# 表示モード：エラーがあれば非表示 %>
-    <div id="group-name-display" class="<%= 'hidden' if @group.errors.any? %> flex items-start gap-3 mb-8 lg:mb-10" data-card-edit-target="display">
-      <h2 class="text-xl lg:text-2xl font-bold text-text"><%= @group.name %></h2>
-      <%# 編集アイコン（サイズ固定） %>
-      <button class="shrink-0 hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
-        <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
-      </button>
+    <div id="group-name-display" class="<%= 'hidden' if @group.errors.any? %> flex items-start justify-between gap-1 lg:gap-3 mb-8" data-card-edit-target="display">
+      <div class="flex items-center gap-3 flex-1">
+        <h2 class="text-xl lg:text-2xl font-bold text-text"><%= @group.name %></h2>
+        <button class="shrink-0 text-text hover:opacity-70 transition" data-action="click->card-edit#toggleForm">
+          <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
+        </button>
+      </div>
+      <div class="flex gap-2 lg:gap-4 shrink-0">
+        <%= render DeleteButtonComponent.new(resource: @group, scope: current_user, confirm_message: t('groups.show.delete_confirm')) %>
+      </div>
     </div>
 
     <%# 編集モード：エラーがなければ hidden、あればを表示 %>
