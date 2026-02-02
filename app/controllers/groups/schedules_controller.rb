@@ -43,6 +43,7 @@ class Groups::SchedulesController < ApplicationController
       if from_page == "edit"
         render :edit, status: :unprocessable_entity
       else
+        @cards_with_spots_by_category = @group.cards_with_spots_grouped
         render template: "groups/show", layout: "application", status: :unprocessable_entity, locals: { group: @group, schedule: @schedule }
       end
     end
