@@ -11,6 +11,7 @@ class GroupsController < ApplicationController
 
   def show
     @schedule = @group.schedule
+    @cards_with_spots_by_category = @group.cards_with_spots_grouped
   end
 
   def new
@@ -53,7 +54,7 @@ class GroupsController < ApplicationController
   private
 
   def set_group
-    @group = Group.includes(:group_memberships, :cards).find(params[:id])
+    @group = Group.includes(:group_memberships, cards: :spots).find(params[:id])
   end
 
   # 現在のユーザーが参加しているグループ一覧を取得
