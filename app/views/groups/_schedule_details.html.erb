@@ -23,6 +23,7 @@
     <%# 編集モード（非表示） %>
     <div id="schedule-details-form" data-memo-edit-target="form" class="<%= 'hidden' unless schedule.errors.any? %>">
       <%= form_with model: [group, schedule], local: true do |f| %>
+        <%# schedulesコントローラで更新時の遷移先を分けるためにfrom_pageを定義している %>
         <%= f.hidden_field :from_page, value: "show" %>
         <div class="flex  gap-4 md:gap-6">
           <%# 開始日 %>
