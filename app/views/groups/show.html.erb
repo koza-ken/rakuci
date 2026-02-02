@@ -25,12 +25,12 @@
       </div>
 
       <%# グループ名の編集フォーム（別ファイルから読み込み） %>
-      <%= render "group_name_edit", group: @group %>
+      <%= render "groups/group_name_edit", group: @group %>
     </div>
 
     <div id="group_details">
-      <%= render "schedule_details", group: @group, schedule: @schedule %>
-      <%= render "group_members", group: @group %>
+      <%= render "groups/schedule_details", group: @group, schedule: @schedule %>
+      <%= render "groups/group_members", group: @group %>
     </div>
 
 
