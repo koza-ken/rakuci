@@ -6,7 +6,7 @@ class GroupsController < ApplicationController
   before_action :check_group_member, only: %i[ show update ]
 
   def index
-    set_groups
+    set_joined_groups
   end
 
   def show
@@ -21,7 +21,7 @@ class GroupsController < ApplicationController
     @form = GroupCreateForm.new(user: current_user, **group_form_params)
 
     if @form.save
-      set_groups
+      set_joined_groups
       respond_to do |format|
         format.turbo_stream { flash.now[:notice] = t("notices.groups.created") }
         format.html { redirect_to groups_path, notice: t("notices.groups.created") }
@@ -52,15 +52,14 @@ class GroupsController < ApplicationController
 
   private
 
-  # ストロングパラメータ
-
-  # フォームオブジェクトの属性のみ（userはアクションで渡す）
-  def group_form_params
-    params.require(:group_create_form).permit(:name, :group_nickname)
+  def set_group
+    @group = Group.includes(:group_memberships, :cards).find(params[:id])
   end
 
-  def group_params
-    params.require(:group).permit(:name)
+  # 現在のユーザーが参加しているグループ一覧を取得
+  def set_joined_groups
+    @groups = current_user.groups.includes(:group_memberships, :schedule).order(updated_at: :desc)
+    @groups_joined = @groups.any?
   end
 
   # グループに参加しているか確認するフィルター（showアクションのフィルター）
@@ -76,13 +75,15 @@ class GroupsController < ApplicationController
     end
   end
 
-  def set_group
-    @group = Group.includes(:group_memberships, :cards).find(params[:id])
+  # ストロングパラメータ
+
+  # フォームオブジェクトの属性のみ（userはアクションで渡す）
+  def group_form_params
+    params.require(:group_create_form).permit(:name, :group_nickname)
   end
 
-  # index と create アクションで共通のグループ取得処理
-  def set_groups
-    @groups = current_user.groups.includes(:group_memberships, :schedule).order(updated_at: :desc)
-    @groups_joined = @groups.any?
+  # グループ名の更新で参照
+  def group_params
+    params.require(:group).permit(:name)
   end
 end
