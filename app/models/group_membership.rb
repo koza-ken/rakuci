@@ -63,7 +63,7 @@ class GroupMembership < ApplicationRecord
   # ゲストトークンでグループのメンバーか確認
   def self.guest_member_by_token?(guest_token, group)
     return false if guest_token.blank?
-    where(guest_token: guest_token, group: group).exists?
+    exists?(guest_token: guest_token, group: group)
   end
 
   private

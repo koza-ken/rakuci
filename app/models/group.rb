@@ -50,7 +50,7 @@ class Group < ApplicationRecord
 
   # カードとスポットをカテゴリ毎にグルーピング（ビュー用）
   def cards_with_spots_grouped
-    cards.map { |card| [card, card.spots.group_by(&:category_id)] }
+    cards.map { |card| [ card, card.spots.group_by(&:category_id) ] }
   end
 
   private
