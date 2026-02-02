@@ -76,23 +76,15 @@
         <% end %>
       </div>
 
-      <div id="group-create-button" class="card-index border-dashed text-center mt-2" data-controller="modal">
-        <% if @group.cards.present? %>
+      <div class="card-index border-dashed text-center mt-2" data-controller="modal">
+        <div class="flex items-center justify-center gap-2 <%= 'mb-2 lg:mb-3' unless @group.cards.present? %>">
           <%= link_to new_group_card_path(@group), data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId"}, class: "flex items-center justify-center gap-2" do %>
             <%= render IconComponent.new(name: "group_card_icon_add", size: 6, color: "text-text") %>
-            <p class="text-sm lg:text-base"><%= t('groups.show.add_card') %></p>
+            <p class="text-sm lg:text-base">
+              <%= t('groups.show.add_card') %>
+            </p>
           <% end %>
-        <% else %>
-          <div class="py-2">
-            <div class="flex items-center justify-center gap-2 mb-2 lg:mb-3">
-              <%= link_to new_group_card_path(@group), data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId"}, class: "flex items-center justify-center gap-2" do %>
-                <%= render IconComponent.new(name: "group_card_icon_add", size: 6, color: "text-text") %>
-                <p class="text-lg lg:text-xl text-text"><%= t('groups.show.add_card') %></p>
-              <% end %>
-            </div>
-            <p class="text-sm lg:text-base text-text-light font-semibold"><%= t('groups.show.cards_empty_label') %></p>
-          </div>
-        <% end %>
+        </div>
       </div>
     </div>
 
