@@ -3,47 +3,6 @@
 
 <%= turbo_frame_tag "group-create-modal", data: { controller: "modal" }  %>
 
-<main class="flex flex-col items-center justify-center px-8 md:px-6 lg:px-8 py-6 mb-20 ">
-  <div id="groups-page-title" class="w-full text-center">
-    <% if @groups.any? %>
-      <h1 class="text-xl md:text-2xl text-text font-bold"><%= t('.title') %></h1>
-    <% end %>
-  </div>
-
-  <div id="groups_list" class="w-full max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-    <% if @groups.any? %>
-      <%= render @groups %>
-    <% else %>
-      <div id="groups_empty_state" class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center py-8 mt-6 px-4">
-        <div class="w-full max-w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-4 py-10 space-y-8 text-center animate-fade-in-up">
-          <div class="mx-auto w-16 h-16 md:w-24 md:h-24 rounded-full bg-primary/20 flex items-center justify-center shadow-inner">
-            <%= render IconComponent.new(name: "footer_icon_group", size: 8, breakpoints: { md: 12 }, color: "text-text-light/40") %>
-          </div>
-          <div class="space-y-6">
-            <p class="text-lg md:text-xl font-semibold text-text"><%= t('.no_groups') %></p>
-            <p class="text-sm md:text-lg text-text-light leading-relaxed"><%= t('.create_group_caption') %></p>
-          </div>
-          <div>
-            <%= link_to new_group_path, data: {turbo_frame: "group-create-modal"}, class: "first-create-btn md:min-w-1/2" do %>
-              <%= render IconComponent.new(name: "group_card_icon_add", size: 6, color: "text-text") %>
-              <span><%= t('.create_group') %></span>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
-  <%# 右下の+ボタン（新規作成ページへのリンク） %>
-  <div id="groups-fab-container">
-    <% if @groups.any? %>
-      <div class="fixed bottom-22 right-4 md:right-6 lg:left-[calc(50%+412px)] lg:right-auto z-50" data-controller="modal">
-        <%= link_to new_group_path, data: {turbo_frame: "group-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
-                    title: t('groups.index.create_group'),
-                    class: "group bg-primary hover:opacity-80 text-text-light w-14 h-14 lg:w-18 lg:h-18 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
-          <%= render IconComponent.new(name: "add_group_icon", size: 8, breakpoints: { lg: 10 }, color: "text-text-light") %>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+<main id="groups-index-content" class="flex flex-col items-center justify-center px-8 md:px-6 lg:px-8 py-6 mb-20 ">
+  <%= render "index_content" %>
 </main>

@@ -50,22 +50,20 @@ class GroupMembership < ApplicationRecord
     self.guest_token ||= SecureRandom.urlsafe_base64(32)
   end
 
+  # メンバーシップが指定されたユーザーによって削除可能かを判定
+  def deletable_by?(user)
+    group.created_by?(user) && !owner?
+  end
+
   # ログインユーザーがグループのメンバーか確認
   def self.user_member?(user, group)
     exists?(user: user, group: group)
   end
 
-  # ゲストトークンがグループのメンバーか確認
-  def self.guest_member?(guest_token, group_or_group_id)
+  # ゲストトークンでグループのメンバーか確認
+  def self.guest_member_by_token?(guest_token, group)
     return false if guest_token.blank?
-    scope = where(guest_token: guest_token)
-    # group_or_group_idがGroupのインスタンスの場合
-    if group_or_group_id.is_a?(Group)
-      scope.exists?(group: group_or_group_id)
-    # group_idの場合
-    else
-      scope.exists?(group_id: group_or_group_id)
-    end
+    exists?(guest_token: guest_token, group: group)
   end
 
   private

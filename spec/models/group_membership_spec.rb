@@ -144,10 +144,10 @@ RSpec.describe GroupMembership, type: :model do
     end
 
     # ゲストトークンがグループのメンバーか確認するメソッド
-    describe ".guest_member?" do
+    describe ".guest_member_by_token?" do
       context "guest_tokenが空の場合" do
         it "falseを返すこと" do
-          result = described_class.guest_member?(nil, create(:group))
+          result = described_class.guest_member_by_token?(nil, create(:group))
           expect(result).to be(false)
         end
       end
@@ -155,7 +155,7 @@ RSpec.describe GroupMembership, type: :model do
       context "guest_tokenがグループに存在する場合" do
         it "trueを返すこと" do
           membership = create(:group_membership, :guest)
-          result = described_class.guest_member?(membership.guest_token, membership.group)
+          result = described_class.guest_member_by_token?(membership.guest_token, membership.group)
           expect(result).to be(true)
         end
       end
@@ -164,7 +164,7 @@ RSpec.describe GroupMembership, type: :model do
         it "falseを返すこと" do
           membership = create(:group_membership, :guest)
           other_group = create(:group)
-          result = described_class.guest_member?(membership.guest_token, other_group)
+          result = described_class.guest_member_by_token?(membership.guest_token, other_group)
           expect(result).to be(false)
         end
       end

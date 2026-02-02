@@ -248,6 +248,7 @@ ja:
       created_groups: 作成したグループ
       new_group: 新規作成
       no_groups: まだグループがありません
+      sort_info: 更新日順で表示
       title: 参加しているグループ
     messages:
       create_failed: グループの作成に失敗しました
@@ -296,7 +297,7 @@ ja:
         memo: メモ
         no_memo: まだメモはありません
     show:
-      add_card: カードを追加する
+      add_card: グループ用のカードを作成する
       back: もどる
       cards_empty_label: 旅行先の候補をカードにしよう
       copy_link: リンクをコピー

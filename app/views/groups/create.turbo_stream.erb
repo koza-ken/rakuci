@@ -4,24 +4,7 @@
 <%# モーダルを閉じる（中身を空にする） %>
 <%= turbo_stream.update "group-create-modal", "" %>
 
-<%# 空状態メッセージを削除 %>
-<%= turbo_stream.remove "groups_empty_state" %>
-
-<%# 一覧に追加 %>
-<%= turbo_stream.append "groups_list", partial: "groups/group", locals: { group: @group } %>
-
-<%# ページタイトル（h1）を表示 %>
-<%= turbo_stream.replace "groups-page-title" do %>
-  <h1 class="text-xl md:text-2xl text-text font-bold"><%= t('groups.index.title') %></h1>
-<% end %>
-
-<%# FABボタンを表示 %>
-<%= turbo_stream.replace "groups-fab-container" do %>
-  <div class="fixed bottom-22 right-4 md:right-6 lg:left-[calc(50%+412px)] lg:right-auto z-50" data-controller="modal">
-    <%= link_to new_group_path, data: {turbo_frame: "group-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
-                title: t('groups.index.create_group'),
-                class: "group bg-primary hover:opacity-80 text-text-light w-14 h-14 lg:w-18 lg:h-18 rounded-full shadow-lg hover:shadow-xl duration-300 flex items-center justify-center relative" do %>
-      <%= render IconComponent.new(name: "add_group_icon", size: 8, breakpoints: { lg: 10 }, color: "text-text-light") %>
-    <% end %>
-  </div>
+<%# indexページのmain要素を更新（create時にturboで切り替えるため部分テンプレートで共通化） %>
+<%= turbo_stream.update "groups-index-content" do %>
+  <%= render "index_content" %>
 <% end %>

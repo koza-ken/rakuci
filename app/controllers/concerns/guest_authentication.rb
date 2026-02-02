@@ -16,7 +16,7 @@ module GuestAuthentication
     if user_signed_in?
       GroupMembership.find_by(user: current_user, group_id: group_id)
     else
-      stored_token = guest_token_for(group_id)
+      stored_token = stored_guest_token_for(group_id)
       GroupMembership.find_by(guest_token: stored_token, group_id: group_id)
     end
   end
@@ -34,8 +34,8 @@ module GuestAuthentication
     guest_tokens.keys.map(&:to_i)
   end
 
-  # 特定グループのゲストトークンを取得
-  def guest_token_for(group_id)
+  # Cookie に保存されている特定グループのゲストトークンを取得
+  def stored_guest_token_for(group_id)
     guest_tokens[group_id.to_s]
   end
 

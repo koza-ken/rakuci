@@ -33,11 +33,17 @@ class Groups::SchedulesController < ApplicationController
     from_page = params[:schedule][:from_page]
 
     if @schedule.update(schedule_params)
-      redirect_to group_schedule_path(@group), notice: t("notices.schedules.updated")
+      # from_page パラメータに基づいて遷移先を分岐
+      if from_page == "show"
+        redirect_to group_path(@group), notice: t("notices.schedules.updated")
+      else
+        redirect_to group_schedule_path(@group), notice: t("notices.schedules.updated")
+      end
     else
       if from_page == "edit"
         render :edit, status: :unprocessable_entity
       else
+        @cards_with_spots_by_category = @group.cards_with_spots_grouped
         render template: "groups/show", layout: "application", status: :unprocessable_entity, locals: { group: @group, schedule: @schedule }
       end
     end
@@ -58,7 +64,7 @@ class Groups::SchedulesController < ApplicationController
     authorized = if user_signed_in?
       current_user.member_of?(@group)
     else
-      GroupMembership.guest_member?(guest_token_for(@group.id), @group.id)
+      GroupMembership.guest_member_by_token?(stored_guest_token_for(@group.id), @group)
     end
 
     unless authorized

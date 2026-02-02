@@ -1,29 +1,38 @@
+# Group（グループ名）+ GroupMembership（グループ内での呼び名）を検証・保存
 class GroupCreateForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  # フォームオブジェクトのインスタンスにuser属性を持たせる（コントローラからcurrent_userを渡している）
-  attr_accessor :user
-  # 作成されたグループを外部から参照できるようにする
-  attr_reader :group
-
-  # groupsモデル
+  # Group 属性
   attribute :name, :string
-  # group_membershipモデル
+
+  # GroupMembership 属性
   attribute :group_nickname, :string
-  attribute :role, :string
-  # attr_accessor :user  # current_user をセットするため
+
+  # saveメソッドのvalid?でバリデーションを実行
   validates :name, presence: true, length: { maximum: 30 }
   validates :group_nickname, presence: true, length: { maximum: 20 }
 
-  # フォーム内容を保存する処理
+  def initialize(user: nil, **attributes) # **はハッシュをキ－ワード引数として受け取る
+    @user = user  # user は ActiveModel 属性ではなく、直接セット
+    super(**attributes)  # name と group_nickname を設定
+  end
+
+  # 初期化時に設定されたuser（コントローラーから渡されるcurrent_user）
+  def user
+    @user
+  end
+
+  # save後に作成されたgroup
+  def group
+    @group
+  end
+
   def save
     return false unless valid?
 
     ActiveRecord::Base.transaction do
-      @group = user.created_groups.build(
-        name: name
-      )
+      @group = user.created_groups.build(name: name)
       @group.group_memberships.build(
         user_id: user.id,
         group_nickname: group_nickname,
@@ -33,7 +42,6 @@ class GroupCreateForm
     end
 
     true
-  # ブロック内で例外が発生すると
   rescue ActiveRecord::RecordInvalid
     false
   end

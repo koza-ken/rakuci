@@ -1,3 +1,27 @@
+# == Schema Information
+#
+# Table name: expenses
+#
+#  id                    :bigint           not null, primary key
+#  amount                :integer          not null
+#  memo                  :text
+#  name                  :string(100)      not null
+#  paid_at               :date             not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  group_id              :bigint           not null
+#  paid_by_membership_id :bigint           not null
+#
+# Indexes
+#
+#  index_expenses_on_group_id               (group_id)
+#  index_expenses_on_paid_by_membership_id  (paid_by_membership_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (group_id => groups.id)
+#  fk_rails_...  (paid_by_membership_id => group_memberships.id)
+#
 require 'rails_helper'
 
 RSpec.describe Expense, type: :model do

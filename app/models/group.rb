@@ -7,7 +7,7 @@
 #  name               :string(30)       not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  created_by_user_id :integer          not null
+#  created_by_user_id :bigint           not null
 #
 # Indexes
 #
@@ -34,6 +34,24 @@ class Group < ApplicationRecord
   validates :created_by_user_id, presence: true
   validates :name, presence: true, length: { maximum: 30 }
   validates :invite_token, presence: true, length: { maximum: 64 }, uniqueness: true
+
+  scope :with_memberships_and_schedule, -> { includes(:group_memberships, :schedule) }
+  scope :recently_updated, -> { order(updated_at: :desc) }
+
+  # グループが指定されたユーザーによって作成されたかを判定
+  def created_by?(user)
+    created_by_user_id == user&.id
+  end
+
+  # グループが指定されたユーザーによって削除可能かを判定
+  def deletable_by?(user)
+    created_by?(user)
+  end
+
+  # カードとスポットをカテゴリ毎にグルーピング（ビュー用）
+  def cards_with_spots_grouped
+    cards.map { |card| [ card, card.spots.group_by(&:category_id) ] }
+  end
 
   private
 

@@ -19,7 +19,6 @@
     <%# カテゴリごとのスポット件数 %>
     <div class="p-1 pr-3 text-sm relative z-10 space-y-1">
       <% Category.order(:display_order).limit(4).each do |category| %>
-        <% count = card.spots.where(category_id: category.id).count %>
         <div class="flex justify-between items-center">
           <div class="flex items-center gap-2">
             <% if category.icon_partial.present? %>
@@ -29,7 +28,7 @@
             <% end %>
             <p class="text-text-light"><%= category.name %></p>
           </div>
-          <p class="text-text-light"><%= count %></p>
+          <p class="text-text-light"><%= spots_count_for_category(spots_by_category, category) %></p>
         </div>
       <% end %>
     </div>
