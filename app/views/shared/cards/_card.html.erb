@@ -28,7 +28,7 @@
             <% end %>
             <p class="text-text-light"><%= category.name %></p>
           </div>
-          <p class="text-text-light"><%= spots_by_category[category.id]&.size || 0 %></p>
+          <p class="text-text-light"><%= spots_count_for_category(spots_by_category, category) %></p>
         </div>
       <% end %>
     </div>
