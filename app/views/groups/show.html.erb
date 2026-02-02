@@ -24,26 +24,8 @@
         </div>
       </div>
 
-      <%# グループ名の編集フォーム（非表示） %>
-      <div id="group-name-form" class="hidden mb-4 lg:mb-6" data-card-edit-target="form">
-        <%= form_with model: @group, local: true do |f| %>
-          <div class="flex items-center gap-2">
-            <%= f.text_field :name, class: "form-text-field flex-1 text-sm lg:text-base" %>
-            <%= f.submit t('groups.form.update'), class: "btn-main px-4 lg:px-8 py-2 w-auto text-sm lg:text-base" %>
-            <button type="button" class="btn-sub w-auto px-2 lg:px-4 py-1" data-action="click->card-edit#toggleForm">
-              <p class="text-2xl">×</p>
-            </button>
-          </div>
-          <%# バリデーションエラー表示 %>
-          <% if @group.errors.any? %>
-            <div class="mt-2">
-              <% @group.errors.messages[:name].each do |message| %>
-                <p class="text-red-600 text-xs lg:text-sm"><%= t('activerecord.attributes.group.name') %><%= message %></p>
-              <% end %>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
+      <%# グループ名の編集フォーム（別ファイルから読み込み） %>
+      <%= render "group_name_form", group: @group %>
     </div>
 
     <%# スケジュールとメンバー %>
