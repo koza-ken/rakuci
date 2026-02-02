@@ -66,7 +66,7 @@ class Groups::ItemsController < ApplicationController
     authorized = if user_signed_in?
       current_user.member_of?(@group)
     else
-      GroupMembership.guest_member?(guest_token_for(@group.id), @group.id)
+      GroupMembership.guest_member_by_token?(stored_guest_token_for(@group.id), @group)
     end
 
     unless authorized
