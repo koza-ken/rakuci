@@ -1,4 +1,6 @@
 class Groups::CommentsController < ApplicationController
+  include GroupMemberAuthorization  # グループメンバーのみアクセス許可
+
   before_action :set_group
   before_action :set_card
   before_action :check_group_member
@@ -58,19 +60,6 @@ class Groups::CommentsController < ApplicationController
         }
         format.html { redirect_to group_card_path(@group, @card), alert: t("errors.comments.unauthorized_delete") }
       end
-    end
-  end
-
-  # グループに参加しているか確認するフィルター
-  def check_group_member
-    authorized = if user_signed_in?
-      current_user.member_of?(@group)
-    else
-      GroupMembership.guest_member_by_token?(stored_guest_token_for(@group.id), @group)
-    end
-
-    unless authorized
-      redirect_to (user_signed_in? ? groups_path : root_path), alert: t("errors.groups.not_member")
     end
   end
 

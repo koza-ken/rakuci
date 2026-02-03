@@ -1,4 +1,6 @@
 class Groups::GroupMembershipsController < ApplicationController
+  include GroupMemberAuthorization  # グループメンバーのみアクセス許可
+
   before_action :authenticate_user!, only: %i[ destroy ]
   before_action :set_group, only: %i[ destroy ]
   before_action :set_group_by_invite_token, only: %i[ new create ]
@@ -59,19 +61,6 @@ class Groups::GroupMembershipsController < ApplicationController
   def check_owner_permission
     unless current_user&.id == @group.created_by_user_id
       redirect_to group_path(@group), alert: t("errors.memberships.not_authorized")
-    end
-  end
-
-  # グループに参加しているか確認するフィルター（destroyアクションのフィルター）
-  def check_group_member
-    authorized = if user_signed_in?
-      current_user.member_of?(@group)
-    else
-      GroupMembership.guest_member_by_token?(stored_guest_token_for(@group.id), @group)
-    end
-
-    unless authorized
-      redirect_to (user_signed_in? ? groups_path : root_path), alert: t("errors.groups.not_member")
     end
   end
 

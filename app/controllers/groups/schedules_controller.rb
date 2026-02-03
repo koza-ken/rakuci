@@ -1,4 +1,6 @@
 class Groups::SchedulesController < ApplicationController
+  include GroupMemberAuthorization  # グループメンバーのみアクセス許可
+
   before_action :set_group
   before_action :check_group_member
 
@@ -59,16 +61,4 @@ class Groups::SchedulesController < ApplicationController
     params.require(:schedule).permit(:name, :start_date, :end_date, :memo)
   end
 
-  # グループに参加しているか確認するフィルター（showアクションのフィルター）
-  def check_group_member
-    authorized = if user_signed_in?
-      current_user.member_of?(@group)
-    else
-      GroupMembership.guest_member_by_token?(stored_guest_token_for(@group.id), @group)
-    end
-
-    unless authorized
-      redirect_to (user_signed_in? ? groups_path : root_path), alert: t("errors.groups.not_member")
-    end
-  end
 end
