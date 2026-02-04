@@ -15,8 +15,8 @@ class Groups::GroupMembershipsController < ApplicationController
       redirect_to group_path(@group.id)
       return
     end
-    # ニックネームの一覧を取得
-    @member_nicknames = available_guest_nicknames
+    # ゲストが選択可能なニックネーム一覧を取得
+    @available_guest_nicknames = available_guest_nicknames
   end
 
   # グループ参加ページからのデータ処理
@@ -83,7 +83,7 @@ class Groups::GroupMembershipsController < ApplicationController
     user_signed_in? && current_user.member_of?(@group)
   end
 
-  # グループのニックネーム一覧を取得（newアクション）
+  # グループのゲスト（user_id: nil）のニックネーム一覧を取得（newアクション）
   def available_guest_nicknames
     @group.group_memberships.where(user_id: nil).pluck(:group_nickname)
   end
