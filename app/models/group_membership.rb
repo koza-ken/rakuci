@@ -55,11 +55,6 @@ class GroupMembership < ApplicationRecord
     group.created_by?(user) && !owner?
   end
 
-  # ログインユーザーがグループのメンバーか確認
-  def self.user_member?(user, group)
-    exists?(user: user, group: group)
-  end
-
   # ゲストトークンでグループのメンバーか確認
   def self.guest_member_by_token?(guest_token, group)
     return false if guest_token.blank?
@@ -68,6 +63,7 @@ class GroupMembership < ApplicationRecord
 
   private
 
+  # カスタムバリデーション
   def must_have_user_or_guest_token
     if user_id.blank? && guest_token.blank?
       errors.add(:base, "ユーザーまたはゲストトークンのどちらかが必要です")
