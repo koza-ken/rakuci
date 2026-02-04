@@ -2,12 +2,12 @@ class Groups::GroupMembershipsController < ApplicationController
   include GroupMemberAuthorization  # グループメンバーのみアクセス許可
 
   before_action :authenticate_user!, only: %i[ destroy ]
-  before_action :set_group, only: %i[ destroy ]
   before_action :set_group_by_invite_token, only: %i[ new create ]
   before_action :ensure_group_present!, only: %i[ new create ]
+  before_action :set_group, only: %i[ destroy ]
   before_action :set_membership, only: %i[ destroy ]
   before_action :check_owner_permission, only: %i[ destroy ]
-  before_action :check_group_member, only: %i[ destroy ]
+  before_action :check_group_member, only: %i[ destroy ]  # /concerns/GroupMemberAuthorizationモジュール
 
   # グループ招待ページ
   def new
@@ -49,8 +49,20 @@ class Groups::GroupMembershipsController < ApplicationController
 
   private
 
+  # ------------フィルター---------------
+
   def set_group
     @group = Group.find(params[:group_id])
+  end
+
+  def set_group_by_invite_token
+    @group = Group.find_by(invite_token: params[:invite_token])
+  end
+
+  # 招待用トークンが有効ならアクション実行
+  def ensure_group_present!
+    return if @group.present?
+    redirect_to root_path, notice: t("errors.groups.invalid_link")
   end
 
   def set_membership
@@ -64,16 +76,7 @@ class Groups::GroupMembershipsController < ApplicationController
     end
   end
 
-  # 招待用トークンからグループを取得（new、createアクションのフィルター）
-  def set_group_by_invite_token
-    @group = Group.find_by(invite_token: params[:invite_token])
-  end
-
-  # @groupがなければroot_pathに（new、createアクションのフィルター）
-  def ensure_group_present!
-    return if @group.present?
-    redirect_to root_path, notice: t("errors.groups.invalid_link")
-  end
+  # ------------------------------------
 
   # ログインしていて、かつ、そのユーザーがそのグループに参加しているか（newアクション）
   def user_already_member_of_group?
