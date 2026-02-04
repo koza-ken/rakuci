@@ -80,7 +80,7 @@ class Groups::GroupMembershipsController < ApplicationController
 
   # ログインしていて、かつ、そのユーザーがそのグループに参加しているか（newアクション）
   def user_already_member_of_group?
-    user_signed_in? && @group.group_memberships.exists?(user_id: current_user.id)
+    user_signed_in? && current_user.member_of?(@group)
   end
 
   # グループのニックネーム一覧を取得（newアクション）
