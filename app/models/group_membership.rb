@@ -40,6 +40,9 @@ class GroupMembership < ApplicationRecord
 
   enum :role, { member: "member", owner: "owner" }
 
+  # スコープ
+  scope :guests, -> { where(user_id: nil) }
+
   # グループ内でのニックネーム
   def nickname
     group_nickname

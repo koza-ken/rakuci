@@ -91,7 +91,7 @@ class Groups::GroupMembershipsController < ApplicationController
 
   # グループのゲスト（user_id: nil）のニックネーム一覧を取得（newアクション）
   def available_guest_nicknames
-    @group.group_memberships.where(user_id: nil).pluck(:group_nickname)
+    @group.group_memberships.guests.pluck(:group_nickname)
   end
 
   # ストロングパラメータ
