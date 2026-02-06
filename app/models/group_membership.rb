@@ -50,6 +50,17 @@ class GroupMembership < ApplicationRecord
     self.guest_token ||= SecureRandom.urlsafe_base64(32)
   end
 
+  # ユーザーまたはゲストトークンをメンバーシップに紐づける
+  # ゲスト参加の場合はトークンを返す、ログイン済みなら nil を返す、失敗時は false
+  def attach_user_or_guest_token(current_user)
+    if current_user&.id
+      update(user_id: current_user.id) ? nil : false
+    else
+      generate_guest_token
+      save ? guest_token : false
+    end
+  end
+
   # メンバーシップが指定されたユーザーによって削除可能かを判定
   def deletable_by?(user)
     group.created_by?(user) && !owner?
