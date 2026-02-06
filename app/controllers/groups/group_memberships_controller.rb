@@ -39,9 +39,7 @@ class Groups::GroupMembershipsController < ApplicationController
   end
 
   def destroy
-    @membership = @group.group_memberships.find(params[:id])
-
-    # オーナーは削除できない
+    # グループのオーナーは削除できない
     if @membership.owner?
       redirect_to group_path(@group), alert: t("errors.memberships.cannot_delete_owner")
       return
