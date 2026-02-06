@@ -46,6 +46,7 @@ class Groups::GroupMembershipsController < ApplicationController
     end
 
     @membership.destroy
+    @group_memberships = @group.group_memberships.to_a
     respond_to do |format|
       format.turbo_stream { flash.now[:notice] = t("notices.memberships.deleted") }
       format.html { redirect_to group_path(@group), notice: t("notices.memberships.deleted") }

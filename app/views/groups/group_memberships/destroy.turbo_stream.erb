@@ -10,7 +10,7 @@
       <div class="mb-4 lg:mb-6 cursor-pointer">
         <div id="members-count" class="flex items-center gap-3 lg:gap-6 mb-2 lg:mb-3">
           <label for="members-textarea-content" class="block text-sm lg:text-base font-medium text-text">
-            <%= t('groups.show.members') %>（<%= @group.group_memberships.size.to_s %>名）
+            <%= t('groups.show.members') %>（<%= @group_memberships.size.to_s %>名）
           </label>
           <button
             data-controller="clipboard"
@@ -22,7 +22,7 @@
             <span class="hidden lg:inline"><%= t('groups.show.invite_button') %></span>
           </button>
         </div>
-        <%= text_area_tag :member, @group.group_memberships.map(&:group_nickname).join("\n"), id: "members-textarea-content", readonly: true, class: "form-text-field bg-gray-100 resize-none min-h-[90px] cursor-pointer text-sm lg:text-base", data: { action: "click->member-delete#toggleDelete" } %>
+        <%= text_area_tag :member, @group_memberships.map(&:group_nickname).join("\n"), id: "members-textarea-content", readonly: true, class: "form-text-field bg-gray-100 resize-none min-h-[90px] cursor-pointer text-sm lg:text-base", data: { action: "click->member-delete#toggleDelete" } %>
       </div>
     </div>
 
@@ -30,7 +30,7 @@
     <div id="members-delete-mode" data-member-delete-target="deleteMode" class="hidden">
       <h3 class="block text-xs lg:text-sm font-medium text-text mb-2 lg:mb-3"><%= t('groups.details.delete_member_title') %></h3>
       <div id="members-list" class="space-y-2 mb-4 lg:mb-6 max-h-[200px] overflow-y-auto border border-gray-300 rounded p-2 bg-white">
-        <% @group.group_memberships.each do |membership| %>
+        <% @group_memberships.each do |membership| %>
           <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
             <span class="text-sm lg:text-base text-text"><%= membership.group_nickname %></span>
             <%# オーナーのみが削除ボタンを表示、かつオーナー本人は削除できない %>
