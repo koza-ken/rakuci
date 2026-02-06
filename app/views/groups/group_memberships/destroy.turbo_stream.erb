@@ -22,7 +22,7 @@
             <span class="hidden lg:inline"><%= t('groups.show.invite_button') %></span>
           </button>
         </div>
-        <%= text_area_tag :member, @group_memberships.map(&:group_nickname).join("\n"), id: "members-textarea-content", readonly: true, class: "form-text-field bg-gray-100 resize-none min-h-[90px] cursor-pointer text-sm lg:text-base", data: { action: "click->member-delete#toggleDelete" } %>
+        <%= text_area_tag :member, @group_memberships.map(&:nickname).join("\n"), id: "members-textarea-content", readonly: true, class: "form-text-field bg-gray-100 resize-none min-h-[90px] cursor-pointer text-sm lg:text-base", data: { action: "click->member-delete#toggleDelete" } %>
       </div>
     </div>
 
@@ -32,10 +32,10 @@
       <div id="members-list" class="space-y-2 mb-4 lg:mb-6 max-h-[200px] overflow-y-auto border border-gray-300 rounded p-2 bg-white">
         <% @group_memberships.each do |membership| %>
           <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
-            <span class="text-sm lg:text-base text-text"><%= membership.group_nickname %></span>
+            <span class="text-sm lg:text-base text-text"><%= membership.nickname %></span>
             <%# オーナーのみが削除ボタンを表示、かつオーナー本人は削除できない %>
             <% if membership.deletable_by?(current_user) %>
-              <%= button_to group_group_membership_path(@group, membership), method: :delete, form_class: "inline", class: "btn-danger px-3 py-1 text-xs lg:text-sm", data: { turbo_confirm: "#{membership.group_nickname}を削除しますか？" } do %>
+              <%= button_to group_group_membership_path(@group, membership), method: :delete, form_class: "inline", class: "btn-danger px-3 py-1 text-xs lg:text-sm", data: { turbo_confirm: "#{membership.nickname}を削除しますか？" } do %>
                 削除
               <% end %>
             <% end %>
