@@ -56,7 +56,7 @@
               options_for_select([[t('groups.new_membership.select_placeholder'), ""]] + @available_guest_nicknames.map { |nickname| [nickname, nickname] }),
               {},
               class: "w-full px-4 py-2 md:mb-8 bg-white text-text-light border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary" %>
-          <%= f.hidden_field :membership_source, value: "dropdown" %>
+          <%= f.hidden_field :membership_source, value: "existing" %>
           <!-- <p class="text-xs text-text-light mb-4 mt-2"><%= t('groups.new_membership.past_users_text_sub') %></p> -->
           <div class="text-center">
             <%= f.submit t('groups.new_membership.submit'), class: "btn-main mt-4 w-1/2" %>
@@ -72,7 +72,7 @@
         <%= form_with url: create_membership_path(@group.invite_token), method: :post, local: true do |f| %>
           <%= f.text_field :group_nickname, placeholder: t('groups.form.group_nickname_placeholder'), class: "form-text-field" %>
           <p class="text-xs md:text-base text-text-light mt-2"><%= @group.name %><%= t('groups.new_membership.note_suffix') %></p>
-          <%= f.hidden_field :membership_source, value: "text_input" %>
+          <%= f.hidden_field :membership_source, value: "new" %>
           <div class="text-center">
             <%= f.submit t('groups.new_membership.submit'), class: "btn-main mt-4 md:mt-8 w-1/2" %>
           </div>
