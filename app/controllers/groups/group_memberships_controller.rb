@@ -21,14 +21,21 @@ class Groups::GroupMembershipsController < ApplicationController
 
   # グループ参加ページからのデータ処理
   def create
-    case membership_params[:membership_source]
-    when "dropdown"
-      handle_dropdown_membership
-    when "text_input"
-      handle_text_input_membership
+    # 「過去参加あり」か「はじめて参加」でストラテジークラスを判定
+    strategy_class = GroupMemberships::GroupJoinStrategy.for(membership_params[:membership_source])
+    strategy = strategy_class.new(@group, membership_params, current_user)
+    # 生成されたストラテジークラスで参加処理
+    result = strategy.execute
+
+    if result.success?
+      # ゲスト参加の場合、セッションにトークンを保存して、グループページに遷移
+      set_guest_token(result.group_id, result.guest_token) if result.has_guest_token?
+      redirect_to group_path(@group.id), notice: t("notices.groups.joined")
     else
-      redirect_to new_membership_path(@group.invite_token), alert: t("errors.groups.invalid_operation")
+      redirect_to new_membership_path(@group.invite_token), alert: result.error_message
     end
+  rescue ArgumentError => e
+    redirect_to new_membership_path(@group.invite_token), alert: t("errors.groups.invalid_operation")
   end
 
   def destroy
