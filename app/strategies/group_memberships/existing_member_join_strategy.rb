@@ -15,7 +15,7 @@ class GroupMemberships::ExistingMemberJoinStrategy < GroupMemberships::GroupJoin
     end
 
     # ゲスト参加で、トークンが一致しない場合
-    if membership.user_id.nil? && guest_token != membership.guest_token
+    if membership.guest? && guest_token != membership.guest_token
       return GroupMemberships::GroupJoinResult.new(false, I18n.t("errors.groups.token_mismatch"))
     end
 

@@ -43,6 +43,11 @@ class GroupMembership < ApplicationRecord
   # スコープ
   scope :guests, -> { where(user_id: nil) }
 
+  # ゲストメンバーか判定
+  def guest?
+    user_id.nil?
+  end
+
   # グループ内でのニックネーム
   def nickname
     group_nickname
