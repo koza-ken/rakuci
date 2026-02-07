@@ -17,6 +17,7 @@ module FriendlyForwarding
 
   # ユーザーの現在のページを保存
   def store_user_location!
+    # deviseのメソッド：URLをセッションに保存
     store_location_for(:user, request.fullpath)
   end
 end
