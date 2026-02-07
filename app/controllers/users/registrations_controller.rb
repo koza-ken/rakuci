@@ -1,4 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  include Users::Concerns::MembershipUserAttachment
+
   before_action :authenticate_user!
   before_action :configure_permitted_parameters
 
@@ -34,17 +36,5 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # アカウント更新後のリダイレクト先を設定（deviseのメソッドをオーバーライド）
   def after_update_path_for(resource)
     profile_path
-  end
-
-  private
-
-  # ゲスト membership に user_id を紐付ける（新規登録時）
-  # 新規ユーザーなので既存の membership はない
-  def attach_guest_memberships_to_user(user)
-    guest_tokens_data = guest_tokens
-    guest_tokens_data.each do |group_id, token|
-      membership = GroupMembership.find_by(guest_token: token, group_id: group_id)
-      membership&.update(user_id: user.id)
-    end
   end
 end
