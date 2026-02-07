@@ -60,5 +60,4 @@ class Groups::SchedulesController < ApplicationController
   def schedule_params
     params.require(:schedule).permit(:name, :start_date, :end_date, :memo)
   end
-
 end

@@ -32,5 +32,4 @@ class GroupMemberships::GroupJoinResult
   def group_id
     @group_id
   end
-
 end
