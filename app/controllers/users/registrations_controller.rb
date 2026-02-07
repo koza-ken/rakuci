@@ -24,8 +24,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  # ユーザー登録後のリダイレクト先を設定（deviseのメソッドをオーバーライド）
+  # ゲスト参加していた場合、membership に user_id を紐付けて、元のページに戻す
+  def after_sign_up_path_for(resource)
+    attach_guest_memberships_to_user(resource)
+    stored_location_for(:user) || root_path
+  end
+
   # アカウント更新後のリダイレクト先を設定（deviseのメソッドをオーバーライド）
   def after_update_path_for(resource)
     profile_path
+  end
+
+  private
+
+  # ゲスト membership に user_id を紐付ける（新規登録時）
+  # 新規ユーザーなので既存の membership はない
+  def attach_guest_memberships_to_user(user)
+    guest_tokens_data = guest_tokens
+    guest_tokens_data.each do |group_id, token|
+      membership = GroupMembership.find_by(guest_token: token, group_id: group_id)
+      membership&.update(user_id: user.id)
+    end
   end
 end
