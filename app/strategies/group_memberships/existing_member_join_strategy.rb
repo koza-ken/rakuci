@@ -21,4 +21,5 @@ class GroupMemberships::ExistingMemberJoinStrategy < GroupMemberships::GroupJoin
 
     # 問題なければ成功（ゲストトークンをセットする必要があれば result に含める）
     GroupMemberships::GroupJoinResult.new(true, guest_token: guest_token, group_id: @group.id)
+  end
 end
