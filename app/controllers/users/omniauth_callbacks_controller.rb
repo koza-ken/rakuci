@@ -1,4 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  include Users::Concerns::MembershipUserAttachment
+
   skip_before_action :verify_authenticity_token, only: :google_oauth2
 
   def google_oauth2
@@ -16,6 +18,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = Users::OauthAuthenticationService.find_or_create_user(request.env["omniauth.auth"])
 
     if @user.persisted?
+      # ゲストとメンバーシップを紐づけ（MembershipUserAttachmentモジュール）
+      cleanup_duplicate_guest_membership(@user)
+      attach_guest_memberships_to_user(@user)
+
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: provider_name) if is_navigational_format?
     else
