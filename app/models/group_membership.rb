@@ -40,6 +40,14 @@ class GroupMembership < ApplicationRecord
 
   enum :role, { member: "member", owner: "owner" }
 
+  # スコープ
+  scope :guests, -> { where(user_id: nil) }
+
+  # ゲストメンバーか判定
+  def guest?
+    user_id.nil?
+  end
+
   # グループ内でのニックネーム
   def nickname
     group_nickname
@@ -50,14 +58,20 @@ class GroupMembership < ApplicationRecord
     self.guest_token ||= SecureRandom.urlsafe_base64(32)
   end
 
+  # ユーザーまたはゲストトークンをメンバーシップに紐づける
+  # ゲスト参加の場合はトークンを返す、ログイン済みなら nil を返す、失敗時は false
+  def attach_user_or_guest_token(current_user)
+    if current_user&.id
+      update(user_id: current_user.id) ? nil : false
+    else
+      generate_guest_token
+      save ? guest_token : false
+    end
+  end
+
   # メンバーシップが指定されたユーザーによって削除可能かを判定
   def deletable_by?(user)
     group.created_by?(user) && !owner?
-  end
-
-  # ログインユーザーがグループのメンバーか確認
-  def self.user_member?(user, group)
-    exists?(user: user, group: group)
   end
 
   # ゲストトークンでグループのメンバーか確認
@@ -68,6 +82,7 @@ class GroupMembership < ApplicationRecord
 
   private
 
+  # カスタムバリデーション
   def must_have_user_or_guest_token
     if user_id.blank? && guest_token.blank?
       errors.add(:base, "ユーザーまたはゲストトークンのどちらかが必要です")

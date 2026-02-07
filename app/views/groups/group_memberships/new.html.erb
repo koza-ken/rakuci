@@ -1,7 +1,7 @@
 <%# 招待ページ %>
 
 <div class="min-h-screen bg-main-bg">
-  <main class="flex flex-col items-center justify-center px-4 md:px-6 lg:px-8 py-12">
+  <main class="flex flex-col items-center justify-center px-8 py-12">
     <div class="w-full max-w-5xl md:max-w-xl lg:max-w-2xl">
       <%# タイトル %>
       <div class="flex items-center justify-between gap-3 mb-12">
@@ -53,10 +53,10 @@
 
         <%= form_with url: create_membership_path(@group.invite_token), method: :post, local: true do |f| %>
           <%= f.select :group_nickname,
-              options_for_select([[t('groups.new_membership.select_placeholder'), ""]] + @member_nicknames.map { |nickname| [nickname, nickname] }),
+              options_for_select([[t('groups.new_membership.select_placeholder'), ""]] + @available_guest_nicknames.map { |nickname| [nickname, nickname] }),
               {},
               class: "w-full px-4 py-2 md:mb-8 bg-white text-text-light border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary" %>
-          <%= f.hidden_field :membership_source, value: "dropdown" %>
+          <%= f.hidden_field :membership_source, value: "existing" %>
           <!-- <p class="text-xs text-text-light mb-4 mt-2"><%= t('groups.new_membership.past_users_text_sub') %></p> -->
           <div class="text-center">
             <%= f.submit t('groups.new_membership.submit'), class: "btn-main mt-4 w-1/2" %>
@@ -72,7 +72,7 @@
         <%= form_with url: create_membership_path(@group.invite_token), method: :post, local: true do |f| %>
           <%= f.text_field :group_nickname, placeholder: t('groups.form.group_nickname_placeholder'), class: "form-text-field" %>
           <p class="text-xs md:text-base text-text-light mt-2"><%= @group.name %><%= t('groups.new_membership.note_suffix') %></p>
-          <%= f.hidden_field :membership_source, value: "text_input" %>
+          <%= f.hidden_field :membership_source, value: "new" %>
           <div class="text-center">
             <%= f.submit t('groups.new_membership.submit'), class: "btn-main mt-4 md:mt-8 w-1/2" %>
           </div>

@@ -1,4 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  include Users::Concerns::MembershipUserAttachment
+
   before_action :authenticate_user!
   before_action :configure_permitted_parameters
 
@@ -22,6 +24,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
       # メールアドレスが変更される場合は、current_passwordが必要
       super
     end
+  end
+
+  # ユーザー登録後のリダイレクト先を設定（deviseのメソッドをオーバーライド）
+  # ゲスト参加していた場合、membership に user_id を紐付けて、元のページに戻す
+  def after_sign_up_path_for(resource)
+    attach_guest_memberships_to_user(resource)
+    stored_location_for(:user) || root_path
   end
 
   # アカウント更新後のリダイレクト先を設定（deviseのメソッドをオーバーライド）

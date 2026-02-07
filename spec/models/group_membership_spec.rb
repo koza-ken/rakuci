@@ -122,27 +122,6 @@ RSpec.describe GroupMembership, type: :model do
   end
 
   describe "メソッド" do
-    # ログインユーザーがグループのメンバーか確認するメソッド
-    describe ".user_member?" do
-      context "ユーザーがグループのメンバーの場合" do
-        it "trueを返すこと" do
-          membership = create(:group_membership)
-
-          result = described_class.user_member?(membership.user, membership.group)
-          expect(result).to be(true)
-        end
-      end
-
-      context "ユーザーがグループのメンバーではない場合" do
-        it "falseを返すこと" do
-          user = create(:user)
-          group = create(:group)
-          result = described_class.user_member?(user, group)
-          expect(result).to be(false)
-        end
-      end
-    end
-
     # ゲストトークンがグループのメンバーか確認するメソッド
     describe ".guest_member_by_token?" do
       context "guest_tokenが空の場合" do

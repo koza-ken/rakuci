@@ -53,6 +53,10 @@ class User < ApplicationRecord
     provider.present? && uid.present?
   end
 
+  # カードとカテゴリごとのスポット件数をグループ化
+  def cards_with_spots_grouped
+    cards.map { |card| [ card, card.spots.group_by(&:category_id) ] }
+  end
 
   private
 

@@ -31,7 +31,7 @@ RSpec.describe "グループ利用フロー", type: :request do
 
       post "/groups/join/#{invite_token}", params: {
         group_nickname: "Bのニックネーム",
-        membership_source: "text_input"
+        membership_source: "new"
       }
       expect(response).to redirect_to(/\/groups/)
       user_b_membership = GroupMembership.find_by(user: user_b, group: group)

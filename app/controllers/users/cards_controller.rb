@@ -4,7 +4,7 @@ class Users::CardsController < ApplicationController
   before_action :check_card_owner, only: %i[show update destroy]
 
   def index
-    @cards = current_user.cards.includes(:cardable).order(updated_at: :desc)
+    @cards_with_spots_by_category = current_user.cards_with_spots_grouped
   end
 
   def show

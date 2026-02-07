@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  include GroupMemberAuthorization  # グループメンバーのみアクセス許可
+
   # except
   before_action :authenticate_user!, except: %i[ show ]
   # only
@@ -61,17 +63,6 @@ class GroupsController < ApplicationController
   def set_joined_groups
     @groups = current_user.groups.with_memberships_and_schedule.recently_updated
     @groups_joined = @groups.any?
-  end
-
-  # グループに参加しているか確認するフィルター（showアクションのフィルター）
-  def check_group_member
-    unless group_member_authorized?
-      redirect_to (user_signed_in? ? groups_path : root_path), alert: t("errors.groups.not_member")
-    end
-  end
-
-  def group_member_authorized?
-    user_signed_in? ? current_user.member_of?(@group) : GroupMembership.guest_member_by_token?(stored_guest_token_for(@group.id), @group)
   end
 
   # ストロングパラメータ
