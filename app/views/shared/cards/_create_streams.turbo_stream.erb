@@ -8,7 +8,7 @@
 <%= turbo_stream.remove (@card.group_card? ? "group_cards_empty_state" : "cards_empty_state") %>
 
 <%# 新規カードを追加 %>
-<%= turbo_stream.append (@card.group_card? ? "group_cards_list" : "cards_list"), partial: "shared/cards/card", locals: { card: @card } %>
+<%= turbo_stream.append (@card.group_card? ? "group_cards_list" : "cards_list"), partial: "shared/cards/card", locals: { card: @card, spots_by_category: @card.spots.group_by(&:category_id) } %>
 
 <% unless @card.group_card? %>
   <%# ユーザーページの場合のみ（ページタイトルとFABボタンを表示） %>

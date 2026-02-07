@@ -6,14 +6,16 @@
 
 <main class="flex flex-col items-center justify-center px-4 py-6 mb-20" data-controller="guide">
   <div id="cards-page-title">
-    <% if @cards.any? %>
+    <% if @cards_with_spots_by_category.any? %>
       <h1 class="text-xl md:text-2xl text-text font-bold"><%= t('cards.index_content.title') %></h1>
     <% end %>
   </div>
 
   <div id="cards_list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 mt-8">
-    <% if @cards.any? %>
-      <%= render partial: "shared/cards/card", collection: @cards %>
+    <% if @cards_with_spots_by_category.any? %>
+      <% @cards_with_spots_by_category.each do |card, spots_by_category| %>
+        <%= render "shared/cards/card", card: card, spots_by_category: spots_by_category %>
+      <% end %>
     <% else %>
       <div id="cards_empty_state" class="col-span-2 sm:col-span-3 md:col-span-4 flex flex-col items-center justify-center py-8 mt-6 px-4">
         <div class=" max-w-xl sm:w-xl rounded-2xl border border-border/80 shadow-[0_10px_50px_rgba(0,0,0,0.05)] px-4 py-10 space-y-8 text-center animate-fade-in-up">
@@ -44,7 +46,7 @@
 
   <%# 右下の+ボタン（新規作成ページへのリンク） %>
   <div id="cards-fab-container">
-    <% if @cards.any? %>
+    <% if @cards_with_spots_by_category.any? %>
       <div class="fixed bottom-22 right-4 md:right-6 lg:left-[calc(50%+412px)] lg:right-auto z-50" data-controller="modal">
         <%= link_to new_card_path, data: {turbo_frame: "card-create-modal", action: "click->modal#setGroupId", modal_target: "fab"},
                     title: t('cards.index_content.create_card'),
