@@ -79,6 +79,7 @@ ja:
           attributes:
             end_date:
               greater_than: は旅行開始日より後の日付を設定してください
+              greater_than_or_equal_to: は旅行開始日より後の日付を設定してください
         schedule_spot:
           attributes:
             end_time:
