@@ -27,7 +27,7 @@ class Schedule < ApplicationRecord
   # バリデーション
   validates :name, presence: true, length: { maximum: 50 }
   validates :schedulable_type, presence: true
-  validates :end_date, comparison: { greater_than: :start_date }, allow_blank: true
+  validates :end_date, comparison: { greater_than_or_equal_to: :start_date }, allow_blank: true
 
   # カスタムバリデーション
   validate :only_one_schedule_per_group

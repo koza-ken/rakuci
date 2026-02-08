@@ -66,9 +66,9 @@ RSpec.describe Schedule, type: :model do
       end
 
       context "end_dateがstart_dateと同じ場合" do
-        it "保存に失敗すること" do
+        it "保存に成功すること" do
           schedule = build(:schedule, start_date: Date.current, end_date: Date.current)
-          expect(schedule).not_to be_valid
+          expect(schedule).to be_valid
         end
       end
 
