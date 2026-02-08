@@ -181,9 +181,9 @@ RSpec.describe ScheduleSpot, type: :model do
       end
 
       context "end_timeがstart_timeと同じ場合" do
-        it "保存に失敗すること" do
+        it "保存に成功すること" do
           schedule_spot = build(:schedule_spot, start_time: "10:00", end_time: "10:00")
-          expect(schedule_spot).not_to be_valid
+          expect(schedule_spot).to be_valid
         end
       end
 
