@@ -104,9 +104,9 @@ class ScheduleSpot < ApplicationRecord
 
   private
 
-  # 終了時刻が開始時刻より後かをチェック
+  # 終了時刻が開始時刻以降かをチェック
   def end_time_after_start_time
-    if start_time.present? && end_time.present? && end_time <= start_time
+    if start_time.present? && end_time.present? && end_time < start_time
       errors.add(:end_time, :greater_than, count: :start_time)
     end
   end
