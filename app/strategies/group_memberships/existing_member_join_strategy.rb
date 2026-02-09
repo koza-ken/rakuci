@@ -14,12 +14,7 @@ class GroupMemberships::ExistingMemberJoinStrategy < GroupMemberships::GroupJoin
       return GroupMemberships::GroupJoinResult.new(false, I18n.t("errors.groups.membership_failed"))
     end
 
-    # ゲスト参加で、トークンが一致しない場合
-    if membership.guest? && guest_token != membership.guest_token
-      return GroupMemberships::GroupJoinResult.new(false, I18n.t("errors.groups.token_mismatch"))
-    end
-
-    # 問題なければ成功（ゲストトークンをセットする必要があれば result に含める）
+    # 成功（ゲストトークンをセットする必要があれば result に含める）
     GroupMemberships::GroupJoinResult.new(true, guest_token: guest_token, group_id: @group.id)
   end
 end
