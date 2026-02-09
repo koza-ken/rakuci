@@ -87,9 +87,12 @@ class GroupMembership < ApplicationRecord
   end
 
   # ゲストトークンでグループのメンバーか確認
-  def self.guest_member_by_token?(guest_token, group)
-    return false if guest_token.blank?
-    exists?(guest_token: guest_token, group: group)
+
+  # 平文トークンから SHA256 digest を生成
+  def self.digest(raw_token)
+    Digest::SHA256.hexdigest(raw_token)
+  end
+
   end
 
   private
