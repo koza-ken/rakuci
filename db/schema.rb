@@ -72,12 +72,12 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_09_112608) do
     t.bigint "group_id", null: false
     t.string "group_nickname", limit: 20
     t.string "role", default: "member", null: false
-    t.string "guest_token", limit: 64
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "guest_token_digest", limit: 64
     t.index ["group_id", "group_nickname"], name: "index_group_memberships_on_group_id_and_group_nickname", unique: true
     t.index ["group_id"], name: "index_group_memberships_on_group_id"
-    t.index ["guest_token"], name: "index_group_memberships_on_guest_token"
+    t.index ["guest_token_digest"], name: "index_group_memberships_on_guest_token_digest"
     t.index ["user_id", "group_id"], name: "index_group_memberships_on_user_id_and_group_id", unique: true
     t.index ["user_id"], name: "index_group_memberships_on_user_id"
   end

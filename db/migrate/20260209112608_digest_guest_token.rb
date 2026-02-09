@@ -3,6 +3,9 @@ class DigestGuestToken < ActiveRecord::Migration[7.2]
     # 新カラム追加（SHA256 hexdigest は常に64文字）
     add_column :group_memberships, :guest_token_digest, :string, limit: 64
 
+    # add_column 後にカラムキャッシュを更新（モデル経由でデータ変換するため必須）
+    GroupMembership.reset_column_information
+
     # 既存の平文トークンを SHA256 digest に変換
     GroupMembership.where.not(guest_token: nil).find_each do |membership|
       membership.update_column(:guest_token_digest, Digest::SHA256.hexdigest(membership.guest_token))
