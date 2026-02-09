@@ -93,6 +93,10 @@ class GroupMembership < ApplicationRecord
     Digest::SHA256.hexdigest(raw_token)
   end
 
+  # 平文トークンから membership を検索
+  def self.find_by_raw_token(raw_token, group_id:)
+    return nil if raw_token.blank?
+    find_by(guest_token_digest: digest(raw_token), group_id: group_id)
   end
 
   private
