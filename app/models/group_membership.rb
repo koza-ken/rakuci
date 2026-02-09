@@ -34,9 +34,9 @@ class GroupMembership < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :group, touch: true
   validates :group_nickname, presence: true, uniqueness: { scope: :group_id }, length: { maximum: 20 }
-  validates :guest_token, length: { maximum: 64 }, allow_blank: true
-  # user_id または guest_token のどちらかが必須
-  validate :must_have_user_or_guest_token
+  validates :guest_token_digest, length: { maximum: 64 }, allow_blank: true
+  # user_id または guest_token_digest のどちらかが必須
+  validate :must_have_user_or_guest_token_digest
 
   enum :role, { member: "member", owner: "owner" }
 
@@ -83,8 +83,8 @@ class GroupMembership < ApplicationRecord
   private
 
   # カスタムバリデーション
-  def must_have_user_or_guest_token
-    if user_id.blank? && guest_token.blank?
+  def must_have_user_or_guest_token_digest
+    if user_id.blank? && guest_token_digest.blank?
       errors.add(:base, "ユーザーまたはゲストトークンのどちらかが必要です")
     end
   end
