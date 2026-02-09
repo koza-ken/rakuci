@@ -9,7 +9,7 @@ module Users::Concerns::MembershipUserAttachment
   def attach_guest_memberships_to_user(user)
     guest_tokens_data = guest_tokens
     guest_tokens_data.each do |group_id, token|
-      membership = GroupMembership.find_by(guest_token: token, group_id: group_id)
+      membership = GroupMembership.find_by_raw_token(token, group_id: group_id)
       membership&.update(user_id: user.id)
     end
   end
@@ -19,7 +19,7 @@ module Users::Concerns::MembershipUserAttachment
   def cleanup_duplicate_guest_membership(user)
     guest_tokens_data = guest_tokens
     guest_tokens_data.each do |group_id, token|
-      membership = GroupMembership.find_by(guest_token: token, group_id: group_id)
+      membership = GroupMembership.find_by_raw_token(token, group_id: group_id)
       next unless membership
 
       existing = GroupMembership.find_by(user_id: user.id, group_id: group_id)
