@@ -37,7 +37,7 @@ FactoryBot.define do
 
     trait :guest do
       user { nil }
-      sequence(:guest_token) { |n| "guest_token_#{n}" }
+      sequence(:guest_token_digest) { |n| Digest::SHA256.hexdigest("guest_token_#{n}") }
     end
   end
 end

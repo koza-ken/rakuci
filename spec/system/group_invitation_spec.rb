@@ -84,7 +84,7 @@ RSpec.describe "グループメンバー招待フロー", type: :system do
         # DBでゲストメンバーシップが作成されていることを確認
         membership = group.group_memberships.find_by(group_nickname: "次郎")
         expect(membership.user_id).to be_nil
-        expect(membership.guest_token).to be_present
+        expect(membership.guest_token_digest).to be_present
       end
     end
 

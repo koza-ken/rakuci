@@ -64,57 +64,57 @@ RSpec.describe GroupMembership, type: :model do
       end
     end
 
-    describe "guest_token" do
+    describe "guest_token_digest" do
       context "値が空の場合" do
         it "保存に成功すること" do
           user = create(:user)
-          membership = build(:group_membership, guest_token: nil)
+          membership = build(:group_membership, guest_token_digest: nil)
           expect(membership).to be_valid
         end
       end
 
       context "文字数が64文字以下の場合" do
         it "保存に成功すること" do
-          membership = build(:group_membership, guest_token: "a" * 64)
+          membership = build(:group_membership, guest_token_digest: "a" * 64)
           expect(membership).to be_valid
         end
       end
 
       context "文字数が65文字以上の場合" do
         it "保存に失敗すること" do
-          membership = build(:group_membership, guest_token: "a" * 65)
+          membership = build(:group_membership, guest_token_digest: "a" * 65)
           expect(membership).not_to be_valid
         end
       end
     end
 
-    # user_idかguest_tokenのどちらかがあるかを確認するカスタムバリデーション
-    describe "must_have_user_or_guest_token" do
+    # user_idかguest_token_digestのどちらかがあるかを確認するカスタムバリデーション
+    describe "must_have_user_or_guest_token_digest" do
       context "user_idだけがある場合" do
         it "保存に成功すること" do
           user = create(:user)
-          membership = build(:group_membership, guest_token: nil)
+          membership = build(:group_membership, guest_token_digest: nil)
           expect(membership).to be_valid
         end
       end
 
-      context "guest_tokenだけがある場合" do
+      context "guest_token_digestだけがある場合" do
         it "保存に成功すること" do
           membership = build(:group_membership, :guest)
           expect(membership).to be_valid
         end
       end
 
-      context "user_idとguest_tokenの両方がある場合" do
+      context "user_idとguest_token_digestの両方がある場合" do
         it "保存に成功すること" do
-          membership = build(:group_membership, guest_token: "guest_token")
+          membership = build(:group_membership, guest_token_digest: Digest::SHA256.hexdigest("guest_token"))
           expect(membership).to be_valid
         end
       end
 
-      context "user_idとguest_tokenの両方がない場合" do
+      context "user_idとguest_token_digestの両方がない場合" do
         it "保存に失敗すること" do
-          membership = build(:group_membership, user_id: nil, guest_token: nil)
+          membership = build(:group_membership, user_id: nil, guest_token_digest: nil)
           expect(membership).not_to be_valid
         end
       end
@@ -122,28 +122,42 @@ RSpec.describe GroupMembership, type: :model do
   end
 
   describe "メソッド" do
-    # ゲストトークンがグループのメンバーか確認するメソッド
+    # 平文トークンでグループのメンバーか確認するメソッド
     describe ".guest_member_by_token?" do
-      context "guest_tokenが空の場合" do
+      context "トークンが空の場合" do
         it "falseを返すこと" do
           result = described_class.guest_member_by_token?(nil, create(:group))
           expect(result).to be(false)
         end
       end
 
-      context "guest_tokenがグループに存在する場合" do
+      context "正しい平文トークンの場合" do
         it "trueを返すこと" do
-          membership = create(:group_membership, :guest)
-          result = described_class.guest_member_by_token?(membership.guest_token, membership.group)
+          raw_token = "test_raw_token_abc123"
+          group = create(:group)
+          create(:group_membership, :guest, group: group, guest_token_digest: Digest::SHA256.hexdigest(raw_token))
+          result = described_class.guest_member_by_token?(raw_token, group)
           expect(result).to be(true)
         end
       end
 
-      context "guest_tokenが存在しないか、異なるグループの場合" do
+      context "不正な平文トークンの場合" do
         it "falseを返すこと" do
-          membership = create(:group_membership, :guest)
+          raw_token = "test_raw_token_abc123"
+          group = create(:group)
+          create(:group_membership, :guest, group: group, guest_token_digest: Digest::SHA256.hexdigest(raw_token))
+          result = described_class.guest_member_by_token?("wrong_token", group)
+          expect(result).to be(false)
+        end
+      end
+
+      context "異なるグループの場合" do
+        it "falseを返すこと" do
+          raw_token = "test_raw_token_abc123"
+          group = create(:group)
           other_group = create(:group)
-          result = described_class.guest_member_by_token?(membership.guest_token, other_group)
+          create(:group_membership, :guest, group: group, guest_token_digest: Digest::SHA256.hexdigest(raw_token))
+          result = described_class.guest_member_by_token?(raw_token, other_group)
           expect(result).to be(false)
         end
       end
@@ -151,23 +165,60 @@ RSpec.describe GroupMembership, type: :model do
 
     # ゲストトークンを生成するメソッド
     describe "#generate_guest_token" do
-      context "既にトークンを持っている場合" do
-        it "既存のトークンを返すこと" do
+      context "既にdigestを持っている場合" do
+        it "新しいトークンを生成しないこと" do
           membership = create(:group_membership, :guest)
-          original_token = membership.guest_token
-
+          original_digest = membership.guest_token_digest
           membership.generate_guest_token
-          expect(membership.guest_token).to eq(original_token)
+          expect(membership.guest_token_digest).to eq(original_digest)
         end
       end
 
-      context "トークンを持っていない場合" do
-        it "トークンを生成すること" do
-          membership = build(:group_membership, guest_token: nil, user_id: create(:user).id)
-          token = membership.generate_guest_token
+      context "digestを持っていない場合" do
+        it "平文トークンを返し、digestを保存すること" do
+          membership = build(:group_membership, guest_token_digest: nil, user_id: create(:user).id)
+          raw_token = membership.generate_guest_token
+          expect(raw_token).not_to be_nil
+          expect(raw_token).to match(/^[A-Za-z0-9_-]+$/)
+          expect(membership.guest_token_digest).to eq(Digest::SHA256.hexdigest(raw_token))
+        end
+      end
+    end
 
-          expect(token).not_to be_nil
-          expect(token).to match(/^[A-Za-z0-9_-]+$/)
+    # ゲストトークンを再生成するメソッド
+    describe "#regenerate_guest_token" do
+      it "新しいトークンを生成し、digestを更新すること" do
+        membership = create(:group_membership, :guest)
+        original_digest = membership.guest_token_digest
+        raw_token = membership.regenerate_guest_token
+        expect(raw_token).not_to be_nil
+        expect(membership.guest_token_digest).not_to eq(original_digest)
+        expect(membership.guest_token_digest).to eq(Digest::SHA256.hexdigest(raw_token))
+      end
+    end
+
+    # SHA256 digest 生成メソッド
+    describe ".digest" do
+      it "SHA256 hexdigestを返すこと" do
+        expect(described_class.digest("test")).to eq(Digest::SHA256.hexdigest("test"))
+      end
+    end
+
+    # 平文トークンからmembershipを検索するメソッド
+    describe ".find_by_raw_token" do
+      context "正しい平文トークンの場合" do
+        it "membershipを返すこと" do
+          raw_token = "test_token_xyz"
+          group = create(:group)
+          membership = create(:group_membership, :guest, group: group, guest_token_digest: Digest::SHA256.hexdigest(raw_token))
+          found = described_class.find_by_raw_token(raw_token, group_id: group.id)
+          expect(found).to eq(membership)
+        end
+      end
+
+      context "トークンが空の場合" do
+        it "nilを返すこと" do
+          expect(described_class.find_by_raw_token(nil, group_id: 1)).to be_nil
         end
       end
     end
