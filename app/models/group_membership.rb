@@ -25,6 +25,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class GroupMembership < ApplicationRecord
+  attr_accessor :raw_guest_token # 平文トークンの一時保持用（DBには保存しない）
+
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_cards, through: :likes, source: :card
