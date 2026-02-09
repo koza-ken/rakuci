@@ -71,13 +71,13 @@ class GroupMembership < ApplicationRecord
   end
 
   # ユーザーまたはゲストトークンをメンバーシップに紐づける
-  # ゲスト参加の場合はトークンを返す、ログイン済みなら nil を返す、失敗時は false
+  # ゲスト参加の場合は平文トークンを返す、ログイン済みなら nil を返す、失敗時は false
   def attach_user_or_guest_token(current_user)
     if current_user&.id
       update(user_id: current_user.id) ? nil : false
     else
-      generate_guest_token
-      save ? guest_token : false
+      token = guest_token_digest.present? ? regenerate_guest_token : generate_guest_token
+      save ? token : false
     end
   end
 
