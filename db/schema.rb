@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_02_09_112608) do
+ActiveRecord::Schema[7.2].define(version: 2026_02_09_124413) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,7 +51,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_09_112608) do
     t.index ["expense_id", "group_membership_id"], name: "index_expense_participants_unique", unique: true
     t.index ["expense_id"], name: "index_expense_participants_on_expense_id"
     t.index ["group_membership_id"], name: "index_expense_participants_on_group_membership_id"
-    t.index ["group_membership_id"], name: "index_expense_participants_on_membership_id"
   end
 
   create_table "expenses", force: :cascade do |t|
