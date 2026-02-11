@@ -25,7 +25,7 @@ Table users {
 
 Table groups {
   id bigint [pk, increment]
-  created_by_user_id int [not null, ref: > users.id, note: "グループ作成者"]
+  created_by_user_id bigint [not null, ref: > users.id, note: "グループ作成者"]
   name varchar(30) [not null]
   invite_token varchar(64) [not null, unique, note: "招待リンク用トークン"]
   created_at timestamp [not null]
@@ -50,22 +50,22 @@ Table group_memberships {
   group_id bigint [not null, ref: > groups.id, note: "所属グループ"]
   group_nickname varchar(20) [note: "グループ内での表示名"]
   role varchar [not null, default: "member", note: "member or owner"]
-  guest_token varchar(64) [note: "ゲスト認証用トークン（user_id=nullの場合のみ）"]
+  guest_token_digest varchar(64) [note: "ゲスト認証用トークンのSHA256ダイジェスト（user_id=nullの場合のみ）"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
 
   Indexes {
     (user_id, group_id) [unique, name: "index_group_memberships_on_user_id_and_group_id"]
     (group_id, group_nickname) [unique, name: "index_group_memberships_on_group_id_and_group_nickname"]
-    guest_token [name: "index_group_memberships_on_guest_token"]
+    guest_token_digest [name: "index_group_memberships_on_guest_token_digest"]
     user_id [name: "index_group_memberships_on_user_id"]
     group_id [name: "index_group_memberships_on_group_id"]
   }
 
   Note: '''
   登録ユーザーとゲストの両方を管理。
-  - 登録ユーザー: user_id あり、guest_token なし
-  - ゲストユーザー: user_id なし、guest_token あり
+  - 登録ユーザー: user_id あり、guest_token_digest なし
+  - ゲストユーザー: user_id なし、guest_token_digest あり（SHA256ハッシュで保存）
   '''
 
 }
@@ -194,7 +194,6 @@ Table schedule_spots {
 
   Indexes {
     (schedule_id, day_number) [name: "index_ss_on_schedule_and_day"]
-    schedule_id [name: "index_schedule_spots_on_schedule_id"]
     spot_id [name: "index_schedule_spots_on_spot_id"]
   }
 
@@ -339,7 +338,7 @@ Table expense_participants {
   Indexes {
     (expense_id, group_membership_id) [unique, name: "index_expense_participants_unique"]
     expense_id [name: "index_expense_participants_on_expense_id"]
-    group_membership_id [name: "index_expense_participants_on_membership_id"]
+    group_membership_id [name: "index_expense_participants_on_group_membership_id"]
   }
 
   Note: '''
