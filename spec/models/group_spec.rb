@@ -212,7 +212,7 @@ RSpec.describe Group, type: :model do
         group = create(:group)
         create(:group_membership, group: group)
 
-        loaded_group = Group.with_memberships_and_schedule.find(group.id)
+        loaded_group = described_class.with_memberships_and_schedule.find(group.id)
         expect(loaded_group.association(:group_memberships)).to be_loaded
         expect(loaded_group.association(:schedule)).to be_loaded
       end
