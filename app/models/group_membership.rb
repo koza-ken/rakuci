@@ -25,7 +25,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class GroupMembership < ApplicationRecord
-  attr_accessor :raw_guest_token # 平文トークンの一時保持用（DBには保存しない）
+  attr_reader :raw_guest_token # 平文トークンの一時保持用（DBには保存しない、外部からの書き込み不可）
 
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
@@ -58,14 +58,14 @@ class GroupMembership < ApplicationRecord
   # ゲストトークンの新規生成（digest未設定時のみ）
   def generate_guest_token
     return if guest_token_digest.present?
-    self.raw_guest_token = SecureRandom.urlsafe_base64(32)
+    @raw_guest_token = SecureRandom.urlsafe_base64(32)
     self.guest_token_digest = self.class.digest(raw_guest_token)
     raw_guest_token
   end
 
   # ゲストトークンの再生成（既存トークンを上書き）
   def regenerate_guest_token
-    self.raw_guest_token = SecureRandom.urlsafe_base64(32)
+    @raw_guest_token = SecureRandom.urlsafe_base64(32)
     self.guest_token_digest = self.class.digest(raw_guest_token)
     raw_guest_token
   end
