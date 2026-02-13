@@ -142,7 +142,7 @@ RSpec.describe GroupMembership, type: :model do
         registered = create(:group_membership, group: group)
         guest = create(:group_membership, :guest, group: group)
 
-        result = GroupMembership.guests
+        result = described_class.guests
         expect(result).to include(guest)
         expect(result).not_to include(registered)
       end
