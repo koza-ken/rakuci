@@ -195,13 +195,10 @@ RSpec.describe Group, type: :model do
   describe "スコープ" do
     describe ".recently_updated" do
       it "updated_atの降順で取得されること" do
-        group_old = create(:group)
-        group_new = create(:group)
-        # updated_at を明示的に設定
-        group_old.update_column(:updated_at, 1.day.ago)
-        group_new.update_column(:updated_at, Time.current)
+        group_old = travel_to(1.day.ago) { create(:group) }
+        group_new = freeze_time { create(:group) }
 
-        result = Group.recently_updated
+        result = described_class.recently_updated
         expect(result.first).to eq(group_new)
         expect(result.last).to eq(group_old)
       end
