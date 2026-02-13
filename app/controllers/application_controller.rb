@@ -5,5 +5,4 @@ class ApplicationController < ActionController::Base
   # Concerns をinclude
   include GuestAuthentication
   include FriendlyForwarding
-
 end

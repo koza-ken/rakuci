@@ -34,17 +34,18 @@ RSpec.describe "Groups::GroupMemberships", type: :request do
   describe "POST /groups/join/:invite_token (create)" do
     context "新規メンバーとしてログインユーザーが参加する場合" do
       let(:user) { create(:user) }
-      before do
-        group # let を事前評価（オーナーの membership も含む）
-        sign_in user
-      end
-
       let(:params) do
         {
           group_nickname: "新メンバー",
           membership_source: "new"
         }
       end
+
+      before do
+        group # let を事前評価（オーナーの membership も含む）
+        sign_in user
+      end
+
 
       it "メンバーシップが作成されること" do
         expect {
@@ -95,7 +96,7 @@ RSpec.describe "Groups::GroupMemberships", type: :request do
     end
 
     context "既存メンバーとして復帰する場合" do
-      let!(:guest_membership) do
+      before do
         create(:group_membership, :guest, group: group, group_nickname: "復帰ゲスト")
       end
 
@@ -202,6 +203,7 @@ RSpec.describe "Groups::GroupMemberships", type: :request do
 
     context "オーナーでないユーザーが削除しようとした場合" do
       let(:non_owner) { create(:user) }
+
       before do
         create(:group_membership, group: group, user: non_owner, group_nickname: "非オーナー")
         sign_in non_owner
