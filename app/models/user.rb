@@ -22,6 +22,7 @@
 #
 class User < ApplicationRecord
   include Hashid::Rails
+  include Cardable
 
   # Include default devise modules. \
   devise :database_authenticatable, :registerable,
@@ -51,11 +52,6 @@ class User < ApplicationRecord
   # OAuth認証（Google認証など）で登録されたユーザーかどうか
   def oauth_user?
     provider.present? && uid.present?
-  end
-
-  # カードとカテゴリごとのスポット件数をグループ化
-  def cards_with_spots_grouped
-    cards.map { |card| [ card, card.spots.group_by(&:category_id) ] }
   end
 
   private

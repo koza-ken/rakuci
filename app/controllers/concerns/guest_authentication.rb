@@ -17,7 +17,7 @@ module GuestAuthentication
       GroupMembership.find_by(user: current_user, group_id: group_id)
     else
       stored_token = stored_guest_token_for(group_id)
-      GroupMembership.find_by(guest_token: stored_token, group_id: group_id)
+      GroupMembership.find_by_raw_token(stored_token, group_id: group_id)
     end
   end
 

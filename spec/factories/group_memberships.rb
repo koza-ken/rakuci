@@ -2,20 +2,20 @@
 #
 # Table name: group_memberships
 #
-#  id             :bigint           not null, primary key
-#  group_nickname :string(20)
-#  guest_token    :string(64)
-#  role           :string           default("member"), not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  group_id       :bigint           not null
-#  user_id        :bigint
+#  id                 :bigint           not null, primary key
+#  group_nickname     :string(20)
+#  guest_token_digest :string(64)
+#  role               :string           default("member"), not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  group_id           :bigint           not null
+#  user_id            :bigint
 #
 # Indexes
 #
 #  index_group_memberships_on_group_id                     (group_id)
 #  index_group_memberships_on_group_id_and_group_nickname  (group_id,group_nickname) UNIQUE
-#  index_group_memberships_on_guest_token                  (guest_token)
+#  index_group_memberships_on_guest_token_digest           (guest_token_digest)
 #  index_group_memberships_on_user_id                      (user_id)
 #  index_group_memberships_on_user_id_and_group_id         (user_id,group_id) UNIQUE
 #
@@ -37,7 +37,7 @@ FactoryBot.define do
 
     trait :guest do
       user { nil }
-      sequence(:guest_token) { |n| "guest_token_#{n}" }
+      sequence(:guest_token_digest) { |n| Digest::SHA256.hexdigest("guest_token_#{n}") }
     end
   end
 end

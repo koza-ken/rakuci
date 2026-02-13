@@ -20,6 +20,7 @@
 #
 class Group < ApplicationRecord
   include Hashid::Rails
+  include Cardable
 
   # コールバック（招待用のトークン設定）
   before_validation :generate_invite_token, on: :create
@@ -46,11 +47,6 @@ class Group < ApplicationRecord
   # グループが指定されたユーザーによって削除可能かを判定
   def deletable_by?(user)
     created_by?(user)
-  end
-
-  # カードとスポットをカテゴリ毎にグルーピング（ビュー用）
-  def cards_with_spots_grouped
-    cards.map { |card| [ card, card.spots.group_by(&:category_id) ] }
   end
 
   private

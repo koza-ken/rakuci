@@ -111,7 +111,7 @@ RSpec.describe Group, type: :model do
 
   describe "コールバック" do
     describe "before_validation :generate_invite_token" do
-       it "グループ作成前はトークンがない" do
+      it "グループ作成前はトークンがない" do
         group = build(:group)
         expect(group.invite_token).to be_nil
       end
@@ -120,6 +120,98 @@ RSpec.describe Group, type: :model do
         group = build(:group)
         group.validate
         expect(group.invite_token).to be_present
+      end
+
+      it "既存グループの更新時にトークンが再生成されないこと" do
+        group = create(:group)
+        original_token = group.invite_token
+        group.update(name: "新しい名前")
+        expect(group.reload.invite_token).to eq(original_token)
+      end
+    end
+  end
+
+  describe "メソッド" do
+    describe "#created_by?" do
+      let(:creator) { create(:user) }
+      let(:other_user) { create(:user) }
+      let(:group) { create(:group, creator: creator) }
+
+      context "グループを作成したユーザーの場合" do
+        it "trueを返すこと" do
+          expect(group.created_by?(creator)).to be(true)
+        end
+      end
+
+      context "グループを作成していないユーザーの場合" do
+        it "falseを返すこと" do
+          expect(group.created_by?(other_user)).to be(false)
+        end
+      end
+
+      context "nilが渡された場合" do
+        it "falseを返すこと" do
+          expect(group.created_by?(nil)).to be(false)
+        end
+      end
+    end
+
+    describe "#deletable_by?" do
+      let(:creator) { create(:user) }
+      let(:other_user) { create(:user) }
+      let(:group) { create(:group, creator: creator) }
+
+      it "作成者は削除可能であること" do
+        expect(group.deletable_by?(creator)).to be(true)
+      end
+
+      it "作成者以外は削除不可であること" do
+        expect(group.deletable_by?(other_user)).to be(false)
+      end
+    end
+
+    describe "#cards_with_spots_grouped" do
+      it "カードとスポットをカテゴリIDでグループ化して返すこと" do
+        group = create(:group)
+        card = create(:card, cardable: group)
+        category = create(:category)
+        create(:spot, card: card, category: category, name: "清水寺")
+
+        result = group.cards_with_spots_grouped
+
+        expect(result.length).to eq(1)
+        grouped_card, spots_by_category = result.first
+        expect(grouped_card).to eq(card)
+        expect(spots_by_category[category.id].map(&:name)).to eq([ "清水寺" ])
+      end
+
+      it "カードがない場合は空配列を返すこと" do
+        group = create(:group)
+        expect(group.cards_with_spots_grouped).to eq([])
+      end
+    end
+  end
+
+  describe "スコープ" do
+    describe ".recently_updated" do
+      it "updated_atの降順で取得されること" do
+        group_old = travel_to(1.day.ago) { create(:group) }
+        group_new = freeze_time { create(:group) }
+
+        result = described_class.recently_updated
+        expect(result.first).to eq(group_new)
+        expect(result.last).to eq(group_old)
+      end
+    end
+
+    describe ".with_memberships_and_schedule" do
+      it "group_membershipsとscheduleを事前読み込みすること" do
+        group = create(:group)
+        create(:group_membership, group: group)
+
+        loaded_group = described_class.with_memberships_and_schedule.find(group.id)
+        expect(loaded_group.association(:group_memberships)).to be_loaded
+        expect(loaded_group.association(:schedule)).to be_loaded
       end
     end
   end
