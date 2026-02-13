@@ -7,7 +7,7 @@ class GroupMemberships::NewMemberJoinStrategy < GroupMemberships::GroupJoinStrat
 
     # ログイン済みユーザー or ゲストのどちらかを設定
     guest_token = membership.attach_user_or_guest_token(@current_user)
-    unless guest_token != false
+    if guest_token == false
       return GroupMemberships::GroupJoinResult.new(false, I18n.t("errors.groups.membership_failed"))
     end
 
