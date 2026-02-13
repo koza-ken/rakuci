@@ -78,6 +78,9 @@ RSpec.configure do |config|
   # factorybotのメソッド呼び出し
   config.include FactoryBot::Syntax::Methods
 
+  # ActiveSupport の時間操作ヘルパー（travel_to など）
+  config.include ActiveSupport::Testing::TimeHelpers
+
   # Devise の統合テストヘルパー
   config.include Devise::Test::IntegrationHelpers, type: :request
 
