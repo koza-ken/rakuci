@@ -48,6 +48,12 @@ class Card < ApplicationRecord
     cardable if card_type == :personal
   end
 
+  # このカードが指定された所有者（User/Group）に属しているか
+  def owned_by?(owner)
+    # ポリモーフィック関連でRailsがcardable_typeとcardable_idの両方を比較してくれる
+    cardable == owner
+  end
+
   # 指定されたメンバーシップがこのカードにいいねしているか
   def liked_by?(group_membership)
     return false unless group_membership

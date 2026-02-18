@@ -58,7 +58,7 @@ class Users::CardsController < ApplicationController
   end
 
   def check_card_owner
-    unless @card.accessible?(user: current_user, guest_group_ids: [])
+    unless @card.owned_by?(current_user)
       redirect_to cards_path, alert: t("errors.cards.unauthorized_view")
     end
   end
