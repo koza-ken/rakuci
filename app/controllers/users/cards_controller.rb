@@ -8,7 +8,7 @@ class Users::CardsController < ApplicationController
   end
 
   def show
-    @categories = Category.all.includes(:spots).order(:display_order)
+    @categories = Category.order(:display_order)
   end
 
   def new

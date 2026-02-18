@@ -7,7 +7,7 @@ class Groups::CardsController < ApplicationController
   before_action :check_card_in_group, only: %i[show update destroy]
 
   def show
-    @categories = Category.all.includes(:spots).order(:display_order)
+    @categories = Category.order(:display_order)
     @comments = @card.comments.includes(:group_membership).order(:created_at)
   end
 
