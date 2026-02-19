@@ -4,7 +4,8 @@ class GroupsController < ApplicationController
   # except
   before_action :authenticate_user!, except: %i[ show ]
   # only
-  before_action :set_group, only: %i[ show update destroy ]
+  before_action :set_group, only: %i[ update destroy ]
+  before_action :set_group_for_show, only: %i[ show ]
   before_action :check_group_member, only: %i[ show update ]
 
   def index
@@ -56,6 +57,10 @@ class GroupsController < ApplicationController
   private
 
   def set_group
+    @group = Group.find(params[:id])
+  end
+
+  def set_group_for_show
     @group = Group.includes(:group_memberships, cards: :spots).find(params[:id])
   end
 
