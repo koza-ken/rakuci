@@ -50,8 +50,8 @@ class Card < ApplicationRecord
 
   # このカードが指定された所有者（User/Group）に属しているか
   def owned_by?(owner)
-    # ポリモーフィック関連でRailsがcardable_typeとcardable_idの両方を比較してくれる
-    cardable == owner
+    # cardableを経由するとSQL発行されるため、カラムの値で直接比較する
+    cardable_type == owner.class.name && cardable_id == owner.id
   end
 
   # 指定されたメンバーシップがこのカードにいいねしているか
