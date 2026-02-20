@@ -14,7 +14,7 @@
   <div id="cards_list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 mt-8">
     <% if @cards_with_spots_by_category.any? %>
       <% @cards_with_spots_by_category.each do |card, spots_by_category| %>
-        <%= render "shared/cards/card", card: card, spots_by_category: spots_by_category %>
+        <%= render "shared/cards/card", card: card, spots_by_category: spots_by_category, categories: @categories %>
       <% end %>
     <% else %>
       <div id="cards_empty_state" class="col-span-2 sm:col-span-3 md:col-span-4 flex flex-col items-center justify-center py-8 mt-6 px-4">

@@ -72,7 +72,7 @@
       <%# カード表示 %>
       <div id="group_cards_list" class="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4 lg:mb-6">
         <% @cards_with_spots_by_category.each do |card, spots_by_category| %>
-          <%= render "shared/cards/card", card: card, spots_by_category: spots_by_category %>
+          <%= render "shared/cards/card", card: card, spots_by_category: spots_by_category, categories: @categories %>
         <% end %>
       </div>
 
