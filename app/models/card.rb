@@ -57,7 +57,7 @@ class Card < ApplicationRecord
   # 指定されたメンバーシップがこのカードにいいねしているか
   def liked_by?(group_membership)
     return false unless group_membership
-    likes.exists?(group_membership: group_membership)
+    likes.any? { |like| like.group_membership_id == group_membership.id }
   end
 
   private
