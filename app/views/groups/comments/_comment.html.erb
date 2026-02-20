@@ -10,10 +10,10 @@
   <div class="flex justify-between items-start">
     <p class="text-gray-800 whitespace-pre-wrap"><%= comment.content %></p>
     <%# ユーザーの、このグループにおけるメンバーシップを取得 %>
-    <% current_membership = current_group_membership_for(comment.card.group.id) %>
+    <% current_membership = current_group_membership_for(@group.id) %>
     <%# このユーザーが参加しているかと、その場合にメンバーシップidを比較し確認 %>
     <% if current_membership && current_membership.id == comment.group_membership_id %>
-      <%= button_to group_card_comment_path(comment.card.group, comment.card, comment),
+      <%= button_to group_card_comment_path(@group, @card, comment),
           method: :delete,
           data: { turbo_confirm: t("comments.confirm_delete") },
           title: t("comments.delete"),

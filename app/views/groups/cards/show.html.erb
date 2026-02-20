@@ -18,7 +18,7 @@
             <%= render IconComponent.new(name: "form_icon_edit", size: 5, breakpoints: { lg: 6 }, color: "text-text-light") %>
           </button>
         </div>
-        <%= render DeleteButtonComponent.new(resource: @card, scope: @card.group, label: t('cards.delete_button'), confirm_message: t("cards.delete_confirm")) %>
+        <%= render DeleteButtonComponent.new(resource: @card, scope: @group, label: t('cards.delete_button'), confirm_message: t("cards.delete_confirm")) %>
       </div>
 
       <%# 編集モード（非表示） %>
@@ -37,7 +37,7 @@
 
     <%# スポット追加ボタン %>
     <div class="flex justify-end mb-2 w-auto" data-controller="modal">
-      <%= link_to new_group_card_spot_path(@card.group, @card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, title: t('cards.add_spot'), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3" do %>
+      <%= link_to new_group_card_spot_path(@group, @card), data: {turbo_frame: "spot-create-modal", action: "click->modal#setGroupId"}, title: t('cards.add_spot'), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center gap-2 lg:gap-3" do %>
         <div class="flex items-center justify-center">
           <%= render IconComponent.new(name: "add_spot_icon", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
         </div>
@@ -47,9 +47,9 @@
 
     <%# グループカード: スポット追加フォーム %>
     <div class="mb-4">
-      <%= form_with url: group_card_schedule_spots_path(@card.group, @card), method: :post, local: true, data: { controller: "spot-selector" } do |f| %>
+      <%= form_with url: group_card_schedule_spots_path(@group, @card), method: :post, local: true, data: { controller: "spot-selector" } do |f| %>
         <%= render "shared/spots/spots", spots: @card.spots, categories: @categories %>
-        <% if @card.group.schedule.present? %>
+        <% if @group.schedule.present? %>
           <div class="flex gap-2 mt-4">
             <%= f.submit t('cards.add_spots_to_schedule'), class: "btn-main flex-1 opacity-50 cursor-not-allowed", id: "group-submit-button", disabled: true, data: { "spot-selector-target": "submitButton", "enable-text": t('cards.add_spots_to_schedule'), "disabled-text": "スポットを選択してください" } %>
           </div>
@@ -113,7 +113,7 @@
 
     <%# 戻るボタン %>
     <div class="mt-8">
-      <%= link_to group_path(@card.group), class: "btn-sub block text-center" do %>
+      <%= link_to group_path(@group), class: "btn-sub block text-center" do %>
         <%= t("cards.form.back") %>
       <% end %>
     </div>
