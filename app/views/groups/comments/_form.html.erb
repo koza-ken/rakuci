@@ -1,5 +1,5 @@
 <%# ネストしたルーティングなのでmodelでgroupとcardも受け取る（group_card_comments_path(group, card)が生成される） %>
-<%= form_with model: [card.group, card, comment], class: "mt-4" do |f| %>
+<%= form_with model: [@group, card, comment], class: "mt-4" do |f| %>
   <%# コメント投稿時のエラーメッセージ表示 %>
   <% if comment.errors.any? %>
     <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded">

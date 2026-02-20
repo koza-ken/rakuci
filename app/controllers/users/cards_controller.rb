@@ -4,11 +4,12 @@ class Users::CardsController < ApplicationController
   before_action :check_card_owner, only: %i[show update destroy]
 
   def index
+    @categories = Category.order(:display_order).to_a
     @cards_with_spots_by_category = current_user.cards_with_spots_grouped
   end
 
   def show
-    @categories = Category.all.includes(:spots).order(:display_order)
+    @categories = Category.order(:display_order).to_a
   end
 
   def new
@@ -19,6 +20,7 @@ class Users::CardsController < ApplicationController
     @card = current_user.cards.build(card_params)
 
     if @card.save
+      @categories = Category.order(:display_order).to_a
       respond_to do |format|
         format.turbo_stream { flash.now[:notice] = t("notices.cards.created") }
         format.html { redirect_to cards_path, notice: t("notices.cards.created") }
@@ -58,7 +60,7 @@ class Users::CardsController < ApplicationController
   end
 
   def check_card_owner
-    unless @card.accessible?(user: current_user, guest_group_ids: [])
+    unless @card.owned_by?(current_user)
       redirect_to cards_path, alert: t("errors.cards.unauthorized_view")
     end
   end

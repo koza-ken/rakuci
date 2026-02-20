@@ -4,7 +4,8 @@ class GroupsController < ApplicationController
   # except
   before_action :authenticate_user!, except: %i[ show ]
   # only
-  before_action :set_group, only: %i[ show update destroy ]
+  before_action :set_group, only: %i[ update destroy ]
+  before_action :set_group_for_show, only: %i[ show ]
   before_action :check_group_member, only: %i[ show update ]
 
   def index
@@ -13,6 +14,7 @@ class GroupsController < ApplicationController
 
   def show
     @schedule = @group.schedule
+    @categories = Category.order(:display_order).to_a
     @cards_with_spots_by_category = @group.cards_with_spots_grouped
   end
 
@@ -56,7 +58,11 @@ class GroupsController < ApplicationController
   private
 
   def set_group
-    @group = Group.includes(:group_memberships, cards: :spots).find(params[:id])
+    @group = Group.find(params[:id])
+  end
+
+  def set_group_for_show
+    @group = Group.includes(:group_memberships).find(params[:id])
   end
 
   # 現在のユーザーが参加しているグループ一覧を取得

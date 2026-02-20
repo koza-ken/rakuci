@@ -18,7 +18,7 @@
 
     <%# カテゴリごとのスポット件数 %>
     <div class="p-1 pr-3 text-sm relative z-10 space-y-1">
-      <% Category.order(:display_order).limit(4).each do |category| %>
+      <% categories.each do |category| %>
         <div class="flex justify-between items-center">
           <div class="flex items-center gap-2">
             <% if category.icon_partial.present? %>

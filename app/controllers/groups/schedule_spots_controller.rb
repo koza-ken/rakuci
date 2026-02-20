@@ -14,7 +14,7 @@ class Groups::ScheduleSpotsController < ApplicationController
   def new
     @schedule = @group.schedule
     @schedule_spot = ScheduleSpot.new
-    @categories = Category.order(display_order: :asc)
+    @categories = Category.order(display_order: :asc).to_a
   end
 
   def create
@@ -69,7 +69,7 @@ class Groups::ScheduleSpotsController < ApplicationController
           format.html { redirect_to group_schedule_path(@group), notice: t("notices.schedule_spots.created") }
         end
       else
-        @categories = Category.order(display_order: :asc)
+        @categories = Category.order(display_order: :asc).to_a
         render :new, status: :unprocessable_entity
       end
     end

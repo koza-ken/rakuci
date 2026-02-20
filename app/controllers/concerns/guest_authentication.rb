@@ -13,7 +13,9 @@ module GuestAuthentication
 
   # 指定されたグループIDに対するGroupMembershipを取得
   def current_group_membership_for(group_id)
-    if user_signed_in?
+    # 複数回このメソッドを呼び出す場合は、最初の呼び出し結果をキャッシュするので、2回目以降のSQLが不要
+    @current_membership_cache ||= {}
+    @current_membership_cache[group_id] ||= if user_signed_in?
       GroupMembership.find_by(user: current_user, group_id: group_id)
     else
       stored_token = stored_guest_token_for(group_id)
