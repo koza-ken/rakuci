@@ -61,7 +61,7 @@ class GroupsController < ApplicationController
   end
 
   def set_group_for_show
-    @group = Group.includes(:group_memberships, cards: :spots).find(params[:id])
+    @group = Group.includes(:group_memberships).find(params[:id])
   end
 
   # 現在のユーザーが参加しているグループ一覧を取得
