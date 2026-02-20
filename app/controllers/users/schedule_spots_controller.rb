@@ -13,7 +13,7 @@ class Users::ScheduleSpotsController < ApplicationController
       # しおり詳細から直接スポット追加
       @schedule = current_user.schedules.find(params[:schedule_id])
       @schedule_spot = ScheduleSpot.new
-      @categories = Category.order(display_order: :asc)
+      @categories = Category.order(display_order: :asc).to_a
     else
       # カードからスポット選択してしおり選択
       @card = current_user.cards.find(params[:card_id])
@@ -74,7 +74,7 @@ class Users::ScheduleSpotsController < ApplicationController
           format.html { redirect_to schedule_path(@schedule), notice: t("notices.schedule_spots.created") }
         end
       else
-        @categories = Category.order(display_order: :asc)
+        @categories = Category.order(display_order: :asc).to_a
         render :new, status: :unprocessable_entity
       end
     end

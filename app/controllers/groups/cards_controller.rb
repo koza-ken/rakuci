@@ -7,7 +7,7 @@ class Groups::CardsController < ApplicationController
   before_action :check_card_in_group, only: %i[show update destroy]
 
   def show
-    @categories = Category.order(:display_order)
+    @categories = Category.order(:display_order).to_a
     @comments = @card.comments.includes(:group_membership).order(:created_at)
   end
 
@@ -19,6 +19,7 @@ class Groups::CardsController < ApplicationController
     @card = @group.cards.build(card_params)
 
     if @card.save
+      @categories = Category.order(:display_order).to_a
       respond_to do |format|
         format.turbo_stream { flash.now[:notice] = t("notices.cards.created") }
         format.html { redirect_to group_path(@group), notice: t("notices.cards.created") }
