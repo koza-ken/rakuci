@@ -7,7 +7,6 @@
 #  day_number      :integer          not null
 #  end_time        :time
 #  global_position :integer          not null
-#  is_custom_entry :boolean          default(FALSE), not null
 #  memo            :text
 #  name            :string
 #  phone_number    :string
@@ -271,7 +270,6 @@ RSpec.describe ScheduleSpot, type: :model do
 
           expect(schedule_spot.spot_id).to eq(spot.id)
           expect(schedule_spot.day_number).to eq(2)
-          expect(schedule_spot.is_custom_entry).to be false
           expect(schedule_spot.name).to eq(spot.name)
           expect(schedule_spot.address).to eq(spot.address)
         end

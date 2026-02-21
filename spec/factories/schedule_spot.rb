@@ -6,7 +6,6 @@ FactoryBot.define do
     start_time { "10:00" }
     end_time { "11:00" }
     memo { "Test memo" }
-    is_custom_entry { false }
     name { "name" }
     address { "123 Test Street" }
     phone_number { "090-1234-5678" }
@@ -14,7 +13,6 @@ FactoryBot.define do
 
     trait :custom do
       spot_id { nil }
-      is_custom_entry { true }
     end
   end
 end

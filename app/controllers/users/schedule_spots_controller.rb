@@ -64,7 +64,6 @@ class Users::ScheduleSpotsController < ApplicationController
       # しおり詳細から直接スポット追加
       @schedule = current_user.schedules.find(params[:schedule_id])
       @schedule_spot = @schedule.schedule_spots.build(schedule_spot_params)
-      @schedule_spot.is_custom_entry = true
       @schedule_spot.day_number = 1
       @schedule_spot.global_position = (@schedule.schedule_spots.maximum(:global_position) || 0) + 1
 

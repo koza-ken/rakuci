@@ -92,7 +92,6 @@ class ScheduleSpot < ApplicationRecord
       spot_id: spot.id,
       day_number: day_number,
       global_position: schedule.schedule_spots.count + 1,
-      is_custom_entry: false,
       name: spot.name,
       address: spot.address,
       phone_number: spot.phone_number,
