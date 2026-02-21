@@ -34,7 +34,7 @@ class ScheduleSpot < ApplicationRecord
 
   # アソシエーション
   belongs_to :schedule
-  belongs_to :spot, optional: true  # カスタム入力時はspot_id = NULL
+  belongs_to :spot, optional: true  # spotから追加したかどうかを区別する
 
   # バリデーション
   # global_position は acts_as_list が自動で管理するためバリデーション不要
