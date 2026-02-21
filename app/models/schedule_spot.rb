@@ -7,7 +7,6 @@
 #  day_number      :integer          not null
 #  end_time        :time
 #  global_position :integer          not null
-#  is_custom_entry :boolean          default(FALSE), not null
 #  memo            :text
 #  name            :string
 #  phone_number    :string

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_02_21_040047) do
+ActiveRecord::Schema[7.2].define(version: 2026_02_21_082947) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -127,7 +127,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_21_040047) do
     t.integer "day_number", null: false
     t.time "start_time"
     t.time "end_time"
-    t.boolean "is_custom_entry", default: false, null: false
     t.string "name"
     t.integer "category_id"
     t.string "address"
