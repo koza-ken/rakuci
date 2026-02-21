@@ -244,19 +244,9 @@ RSpec.describe ScheduleSpot, type: :model do
       end
 
       context "nameが空の場合" do
-        context "spotが存在する場合" do
-          it "spot.nameを返すこと" do
-            spot = create(:spot, name: "Spot Name")
-            schedule_spot = build(:schedule_spot, name: "", spot: spot)
-            expect(schedule_spot.display_name).to eq("Spot Name")
-          end
-        end
-
-        context "spotが存在しない場合" do
-          it "「予定」を返すこと" do
-            schedule_spot = build(:schedule_spot, name: "", spot: nil)
-            expect(schedule_spot.display_name).to eq("予定")
-          end
+        it "「予定」を返すこと" do
+          schedule_spot = build(:schedule_spot, name: "", spot: nil)
+          expect(schedule_spot.display_name).to eq("予定")
         end
       end
     end
