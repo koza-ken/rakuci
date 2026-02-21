@@ -80,10 +80,11 @@ class ScheduleSpot < ApplicationRecord
 
   # カテゴリに応じた背景色のTailwindクラスを返す
   def category_background_color
-    category_id = snapshot_category_id || spot&.category_id
-    return "bg-white" unless category_id
+    # category_id はしおり登録時の値、なければ元Spotのカテゴリを参照
+    id = category_id || spot&.category_id
+    return "bg-white" unless id
 
-    category = Category.find_by(id: category_id)
+    category = Category.find_by(id: id)
     category&.background_color_class || "bg-white"
   end
 
