@@ -8,7 +8,7 @@ class Groups::ScheduleSpotsController < ApplicationController
 
   def show
     @schedule = @group.schedule
-    @category = Category.find_by(id: @schedule_spot.snapshot_category_id)
+    @category = Category.find_by(id: @schedule_spot.category_id)
   end
 
   def new
@@ -144,6 +144,6 @@ class Groups::ScheduleSpotsController < ApplicationController
   end
 
   def schedule_spot_params
-    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_category_id, :snapshot_address, :snapshot_phone_number, :snapshot_website_url, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
+    params.require(:schedule_spot).permit(:name, :category_id, :address, :phone_number, :website_url, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
   end
 end

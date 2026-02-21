@@ -21,9 +21,9 @@
         <div class="mb-4 lg:mb-0">
           <label class="block text-sm lg:text-base font-medium text-text mb-2"><%= t('schedule_spots.show.address') %></label>
           <div class="flex items-center gap-2">
-            <input type="text" value="<%= @schedule_spot.snapshot_address.present? ? @schedule_spot.snapshot_address : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
+            <input type="text" value="<%= @schedule_spot.address.present? ? @schedule_spot.address : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
             <% if @schedule_spot.google_place_id.present? %>
-              <%= link_to "https://www.google.com/maps/search/?api=1&query=#{@schedule_spot.snapshot_name}&query_place_id=#{@schedule_spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition flex-shrink-0", onclick: "return confirm('Googleマップに移動します')" do %>
+              <%= link_to "https://www.google.com/maps/search/?api=1&query=#{@schedule_spot.name}&query_place_id=#{@schedule_spot.google_place_id}", target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-70 transition flex-shrink-0", onclick: "return confirm('Googleマップに移動します')" do %>
                 <%= render IconComponent.new(name: "map_icon_google", size: 8, color: "text-text-light") %>
               <% end %>
             <% end %>
@@ -33,10 +33,10 @@
         <div class="mb-4 lg:mb-0">
           <label class="block text-sm lg:text-base font-medium text-text mb-2"><%= t('schedule_spots.show.website_url') %></label>
           <div class="flex items-center gap-2">
-            <input type="text" value="<%= @schedule_spot.snapshot_website_url.present? ? @schedule_spot.snapshot_website_url : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
-            <% if @schedule_spot.snapshot_website_url.present? %>
-              <%# snapshot_website_url は ScheduleSpot モデルでバリデーション済み（HTTP/HTTPS のみ） %>
-              <%= link_to @schedule_spot.snapshot_website_url, target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('外部サイトに移動しますか？')" do %>
+            <input type="text" value="<%= @schedule_spot.website_url.present? ? @schedule_spot.website_url : "---" %>" readonly class="form-text-field bg-gray-100 flex-1" />
+            <% if @schedule_spot.website_url.present? %>
+              <%# website_url は ScheduleSpot モデルでバリデーション済み（HTTP/HTTPS のみ） %>
+              <%= link_to @schedule_spot.website_url, target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('外部サイトに移動しますか？')" do %>
                 <%= render IconComponent.new(name: "jump_homepage_icon", size: 8, color: "text-text-light") %>
               <% end %>
             <% end %>
@@ -45,7 +45,7 @@
 
         <div class="mb-4 lg:mb-0">
           <label class="block text-sm lg:text-base font-medium text-text mb-2"><%= t('schedule_spots.show.phone_number') %></label>
-          <input type="text" value="<%= @schedule_spot.snapshot_phone_number.present? ? @schedule_spot.snapshot_phone_number : "---" %>" readonly class="form-text-field bg-gray-100" />
+          <input type="text" value="<%= @schedule_spot.phone_number.present? ? @schedule_spot.phone_number : "---" %>" readonly class="form-text-field bg-gray-100" />
         </div>
 
         <div class="mb-4 lg:mb-0">

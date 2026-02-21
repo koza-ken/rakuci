@@ -106,11 +106,11 @@ RSpec.describe 'Users::ScheduleSpots', type: :request do
   end
 
   describe 'PATCH /schedule_spots/:id' do
-    let(:schedule_spot) { create(:schedule_spot, schedule: schedule, snapshot_name: '元の名前') }
+    let(:schedule_spot) { create(:schedule_spot, schedule: schedule, name: '元の名前') }
     let(:params) do
       {
         schedule_spot: {
-          snapshot_name: '更新後の名前',
+          name: '更新後の名前',
           memo: '更新後のメモ'
         }
       }
@@ -119,7 +119,7 @@ RSpec.describe 'Users::ScheduleSpots', type: :request do
     it 'しおりのスポットが更新されること' do
       patch user_schedule_spot_path(schedule_spot), params: params
       schedule_spot.reload
-      expect(schedule_spot.snapshot_name).to eq('更新後の名前')
+      expect(schedule_spot.name).to eq('更新後の名前')
       expect(schedule_spot.memo).to eq('更新後のメモ')
     end
 
@@ -132,7 +132,7 @@ RSpec.describe 'Users::ScheduleSpots', type: :request do
       let(:invalid_params) do
         {
           schedule_spot: {
-            snapshot_name: '',  # 空文字列は無効
+            name: '',  # 空文字列は無効
             day_number: 0       # 0は無効
           }
         }
@@ -145,10 +145,10 @@ RSpec.describe 'Users::ScheduleSpots', type: :request do
       end
 
       it 'ScheduleSpotが更新されないこと' do
-        original_name = schedule_spot.snapshot_name
+        original_name = schedule_spot.name
         patch user_schedule_spot_path(schedule_spot), params: invalid_params
         schedule_spot.reload
-        expect(schedule_spot.snapshot_name).to eq(original_name)
+        expect(schedule_spot.name).to eq(original_name)
       end
     end
 

@@ -4,7 +4,7 @@ class Users::ScheduleSpotsController < ApplicationController
   before_action :set_schedule_from_schedule_spot, only: %i[show edit update destroy]
 
   def show
-    @category = Category.find_by(id: @schedule_spot.snapshot_category_id)
+    @category = Category.find_by(id: @schedule_spot.category_id)
   end
 
   # TODO でかそう
@@ -139,6 +139,6 @@ class Users::ScheduleSpotsController < ApplicationController
   end
 
   def schedule_spot_params
-    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_address, :snapshot_website_url, :snapshot_phone_number, :snapshot_category_id, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
+    params.require(:schedule_spot).permit(:name, :address, :website_url, :phone_number, :category_id, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
   end
 end
