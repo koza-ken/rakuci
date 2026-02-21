@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_02_09_124413) do
+ActiveRecord::Schema[7.2].define(version: 2026_02_21_040047) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -128,11 +128,11 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_09_124413) do
     t.time "start_time"
     t.time "end_time"
     t.boolean "is_custom_entry", default: false, null: false
-    t.string "snapshot_name"
-    t.integer "snapshot_category_id"
-    t.string "snapshot_address"
-    t.string "snapshot_phone_number"
-    t.string "snapshot_website_url"
+    t.string "name"
+    t.integer "category_id"
+    t.string "address"
+    t.string "phone_number"
+    t.string "website_url"
     t.text "memo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
