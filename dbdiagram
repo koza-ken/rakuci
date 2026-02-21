@@ -182,12 +182,12 @@ Table schedule_spots {
   start_time time [note: "開始時刻（到着時刻）"]
   end_time time [note: "終了時刻（出発時刻）"]
   is_custom_entry boolean [not null, default: false, note: "true: カスタム入力, false: Spotからの参照"]
-  snapshot_name varchar [note: "スポット名のスナップショット"]
-  snapshot_category_id int [note: "カテゴリIDのスナップショット（外部キー制約なし）"]
-  snapshot_address varchar [note: "住所のスナップショット"]
-  snapshot_phone_number varchar [note: "電話番号のスナップショット"]
-  snapshot_website_url varchar [note: "WebサイトURLのスナップショット"]
-  google_place_id varchar [note: "Google Place IDのスナップショット"]
+  name varchar [note: "しおり上のスポット名（Spotから追加時はコピー、カスタム入力時は直接入力値）"]
+  category_id int [note: "しおり上のカテゴリID（外部キー制約なし）"]
+  address varchar [note: "しおり上の住所"]
+  phone_number varchar [note: "しおり上の電話番号"]
+  website_url varchar [note: "しおり上のWebサイトURL"]
+  google_place_id varchar [note: "Google Place ID"]
   memo text [note: "メモ"]
   created_at timestamp [not null]
   updated_at timestamp [not null]
@@ -199,15 +199,15 @@ Table schedule_spots {
 
   Note: '''
   個人用・グループ用のスケジュール（しおり）に追加されたスポット。
-  スケジュール作成時点の情報をスナップショットとして保存することで、
-  後からスポット情報が変更・削除されても、当時のスケジュール情報は保持される。
+  name等のカラムはしおり登録時点の値を保持し、Spotテーブルとは独立している。
+  Spot情報が変更・削除されても、しおりの内容は保持される（スナップショットパターン）。
 
   acts_as_listでglobal_positionを管理（スコープ: schedule_id）。
   並び替え機能で順序変更可能。
 
   is_custom_entry:
-  - true  → spot_id IS NULL, snapshot_nameが直接入力される
-  - false → spot_id IS NOT NULL, spotsから情報をスナップショットとして保存
+  - true  → spot_id IS NULL, nameが直接入力される
+  - false → spot_id IS NOT NULL, Spotの情報をコピーして保存
   '''
 
 }
