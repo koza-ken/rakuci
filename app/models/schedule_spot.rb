@@ -46,7 +46,6 @@ class ScheduleSpot < ApplicationRecord
   validates :website_url, format: { with: URI::DEFAULT_PARSER.make_regexp([ "http", "https" ]) }, length: { maximum: 500 }, allow_blank: true
 
   # カスタムバリデーション
-  validate :spot_or_custom_entry_valid
   validate :end_time_after_start_time
 
   # 並び替えgem acts_as_list
@@ -107,24 +106,6 @@ class ScheduleSpot < ApplicationRecord
   def end_time_after_start_time
     if start_time.present? && end_time.present? && end_time < start_time
       errors.add(:end_time, :greater_than, count: :start_time)
-    end
-  end
-
-  # spot_id と is_custom_entry の整合性をチェック
-  def spot_or_custom_entry_valid
-    if is_custom_entry
-      # カスタム入力の場合：spot_idはNULL、nameは必須
-      if spot_id.present?
-        errors.add(:spot_id, "はカスタム入力時には指定できません")
-      end
-      if name.blank?
-        errors.add(:name, "を入力してください")
-      end
-    else
-      # Spot参照の場合：spot_idは必須
-      if spot_id.blank?
-        errors.add(:spot_id, "を指定してください")
-      end
     end
   end
 end

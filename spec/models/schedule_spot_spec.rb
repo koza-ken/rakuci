@@ -194,44 +194,6 @@ RSpec.describe ScheduleSpot, type: :model do
       end
     end
 
-    describe "spot_or_custom_entry_valid" do
-      context "is_custom_entryがfalseで、spot_idがある場合" do
-        it "保存に成功すること" do
-          spot = create(:spot)
-          schedule_spot = build(:schedule_spot, spot_id: spot.id, is_custom_entry: false)
-          expect(schedule_spot).to be_valid
-        end
-      end
-
-      context "is_custom_entryがtrueで、spot_idがない場合" do
-        it "保存に成功すること" do
-          schedule_spot = build(:schedule_spot, :custom, is_custom_entry: true)
-          expect(schedule_spot).to be_valid
-        end
-      end
-
-      context "is_custom_entryがtrueで、spot_idがある場合" do
-        it "保存に失敗すること" do
-          spot = create(:spot)
-          schedule_spot = build(:schedule_spot, :custom, spot_id: spot.id, is_custom_entry: true)
-          expect(schedule_spot).not_to be_valid
-        end
-      end
-
-      context "is_custom_entryがfalseで、spot_idがない場合" do
-        it "保存に失敗すること" do
-          schedule_spot = build(:schedule_spot, spot_id: nil, is_custom_entry: false)
-          expect(schedule_spot).not_to be_valid
-        end
-      end
-
-      context "is_custom_entryがtrueで、nameが空の場合" do
-        it "保存に失敗すること" do
-          schedule_spot = build(:schedule_spot, :custom, name: nil, is_custom_entry: true)
-          expect(schedule_spot).not_to be_valid
-        end
-      end
-    end
   end
 
   describe "メソッド" do
