@@ -56,9 +56,9 @@ class ScheduleSpot < ApplicationRecord
   scope :ordered, -> { order(:global_position) }
   scope :on_day, ->(day) { where(day_number: day) }
 
-  # 表示名を取得（しおりの登録名 > Spot名 > デフォルト）
+  # 表示名を取得（登録名 > デフォルト）
   def display_name
-    name.presence || spot&.name || "予定"
+    name.presence || "予定"
   end
 
   # 開始時刻と終了時刻をフォーマット（"HH:MM ～ HH:MM" または "HH:MM ～" または "～ HH:MM" の形式）
