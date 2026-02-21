@@ -181,7 +181,6 @@ Table schedule_spots {
   day_number int [not null, note: "何日目（1日目,2日目...区切り線表示用）"]
   start_time time [note: "開始時刻（到着時刻）"]
   end_time time [note: "終了時刻（出発時刻）"]
-  is_custom_entry boolean [not null, default: false, note: "true: カスタム入力, false: Spotからの参照"]
   name varchar [note: "しおり上のスポット名（Spotから追加時はコピー、カスタム入力時は直接入力値）"]
   category_id int [note: "しおり上のカテゴリID（外部キー制約なし）"]
   address varchar [note: "しおり上の住所"]
@@ -205,9 +204,9 @@ Table schedule_spots {
   acts_as_listでglobal_positionを管理（スコープ: schedule_id）。
   並び替え機能で順序変更可能。
 
-  is_custom_entry:
-  - true  → spot_id IS NULL, nameが直接入力される
-  - false → spot_id IS NOT NULL, Spotの情報をコピーして保存
+  spot_id:
+  - NULL     → カスタム入力（直接入力されたスポット）
+  - NOT NULL → Spotから追加（Spotとのトレーサビリティを保持）
   '''
 
 }
