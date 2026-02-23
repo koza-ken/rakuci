@@ -271,33 +271,18 @@ RSpec.describe GroupMembership, type: :model do
 
     # ゲストトークンを生成するメソッド
     describe "#generate_guest_token" do
-      context "既にdigestを持っている場合" do
-        it "新しいトークンを生成しないこと" do
-          membership = create(:group_membership, :guest)
-          original_digest = membership.guest_token_digest
-          membership.generate_guest_token
-          expect(membership.guest_token_digest).to eq(original_digest)
-        end
+      it "平文トークンを返し、digestを保存すること" do
+        membership = build(:group_membership, guest_token_digest: nil, user_id: create(:user).id)
+        raw_token = membership.generate_guest_token
+        expect(raw_token).not_to be_nil
+        expect(raw_token).to match(/^[A-Za-z0-9_-]+$/)
+        expect(membership.guest_token_digest).to eq(Digest::SHA256.hexdigest(raw_token))
       end
 
-      context "digestを持っていない場合" do
-        it "平文トークンを返し、digestを保存すること" do
-          membership = build(:group_membership, guest_token_digest: nil, user_id: create(:user).id)
-          raw_token = membership.generate_guest_token
-          expect(raw_token).not_to be_nil
-          expect(raw_token).to match(/^[A-Za-z0-9_-]+$/)
-          expect(membership.guest_token_digest).to eq(Digest::SHA256.hexdigest(raw_token))
-        end
-      end
-    end
-
-    # ゲストトークンを再生成するメソッド
-    describe "#regenerate_guest_token" do
-      it "新しいトークンを生成し、digestを更新すること" do
+      it "既にdigestがある場合も上書きすること" do
         membership = create(:group_membership, :guest)
         original_digest = membership.guest_token_digest
-        raw_token = membership.regenerate_guest_token
-        expect(raw_token).not_to be_nil
+        raw_token = membership.generate_guest_token
         expect(membership.guest_token_digest).not_to eq(original_digest)
         expect(membership.guest_token_digest).to eq(Digest::SHA256.hexdigest(raw_token))
       end
