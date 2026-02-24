@@ -1,7 +1,8 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include Users::Concerns::MembershipUserAttachment
 
-  skip_before_action :verify_authenticity_token, only: :google_oauth2
+  # gemがあるので不要
+  # skip_before_action :verify_authenticity_token, only: :google_oauth2
 
   def google_oauth2
     handle_callback(:google_oauth2, "Google")
