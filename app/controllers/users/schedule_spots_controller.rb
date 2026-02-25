@@ -58,7 +58,7 @@ class Users::ScheduleSpotsController < ApplicationController
   private
 
   def set_schedule_spot
-    @schedule_spot = ScheduleSpot.find(params[:id])
+    @schedule_spot = ScheduleSpot.includes(:spot).find(params[:id])
   end
 
   def set_schedule_from_schedule_spot
