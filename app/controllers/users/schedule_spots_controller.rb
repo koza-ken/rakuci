@@ -1,7 +1,7 @@
 class Users::ScheduleSpotsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_schedule_spot, only: %i[show edit update destroy]
-  before_action :set_schedule_from_schedule_spot, only: %i[show edit update destroy]
+  before_action :set_schedule_spot, only: %i[show edit update destroy move_higher move_lower]
+  before_action :set_schedule_from_schedule_spot, only: %i[show edit update destroy move_higher move_lower]
 
   def show
     @category = Category.find_by(id: @schedule_spot.category_id)
@@ -13,7 +13,7 @@ class Users::ScheduleSpotsController < ApplicationController
       # しおり詳細から直接スポット追加
       @schedule = current_user.schedules.find(params[:schedule_id])
       @schedule_spot = ScheduleSpot.new
-      @categories = Category.order(display_order: :asc).to_a
+      set_categories
     else
       # カードからスポット選択してしおり選択
       @card = current_user.cards.find(params[:card_id])
@@ -68,7 +68,7 @@ class Users::ScheduleSpotsController < ApplicationController
           format.html { redirect_to schedule_path(@schedule), notice: t("notices.schedule_spots.created") }
         end
       else
-        @categories = Category.order(display_order: :asc).to_a
+        set_categories
         render :new, status: :unprocessable_entity
       end
     end
@@ -99,11 +99,7 @@ class Users::ScheduleSpotsController < ApplicationController
 
   # 並び替えacts_as_listのメソッド
   def move_higher
-    @schedule_spot = ScheduleSpot.find(params[:id])
-    @schedule = @schedule_spot.schedule
-    # acts_as_listのメソッドで移動
     @schedule_spot.move_higher
-    # レスポンス(Turbo Stream)
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to schedule_path(@schedule) }
@@ -111,11 +107,7 @@ class Users::ScheduleSpotsController < ApplicationController
   end
 
   def move_lower
-    @schedule_spot = ScheduleSpot.find(params[:id])
-    @schedule = @schedule_spot.schedule
-    # acts_as_listのメソッドで移動
     @schedule_spot.move_lower
-    # レスポンス(Turbo Stream)
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to schedule_path(@schedule) }
@@ -134,5 +126,9 @@ class Users::ScheduleSpotsController < ApplicationController
 
   def schedule_spot_params
     params.require(:schedule_spot).permit(:name, :address, :website_url, :phone_number, :category_id, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
+  end
+
+  def set_categories
+    @categories = Category.order(display_order: :asc).to_a
   end
 end

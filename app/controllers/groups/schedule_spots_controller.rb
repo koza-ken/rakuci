@@ -1,25 +1,22 @@
 class Groups::ScheduleSpotsController < ApplicationController
   include GroupMemberAuthorization  # グループメンバーのみアクセス許可
 
-  before_action :set_schedule_spot, only: %i[show edit update destroy]
+  before_action :set_schedule_spot, only: %i[show edit update destroy move_higher move_lower]
   before_action :set_group, only: %i[new create]
-  before_action :set_group_from_schedule_spot, only: %i[show edit update destroy]
+  before_action :set_group_from_schedule_spot, only: %i[show edit update destroy move_higher move_lower]
+  before_action :set_schedule
   before_action :check_group_member
 
   def show
-    @schedule = @group.schedule
     @category = Category.find_by(id: @schedule_spot.category_id)
   end
 
   def new
-    @schedule = @group.schedule
     @schedule_spot = ScheduleSpot.new
-    @categories = Category.order(display_order: :asc).to_a
+    set_categories
   end
 
   def create
-    @schedule = @group.schedule
-
     if params[:spot_ids].present? || params[:spot_id].present?
       # カードからスポット選択してしおり追加
       @card = Card.find(params[:card_id])
@@ -63,20 +60,17 @@ class Groups::ScheduleSpotsController < ApplicationController
           format.html { redirect_to group_schedule_path(@group), notice: t("notices.schedule_spots.created") }
         end
       else
-        @categories = Category.order(display_order: :asc).to_a
+        set_categories
         render :new, status: :unprocessable_entity
       end
     end
   end
 
   def edit
-    @schedule = @group.schedule
-    @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
   end
 
   # スポットの編集フォームによる更新と、並び替えによる更新を処理
   def update
-    @schedule = @group.schedule
     if @schedule_spot.update(schedule_spot_params)
       respond_to do |format|
         # 並び替えによる更新のレスポンス
@@ -90,7 +84,6 @@ class Groups::ScheduleSpotsController < ApplicationController
   end
 
   def destroy
-    @schedule_spot = ScheduleSpot.find(params[:id])
     if @schedule_spot.destroy
       redirect_to group_schedule_path(@group), notice: t("notices.schedule_spots.destroyed"), turbo: false
     end
@@ -98,12 +91,7 @@ class Groups::ScheduleSpotsController < ApplicationController
 
   # 並び替えacts_as_listのメソッド
   def move_higher
-    @schedule = @group.schedule
-    # スポットを取得
-    @schedule_spot = @schedule.schedule_spots.find(params[:id])
-    # acts_as_listのメソッドで移動
     @schedule_spot.move_higher
-    # レスポンス(Turbo Stream)
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to group_schedule_path(@group) }
@@ -111,12 +99,7 @@ class Groups::ScheduleSpotsController < ApplicationController
   end
 
   def move_lower
-    @schedule = @group.schedule
-    # スポットを取得
-    @schedule_spot = @schedule.schedule_spots.find(params[:id])
-    # acts_as_listのメソッドで移動
     @schedule_spot.move_lower
-    # レスポンス(Turbo Stream)
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to group_schedule_path(@group) }
@@ -126,7 +109,7 @@ class Groups::ScheduleSpotsController < ApplicationController
   private
 
   def set_schedule_spot
-    @schedule_spot = ScheduleSpot.find(params[:id])
+    @schedule_spot = ScheduleSpot.includes(:spot).find(params[:id])
   end
 
   def set_group
@@ -135,6 +118,14 @@ class Groups::ScheduleSpotsController < ApplicationController
 
   def set_group_from_schedule_spot
     @group = @schedule_spot.schedule.schedulable
+  end
+
+  def set_schedule
+    @schedule = @group.schedule
+  end
+
+  def set_categories
+    @categories = Category.order(display_order: :asc).to_a
   end
 
   def schedule_spot_params
