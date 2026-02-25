@@ -56,20 +56,17 @@ class Groups::SpotsController < ApplicationController
     @group = Group.find(params[:group_id])
   end
 
+  # URLをshallow化したのでparamsにgroup_idがない
   def set_group_from_spot
     @group = @spot.card.group
   end
 
   def set_card
-    @card = Card.find(params[:card_id]) if params[:card_id]
+    @card = Card.find(params[:card_id])
   end
 
   def set_spot
-    if params[:card_id]
-      @spot = @card.spots.find(params[:id])
-    else
-      @spot = Spot.find(params[:id])
-    end
+    @spot = Spot.find(params[:id])
   end
 
   def set_categories
