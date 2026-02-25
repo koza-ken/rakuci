@@ -80,13 +80,14 @@ class Users::ScheduleSpotsController < ApplicationController
 
   def new_from_card
     @card = current_user.cards.find(params[:card_id])
+    @schedules = current_user.schedules
+    # カードから複数のスポットを追加するかの判定
     if params[:spot_ids].present?
-      @spots = Spot.where(id: params[:spot_ids])
       @spot_ids = Array(params[:spot_ids])
+      @spots = Spot.where(id: @spot_ids)
     else
       @spot = Spot.find(params[:spot_id])
     end
-    @schedules = current_user.schedules
   end
 
   def new_from_schedule
