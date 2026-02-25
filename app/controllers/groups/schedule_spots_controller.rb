@@ -92,12 +92,11 @@ class Groups::ScheduleSpotsController < ApplicationController
 
   def create_from_card
     @card = Card.find(params[:card_id])
+    # カードから追加するスポットを順番に保存していく
     spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
-    results = spot_ids.map do |spot_id|
-      spot = Spot.find(spot_id)
-      schedule_spot = ScheduleSpot.create_from_spot(@schedule, spot)
-      schedule_spot.save
-    end
+    spots = Spot.where(id: spot_ids)
+    results = spots.map { |spot| ScheduleSpot.create_from_spot(@schedule, spot).save }
+    # スポットの保存結果を返す
     if results.all?
       respond_to do |format|
         format.turbo_stream { flash.now[:notice] = t("notices.group_schedule_spots.created_multiple", count: results.size) }
