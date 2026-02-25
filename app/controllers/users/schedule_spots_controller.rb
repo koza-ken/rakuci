@@ -66,7 +66,7 @@ class Users::ScheduleSpotsController < ApplicationController
   end
 
   def schedule_spot_params
-    params.require(:schedule_spot).permit(:name, :address, :website_url, :phone_number, :category_id, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
+    params.require(:schedule_spot).permit(:name, :category_id, :address, :phone_number, :website_url, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
   end
 
   def set_categories
