@@ -53,11 +53,7 @@ class Users::SpotsController < ApplicationController
   end
 
   def set_spot
-    if params[:card_id]
-      @spot = @card.spots.find(params[:id])
-    else
-      @spot = Spot.find(params[:id])
-    end
+    @spot = Spot.find(params[:id])
   end
 
   def set_categories
