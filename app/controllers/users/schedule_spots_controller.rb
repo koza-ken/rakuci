@@ -7,71 +7,12 @@ class Users::ScheduleSpotsController < ApplicationController
     @category = Category.find_by(id: @schedule_spot.category_id)
   end
 
-  # TODO でかそう
   def new
-    if params[:schedule_id].present?
-      # しおり詳細から直接スポット追加
-      @schedule = current_user.schedules.find(params[:schedule_id])
-      @schedule_spot = ScheduleSpot.new
-      set_categories
-    else
-      # カードからスポット選択してしおり選択
-      @card = current_user.cards.find(params[:card_id])
-      if params[:spot_ids].present?
-        # 複数スポット（チェックボックス）
-        @spots = Spot.where(id: params[:spot_ids])
-        @spot_ids = Array(params[:spot_ids])
-      else
-        # 単一スポット（個別追加）
-        @spot = Spot.find(params[:spot_id])
-      end
-      @schedules = current_user.schedules
-    end
+    add_spot_from_card? ? new_from_card : new_from_schedule
   end
 
-  # TODO　でかそう
   def create
-    if params[:spot_ids].present? || params[:spot_id].present?
-      # カードからスポット選択してしおり選択
-      @card = current_user.cards.find(params[:card_id])
-      @schedule = current_user.schedules.find(params[:schedule_id])
-      # spot_ids（複数）か spot_id（個別）かを判定
-      spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
-      # 複数作成
-      results = spot_ids.map do |spot_id|
-        spot = Spot.find(spot_id)
-        schedule_spot = ScheduleSpot.create_from_spot(@schedule, spot)
-        schedule_spot.save
-      end
-      # 成功・失敗を判定して、常に HTML レスポンス
-      # TODO Turboをfalseにすべきか確認
-      if results.all?
-        redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_multiple", count: results.size)
-      elsif results.none?
-        # 全て失敗
-        redirect_to card_path(@card), alert: t("errors.user_schedule_spots.create_failed")
-      else
-        # 一部成功
-        added = results.count(true)
-        failed = results.count(false)
-        redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_partial", added: added, failed: failed)
-      end
-    else
-      # しおり詳細から直接スポット追加
-      @schedule = current_user.schedules.find(params[:schedule_id])
-      @schedule_spot = @schedule.schedule_spots.build(schedule_spot_params)
-      @schedule_spot.day_number = 1
-
-      if @schedule_spot.save
-        respond_to do |format|
-          format.turbo_stream { flash.now[:notice] = t("notices.schedule_spots.created") }
-          format.html { redirect_to schedule_path(@schedule), notice: t("notices.schedule_spots.created") }
-        end
-      else
-        set_categories
-        render :new, status: :unprocessable_entity
-      end
-    end
+    add_spot_from_card? ? create_from_card : create_from_schedule
   end
 
   def edit
@@ -130,5 +71,62 @@ class Users::ScheduleSpotsController < ApplicationController
 
   def set_categories
     @categories = Category.order(display_order: :asc).to_a
+  end
+
+  def add_spot_from_card?
+    # cardからしおりにスポットを追加する場合paramsにspotが含まれる
+    params[:spot_ids].present? || params[:spot_id].present?
+  end
+
+  def new_from_card
+    @card = current_user.cards.find(params[:card_id])
+    if params[:spot_ids].present?
+      @spots = Spot.where(id: params[:spot_ids])
+      @spot_ids = Array(params[:spot_ids])
+    else
+      @spot = Spot.find(params[:spot_id])
+    end
+    @schedules = current_user.schedules
+  end
+
+  def new_from_schedule
+    @schedule = current_user.schedules.find(params[:schedule_id])
+    @schedule_spot = ScheduleSpot.new
+    set_categories
+  end
+
+  def create_from_card
+    @card = current_user.cards.find(params[:card_id])
+    @schedule = current_user.schedules.find(params[:schedule_id])
+    spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
+    results = spot_ids.map do |spot_id|
+      spot = Spot.find(spot_id)
+      schedule_spot = ScheduleSpot.create_from_spot(@schedule, spot)
+      schedule_spot.save
+    end
+    if results.all?
+      redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_multiple", count: results.size)
+    elsif results.none?
+      redirect_to card_path(@card), alert: t("errors.user_schedule_spots.create_failed")
+    else
+      added = results.count(true)
+      failed = results.count(false)
+      redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_partial", added: added, failed: failed)
+    end
+  end
+
+  def create_from_schedule
+    @schedule = current_user.schedules.find(params[:schedule_id])
+    @schedule_spot = @schedule.schedule_spots.build(schedule_spot_params)
+    @schedule_spot.day_number = 1
+    if @schedule_spot.save
+      respond_to do |format|
+        format.turbo_stream { flash.now[:notice] = t("notices.schedule_spots.created") }
+        format.html { redirect_to schedule_path(@schedule), notice: t("notices.schedule_spots.created") }
+      end
+    else
+      set_categories
+      render :new, status: :unprocessable_entity
+    end
   end
 end
