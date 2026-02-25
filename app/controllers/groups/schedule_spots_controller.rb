@@ -25,14 +25,10 @@ class Groups::ScheduleSpotsController < ApplicationController
       @card = Card.find(params[:card_id])
       # spot_ids（複数）か spot_id（個別）かを判定
       spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
-      # 現在の最大position取得
-      current_max_position = @schedule.schedule_spots.maximum(:global_position) || 0
       # 複数作成
-      results = spot_ids.map.with_index do |spot_id, index|
+      results = spot_ids.map do |spot_id|
         spot = Spot.find(spot_id)
         schedule_spot = ScheduleSpot.create_from_spot(@schedule, spot)
-        # global_positionを手動で上書き（連番になるように）
-        schedule_spot.global_position = current_max_position + index + 1
         schedule_spot.save
       end
       # 成功・失敗を判定
@@ -60,7 +56,6 @@ class Groups::ScheduleSpotsController < ApplicationController
       # しおり詳細から直接スポット追加
       @schedule_spot = @schedule.schedule_spots.build(schedule_spot_params)
       @schedule_spot.day_number = 1
-      @schedule_spot.global_position = (@schedule.schedule_spots.maximum(:global_position) || 0) + 1
 
       if @schedule_spot.save
         respond_to do |format|

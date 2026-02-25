@@ -38,8 +38,7 @@ class ScheduleSpot < ApplicationRecord
 
   # バリデーション
   # global_position は acts_as_list が自動で管理するためバリデーション不要
-  validates :day_number, presence: true,
-            numericality: { only_integer: true, greater_than: 0 }
+  validates :day_number, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :name, presence: true, length: { maximum: 50 }
   validates :address, length: { maximum: 255 }
   validates :phone_number, length: { maximum: 20 }
@@ -90,7 +89,6 @@ class ScheduleSpot < ApplicationRecord
     schedule.schedule_spots.build(
       spot_id: spot.id,
       day_number: day_number,
-      global_position: schedule.schedule_spots.count + 1,
       name: spot.name,
       address: spot.address,
       phone_number: spot.phone_number,
