@@ -99,12 +99,11 @@ class Users::ScheduleSpotsController < ApplicationController
   def create_from_card
     @card = current_user.cards.find(params[:card_id])
     @schedule = current_user.schedules.find(params[:schedule_id])
+    # カードから追加するスポットを順番に保存していく
     spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
-    results = spot_ids.map do |spot_id|
-      spot = Spot.find(spot_id)
-      schedule_spot = ScheduleSpot.create_from_spot(@schedule, spot)
-      schedule_spot.save
-    end
+    spots = Spot.where(id: spot_ids)
+    results = spots.map { |spot| ScheduleSpot.create_from_spot(@schedule, spot).save }
+    # スポットの保存結果を返す
     if results.all?
       redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_multiple", count: results.size)
     elsif results.none?
