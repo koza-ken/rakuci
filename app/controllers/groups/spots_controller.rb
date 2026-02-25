@@ -83,7 +83,7 @@ class Groups::SpotsController < ApplicationController
   # カードがそのグループに属しているか確認
   def check_card_in_group
     @card ||= @spot.card
-    unless @card.group_card? && @card.cardable_id == @group.id
+    unless @card.owned_by?(@group)
       redirect_to group_path(@group), alert: t("errors.cards.unauthorized_view")
     end
   end
