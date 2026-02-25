@@ -9,7 +9,7 @@ class Users::SpotsController < ApplicationController
 
   def new
     @spot = @card.spots.build
-    @categories = Category.order(display_order: :asc).to_a
+    set_categories
   end
 
   def create
@@ -23,20 +23,20 @@ class Users::SpotsController < ApplicationController
         format.html { redirect_to card_path(@card), notice: t("notices.spots.created") }
       end
     else
-      @categories = Category.order(display_order: :asc).to_a
+      set_categories
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @categories = Category.order(display_order: :asc).to_a
+    set_categories
   end
 
   def update
     if @spot.update(spot_params)
       redirect_to user_spot_path(@spot), notice: t("notices.spots.updated")
     else
-      @categories = Category.order(display_order: :asc).to_a
+      set_categories
       render :edit, status: :unprocessable_entity
     end
   end
@@ -58,6 +58,10 @@ class Users::SpotsController < ApplicationController
     else
       @spot = Spot.find(params[:id])
     end
+  end
+
+  def set_categories
+    @categories = Category.order(display_order: :asc).to_a
   end
 
   def spot_params
