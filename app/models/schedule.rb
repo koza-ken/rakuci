@@ -20,13 +20,12 @@ class Schedule < ApplicationRecord
   include Hashid::Rails
 
   # アソシエーション
-  belongs_to :schedulable, polymorphic: true, touch: true
   has_many :schedule_spots, dependent: :destroy
   has_one :item_list, as: :listable, dependent: :destroy
+  belongs_to :schedulable, polymorphic: true, touch: true
 
   # バリデーション
-  validates :name, presence: true, length: { maximum: 50 }
-  validates :schedulable_type, presence: true
+  validates :name, presence: true, length: { maximum:  50 }
   validates :end_date, comparison: { greater_than_or_equal_to: :start_date }, allow_blank: true
 
   # カスタムバリデーション
