@@ -42,18 +42,6 @@ class Schedule < ApplicationRecord
     schedulable_type == "Group"
   end
 
-  # しおりの詳細ページへのパスを返す
-  def show_path
-    if user_schedule?
-      # 個人しおりのルーティングはresources（複数形）なので、scheduleのIDが必要->self
-      Rails.application.routes.url_helpers.schedule_path(self)
-    else
-      # グループしおりのルーティングはresource（単数形）なのでscheduleのIDは不要
-      # 代わりにどのグループかを示すGroupオブジェクトを渡す->schedulable
-      Rails.application.routes.url_helpers.group_schedule_path(schedulable)
-    end
-  end
-
   # しおりの日数を返す
   def total_days
     return 1 if start_date.blank? || end_date.blank?
