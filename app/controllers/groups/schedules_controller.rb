@@ -6,6 +6,9 @@ class Groups::SchedulesController < ApplicationController
   before_action :set_schedule, only: %i[show edit update]
 
   def show
+    @schedule_spots = @schedule.schedule_spots
+                               .includes(:category, spot: :category)
+                               .order(:global_position)
   end
 
   def new

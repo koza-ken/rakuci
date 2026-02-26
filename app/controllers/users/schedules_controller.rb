@@ -10,6 +10,9 @@ class Users::SchedulesController < ApplicationController
   end
 
   def show
+    @schedule_spots = @schedule.schedule_spots
+                               .includes(:category, spot: :category)
+                               .order(:global_position)
   end
 
   def new

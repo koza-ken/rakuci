@@ -34,7 +34,8 @@ class ScheduleSpot < ApplicationRecord
 
   # アソシエーション
   belongs_to :schedule
-  belongs_to :spot, optional: true  # spotから追加したかどうかを区別する
+  belongs_to :spot, optional: true      # spotから追加したかどうかを区別する
+  belongs_to :category, optional: true  # スナップショットとして保存したカテゴリ
 
   # バリデーション
   # global_position は acts_as_list が自動で管理するためバリデーション不要
@@ -77,12 +78,8 @@ class ScheduleSpot < ApplicationRecord
 
   # カテゴリに応じた背景色のTailwindクラスを返す
   def category_background_color
-    # category_id はしおり登録時の値、なければ元Spotのカテゴリを参照
-    id = category_id || spot&.category_id
-    return "bg-white" unless id
-
-    category = Category.find_by(id: id)
-    category&.background_color_class || "bg-white"
+    cat = category || spot&.category
+    cat&.background_color_class || "bg-white"
   end
 
   def self.create_from_spot(schedule, spot, day_number: 1)
