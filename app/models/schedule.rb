@@ -55,7 +55,7 @@ class Schedule < ApplicationRecord
   end
 
   # しおりの日数を返す
-  def days
+  def total_days
     return 1 if start_date.blank? || end_date.blank?
     (end_date - start_date).to_i + 1
   end

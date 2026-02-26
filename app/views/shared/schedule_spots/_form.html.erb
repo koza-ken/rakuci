@@ -47,7 +47,7 @@
 
     <div class="mb-4 lg:mb-0">
       <%= f.label :day_number, "日程", class: "block text-sm lg:text-base font-medium text-text mb-2" %>
-      <%= f.select :day_number, (1..@schedule.days).map { |d|
+      <%= f.select :day_number, (1..@schedule.total_days).map { |d|
         formatted_date = @schedule.formatted_date_for_day(d)
         label = formatted_date.present? ? "#{formatted_date}（#{d}日目）" : "#{d}日目"
         [label, d]

@@ -28,7 +28,7 @@
         <% end %>
       </div>
 
-      <% (1..schedule.days).each do |day| %>
+      <% (1..schedule.total_days).each do |day| %>
         <%# 日目の見出し %>
         <% formatted_date = schedule.formatted_date_for_day(day) %>
         <h3 class="text-base lg:text-lg font-bold text-gray-700 mt-6 lg:mt-8 mb-3 lg:mb-4">
