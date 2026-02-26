@@ -56,7 +56,8 @@ class Groups::SpotsController < ApplicationController
 
   # URLをshallow化したのでparamsにgroup_idがない
   def set_group_from_spot
-    @group = @spot.card.group
+    @card = @spot.card
+    @group = @card.group
   end
 
   def set_card
@@ -77,7 +78,6 @@ class Groups::SpotsController < ApplicationController
 
   # カードがそのグループに属しているか確認
   def check_card_in_group
-    @card ||= @spot.card
     unless @card.owned_by?(@group)
       redirect_to group_path(@group), alert: t("errors.cards.unauthorized_view")
     end
