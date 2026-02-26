@@ -1,5 +1,6 @@
 class Users::SchedulesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_schedule, only: %i[show edit update destroy]
 
   def index
     user_schedules = current_user.schedules
@@ -9,7 +10,6 @@ class Users::SchedulesController < ApplicationController
   end
 
   def show
-    @schedule = current_user.schedules.find(params[:id])
   end
 
   def new
@@ -30,12 +30,9 @@ class Users::SchedulesController < ApplicationController
   end
 
   def edit
-    @schedule = current_user.schedules.find(params[:id])
   end
 
   def update
-    @schedule = current_user.schedules.find(params[:id])
-
     if @schedule.update(schedule_params)
       redirect_to schedule_path(@schedule), notice: t("notices.schedules.updated")
     else
@@ -44,13 +41,16 @@ class Users::SchedulesController < ApplicationController
   end
 
   def destroy
-    @schedule = current_user.schedules.find(params[:id])
     if @schedule.destroy
       redirect_to schedules_path, notice: t("notices.schedules.destroyed"), turbo: false
     end
   end
 
   private
+
+  def set_schedule
+    @schedule = current_user.schedules.find(params[:id])
+  end
 
   def schedule_params
     params.require(:schedule).permit(:name, :start_date, :end_date, :memo)
