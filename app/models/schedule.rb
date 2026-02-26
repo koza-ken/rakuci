@@ -39,11 +39,6 @@ class Schedule < ApplicationRecord
     schedulable_type == "User" ? :personal : :group
   end
 
-  # グループしおりの場合、グループオブジェクトを返す
-  def group
-    Group.find_by(id: schedulable_id) if schedulable_type == "Group"
-  end
-
   # しおりの詳細ページへのパスを返す
   def show_path
     if schedule_type == :personal
