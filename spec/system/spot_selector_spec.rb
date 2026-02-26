@@ -132,7 +132,7 @@ RSpec.describe "スポット送信ボタン", type: :system do
 
   describe "個人カードのスポット送信ボタン" do
     let(:card) { create(:card, :for_user, cardable: user) }
-    let(:schedule_personal) { create(:schedule, :for_user, schedulable: user) }
+    let(:user_schedule) { create(:schedule, :for_user, schedulable: user) }
     let(:category) { create(:category) }
     let(:spot1) { create(:spot, card: card, category: category, name: "個人スポット1") }
     let(:spot2) { create(:spot, card: card, category: category, name: "個人スポット2") }
@@ -148,35 +148,35 @@ RSpec.describe "スポット送信ボタン", type: :system do
 
         # 初期状態：ボタンが disabled（個人カードにスケジュール存在時のみ表示）
         if user.schedules.any?
-          button = find("#personal-submit-button")
+          button = find("#user-submit-button")
           expect(button).to be_disabled
-          expect(page).to have_css("#personal-submit-button.opacity-50")
+          expect(page).to have_css("#user-submit-button.opacity-50")
         end
       end
 
       it "スポットを1つチェックするとボタンが有効になること" do
         # ユーザーにスケジュールを追加
-        schedule_personal
+        user_schedule
         visit card_path(card)
 
         # スポット1をチェック
         check "spot_#{spot1.id}"
 
         # ボタンが enabled に変わる
-        button = find("#personal-submit-button")
+        button = find("#user-submit-button")
         expect(button).not_to be_disabled
-        expect(page).not_to have_css("#personal-submit-button.opacity-50")
+        expect(page).not_to have_css("#user-submit-button.opacity-50")
       end
 
       it "スポットをチェックして送信できること" do
-        schedule_personal
+        user_schedule
         visit card_path(card)
 
         # スポット1をチェック
         check "spot_#{spot1.id}"
 
         # ボタンをクリック（GET で送信、schedule_spots/new へ遷移）
-        click_button I18n.t('cards.add_spots_to_schedule'), id: "personal-submit-button"
+        click_button I18n.t('cards.add_spots_to_schedule'), id: "user-submit-button"
 
         # 新しいページに遷移している（schedule_spots/new へクエリパラメータ付きで遷移）
         expect(page).to have_current_path(/\/cards\/.*\/schedule_spots\/new/)

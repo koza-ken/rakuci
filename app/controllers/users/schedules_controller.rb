@@ -2,11 +2,10 @@ class Users::SchedulesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    personal_schedules = current_user.schedules
+    user_schedules = current_user.schedules
     group_schedule_ids = current_user.groups.pluck(:id)
-    group_schedules = Schedule.where(schedulable_type: "Group", schedulable_id: group_schedule_ids)
-                               .includes(schedulable: :group_memberships)
-    @schedules = (personal_schedules + group_schedules).sort_by { |s| s.start_date.presence || Date.new(1, 1, 1) }.reverse
+    group_schedules = Schedule.where(schedulable_type: "Group", schedulable_id: group_schedule_ids).includes(schedulable: :group_memberships)
+    @schedules = (user_schedules + group_schedules).sort_by { |s| s.start_date.presence || Date.new(1, 1, 1) }.reverse
   end
 
   def show

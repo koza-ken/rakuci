@@ -45,7 +45,7 @@ class Card < ApplicationRecord
 
   # 個人カードの場合、ユーザーオブジェクトを返す
   def user
-    cardable if card_type == :personal
+    cardable if card_type == :user
   end
 
   # このカードが指定された所有者（User/Group）に属しているか
@@ -64,7 +64,7 @@ class Card < ApplicationRecord
 
   # カードのタイプを返す（個人用 or グループ用）
   def card_type
-    cardable_type == "User" ? :personal : :group
+    cardable_type == "User" ? :user : :group
   end
 
   # そのユーザーがカードにアクセス可能か
@@ -80,7 +80,7 @@ class Card < ApplicationRecord
 
   # ゲストユーザーがカードにアクセス可能か
   def accessible_by_guest?(guest_group_ids)
-    return false if card_type == :personal  # 個人カードは不可
+    return false if card_type == :user  # 個人カードは不可
     guest_group_ids.include?(cardable_id)
   end
 end
