@@ -51,12 +51,12 @@ class Groups::SchedulesController < ApplicationController
 
   private
 
-  def set_schedule
-    @schedule = @group.schedule
-  end
-
   def set_group
     @group = Group.find(params[:group_id])
+  end
+
+  def set_schedule
+    @schedule = @group.schedule
   end
 
   def schedule_params
