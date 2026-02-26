@@ -84,7 +84,7 @@ RSpec.describe "グループ利用フロー", type: :request do
       }
       expect(response).to redirect_to(/\/groups/)
       schedule = Schedule.last
-      expect(schedule.schedule_type).to eq(:group)
+      expect(schedule.group_schedule?).to be true
 
       # スポットをしおりに追加
       post "/groups/#{group.id}/schedule/schedule_spots", params: {

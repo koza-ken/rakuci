@@ -16,7 +16,7 @@
       <% end %>
 
       <%# グループしおりの場合、グループ名と人数を表示 %>
-      <% if schedule.schedule_type == :group %>
+      <% if schedule.group_schedule? %>
         <div class="flex items-center justify-between">
           <span class="text-sm text-text-light"><%= schedule.schedulable.name %></span>
           <div class="flex items-center gap-2">

@@ -34,14 +34,17 @@ class Schedule < ApplicationRecord
   # しおりがつくられたらしおりに紐づくもちものリストが作られる
   after_create :create_item_list
 
-  # しおりのタイプを返す（個人 or グループ）
-  def schedule_type
-    schedulable_type == "User" ? :personal : :group
+  def user_schedule?
+    schedulable_type == "User"
+  end
+
+  def group_schedule?
+    schedulable_type == "Group"
   end
 
   # しおりの詳細ページへのパスを返す
   def show_path
-    if schedule_type == :personal
+    if user_schedule?
       Rails.application.routes.url_helpers.schedule_path(self)
     else
       # グループスケジュールは resource（単数形）なので、IDは不要

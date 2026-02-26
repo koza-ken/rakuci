@@ -110,43 +110,35 @@ RSpec.describe Schedule, type: :model do
   end
 
   describe "メソッド" do
-    describe "#schedule_type" do
-      context "個人のしおりの場合" do
-        it "personalを返すこと" do
-          user = create(:user)
-          schedule = create(:schedule, :for_user, schedulable: user)
+    describe "#user_schedule?" do
+      it "個人のしおりの場合trueを返すこと" do
+        user = create(:user)
+        schedule = create(:schedule, :for_user, schedulable: user)
 
-          expect(schedule.schedule_type).to eq(:personal)
-        end
+        expect(schedule.user_schedule?).to be true
       end
 
-      context "グループのしおりの場合" do
-        it "groupを返すこと" do
-          group = create(:group)
-          schedule = create(:schedule, :for_group, schedulable: group)
+      it "グループのしおりの場合falseを返すこと" do
+        group = create(:group)
+        schedule = create(:schedule, :for_group, schedulable: group)
 
-          expect(schedule.schedule_type).to eq(:group)
-        end
+        expect(schedule.user_schedule?).to be false
       end
     end
 
-    describe "#group" do
-      context "グループのしおりの場合" do
-        it "グループオブジェクトを返すこと" do
-          group = create(:group)
-          schedule = create(:schedule, :for_group, schedulable: group)
+    describe "#group_schedule?" do
+      it "グループのしおりの場合trueを返すこと" do
+        group = create(:group)
+        schedule = create(:schedule, :for_group, schedulable: group)
 
-          expect(schedule.group).to eq(group)
-        end
+        expect(schedule.group_schedule?).to be true
       end
 
-      context "個人のしおりの場合" do
-        it "nilを返すこと" do
-          user = create(:user)
-          schedule = create(:schedule, :for_user, schedulable: user)
+      it "個人のしおりの場合falseを返すこと" do
+        user = create(:user)
+        schedule = create(:schedule, :for_user, schedulable: user)
 
-          expect(schedule.group).to be_nil
-        end
+        expect(schedule.group_schedule?).to be false
       end
     end
 
