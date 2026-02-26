@@ -26,10 +26,10 @@ class Schedule < ApplicationRecord
 
   # バリデーション
   validates :name, presence: true, length: { maximum:  50 }
-  validates :end_date, comparison: { greater_than_or_equal_to: :start_date }, allow_blank: true
 
   # カスタムバリデーション
   validate :only_one_schedule_per_group
+  validate :end_date_after_start_date
 
   # しおりがつくられたらしおりに紐づくもちものリストが作られる
   after_create :create_item_list
@@ -82,6 +82,14 @@ class Schedule < ApplicationRecord
 
   def create_item_list
     ItemList.create(listable: self)
+  end
+
+  # 終了日が開始日以降かをチェック
+  def end_date_after_start_date
+    return unless start_date.present? && end_date.present?
+    if end_date < start_date
+      errors.add(:end_date, :greater_than_or_equal_to, count: :start_date)
+    end
   end
 
   # グループは1つのスケジュールのみ持つことができる
