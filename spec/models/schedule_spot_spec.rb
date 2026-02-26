@@ -193,7 +193,6 @@ RSpec.describe ScheduleSpot, type: :model do
         end
       end
     end
-
   end
 
   describe "メソッド" do
