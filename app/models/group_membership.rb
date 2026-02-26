@@ -55,16 +55,8 @@ class GroupMembership < ApplicationRecord
     group_nickname
   end
 
-  # ゲストトークンの新規生成（digest未設定時のみ）
+  # ゲストトークンの生成
   def generate_guest_token
-    return if guest_token_digest.present?
-    @raw_guest_token = SecureRandom.urlsafe_base64(32)
-    self.guest_token_digest = self.class.digest(raw_guest_token)
-    raw_guest_token
-  end
-
-  # ゲストトークンの再生成（既存トークンを上書き）
-  def regenerate_guest_token
     @raw_guest_token = SecureRandom.urlsafe_base64(32)
     self.guest_token_digest = self.class.digest(raw_guest_token)
     raw_guest_token
@@ -76,7 +68,7 @@ class GroupMembership < ApplicationRecord
     if current_user&.id
       update(user_id: current_user.id) ? nil : false
     else
-      token = guest_token_digest.present? ? regenerate_guest_token : generate_guest_token
+      token = generate_guest_token
       save ? token : false
     end
   end

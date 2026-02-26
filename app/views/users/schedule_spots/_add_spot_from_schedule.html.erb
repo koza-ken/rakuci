@@ -7,17 +7,17 @@
   <%= form_with model: @schedule_spot, url: schedule_schedule_spots_path(@schedule), class: "w-full max-w-md", data: { controller: "autocomplete" } do |f| %>
     <%# スポット名 %>
     <div class="mb-6">
-      <%= f.label :snapshot_name, class: "block text-sm font-medium text-text mb-2" do %>
+      <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
         <%= t('spots.form.name') %>
         <span class="text-red-600 font-bold ml-1">*</span>
       <% end %>
-      <%= f.text_field :snapshot_name,
+      <%= f.text_field :name,
           data: { autocomplete_target: "nameField" },
           placeholder: t('spots.form.name_placeholder'),
           class: "form-text-field" %>
       <% if @schedule_spot.errors.any? %>
         <div class="ml-2">
-          <% @schedule_spot.errors.messages[:snapshot_name].each do |message| %>
+          <% @schedule_spot.errors.messages[:name].each do |message| %>
             <p class="text-red-600 text-xs"><%= t('schedule_spots.form.spot_name') %><%= message %></p>
           <% end %>
         </div>
@@ -42,15 +42,15 @@
 
     <%# カテゴリ %>
     <div class="mb-6">
-      <%= f.label :snapshot_category_id, class: "block text-sm font-medium text-text mb-2" do %>
+      <%= f.label :category_id, class: "block text-sm font-medium text-text mb-2" do %>
         <%= t('spots.form.category') %>
       <% end %>
-      <%= f.collection_select :snapshot_category_id, @categories, :id, :name,
+      <%= f.collection_select :category_id, @categories, :id, :name,
           {include_blank: "--- 選択してください ---"},
           {class: "form-text-field"} %>
       <% if @schedule_spot.errors.any? %>
         <div class="ml-2">
-          <% @schedule_spot.errors.messages[:snapshot_category_id].each do |message| %>
+          <% @schedule_spot.errors.messages[:category_id].each do |message| %>
             <p class="text-red-600 text-xs"><%= t('schedule_spots.form.category') %><%= message %></p>
           <% end %>
         </div>
@@ -59,8 +59,8 @@
 
     <%# 住所 %>
     <div class="mb-6">
-      <%= f.label :snapshot_address, t('spots.form.address'), class: "block text-sm font-medium text-text mb-2" %>
-      <%= f.text_field :snapshot_address,
+      <%= f.label :address, t('spots.form.address'), class: "block text-sm font-medium text-text mb-2" %>
+      <%= f.text_field :address,
           data: { autocomplete_target: "addressField" },
           placeholder: t('spots.form.address_placeholder'),
           class: "form-text-field resize-vertical" %>
@@ -68,8 +68,8 @@
 
     <%# URL %>
     <div class="mb-6">
-      <%= f.label :snapshot_website_url, t('spots.form.website_url'), class: "block text-sm font-medium text-text mb-2" %>
-      <%= f.text_field :snapshot_website_url,
+      <%= f.label :website_url, t('spots.form.website_url'), class: "block text-sm font-medium text-text mb-2" %>
+      <%= f.text_field :website_url,
           data: { autocomplete_target: "websiteField" },
           placeholder: t('spots.form.web_site_url_placeholder'),
           class: "form-text-field resize-vertical" %>
@@ -77,8 +77,8 @@
 
     <%# 電話番号 %>
     <div class="mb-6">
-      <%= f.label :snapshot_phone_number, t('spots.form.phone_number'), class: "block text-sm font-medium text-text mb-2" %>
-      <%= f.text_field :snapshot_phone_number,
+      <%= f.label :phone_number, t('spots.form.phone_number'), class: "block text-sm font-medium text-text mb-2" %>
+      <%= f.text_field :phone_number,
           data: { autocomplete_target: "phoneField" },
           placeholder: t('spots.form.phone_number_placeholder'),
           class: "form-text-field resize-vertical" %>

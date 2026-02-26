@@ -143,7 +143,7 @@ ja:
       guide_slide_5_title: 費用を精算する
       guide_slide_5_description: 旅行中の費用を記録しておくことで、旅費の精算ができます。
       lets_create_card: 旅行先のカードをつくろう
-      personal_card_page: このページはあなた専用のカードをつくることができます
+      user_card_page: このページはあなた専用のカードをつくることができます
       title: あなたの旅のカード
     memo_input_placeholder: メモを入力してください
     messages:

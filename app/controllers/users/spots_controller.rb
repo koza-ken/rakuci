@@ -9,13 +9,11 @@ class Users::SpotsController < ApplicationController
 
   def new
     @spot = @card.spots.build
-    @categories = Category.order(display_order: :asc).to_a
+    set_categories
   end
 
   def create
     @spot = @card.spots.build(spot_params)
-    # 空文字列のgoogle_place_idをnilに変換（データベースのユニーク制約対策）
-    @spot.google_place_id = nil if @spot.google_place_id.blank?
 
     if @spot.save
       respond_to do |format|
@@ -23,20 +21,20 @@ class Users::SpotsController < ApplicationController
         format.html { redirect_to card_path(@card), notice: t("notices.spots.created") }
       end
     else
-      @categories = Category.order(display_order: :asc).to_a
+      set_categories
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @categories = Category.order(display_order: :asc).to_a
+    set_categories
   end
 
   def update
     if @spot.update(spot_params)
       redirect_to user_spot_path(@spot), notice: t("notices.spots.updated")
     else
-      @categories = Category.order(display_order: :asc).to_a
+      set_categories
       render :edit, status: :unprocessable_entity
     end
   end
@@ -53,11 +51,11 @@ class Users::SpotsController < ApplicationController
   end
 
   def set_spot
-    if params[:card_id]
-      @spot = @card.spots.find(params[:id])
-    else
-      @spot = Spot.find(params[:id])
-    end
+    @spot = Spot.find(params[:id])
+  end
+
+  def set_categories
+    @categories = Category.order(display_order: :asc).to_a
   end
 
   def spot_params
@@ -66,7 +64,7 @@ class Users::SpotsController < ApplicationController
 
   def check_card_owner
     @card ||= @spot.card
-    unless @card.accessible?(user: current_user, guest_group_ids: [])
+    unless @card.owned_by?(current_user)
       redirect_to cards_path, alert: t("errors.cards.unauthorized_view")
     end
   end

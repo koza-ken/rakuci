@@ -1,18 +1,18 @@
 class Users::SchedulesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_schedule, only: %i[show edit update destroy]
 
   def index
-    @user = current_user
-    personal_schedules = @user.schedules
-    group_schedule_ids = @user.groups.pluck(:id)
-    group_schedules = Schedule.where(schedulable_type: "Group", schedulable_id: group_schedule_ids)
-                               .includes(schedulable: :group_memberships)
-    @schedules = (personal_schedules + group_schedules).sort_by { |s| s.start_date.presence || Date.new(1, 1, 1) }.reverse
+    user_schedules = current_user.schedules
+    group_schedule_ids = current_user.groups.pluck(:id)
+    group_schedules = Schedule.where(schedulable_type: "Group", schedulable_id: group_schedule_ids).includes(schedulable: :group_memberships)
+    @schedules = (user_schedules + group_schedules).sort_by { |s| s.start_date.presence || Date.new(1, 1, 1) }.reverse
   end
 
   def show
-    @user = current_user
-    @schedule = @user.schedules.find(params[:id])
+    @schedule_spots = @schedule.schedule_spots
+                               .includes(:category, spot: :category)
+                               .order(:global_position)
   end
 
   def new
@@ -33,12 +33,9 @@ class Users::SchedulesController < ApplicationController
   end
 
   def edit
-    @schedule = current_user.schedules.find(params[:id])
   end
 
   def update
-    @schedule = current_user.schedules.find(params[:id])
-
     if @schedule.update(schedule_params)
       redirect_to schedule_path(@schedule), notice: t("notices.schedules.updated")
     else
@@ -47,13 +44,16 @@ class Users::SchedulesController < ApplicationController
   end
 
   def destroy
-    @schedule = current_user.schedules.find(params[:id])
     if @schedule.destroy
       redirect_to schedules_path, notice: t("notices.schedules.destroyed"), turbo: false
     end
   end
 
   private
+
+  def set_schedule
+    @schedule = current_user.schedules.find(params[:id])
+  end
 
   def schedule_params
     params.require(:schedule).permit(:name, :start_date, :end_date, :memo)

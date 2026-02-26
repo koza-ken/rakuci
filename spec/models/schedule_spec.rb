@@ -110,52 +110,44 @@ RSpec.describe Schedule, type: :model do
   end
 
   describe "メソッド" do
-    describe "#schedule_type" do
-      context "個人のしおりの場合" do
-        it "personalを返すこと" do
-          user = create(:user)
-          schedule = create(:schedule, :for_user, schedulable: user)
+    describe "#user_schedule?" do
+      it "個人のしおりの場合trueを返すこと" do
+        user = create(:user)
+        schedule = create(:schedule, :for_user, schedulable: user)
 
-          expect(schedule.schedule_type).to eq(:personal)
-        end
+        expect(schedule.user_schedule?).to be true
       end
 
-      context "グループのしおりの場合" do
-        it "groupを返すこと" do
-          group = create(:group)
-          schedule = create(:schedule, :for_group, schedulable: group)
+      it "グループのしおりの場合falseを返すこと" do
+        group = create(:group)
+        schedule = create(:schedule, :for_group, schedulable: group)
 
-          expect(schedule.schedule_type).to eq(:group)
-        end
+        expect(schedule.user_schedule?).to be false
       end
     end
 
-    describe "#group" do
-      context "グループのしおりの場合" do
-        it "グループオブジェクトを返すこと" do
-          group = create(:group)
-          schedule = create(:schedule, :for_group, schedulable: group)
+    describe "#group_schedule?" do
+      it "グループのしおりの場合trueを返すこと" do
+        group = create(:group)
+        schedule = create(:schedule, :for_group, schedulable: group)
 
-          expect(schedule.group).to eq(group)
-        end
+        expect(schedule.group_schedule?).to be true
       end
 
-      context "個人のしおりの場合" do
-        it "nilを返すこと" do
-          user = create(:user)
-          schedule = create(:schedule, :for_user, schedulable: user)
+      it "個人のしおりの場合falseを返すこと" do
+        user = create(:user)
+        schedule = create(:schedule, :for_user, schedulable: user)
 
-          expect(schedule.group).to be_nil
-        end
+        expect(schedule.group_schedule?).to be false
       end
     end
 
-    describe "#days" do
+    describe "#total_days" do
       context "start_dateとend_dateが両方空の場合" do
         it "1を返すこと" do
           schedule = build(:schedule, start_date: nil, end_date: nil)
 
-          expect(schedule.days).to eq(1)
+          expect(schedule.total_days).to eq(1)
         end
       end
 
@@ -163,7 +155,7 @@ RSpec.describe Schedule, type: :model do
         it "1を返すこと" do
           schedule = build(:schedule, start_date: Date.current, end_date: nil)
 
-          expect(schedule.days).to eq(1)
+          expect(schedule.total_days).to eq(1)
         end
       end
 
@@ -171,7 +163,7 @@ RSpec.describe Schedule, type: :model do
         it "1を返すこと" do
           schedule = build(:schedule, start_date: Date.current, end_date: Date.current)
 
-          expect(schedule.days).to eq(1)
+          expect(schedule.total_days).to eq(1)
         end
       end
 
@@ -181,7 +173,7 @@ RSpec.describe Schedule, type: :model do
           end_date = start_date + 7.days
           schedule = build(:schedule, start_date: start_date, end_date: end_date)
 
-          expect(schedule.days).to eq(8)
+          expect(schedule.total_days).to eq(8)
         end
       end
     end

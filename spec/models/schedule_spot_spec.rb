@@ -2,23 +2,22 @@
 #
 # Table name: schedule_spots
 #
-#  id                    :bigint           not null, primary key
-#  day_number            :integer          not null
-#  end_time              :time
-#  global_position       :integer          not null
-#  is_custom_entry       :boolean          default(FALSE), not null
-#  memo                  :text
-#  snapshot_address      :string
-#  snapshot_name         :string
-#  snapshot_phone_number :string
-#  snapshot_website_url  :string
-#  start_time            :time
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  google_place_id       :string
-#  schedule_id           :bigint           not null
-#  snapshot_category_id  :integer
-#  spot_id               :bigint
+#  id              :bigint           not null, primary key
+#  address         :string
+#  day_number      :integer          not null
+#  end_time        :time
+#  global_position :integer          not null
+#  memo            :text
+#  name            :string
+#  phone_number    :string
+#  start_time      :time
+#  website_url     :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  category_id     :integer
+#  google_place_id :string
+#  schedule_id     :bigint           not null
+#  spot_id         :bigint
 #
 # Indexes
 #
@@ -59,100 +58,100 @@ RSpec.describe ScheduleSpot, type: :model do
 
     # global_position は acts_as_list が自動で管理するためバリデーションテスト不要
 
-    describe "snapshot_name" do
+    describe "name" do
       context "文字数が50文字以下の場合" do
         it "保存に成功すること" do
-          schedule_spot = build(:schedule_spot, snapshot_name: "a" * 50)
+          schedule_spot = build(:schedule_spot, name: "a" * 50)
           expect(schedule_spot).to be_valid
         end
       end
 
       context "文字数が51文字以上の場合" do
         it "保存に失敗すること" do
-          schedule_spot = build(:schedule_spot, snapshot_name: "a" * 51)
+          schedule_spot = build(:schedule_spot, name: "a" * 51)
           expect(schedule_spot).not_to be_valid
         end
       end
     end
 
-    describe "snapshot_address" do
+    describe "address" do
       context "文字数が255文字以下の場合" do
         it "保存に成功すること" do
-          schedule_spot = build(:schedule_spot, snapshot_address: "a" * 255)
+          schedule_spot = build(:schedule_spot, address: "a" * 255)
           expect(schedule_spot).to be_valid
         end
       end
 
       context "文字数が256文字以上の場合" do
         it "保存に失敗すること" do
-          schedule_spot = build(:schedule_spot, snapshot_address: "a" * 256)
+          schedule_spot = build(:schedule_spot, address: "a" * 256)
           expect(schedule_spot).not_to be_valid
         end
       end
     end
 
-    describe "snapshot_phone_number" do
+    describe "phone_number" do
       context "文字数が20文字以下の場合" do
         it "保存に成功すること" do
-          schedule_spot = build(:schedule_spot, snapshot_phone_number: "a" * 20)
+          schedule_spot = build(:schedule_spot, phone_number: "a" * 20)
           expect(schedule_spot).to be_valid
         end
       end
 
       context "文字数が21文字以上の場合" do
         it "保存に失敗すること" do
-          schedule_spot = build(:schedule_spot, snapshot_phone_number: "a" * 21)
+          schedule_spot = build(:schedule_spot, phone_number: "a" * 21)
           expect(schedule_spot).not_to be_valid
         end
       end
     end
 
-    describe "snapshot_website_url" do
+    describe "website_url" do
       context "値が空の場合" do
         it "保存に成功すること" do
-          schedule_spot = build(:schedule_spot, snapshot_website_url: nil)
+          schedule_spot = build(:schedule_spot, website_url: nil)
           expect(schedule_spot).to be_valid
         end
       end
 
       context "有効な HTTP URL の場合" do
         it "保存に成功すること" do
-          schedule_spot = build(:schedule_spot, snapshot_website_url: "http://example.com")
+          schedule_spot = build(:schedule_spot, website_url: "http://example.com")
           expect(schedule_spot).to be_valid
         end
       end
 
       context "有効な HTTPS URL の場合" do
         it "保存に成功すること" do
-          schedule_spot = build(:schedule_spot, snapshot_website_url: "https://example.com")
+          schedule_spot = build(:schedule_spot, website_url: "https://example.com")
           expect(schedule_spot).to be_valid
         end
       end
 
       context "JavaScript プロトコルの場合" do
         it "保存に失敗すること" do
-          schedule_spot = build(:schedule_spot, snapshot_website_url: "javascript:alert('xss')")
+          schedule_spot = build(:schedule_spot, website_url: "javascript:alert('xss')")
           expect(schedule_spot).not_to be_valid
         end
       end
 
       context "不正なスキーム（ftp）の場合" do
         it "保存に失敗すること" do
-          schedule_spot = build(:schedule_spot, snapshot_website_url: "ftp://example.com")
+          schedule_spot = build(:schedule_spot, website_url: "ftp://example.com")
           expect(schedule_spot).not_to be_valid
         end
       end
 
       context "文字数が500文字以下の場合" do
         it "保存に成功すること" do
-          schedule_spot = build(:schedule_spot, snapshot_website_url: "https://example.com" + ("a" * 481))
+          schedule_spot = build(:schedule_spot, website_url: "https://example.com" + ("a" * 481))
           expect(schedule_spot).to be_valid
         end
       end
 
       context "文字数が501文字以上の場合" do
         it "保存に失敗すること" do
-          schedule_spot = build(:schedule_spot, snapshot_website_url: "https://example.com" + ("a" * 482))
+          schedule_spot = build(:schedule_spot, website_url: "https://example.com" + ("a" * 482))
           expect(schedule_spot).not_to be_valid
         end
       end
@@ -194,70 +193,21 @@ RSpec.describe ScheduleSpot, type: :model do
         end
       end
     end
-
-    describe "spot_or_custom_entry_valid" do
-      context "is_custom_entryがfalseで、spot_idがある場合" do
-        it "保存に成功すること" do
-          spot = create(:spot)
-          schedule_spot = build(:schedule_spot, spot_id: spot.id, is_custom_entry: false)
-          expect(schedule_spot).to be_valid
-        end
-      end
-
-      context "is_custom_entryがtrueで、spot_idがない場合" do
-        it "保存に成功すること" do
-          schedule_spot = build(:schedule_spot, :custom, is_custom_entry: true)
-          expect(schedule_spot).to be_valid
-        end
-      end
-
-      context "is_custom_entryがtrueで、spot_idがある場合" do
-        it "保存に失敗すること" do
-          spot = create(:spot)
-          schedule_spot = build(:schedule_spot, :custom, spot_id: spot.id, is_custom_entry: true)
-          expect(schedule_spot).not_to be_valid
-        end
-      end
-
-      context "is_custom_entryがfalseで、spot_idがない場合" do
-        it "保存に失敗すること" do
-          schedule_spot = build(:schedule_spot, spot_id: nil, is_custom_entry: false)
-          expect(schedule_spot).not_to be_valid
-        end
-      end
-
-      context "is_custom_entryがtrueで、snapshot_nameが空の場合" do
-        it "保存に失敗すること" do
-          schedule_spot = build(:schedule_spot, :custom, snapshot_name: nil, is_custom_entry: true)
-          expect(schedule_spot).not_to be_valid
-        end
-      end
-    end
   end
 
   describe "メソッド" do
     describe "#display_name" do
-      context "snapshot_nameが存在する場合" do
-        it "snapshot_nameを返すこと" do
-          schedule_spot = build(:schedule_spot, snapshot_name: "Custom Name")
+      context "nameが存在する場合" do
+        it "nameを返すこと" do
+          schedule_spot = build(:schedule_spot, name: "Custom Name")
           expect(schedule_spot.display_name).to eq("Custom Name")
         end
       end
 
-      context "snapshot_nameが空の場合" do
-        context "spotが存在する場合" do
-          it "spot.nameを返すこと" do
-            spot = create(:spot, name: "Spot Name")
-            schedule_spot = build(:schedule_spot, snapshot_name: "", spot: spot)
-            expect(schedule_spot.display_name).to eq("Spot Name")
-          end
-        end
-
-        context "spotが存在しない場合" do
-          it "「予定」を返すこと" do
-            schedule_spot = build(:schedule_spot, snapshot_name: "", spot: nil)
-            expect(schedule_spot.display_name).to eq("予定")
-          end
+      context "nameが空の場合" do
+        it "「予定」を返すこと" do
+          schedule_spot = build(:schedule_spot, name: "", spot: nil)
+          expect(schedule_spot.display_name).to eq("予定")
         end
       end
     end
@@ -271,41 +221,40 @@ RSpec.describe ScheduleSpot, type: :model do
 
           expect(schedule_spot.spot_id).to eq(spot.id)
           expect(schedule_spot.day_number).to eq(2)
-          expect(schedule_spot.is_custom_entry).to be false
-          expect(schedule_spot.snapshot_name).to eq(spot.name)
-          expect(schedule_spot.snapshot_address).to eq(spot.address)
+          expect(schedule_spot.name).to eq(spot.name)
+          expect(schedule_spot.address).to eq(spot.address)
         end
       end
     end
 
     describe "#category_background_color" do
-      context "snapshot_category_idがある場合" do
+      context "category_idがある場合" do
         it "そのカテゴリの背景色クラスを返すこと" do
           category = create(:category, name: "観光地")
-          schedule_spot = build(:schedule_spot, snapshot_category_id: category.id)
+          schedule_spot = build(:schedule_spot, category_id: category.id)
           expect(schedule_spot.category_background_color).to eq("bg-sky-100/60")
         end
       end
 
-      context "snapshot_category_idがなく、spot.category_idがある場合" do
+      context "category_idがなく、spot.category_idがある場合" do
         it "spotのカテゴリの背景色クラスを返すこと" do
           category = create(:category, name: "グルメ")
           spot = create(:spot, category: category)
-          schedule_spot = build(:schedule_spot, snapshot_category_id: nil, spot: spot)
+          schedule_spot = build(:schedule_spot, category_id: nil, spot: spot)
           expect(schedule_spot.category_background_color).to eq("bg-red-100/60")
         end
       end
 
       context "どちらのcategory_idもない場合" do
         it "bg-whiteを返すこと" do
-          schedule_spot = build(:schedule_spot, snapshot_category_id: nil, spot: nil)
+          schedule_spot = build(:schedule_spot, category_id: nil, spot: nil)
           expect(schedule_spot.category_background_color).to eq("bg-white")
         end
       end
 
       context "category_idはあるがCategoryが見つからない場合" do
         it "bg-whiteを返すこと" do
-          schedule_spot = build(:schedule_spot, snapshot_category_id: 99999)
+          schedule_spot = build(:schedule_spot, category_id: 99999)
           expect(schedule_spot.category_background_color).to eq("bg-white")
         end
       end

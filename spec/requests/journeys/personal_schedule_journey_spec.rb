@@ -47,7 +47,7 @@ RSpec.describe "個人ユーザーのしおり作成フロー", type: :request d
       expect(response).to redirect_to(/\/schedules/)
       schedule = Schedule.last
       expect(schedule.name).to eq("東京旅行")
-      expect(schedule.schedule_type).to eq(:personal)
+      expect(schedule.user_schedule?).to be true
 
       # スポットをしおりに追加
       post "/schedules/#{schedule.id}/schedule_spots", params: {

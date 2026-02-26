@@ -1,83 +1,19 @@
 class Users::ScheduleSpotsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_schedule_spot, only: %i[show edit update destroy]
-  before_action :set_schedule_from_schedule_spot, only: %i[show edit update destroy]
+  before_action :set_schedule_spot, only: %i[show edit update destroy move_higher move_lower]
+  before_action :set_schedule_from_schedule_spot, only: %i[show edit update destroy move_higher move_lower]
+  before_action :set_schedule_spots, only: %i[move_higher move_lower]
 
   def show
-    @category = Category.find_by(id: @schedule_spot.snapshot_category_id)
+    @category = Category.find_by(id: @schedule_spot.category_id)
   end
 
-  # TODO でかそう
   def new
-    if params[:schedule_id].present?
-      # しおり詳細から直接スポット追加
-      @schedule = current_user.schedules.find(params[:schedule_id])
-      @schedule_spot = ScheduleSpot.new
-      @categories = Category.order(display_order: :asc).to_a
-    else
-      # カードからスポット選択してしおり選択
-      @card = current_user.cards.find(params[:card_id])
-      if params[:spot_ids].present?
-        # 複数スポット（チェックボックス）
-        @spots = Spot.where(id: params[:spot_ids])
-        @spot_ids = Array(params[:spot_ids])
-      else
-        # 単一スポット（個別追加）
-        @spot = Spot.find(params[:spot_id])
-      end
-      @schedules = current_user.schedules
-    end
+    add_spot_from_card? ? new_from_card : new_from_schedule
   end
 
-  # TODO　でかそう
   def create
-    if params[:spot_ids].present? || params[:spot_id].present?
-      # カードからスポット選択してしおり選択
-      @card = current_user.cards.find(params[:card_id])
-      @schedule = current_user.schedules.find(params[:schedule_id])
-      # spot_ids（複数）か spot_id（個別）かを判定
-      spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
-      # 現在の最大position取得
-      current_max_position = @schedule.schedule_spots.maximum(:global_position) || 0
-      # 複数作成
-      results = spot_ids.map.with_index do |spot_id, index|
-        spot = Spot.find(spot_id)
-        schedule_spot = ScheduleSpot.create_from_spot(@schedule, spot)
-        # global_positionを手動で上書き（連番になるように）
-        schedule_spot.global_position = current_max_position + index + 1
-        schedule_spot.save
-      end
-      # 成功・失敗を判定して、常に HTML レスポンス
-      # TODO Turboをfalseにすべきか確認
-      if results.all?
-        redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_multiple", count: results.size)
-      elsif results.none?
-        # 全て失敗
-        redirect_to card_path(@card), alert: t("errors.user_schedule_spots.create_failed")
-      else
-        # 一部成功
-        added = results.count(true)
-        failed = results.count(false)
-        redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_partial", added: added, failed: failed)
-      end
-    else
-      # しおり詳細から直接スポット追加
-      @schedule = current_user.schedules.find(params[:schedule_id])
-      @schedule_spot = @schedule.schedule_spots.build(schedule_spot_params)
-      @schedule_spot.is_custom_entry = true
-      @schedule_spot.day_number = 1
-      @schedule_spot.global_position = (@schedule.schedule_spots.maximum(:global_position) || 0) + 1
-
-      if @schedule_spot.save
-        respond_to do |format|
-          format.turbo_stream { flash.now[:notice] = t("notices.schedule_spots.created") }
-          format.html { redirect_to schedule_path(@schedule), notice: t("notices.schedule_spots.created") }
-        end
-      else
-        @categories = Category.order(display_order: :asc).to_a
-        render :new, status: :unprocessable_entity
-      end
-    end
+    add_spot_from_card? ? create_from_card : create_from_schedule
   end
 
   def edit
@@ -105,11 +41,7 @@ class Users::ScheduleSpotsController < ApplicationController
 
   # 並び替えacts_as_listのメソッド
   def move_higher
-    @schedule_spot = ScheduleSpot.find(params[:id])
-    @schedule = @schedule_spot.schedule
-    # acts_as_listのメソッドで移動
     @schedule_spot.move_higher
-    # レスポンス(Turbo Stream)
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to schedule_path(@schedule) }
@@ -117,11 +49,7 @@ class Users::ScheduleSpotsController < ApplicationController
   end
 
   def move_lower
-    @schedule_spot = ScheduleSpot.find(params[:id])
-    @schedule = @schedule_spot.schedule
-    # acts_as_listのメソッドで移動
     @schedule_spot.move_lower
-    # レスポンス(Turbo Stream)
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to schedule_path(@schedule) }
@@ -131,14 +59,81 @@ class Users::ScheduleSpotsController < ApplicationController
   private
 
   def set_schedule_spot
-    @schedule_spot = ScheduleSpot.find(params[:id])
+    @schedule_spot = ScheduleSpot.includes(:spot).find(params[:id])
   end
 
   def set_schedule_from_schedule_spot
     @schedule = @schedule_spot.schedule
   end
 
+  def set_schedule_spots
+    @schedule_spots = @schedule.schedule_spots
+                               .includes(:category, spot: :category)
+                               .order(:global_position)
+  end
+
   def schedule_spot_params
-    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_address, :snapshot_website_url, :snapshot_phone_number, :snapshot_category_id, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
+    params.require(:schedule_spot).permit(:name, :category_id, :address, :phone_number, :website_url, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
+  end
+
+  def set_categories
+    @categories = Category.order(display_order: :asc).to_a
+  end
+
+  def add_spot_from_card?
+    # cardからしおりにスポットを追加する場合paramsにspotが含まれる
+    params[:spot_ids].present? || params[:spot_id].present?
+  end
+
+  def new_from_card
+    @card = current_user.cards.find(params[:card_id])
+    @schedules = current_user.schedules
+    # カードから複数のスポットを追加するかの判定
+    if params[:spot_ids].present?
+      @spot_ids = Array(params[:spot_ids])
+      @spots = Spot.where(id: @spot_ids)
+    else
+      @spot = Spot.find(params[:spot_id])
+    end
+  end
+
+  def new_from_schedule
+    @schedule = current_user.schedules.find(params[:schedule_id])
+    @schedule_spot = ScheduleSpot.new
+    set_categories
+  end
+
+  def create_from_card
+    @card = current_user.cards.find(params[:card_id])
+    @schedule = current_user.schedules.find(params[:schedule_id])
+    # カードから追加するスポットを順番に保存していく
+    spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
+    spots = Spot.where(id: spot_ids)
+    results = spots.map { |spot| ScheduleSpot.create_from_spot(@schedule, spot).save }
+    # スポットの保存結果を返す
+    if results.all?
+      redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_multiple", count: results.size)
+    elsif results.none?
+      redirect_to card_path(@card), alert: t("errors.user_schedule_spots.create_failed")
+    else
+      added = results.count(true)
+      failed = results.count(false)
+      redirect_to card_path(@card), notice: t("notices.user_schedule_spots.created_partial", added: added, failed: failed)
+    end
+  end
+
+  def create_from_schedule
+    @schedule = current_user.schedules.find(params[:schedule_id])
+    @schedule_spot = @schedule.schedule_spots.build(schedule_spot_params)
+    @schedule_spot.day_number = 1
+    if @schedule_spot.save
+      respond_to do |format|
+        format.turbo_stream { flash.now[:notice] = t("notices.schedule_spots.created") }
+        format.html { redirect_to schedule_path(@schedule), notice: t("notices.schedule_spots.created") }
+      end
+    else
+      set_categories
+      render :new, status: :unprocessable_entity
+    end
   end
 end

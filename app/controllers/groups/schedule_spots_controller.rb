@@ -1,88 +1,31 @@
 class Groups::ScheduleSpotsController < ApplicationController
   include GroupMemberAuthorization  # グループメンバーのみアクセス許可
 
-  before_action :set_schedule_spot, only: %i[show edit update destroy]
+  before_action :set_schedule_spot, only: %i[show edit update destroy move_higher move_lower]
   before_action :set_group, only: %i[new create]
-  before_action :set_group_from_schedule_spot, only: %i[show edit update destroy]
+  before_action :set_group_from_schedule_spot, only: %i[show edit update destroy move_higher move_lower]
+  before_action :set_schedule
   before_action :check_group_member
+  before_action :set_schedule_spots, only: %i[move_higher move_lower]
 
   def show
-    @schedule = @group.schedule
-    @category = Category.find_by(id: @schedule_spot.snapshot_category_id)
+    @category = Category.find_by(id: @schedule_spot.category_id)
   end
 
   def new
-    @schedule = @group.schedule
     @schedule_spot = ScheduleSpot.new
-    @categories = Category.order(display_order: :asc).to_a
+    set_categories
   end
 
   def create
-    @schedule = @group.schedule
-
-    if params[:spot_ids].present? || params[:spot_id].present?
-      # カードからスポット選択してしおり追加
-      @card = Card.find(params[:card_id])
-      # spot_ids（複数）か spot_id（個別）かを判定
-      spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
-      # 現在の最大position取得
-      current_max_position = @schedule.schedule_spots.maximum(:global_position) || 0
-      # 複数作成
-      results = spot_ids.map.with_index do |spot_id, index|
-        spot = Spot.find(spot_id)
-        schedule_spot = ScheduleSpot.create_from_spot(@schedule, spot)
-        # global_positionを手動で上書き（連番になるように）
-        schedule_spot.global_position = current_max_position + index + 1
-        schedule_spot.save
-      end
-      # 成功・失敗を判定
-      if results.all?
-        respond_to do |format|
-          format.turbo_stream { flash.now[:notice] = t("notices.group_schedule_spots.created_multiple", count: results.size) }
-          format.html { redirect_to group_card_path(@group, @card), notice: t("notices.group_schedule_spots.created_multiple", count: results.size) }
-        end
-      elsif results.none?
-        # 全て失敗
-        respond_to do |format|
-          format.turbo_stream { flash.now[:alert] = t("errors.group_schedule_spots.create_failed") }
-          format.html { redirect_to group_card_path(@group, @card), alert: t("errors.group_schedule_spots.create_failed") }
-        end
-      else
-        # 一部成功
-        added = results.count(true)
-        failed = results.count(false)
-        respond_to do |format|
-          format.turbo_stream { flash.now[:notice] = t("notices.group_schedule_spots.created_partial", added: added, failed: failed) }
-          format.html { redirect_to group_card_path(@group, @card), notice: t("notices.group_schedule_spots.created_partial", added: added, failed: failed) }
-        end
-      end
-    else
-      # しおり詳細から直接スポット追加
-      @schedule_spot = @schedule.schedule_spots.build(schedule_spot_params)
-      @schedule_spot.is_custom_entry = true
-      @schedule_spot.day_number = 1
-      @schedule_spot.global_position = (@schedule.schedule_spots.maximum(:global_position) || 0) + 1
-
-      if @schedule_spot.save
-        respond_to do |format|
-          format.turbo_stream { flash.now[:notice] = t("notices.schedule_spots.created") }
-          format.html { redirect_to group_schedule_path(@group), notice: t("notices.schedule_spots.created") }
-        end
-      else
-        @categories = Category.order(display_order: :asc).to_a
-        render :new, status: :unprocessable_entity
-      end
-    end
+    add_spot_from_card? ? create_from_card : create_from_schedule
   end
 
   def edit
-    @schedule = @group.schedule
-    @schedule_spot = @schedule.schedule_spots.includes(:spot).find(params[:id])
   end
 
   # スポットの編集フォームによる更新と、並び替えによる更新を処理
   def update
-    @schedule = @group.schedule
     if @schedule_spot.update(schedule_spot_params)
       respond_to do |format|
         # 並び替えによる更新のレスポンス
@@ -96,7 +39,6 @@ class Groups::ScheduleSpotsController < ApplicationController
   end
 
   def destroy
-    @schedule_spot = ScheduleSpot.find(params[:id])
     if @schedule_spot.destroy
       redirect_to group_schedule_path(@group), notice: t("notices.schedule_spots.destroyed"), turbo: false
     end
@@ -104,12 +46,7 @@ class Groups::ScheduleSpotsController < ApplicationController
 
   # 並び替えacts_as_listのメソッド
   def move_higher
-    @schedule = @group.schedule
-    # スポットを取得
-    @schedule_spot = @schedule.schedule_spots.find(params[:id])
-    # acts_as_listのメソッドで移動
     @schedule_spot.move_higher
-    # レスポンス(Turbo Stream)
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to group_schedule_path(@group) }
@@ -117,12 +54,7 @@ class Groups::ScheduleSpotsController < ApplicationController
   end
 
   def move_lower
-    @schedule = @group.schedule
-    # スポットを取得
-    @schedule_spot = @schedule.schedule_spots.find(params[:id])
-    # acts_as_listのメソッドで移動
     @schedule_spot.move_lower
-    # レスポンス(Turbo Stream)
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to group_schedule_path(@group) }
@@ -132,7 +64,7 @@ class Groups::ScheduleSpotsController < ApplicationController
   private
 
   def set_schedule_spot
-    @schedule_spot = ScheduleSpot.find(params[:id])
+    @schedule_spot = ScheduleSpot.includes(:spot).find(params[:id])
   end
 
   def set_group
@@ -143,7 +75,66 @@ class Groups::ScheduleSpotsController < ApplicationController
     @group = @schedule_spot.schedule.schedulable
   end
 
+  def set_schedule
+    @schedule = @group.schedule
+  end
+
+  def set_schedule_spots
+    @schedule_spots = @schedule.schedule_spots
+                               .includes(:category, spot: :category)
+                               .order(:global_position)
+  end
+
+  def set_categories
+    @categories = Category.order(display_order: :asc).to_a
+  end
+
   def schedule_spot_params
-    params.require(:schedule_spot).permit(:snapshot_name, :snapshot_category_id, :snapshot_address, :snapshot_phone_number, :snapshot_website_url, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
+    params.require(:schedule_spot).permit(:name, :category_id, :address, :phone_number, :website_url, :google_place_id, :start_time, :end_time, :memo, :day_number, :global_position)
+  end
+
+  def add_spot_from_card?
+    params[:spot_ids].present? || params[:spot_id].present?
+  end
+
+  def create_from_card
+    @card = Card.find(params[:card_id])
+    # カードから追加するスポットを順番に保存していく
+    spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
+    spots = Spot.where(id: spot_ids)
+    results = spots.map { |spot| ScheduleSpot.create_from_spot(@schedule, spot).save }
+    # スポットの保存結果を返す
+    if results.all?
+      respond_to do |format|
+        format.turbo_stream { flash.now[:notice] = t("notices.group_schedule_spots.created_multiple", count: results.size) }
+        format.html { redirect_to group_card_path(@group, @card), notice: t("notices.group_schedule_spots.created_multiple", count: results.size) }
+      end
+    elsif results.none?
+      respond_to do |format|
+        format.turbo_stream { flash.now[:alert] = t("errors.group_schedule_spots.create_failed") }
+        format.html { redirect_to group_card_path(@group, @card), alert: t("errors.group_schedule_spots.create_failed") }
+      end
+    else
+      added = results.count(true)
+      failed = results.count(false)
+      respond_to do |format|
+        format.turbo_stream { flash.now[:notice] = t("notices.group_schedule_spots.created_partial", added: added, failed: failed) }
+        format.html { redirect_to group_card_path(@group, @card), notice: t("notices.group_schedule_spots.created_partial", added: added, failed: failed) }
+      end
+    end
+  end
+
+  def create_from_schedule
+    @schedule_spot = @schedule.schedule_spots.build(schedule_spot_params)
+    @schedule_spot.day_number = 1
+    if @schedule_spot.save
+      respond_to do |format|
+        format.turbo_stream { flash.now[:notice] = t("notices.schedule_spots.created") }
+        format.html { redirect_to group_schedule_path(@group), notice: t("notices.schedule_spots.created") }
+      end
+    else
+      set_categories
+      render :new, status: :unprocessable_entity
+    end
   end
 end

@@ -30,6 +30,11 @@ module ApplicationHelper
     title.present? ? "#{title} | #{base_title}" : base_title
   end
 
+  # 外部リンクに使用する URL が http/https のみかを検証して返す（XSS 対策）
+  def safe_external_url(url)
+    url if url&.match?(/\Ahttps?:\/\//)
+  end
+
   # ホーム（トップ）ではパンくずを表示しない
   def show_breadcrumbs?
     !current_page?(root_path)

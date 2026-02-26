@@ -3,10 +3,12 @@ class Groups::SchedulesController < ApplicationController
 
   before_action :set_group
   before_action :check_group_member
+  before_action :set_schedule, only: %i[show edit update]
 
   def show
-    # groupには一つしかscheduleがない
-    @schedule = @group.schedule
+    @schedule_spots = @schedule.schedule_spots
+                               .includes(:category, spot: :category)
+                               .order(:global_position)
   end
 
   def new
@@ -27,15 +29,14 @@ class Groups::SchedulesController < ApplicationController
   end
 
   def edit
-    @schedule = @group.schedule
   end
 
   def update
-    @schedule = @group.schedule
+    # グループ詳細ページのインラインで編集したときは更新後にグループ詳細ページに遷移するための分岐
     from_page = params[:schedule][:from_page]
 
     if @schedule.update(schedule_params)
-      # from_page パラメータに基づいて遷移先を分岐
+      # 更新がグループ詳細ページならグループ詳細ページに遷移
       if from_page == "show"
         redirect_to group_path(@group), notice: t("notices.schedules.updated")
       else
@@ -55,6 +56,10 @@ class Groups::SchedulesController < ApplicationController
 
   def set_group
     @group = Group.find(params[:group_id])
+  end
+
+  def set_schedule
+    @schedule = @group.schedule
   end
 
   def schedule_params

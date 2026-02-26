@@ -2,23 +2,22 @@
 #
 # Table name: schedule_spots
 #
-#  id                    :bigint           not null, primary key
-#  day_number            :integer          not null
-#  end_time              :time
-#  global_position       :integer          not null
-#  is_custom_entry       :boolean          default(FALSE), not null
-#  memo                  :text
-#  snapshot_address      :string
-#  snapshot_name         :string
-#  snapshot_phone_number :string
-#  snapshot_website_url  :string
-#  start_time            :time
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  google_place_id       :string
-#  schedule_id           :bigint           not null
-#  snapshot_category_id  :integer
-#  spot_id               :bigint
+#  id              :bigint           not null, primary key
+#  address         :string
+#  day_number      :integer          not null
+#  end_time        :time
+#  global_position :integer          not null
+#  memo            :text
+#  name            :string
+#  phone_number    :string
+#  start_time      :time
+#  website_url     :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  category_id     :integer
+#  google_place_id :string
+#  schedule_id     :bigint           not null
+#  spot_id         :bigint
 #
 # Indexes
 #
@@ -35,19 +34,18 @@ class ScheduleSpot < ApplicationRecord
 
   # アソシエーション
   belongs_to :schedule
-  belongs_to :spot, optional: true  # カスタム入力時はspot_id = NULL
+  belongs_to :spot, optional: true      # spotから追加したかどうかを区別する
+  belongs_to :category, optional: true  # スナップショットとして保存したカテゴリ
 
   # バリデーション
   # global_position は acts_as_list が自動で管理するためバリデーション不要
-  validates :day_number, presence: true,
-            numericality: { only_integer: true, greater_than: 0 }
-  validates :snapshot_name, presence: true, length: { maximum: 50 }
-  validates :snapshot_address, length: { maximum: 255 }
-  validates :snapshot_phone_number, length: { maximum: 20 }
-  validates :snapshot_website_url, format: { with: URI::DEFAULT_PARSER.make_regexp([ "http", "https" ]) }, length: { maximum: 500 }, allow_blank: true
+  validates :day_number, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :name, presence: true, length: { maximum: 50 }
+  validates :address, length: { maximum: 255 }
+  validates :phone_number, length: { maximum: 20 }
+  validates :website_url, format: { with: URI::DEFAULT_PARSER.make_regexp([ "http", "https" ]) }, length: { maximum: 500 }, allow_blank: true
 
   # カスタムバリデーション
-  validate :spot_or_custom_entry_valid
   validate :end_time_after_start_time
 
   # 並び替えgem acts_as_list
@@ -57,9 +55,9 @@ class ScheduleSpot < ApplicationRecord
   scope :ordered, -> { order(:global_position) }
   scope :on_day, ->(day) { where(day_number: day) }
 
-  # 表示名を取得（スナップショット > Spot > デフォルト）
+  # 表示名を取得（登録名 > デフォルト）
   def display_name
-    snapshot_name.presence || spot&.name || "予定"
+    name.presence || "予定"
   end
 
   # 開始時刻と終了時刻をフォーマット（"HH:MM ～ HH:MM" または "HH:MM ～" または "～ HH:MM" の形式）
@@ -80,27 +78,22 @@ class ScheduleSpot < ApplicationRecord
 
   # カテゴリに応じた背景色のTailwindクラスを返す
   def category_background_color
-    category_id = snapshot_category_id || spot&.category_id
-    return "bg-white" unless category_id
-
-    category = Category.find_by(id: category_id)
-    category&.background_color_class || "bg-white"
+    cat = category || spot&.category
+    cat&.background_color_class || "bg-white"
   end
 
   def self.create_from_spot(schedule, spot, day_number: 1)
-      schedule.schedule_spots.build(
-        spot_id: spot.id,
-        day_number: day_number,
-        global_position: schedule.schedule_spots.count + 1,
-        is_custom_entry: false,
-        snapshot_name: spot.name,
-        snapshot_address: spot.address,
-        snapshot_phone_number: spot.phone_number,
-        snapshot_website_url: spot.website_url,
-        snapshot_category_id: spot.category_id,
-        google_place_id: spot.google_place_id
-      )
-    end
+    schedule.schedule_spots.build(
+      spot_id: spot.id,
+      day_number: day_number,
+      name: spot.name,
+      address: spot.address,
+      phone_number: spot.phone_number,
+      website_url: spot.website_url,
+      category_id: spot.category_id,
+      google_place_id: spot.google_place_id
+    )
+  end
 
   private
 
@@ -108,24 +101,6 @@ class ScheduleSpot < ApplicationRecord
   def end_time_after_start_time
     if start_time.present? && end_time.present? && end_time < start_time
       errors.add(:end_time, :greater_than, count: :start_time)
-    end
-  end
-
-  # spot_id と is_custom_entry の整合性をチェック
-  def spot_or_custom_entry_valid
-    if is_custom_entry
-      # カスタム入力の場合：spot_idはNULL、snapshot_nameは必須
-      if spot_id.present?
-        errors.add(:spot_id, "はカスタム入力時には指定できません")
-      end
-      if snapshot_name.blank?
-        errors.add(:snapshot_name, "を入力してください")
-      end
-    else
-      # Spot参照の場合：spot_idは必須
-      if spot_id.blank?
-        errors.add(:spot_id, "を指定してください")
-      end
     end
   end
 end

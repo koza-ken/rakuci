@@ -13,13 +13,11 @@ class Groups::SpotsController < ApplicationController
 
   def new
     @spot = @card.spots.build
-    @categories = Category.order(display_order: :asc).to_a
+    set_categories
   end
 
   def create
     @spot = @card.spots.build(spot_params)
-    # 空文字列のgoogle_place_idをnilに変換（データベースのユニーク制約対策）
-    @spot.google_place_id = nil if @spot.google_place_id.blank?
 
     if @spot.save
       respond_to do |format|
@@ -27,20 +25,20 @@ class Groups::SpotsController < ApplicationController
         format.html { redirect_to group_card_path(@group, @card), notice: t("notices.spots.created") }
       end
     else
-      @categories = Category.order(display_order: :asc).to_a
+      set_categories
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @categories = Category.order(display_order: :asc).to_a
+    set_categories
   end
 
   def update
     if @spot.update(spot_params)
       redirect_to group_spot_path(@spot), notice: t("notices.spots.updated")
     else
-      @categories = Category.order(display_order: :asc).to_a
+      set_categories
       render :edit, status: :unprocessable_entity
     end
   end
@@ -56,20 +54,22 @@ class Groups::SpotsController < ApplicationController
     @group = Group.find(params[:group_id])
   end
 
+  # URLをshallow化したのでparamsにgroup_idがない
   def set_group_from_spot
-    @group = @spot.card.group
+    @card = @spot.card
+    @group = @card.group
   end
 
   def set_card
-    @card = Card.find(params[:card_id]) if params[:card_id]
+    @card = Card.find(params[:card_id])
   end
 
   def set_spot
-    if params[:card_id]
-      @spot = @card.spots.find(params[:id])
-    else
-      @spot = Spot.find(params[:id])
-    end
+    @spot = Spot.find(params[:id])
+  end
+
+  def set_categories
+    @categories = Category.order(display_order: :asc).to_a
   end
 
   def spot_params
@@ -78,8 +78,7 @@ class Groups::SpotsController < ApplicationController
 
   # カードがそのグループに属しているか確認
   def check_card_in_group
-    @card ||= @spot.card
-    unless @card.group_card? && @card.cardable_id == @group.id
+    unless @card.owned_by?(@group)
       redirect_to group_path(@group), alert: t("errors.cards.unauthorized_view")
     end
   end

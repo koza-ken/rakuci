@@ -20,43 +20,30 @@ class Schedule < ApplicationRecord
   include Hashid::Rails
 
   # アソシエーション
-  belongs_to :schedulable, polymorphic: true, touch: true
   has_many :schedule_spots, dependent: :destroy
   has_one :item_list, as: :listable, dependent: :destroy
+  belongs_to :schedulable, polymorphic: true, touch: true
 
   # バリデーション
-  validates :name, presence: true, length: { maximum: 50 }
-  validates :schedulable_type, presence: true
-  validates :end_date, comparison: { greater_than_or_equal_to: :start_date }, allow_blank: true
+  validates :name, presence: true, length: { maximum:  50 }
 
   # カスタムバリデーション
   validate :only_one_schedule_per_group
+  validate :end_date_after_start_date
 
   # しおりがつくられたらしおりに紐づくもちものリストが作られる
   after_create :create_item_list
 
-  # しおりのタイプを返す（個人 or グループ）
-  def schedule_type
-    schedulable_type == "User" ? :personal : :group
+  def user_schedule?
+    schedulable_type == "User"
   end
 
-  # グループしおりの場合、グループオブジェクトを返す
-  def group
-    Group.find_by(id: schedulable_id) if schedulable_type == "Group"
-  end
-
-  # しおりの詳細ページへのパスを返す
-  def show_path
-    if schedule_type == :personal
-      Rails.application.routes.url_helpers.schedule_path(self)
-    else
-      # グループスケジュールは resource（単数形）なので、IDは不要
-      Rails.application.routes.url_helpers.group_schedule_path(schedulable)
-    end
+  def group_schedule?
+    schedulable_type == "Group"
   end
 
   # しおりの日数を返す
-  def days
+  def total_days
     return 1 if start_date.blank? || end_date.blank?
     (end_date - start_date).to_i + 1
   end
@@ -83,6 +70,14 @@ class Schedule < ApplicationRecord
 
   def create_item_list
     ItemList.create(listable: self)
+  end
+
+  # 終了日が開始日以降かをチェック
+  def end_date_after_start_date
+    return unless start_date.present? && end_date.present?
+    if end_date < start_date
+      errors.add(:end_date, :greater_than_or_equal_to, count: :start_date)
+    end
   end
 
   # グループは1つのスケジュールのみ持つことができる
