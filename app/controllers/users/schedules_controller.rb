@@ -2,17 +2,15 @@ class Users::SchedulesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @user = current_user
-    personal_schedules = @user.schedules
-    group_schedule_ids = @user.groups.pluck(:id)
+    personal_schedules = current_user.schedules
+    group_schedule_ids = current_user.groups.pluck(:id)
     group_schedules = Schedule.where(schedulable_type: "Group", schedulable_id: group_schedule_ids)
                                .includes(schedulable: :group_memberships)
     @schedules = (personal_schedules + group_schedules).sort_by { |s| s.start_date.presence || Date.new(1, 1, 1) }.reverse
   end
 
   def show
-    @user = current_user
-    @schedule = @user.schedules.find(params[:id])
+    @schedule = current_user.schedules.find(params[:id])
   end
 
   def new
