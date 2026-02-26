@@ -38,9 +38,8 @@
           <label class="block text-sm md:text-base font-medium text-text mb-2 md:mb-3"><%= t('spots.form.website_url') %></label>
           <div class="flex items-center gap-2">
             <input type="text" value="<%= @spot.website_url.present? ? @spot.website_url : "---" %>" readonly class="form-text-field bg-gray-100 flex-1 text-sm md:text-base" />
-            <% if @spot.website_url.present? %>
-              <%# website_url は Spot モデルでバリデーション済み（HTTP/HTTPS のみ） %>
-              <%= link_to @spot.website_url, target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('外部サイトに移動しますか？')" do %>
+            <% if safe_external_url(@spot.website_url) %>
+              <%= link_to safe_external_url(@spot.website_url), target: "_blank", rel: "noopener noreferrer", class: "hover:opacity-60 transition flex-shrink-0", onclick: "return confirm('外部サイトに移動しますか？')" do %>
                 <%= render IconComponent.new(name: "jump_homepage_icon", size: 8, color: "text-text-light") %>
               <% end %>
             <% end %>
