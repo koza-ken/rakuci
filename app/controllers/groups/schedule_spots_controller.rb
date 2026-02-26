@@ -6,6 +6,7 @@ class Groups::ScheduleSpotsController < ApplicationController
   before_action :set_group_from_schedule_spot, only: %i[show edit update destroy move_higher move_lower]
   before_action :set_schedule
   before_action :check_group_member
+  before_action :set_schedule_spots, only: %i[move_higher move_lower]
 
   def show
     @category = Category.find_by(id: @schedule_spot.category_id)
@@ -76,6 +77,12 @@ class Groups::ScheduleSpotsController < ApplicationController
 
   def set_schedule
     @schedule = @group.schedule
+  end
+
+  def set_schedule_spots
+    @schedule_spots = @schedule.schedule_spots
+                               .includes(:category, spot: :category)
+                               .order(:global_position)
   end
 
   def set_categories
