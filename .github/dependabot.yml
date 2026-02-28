@@ -1,12 +1,49 @@
-# version: 2
-# updates:
-# - package-ecosystem: bundler
-#   directory: "/"
-#   schedule:
-#     interval: daily
-#   open-pull-requests-limit: 10
-# - package-ecosystem: github-actions
-#   directory: "/"
-#   schedule:
-#     interval: daily
-#   open-pull-requests-limit: 10
+version: 2
+updates:
+  - package-ecosystem: bundler
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      linting:
+        patterns:
+          - "rubocop*"
+          - "brakeman"
+      testing:
+        patterns:
+          - "rspec*"
+          - "factory_bot*"
+          - "faker"
+          - "capybara"
+          - "cuprite"
+          - "simplecov"
+      development:
+        patterns:
+          - "web-console"
+          - "better_errors"
+          - "binding_of_caller"
+          - "ruby-lsp"
+          - "annotate"
+          - "rack-mini-profiler"
+          - "bullet"
+          - "debug"
+
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      github-actions:
+        patterns:
+          - "*"
