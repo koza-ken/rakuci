@@ -1,4 +1,4 @@
 <%# いいねボタンを更新 %>
 <%= turbo_stream.replace "like_area_#{@card.id}" do %>
-  <%= render "likes/like_button", card: @card %>
+  <%= render "likes/like_button", card: @card, current_membership: @group_membership %>
 <% end %>

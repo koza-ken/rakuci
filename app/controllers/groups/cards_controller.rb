@@ -20,6 +20,7 @@ class Groups::CardsController < ApplicationController
 
     if @card.save
       @categories = Category.order(:display_order).to_a
+      @group_membership = current_group_membership_for(@group.id)
       respond_to do |format|
         format.turbo_stream { flash.now[:notice] = t("notices.cards.created") }
         format.html { redirect_to group_path(@group), notice: t("notices.cards.created") }

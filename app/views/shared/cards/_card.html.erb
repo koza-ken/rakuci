@@ -42,7 +42,7 @@
     </div>
     <% if card.group_card? %>
       <div class="flex justify-end mr-2" onclick="event.stopPropagation(); event.preventDefault();">
-        <%= render "likes/like_button", card: card %>
+        <%= render "likes/like_button", card: card, current_membership: current_membership %>
       </div>
     <% end %>
   </div>
