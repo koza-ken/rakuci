@@ -10,9 +10,10 @@ class Groups::LikesController < ApplicationController
   def create
     @like = @card.likes.build(group_membership: @group_membership)
     if @like.save
+      @card.likes.reload
       respond_to do |format|
-        format.turbo_stream { flash.now[:notice] = t("notices.likes.created") }
-        format.html { redirect_to group_card_path(@group, @card), notice: t("notices.likes.created") }
+        format.turbo_stream
+        format.html { redirect_to group_card_path(@group, @card) }
       end
     else
       respond_to do |format|
@@ -25,9 +26,10 @@ class Groups::LikesController < ApplicationController
   def destroy
     @like = @card.likes.find_by(group_membership: @group_membership)
     @like&.destroy
+    @card.likes.reload
     respond_to do |format|
-      format.turbo_stream { flash.now[:notice] = t("notices.likes.destroyed") }
-      format.html { redirect_to group_card_path(@group, @card), notice: t("notices.likes.destroyed") }
+      format.turbo_stream
+      format.html { redirect_to group_card_path(@group, @card) }
     end
   end
 
@@ -49,6 +51,9 @@ class Groups::LikesController < ApplicationController
   def check_card_in_group
     unless @card.owned_by?(@group)
       redirect_to group_path(@group), alert: t("errors.cards.unauthorized_view")
+      return
     end
+    # ビューでcard.groupを使う際のSQL発行を防ぐため、既に取得済みの@groupをキャッシュに設定
+    @card.cardable = @group
   end
 end

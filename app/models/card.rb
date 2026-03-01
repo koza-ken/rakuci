@@ -57,7 +57,14 @@ class Card < ApplicationRecord
   # 指定されたメンバーシップがこのカードにいいねしているか
   def liked_by?(group_membership)
     return false unless group_membership
-    likes.any? { |like| like.group_membership_id == group_membership.id }
+    # likesが事前にロードされているか確認
+    if likes.loaded?
+      # メモリにあるので、SQLなしで存在を処理（未ロードでanyを使うとカードにいいねしている全員分取得してしまう）
+      likes.any? { |like| like.group_membership_id == group_membership.id }
+    else
+      # SQLを発行して存在を確認
+      likes.exists?(group_membership_id: group_membership.id)
+    end
   end
 
   private

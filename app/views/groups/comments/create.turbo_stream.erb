@@ -3,14 +3,12 @@
   <%# フラッシュメッセージを表示 %>
   <%= turbo_stream.update "flash-container", partial: "shared/flash_messages", locals: { flash: flash } %>
 
-  <%# コメントが存在する場合、「まだコメントがありません」を削除 %>
-  <% if @card.comments.present? %>
-    <%= turbo_stream.remove "no-comments-message" %>
-  <% end %>
+  <%# 「まだコメントがありません」を削除（要素がなければ何もしない） %>
+  <%= turbo_stream.remove "no-comments-message" %>
 
   <%# 成功時：コメントを追加 %>
   <%= turbo_stream.append "comments_list" do %>
-    <%= render "groups/comments/comment", comment: @comment %>
+    <%= render "groups/comments/comment", comment: @comment, current_membership: @group_membership %>
   <% end %>
   <%# フォームをクリア %>
   <%= turbo_stream.replace "comment_form" do %>
