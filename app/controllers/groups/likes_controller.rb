@@ -40,7 +40,7 @@ class Groups::LikesController < ApplicationController
   end
 
   def set_card
-    @card = Card.includes(:cardable).find(params[:card_id])
+    @card = Card.find(params[:card_id])
   end
 
   def set_group_membership
@@ -51,6 +51,9 @@ class Groups::LikesController < ApplicationController
   def check_card_in_group
     unless @card.owned_by?(@group)
       redirect_to group_path(@group), alert: t("errors.cards.unauthorized_view")
+      return
     end
+    # ビューでcard.groupを使う際のSQL発行を防ぐため、既に取得済みの@groupをキャッシュに設定
+    @card.cardable = @group
   end
 end
