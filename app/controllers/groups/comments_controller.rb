@@ -6,11 +6,12 @@ class Groups::CommentsController < ApplicationController
   before_action :check_group_member
   before_action :check_card_in_group
   before_action :set_comment, only: %i[destroy]
+  before_action :set_group_membership
   before_action :check_comment_owner, only: %i[destroy]
 
   def create
     @comment = @card.comments.build(comment_params)
-    @comment.group_membership = current_group_membership_for(@group.id)
+    @comment.group_membership = @group_membership
 
     if @comment.save
       respond_to do |format|
@@ -51,9 +52,12 @@ class Groups::CommentsController < ApplicationController
     params.require(:comment).permit(:content)
   end
 
+  def set_group_membership
+    @group_membership = current_group_membership_for(@group.id)
+  end
+
   def check_comment_owner
-    current_membership = current_group_membership_for(@group.id)
-    unless current_membership && current_membership.id == @comment.group_membership_id
+    unless @group_membership && @group_membership.id == @comment.group_membership_id
       redirect_to group_card_path(@group, @card), alert: t("errors.comments.unauthorized_delete")
     end
   end
