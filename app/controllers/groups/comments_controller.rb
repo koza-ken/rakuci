@@ -54,12 +54,7 @@ class Groups::CommentsController < ApplicationController
   def check_comment_owner
     current_membership = current_group_membership_for(@group.id)
     unless current_membership && current_membership.id == @comment.group_membership_id
-      respond_to do |format|
-        format.turbo_stream {
-          redirect_to group_card_path(@group, @card), alert: t("errors.comments.unauthorized_delete")
-        }
-        format.html { redirect_to group_card_path(@group, @card), alert: t("errors.comments.unauthorized_delete") }
-      end
+      redirect_to group_card_path(@group, @card), alert: t("errors.comments.unauthorized_delete")
     end
   end
 
