@@ -9,7 +9,7 @@
   </div>
   <div class="flex justify-between items-start">
     <p class="text-gray-800 whitespace-pre-wrap"><%= comment.content %></p>
-    <% if current_membership && current_membership.id == comment.group_membership_id %>
+    <% if comment.deletable_by?(current_membership) %>
       <%= button_to group_card_comment_path(@group, @card, comment),
           method: :delete,
           data: { turbo_confirm: t("comments.confirm_delete") },

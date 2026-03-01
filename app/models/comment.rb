@@ -25,4 +25,10 @@ class Comment < ApplicationRecord
   belongs_to :group_membership
 
   validates :content, presence: true, length: { maximum: 200 }
+
+  # 指定されたメンバーシップがこのコメントを削除できるか
+  def deletable_by?(membership)
+    return false unless membership
+    group_membership_id == membership.id
+  end
 end
