@@ -10,6 +10,7 @@ class Groups::LikesController < ApplicationController
   def create
     @like = @card.likes.build(group_membership: @group_membership)
     if @like.save
+      @card.likes.reload
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to group_card_path(@group, @card) }
@@ -25,6 +26,7 @@ class Groups::LikesController < ApplicationController
   def destroy
     @like = @card.likes.find_by(group_membership: @group_membership)
     @like&.destroy
+    @card.likes.reload
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to group_card_path(@group, @card) }
@@ -38,7 +40,7 @@ class Groups::LikesController < ApplicationController
   end
 
   def set_card
-    @card = Card.find(params[:card_id])
+    @card = Card.includes(:cardable).find(params[:card_id])
   end
 
   def set_group_membership
