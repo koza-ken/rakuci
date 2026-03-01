@@ -65,7 +65,7 @@
         <% if @comments.present? %>
           <div class="space-y-3 mb-4">
             <% @comments.each do |comment| %>
-              <%= render "groups/comments/comment", comment: comment %>
+              <%= render "groups/comments/comment", comment: comment, current_membership: current_group_membership_for(@group.id) %>
             <% end %>
           </div>
         <% else %>
