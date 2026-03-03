@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_02_21_082947) do
+ActiveRecord::Schema[7.2].define(version: 2026_03_03_034457) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,26 +91,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_21_082947) do
     t.index ["invite_token"], name: "index_groups_on_invite_token", unique: true
   end
 
-  create_table "item_lists", force: :cascade do |t|
-    t.string "listable_type", null: false
-    t.integer "listable_id", null: false
-    t.string "name", limit: 100
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["listable_type", "listable_id"], name: "index_item_lists_on_listable", unique: true
-  end
-
-  create_table "items", force: :cascade do |t|
-    t.integer "item_list_id", null: false
-    t.string "name", limit: 100, null: false
-    t.boolean "checked", default: false, null: false
-    t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["item_list_id", "position"], name: "index_items_on_list_and_position"
-    t.index ["item_list_id"], name: "index_items_on_item_list_id"
-  end
-
   create_table "likes", force: :cascade do |t|
     t.bigint "card_id", null: false
     t.bigint "group_membership_id", null: false
@@ -119,6 +99,26 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_21_082947) do
     t.index ["card_id", "group_membership_id"], name: "index_likes_on_card_id_and_group_membership_id", unique: true
     t.index ["card_id"], name: "index_likes_on_card_id"
     t.index ["group_membership_id"], name: "index_likes_on_group_membership_id"
+  end
+
+  create_table "packing_items", force: :cascade do |t|
+    t.integer "packing_list_id", null: false
+    t.string "name", limit: 100, null: false
+    t.boolean "checked", default: false, null: false
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["packing_list_id", "position"], name: "index_packing_items_on_list_and_position"
+    t.index ["packing_list_id"], name: "index_packing_items_on_packing_list_id"
+  end
+
+  create_table "packing_lists", force: :cascade do |t|
+    t.string "listable_type", null: false
+    t.integer "listable_id", null: false
+    t.string "name", limit: 100
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["listable_type", "listable_id"], name: "index_packing_lists_on_listable", unique: true
   end
 
   create_table "schedule_spots", force: :cascade do |t|
@@ -193,9 +193,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_21_082947) do
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "users"
   add_foreign_key "groups", "users", column: "created_by_user_id"
-  add_foreign_key "items", "item_lists"
   add_foreign_key "likes", "cards"
   add_foreign_key "likes", "group_memberships"
+  add_foreign_key "packing_items", "packing_lists"
   add_foreign_key "schedule_spots", "schedules"
   add_foreign_key "schedule_spots", "spots"
   add_foreign_key "spots", "cards"
