@@ -30,9 +30,9 @@ Rails.application.routes.draw do
   end
 
   # 持ち物リスト機能
-  concern :with_item_list do
-    resource :item_list, only: %i[show] do
-      resources :items, only: %i[create update destroy]
+  concern :with_packing_list do
+    resource :packing_list, only: %i[show] do
+      resources :packing_items, only: %i[create update destroy], path: "items", as: "items"
     end
   end
 
@@ -55,8 +55,8 @@ Rails.application.routes.draw do
     end
 
     # ユーザーの持ち物リスト（全体管理・表示のみ）
-    resource :item_list, only: %i[show] do
-      resources :items, only: %i[create update destroy]
+    resource :packing_list, only: %i[show] do
+      resources :packing_items, only: %i[create update destroy], path: "items", as: "items"
     end
 
     # しおり
@@ -65,7 +65,7 @@ Rails.application.routes.draw do
       resources :schedule_spots, only: %i[new create]
 
       # 個人しおり個別の持ち物リスト
-      concerns :with_item_list
+      concerns :with_packing_list
     end
 
     # しおりのスポット（shallow化: /user/schedule_spots/:id）
@@ -108,7 +108,7 @@ Rails.application.routes.draw do
         resources :schedule_spots, only: %i[new create]
 
         # グループしおりの持ち物リスト
-        concerns :with_item_list
+        concerns :with_packing_list
       end
 
       # グループメンバーシップ
