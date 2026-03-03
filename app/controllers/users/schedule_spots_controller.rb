@@ -91,7 +91,7 @@ class Users::ScheduleSpotsController < ApplicationController
     # カードから複数のスポットを追加するかの判定
     if params[:spot_ids].present?
       @spot_ids = Array(params[:spot_ids])
-      @spots = Spot.where(id: @spot_ids)
+      @spots = Spot.find(@spot_ids)
     else
       @spot = Spot.find(params[:spot_id])
     end
@@ -108,7 +108,7 @@ class Users::ScheduleSpotsController < ApplicationController
     @schedule = current_user.schedules.find(params[:schedule_id])
     # カードから追加するスポットを順番に保存していく
     spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
-    spots = Spot.where(id: spot_ids)
+    spots = Spot.find(spot_ids)
     results = spots.map { |spot| ScheduleSpot.create_from_spot(@schedule, spot).save }
     # スポットの保存結果を返す
     if results.all?

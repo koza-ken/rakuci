@@ -101,7 +101,7 @@ class Groups::ScheduleSpotsController < ApplicationController
     @card = Card.find(params[:card_id])
     # カードから追加するスポットを順番に保存していく
     spot_ids = params[:spot_ids].presence || [ params[:spot_id] ].compact
-    spots = Spot.where(id: spot_ids)
+    spots = Spot.find(spot_ids)
     results = spots.map { |spot| ScheduleSpot.create_from_spot(@schedule, spot).save }
     # スポットの保存結果を返す
     if results.all?
