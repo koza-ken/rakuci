@@ -31,6 +31,36 @@ RSpec.describe 'Users::ScheduleSpots', type: :request do
       end
     end
 
+    context 'hashidで1個のスポットをしおりに追加する場合' do
+      let(:params) do
+        {
+          spot_id: spot1.hashid,
+          schedule_id: schedule.hashid
+        }
+      end
+
+      it '個人しおりにスポットが1件追加されること' do
+        expect {
+          post card_schedule_spots_path(card), params: params
+        }.to change(ScheduleSpot, :count).by(1)
+      end
+    end
+
+    context 'hashidで複数スポットをしおりに追加する場合' do
+      let(:params) do
+        {
+          spot_ids: [ spot1.hashid, spot2.hashid ],
+          schedule_id: schedule.hashid
+        }
+      end
+
+      it '個人しおりにスポットが2件追加されること' do
+        expect {
+          post card_schedule_spots_path(card), params: params
+        }.to change(ScheduleSpot, :count).by(2)
+      end
+    end
+
     context '個人カードの複数スポットをしおりに追加する場合' do
       let(:params) do
         {
