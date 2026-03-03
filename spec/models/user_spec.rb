@@ -125,15 +125,15 @@ RSpec.describe User, type: :model do
   end
 
   describe "コールバック" do
-    describe "after_create :create_item_list" do
-      it "ユーザー作成時に ItemList が生成されること" do
-        expect { create(:user) }.to change(ItemList, :count).by(1)
+    describe "after_create :create_packing_list" do
+      it "ユーザー作成時に PackingList が生成されること" do
+        expect { create(:user) }.to change(PackingList, :count).by(1)
       end
 
-      it "生成された ItemList がユーザーに紐づいていること" do
+      it "生成された PackingList がユーザーに紐づいていること" do
         user = create(:user)
-        expect(user.item_list).to be_present
-        expect(user.item_list.listable).to eq(user)
+        expect(user.packing_list).to be_present
+        expect(user.packing_list.listable).to eq(user)
       end
     end
   end

@@ -35,14 +35,14 @@ class User < ApplicationRecord
   # ポリモーフィック
   has_many :cards, as: :cardable, dependent: :destroy
   has_many :schedules, as: :schedulable, dependent: :destroy
-  has_one :item_list, as: :listable, dependent: :destroy
+  has_one :packing_list, as: :listable, dependent: :destroy
 
   validates :display_name, length: { maximum: 20 }, allow_blank: true
   validates :provider, presence: true, if: -> { uid.present? }, length: { maximum: 64 }
   validates :uid, presence: true, if: -> { provider.present? }
 
   # ユーザーがつくられたらユーザー用のもちものリストが作られる（ユーザー用のリスト）
-  after_create :create_item_list
+  after_create :create_packing_list
 
   # ユーザーが特定のグループのメンバーかどうかを確認
   def member_of?(group)
@@ -56,7 +56,7 @@ class User < ApplicationRecord
 
   private
 
-  def create_item_list
-    ItemList.create(listable: self)
+  def create_packing_list
+    PackingList.create(listable: self)
   end
 end

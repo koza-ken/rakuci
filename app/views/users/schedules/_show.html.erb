@@ -22,9 +22,9 @@
     <div class="mt-8 lg:mt-10">
       <div class="flex items-start md:items-center justify-between gap-3 md:gap-4 mb-8 lg:mb-10">
         <%= link_to t('users.schedules.show.back'), schedules_path, class: "btn-sub w-auto text-center px-4 md:px-8 py-2 md:py-3 text-sm lg:text-base" %>
-        <%= link_to schedule_item_list_path(schedule), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base" do %>
+        <%= link_to schedule_packing_list_path(schedule), class: "btn-main-icon p-2 lg:px-4 lg:py-2 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base" do %>
           <%= render IconComponent.new(name: "footer_icon_backpack", size: 6, breakpoints: { lg: 8 }, color: "text-text-light") %>
-          <span class="hidden lg:inline"><%= t('users.schedules.show.item_list') %></span>
+          <span class="hidden lg:inline"><%= t('users.schedules.show.packing_list') %></span>
         <% end %>
       </div>
 

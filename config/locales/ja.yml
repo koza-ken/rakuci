@@ -199,7 +199,7 @@ ja:
       not_member: このグループには参加していません
       token_mismatch: トークンが一致しません
       user_not_found: 選択したユーザーが見つかりません
-    items:
+    packing_items:
       create_failed: もちものの追加に失敗しました
       update_failed: もちものの更新に失敗しました
     likes:
@@ -294,7 +294,7 @@ ja:
         delete: 削除
         delete_schedule: しおりを削除
         expenses: 精算
-        item_list: もちもの
+        packing_list: もちもの
         memo: メモ
         no_memo: まだメモはありません
     show:
@@ -317,7 +317,7 @@ ja:
       title: グループ詳細
       travel_candidates: 旅行先の候補
   hello: ''
-  item_lists:
+  packing_lists:
     form:
       cancel_button: キャンセル
       create_button: 追加
@@ -348,7 +348,7 @@ ja:
       destroyed: グループを削除しました
       joined: グループに参加しました
       updated: グループ名が更新されました
-    items:
+    packing_items:
       created: もちものを追加しました
       destroyed: もちものを削除しました
       updated: もちものを更新しました
@@ -431,7 +431,7 @@ ja:
       delete_schedule: 削除
       edit: 編集
       group_name: グループ名
-      item_list_button: もちもの
+      packing_list_button: もちもの
       memo: メモ
       no_schedule_message: はまだ作成されていません
       no_spots: スポットを追加しよう
@@ -497,7 +497,7 @@ ja:
         delete: 削除
         delete_confirm: このしおりを削除しますか
         detail: 詳細
-        item_list: もちもの
+        packing_list: もちもの
         memo: メモ
         title: しおり詳細
       spot_count_message: 件のスポットを追加します

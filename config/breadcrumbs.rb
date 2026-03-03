@@ -68,8 +68,8 @@ crumb :group_schedule_spot do |schedule_spot|
   parent :group_schedule, schedule_spot.schedule.schedulable
 end
 
-crumb :group_schedule_item_list do |group|
-  link "もちもの", group_schedule_item_list_path(group)
+crumb :group_schedule_packing_list do |group|
+  link "もちもの", group_schedule_packing_list_path(group)
   parent :group_schedule, group
 end
 
@@ -96,7 +96,7 @@ crumb :schedule_spot do |schedule_spot|
   parent :schedule, schedule_spot.schedule
 end
 
-crumb :schedule_item_list do |schedule|
-  link "もちもの", schedule_item_list_path(schedule)
+crumb :schedule_packing_list do |schedule|
+  link "もちもの", schedule_packing_list_path(schedule)
   parent :schedule, schedule
 end

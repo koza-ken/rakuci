@@ -60,11 +60,11 @@ module ApplicationHelper
       is_schedule_related = path.include?("schedule")
       is_expenses = path.include?("expenses")
       is_schedule_related || is_expenses
-    when "item_list"
-      # もちもの判定：item_list、ただしschedule配下は除外
-      is_item_list = path.include?("item_list")
+    when "packing_list"
+      # もちもの判定：packing_list、ただしschedule配下は除外
+      is_packing_list = path.include?("packing_list")
       is_not_schedule = path.exclude?("schedule")
-      is_item_list && is_not_schedule
+      is_packing_list && is_not_schedule
     when "profile"
       path.include?("profile")
     else

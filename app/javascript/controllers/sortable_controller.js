@@ -26,16 +26,16 @@ export default class extends Controller {
     })
 
     // もちものリストのアイテム並び替え
-    const itemsLists = document.querySelectorAll("#items-list")
+    const packingItemsLists = document.querySelectorAll("#packing-items-list")
 
-    itemsLists.forEach((list) => {
+    packingItemsLists.forEach((list) => {
       new Sortable(list, {
         animation: 150,
         ghostClass: "sortable-ghost",
         // ドラッグのハンドルをクラスで指定
         handle: ".drag-handle",
-        // items全体をグループと指定することで並び替えができる
-        group: "items",
+        // packing_items全体をグループと指定することで並び替えができる
+        group: "packing_items",
         onEnd: (evt) => this.handleItemsSortEnd(evt),
       })
     })
@@ -80,7 +80,7 @@ export default class extends Controller {
   // もちものリストのアイテム並び替え後に実行
   handleItemsSortEnd(evt) {
     const item = evt.item
-    const itemId = item.dataset.itemId
+    const itemId = item.dataset.packingItemId
     const newPosition = evt.newIndex + 1
 
     // バックエンドに更新を送信
@@ -88,10 +88,10 @@ export default class extends Controller {
   }
 
   updateItemPosition(itemId, position) {
-    const url = `${window.location.pathname.replace(/\/item_list.*/, "")}/item_list/items/${itemId}`
+    const url = `${window.location.pathname.replace(/\/packing_list.*/, "")}/packing_list/items/${itemId}`
 
     const params = {
-      item: {
+      packing_item: {
         position: position,
       },
     }

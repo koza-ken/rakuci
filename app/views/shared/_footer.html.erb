@@ -16,7 +16,7 @@
         <span class="text-[0.6rem] text-secondary font-bold">しおり</span>
       <% end %>
 
-      <%= link_to item_list_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity scale-90" do %>
+      <%= link_to packing_list_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity scale-90" do %>
         <%# もちもののアイコンが少し小さい気がするのでsize=9に %>
         <%= render IconComponent.new(name: "footer_icon_backpack", size: 9, color: "text-secondary") %>
         <span class="text-[0.6rem] text-secondary font-bold">もちもの</span>
