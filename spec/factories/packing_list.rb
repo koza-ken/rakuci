@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :item_list do
+  factory :packing_list do
     association :listable, factory: :user
     name { "旅行持ち物リスト" }
 
