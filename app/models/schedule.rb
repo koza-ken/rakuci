@@ -21,7 +21,7 @@ class Schedule < ApplicationRecord
 
   # アソシエーション
   has_many :schedule_spots, dependent: :destroy
-  has_one :item_list, as: :listable, dependent: :destroy
+  has_one :packing_list, as: :listable, dependent: :destroy
   belongs_to :schedulable, polymorphic: true, touch: true
 
   # バリデーション
@@ -32,7 +32,7 @@ class Schedule < ApplicationRecord
   validate :end_date_after_start_date
 
   # しおりがつくられたらしおりに紐づくもちものリストが作られる
-  after_create :create_item_list
+  after_create :create_packing_list
 
   def user_schedule?
     schedulable_type == "User"
@@ -68,8 +68,8 @@ class Schedule < ApplicationRecord
 
   private
 
-  def create_item_list
-    ItemList.create(listable: self)
+  def create_packing_list
+    PackingList.create(listable: self)
   end
 
   # 終了日が開始日以降かをチェック
