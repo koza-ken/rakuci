@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
-// アイテムの編集・チェック機能を制御
+// 持ち物の編集・チェック機能を制御
 export default class extends Controller {
   static targets = ["display", "editForm", "checkbox", "nameInput", "itemRow"]
 
@@ -56,12 +56,12 @@ export default class extends Controller {
   // サーバーにcheckedステータスを送信
   updateCheckStatus(isChecked) {
     const itemRow = this.itemRowTarget
-    const itemId = itemRow.id.replace("item_", "")
-    // URL は item_list_item_path(item_list, item) => /item_list/items/:id
-    const url = `${window.location.pathname.replace(/\/item_list.*/, "")}/item_list/items/${itemId}`
+    const itemId = itemRow.id.replace("packing_item_", "")
+    // URL は packing_list_item_path(packing_list, packing_item) => /packing_list/items/:id
+    const url = `${window.location.pathname.replace(/\/packing_list.*/, "")}/packing_list/items/${itemId}`
 
     const params = {
-      item: {
+      packing_item: {
         checked: isChecked,
       },
     }
@@ -73,13 +73,13 @@ export default class extends Controller {
         "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
       },
       body: JSON.stringify(params),
-    }).catch((error) => console.error("Error updating item:", error))
+    }).catch((error) => console.error("Error updating packing item:", error))
   }
 
   // blur時にアイテムを保存
   saveItem(event) {
     const input = event.target
-    const itemId = this.itemRowTarget.id.replace("item_", "")
+    const itemId = this.itemRowTarget.id.replace("packing_item_", "")
     const newValue = input.value
     const originalValue = this.originalValue
 
@@ -91,9 +91,9 @@ export default class extends Controller {
     }
 
     // URL と params を構築
-    const url = `${window.location.pathname.replace(/\/item_list.*/, "")}/item_list/items/${itemId}`
+    const url = `${window.location.pathname.replace(/\/packing_list.*/, "")}/packing_list/items/${itemId}`
     const params = {
-      item: {
+      packing_item: {
         name: newValue,
       },
     }
@@ -117,13 +117,13 @@ export default class extends Controller {
           this.editFormTarget.classList.add("hidden")
           this.displayTarget.classList.remove("hidden")
         } else {
-          console.error("Error updating item:", response.status)
+          console.error("Error updating packing item:", response.status)
           // エラー時は元の値に戻す
           input.value = originalValue
         }
       })
       .catch((error) => {
-        console.error("Error updating item:", error)
+        console.error("Error updating packing item:", error)
         // エラー時は元の値に戻す
         input.value = originalValue
       })

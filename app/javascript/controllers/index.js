@@ -40,11 +40,11 @@ application.register("header-scroll", HeaderScrollController);
 import SortableController from "./sortable_controller";
 application.register("sortable", SortableController);
 
-import ItemListFormController from "./item_list_form_controller";
-application.register("item-list-form", ItemListFormController);
+import PackingListFormController from "./packing_list_form_controller";
+application.register("packing-list-form", PackingListFormController);
 
-import ItemEditController from "./item_edit_controller";
-application.register("item-edit", ItemEditController);
+import PackingItemEditController from "./packing_item_edit_controller";
+application.register("packing-item-edit", PackingItemEditController);
 
 import DropdownController from "./dropdown_controller";
 application.register("dropdown", DropdownController);
