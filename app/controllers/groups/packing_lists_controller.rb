@@ -1,15 +1,15 @@
-class Groups::ItemListsController < ApplicationController
+class Groups::PackingListsController < ApplicationController
   include GroupMemberAuthorization  # グループメンバーのみアクセス許可
 
   before_action :set_group
   before_action :check_group_member
   before_action :set_schedule
-  before_action :set_item_list, only: %i[show]
+  before_action :set_packing_list, only: %i[show]
 
-  # GET /groups/:group_id/schedule/item_list
+  # GET /groups/:group_id/schedule/packing_list
   def show
-    @items = @item_list.items.order(:position)
-    @item = @item_list.items.build
+    @packing_items = @packing_list.packing_items.order(:position)
+    @packing_item = @packing_list.packing_items.build
   end
 
   private
@@ -22,7 +22,7 @@ class Groups::ItemListsController < ApplicationController
     @schedule = @group.schedule
   end
 
-  def set_item_list
-    @item_list = @schedule.item_list
+  def set_packing_list
+    @packing_list = @schedule.packing_list
   end
 end
