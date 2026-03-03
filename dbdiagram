@@ -232,7 +232,7 @@ Table comments {
 
 }
 
-Table item_lists {
+Table packing_lists {
   id bigint [pk, increment]
   listable_type varchar [not null, note: "'User' or 'Schedule'"]
   listable_id integer [not null, note: "user_id or schedule_id（ポリモーフィック）"]
@@ -241,13 +241,13 @@ Table item_lists {
   updated_at timestamp [not null]
 
   Indexes {
-    (listable_type, listable_id) [unique, name: "index_item_lists_on_listable"]
+    (listable_type, listable_id) [unique, name: "index_packing_lists_on_listable"]
   }
 
   Note: '''
   持ち物リスト（ポリモーフィック）
-  - User has_one :item_list (listable_type='User') ... ユーザーの永続的なマスターリスト
-  - Schedule has_one :item_list (listable_type='Schedule') ... しおりごとの持ち物リスト
+  - User has_one :packing_list (listable_type='User') ... ユーザーの永続的なマスターリスト
+  - Schedule has_one :packing_list (listable_type='Schedule') ... しおりごとの持ち物リスト
 
   リストの種類の判別:
   - マスターリスト: listable_type == 'User'
@@ -260,9 +260,9 @@ Table item_lists {
   '''
 }
 
-Table items {
+Table packing_items {
   id bigint [pk, increment]
-  item_list_id integer [not null, ref: > item_lists.id, note: "所属リスト"]
+  packing_list_id integer [not null, ref: > packing_lists.id, note: "所属リスト"]
   name varchar(100) [not null, note: "持ち物名"]
   checked boolean [not null, default: false, note: "準備済みか"]
   position integer [note: "並び順（acts_as_listで管理）"]
@@ -270,16 +270,16 @@ Table items {
   updated_at timestamp [not null]
 
   Indexes {
-    item_list_id [name: "index_items_on_item_list_id"]
-    (item_list_id, position) [name: "index_items_on_list_and_position"]
+    packing_list_id [name: "index_packing_items_on_packing_list_id"]
+    (packing_list_id, position) [name: "index_packing_items_on_list_and_position"]
   }
 
   Note: '''
   個別の持ち物アイテム。
-  - acts_as_listでpositionを管理（スコープ: item_list_id）
+  - acts_as_listでpositionを管理（スコープ: packing_list_id）
   - checked: 準備完了フラグ（Ajax更新）
 
-  【注意】item_list_id は integer（int）で定義。他のほとんどのテーブルは bigint を使用。
+  【注意】packing_list_id は integer（int）で定義。他のほとんどのテーブルは bigint を使用。
   '''
 }
 
