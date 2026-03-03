@@ -31,6 +31,36 @@ RSpec.describe 'Groups::ScheduleSpots', type: :request do
       end
     end
 
+    context 'hashidで1個のスポットをしおりに追加する場合' do
+      let(:params) do
+        {
+          spot_id: spot1.hashid,
+          card_id: card.hashid
+        }
+      end
+
+      it 'グループしおりにスポットが1件追加されること' do
+        expect {
+          post group_card_schedule_spots_path(group, card), params: params
+        }.to change(ScheduleSpot, :count).by(1)
+      end
+    end
+
+    context 'hashidで複数スポットをしおりに追加する場合' do
+      let(:params) do
+        {
+          spot_ids: [ spot1.hashid, spot2.hashid ],
+          card_id: card.hashid
+        }
+      end
+
+      it 'グループしおりにスポットが2件追加されること' do
+        expect {
+          post group_card_schedule_spots_path(group, card), params: params
+        }.to change(ScheduleSpot, :count).by(2)
+      end
+    end
+
     context 'グループカードの複数スポットをしおりに追加する場合' do
       let(:params) do
         {
