@@ -8,6 +8,8 @@ class Groups::PackingItemsController < ApplicationController
   before_action :set_packing_list, only: %i[create update destroy]
   before_action :set_packing_item, only: %i[update destroy]  # PackingItemActions
 
+  # アクションはconcernに共通化
+
   private
 
   def set_group
