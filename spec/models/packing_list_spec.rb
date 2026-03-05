@@ -19,16 +19,6 @@ RSpec.describe PackingList, type: :model do
   describe 'バリデーション' do
     let(:user) { create(:user) }
 
-    describe 'listable_type' do
-      context '存在しない場合' do
-        it '無効であること' do
-          packing_list = described_class.new(listable_id: user.id, name: 'テスト')
-          expect(packing_list).not_to be_valid
-          expect(packing_list.errors[:listable_type]).to be_present
-        end
-      end
-    end
-
     describe 'listable' do
       context '存在しない場合' do
         it '無効であること' do

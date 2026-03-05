@@ -18,9 +18,9 @@ class Users::PackingListsController < ApplicationController
 
   def set_packing_list
     @packing_list = if params[:schedule_id].present?
-      @schedule.packing_list || PackingList.create(listable: @schedule)
+      @schedule.packing_list
     else
-      current_user.packing_list || PackingList.create(listable: current_user)
+      current_user.packing_list
     end
   end
 
