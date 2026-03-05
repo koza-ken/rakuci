@@ -7,7 +7,6 @@ class Users::PackingListsController < ApplicationController
   def show
     @packing_items = @packing_list.packing_items.order(:position)
     @packing_item = @packing_list.packing_items.build
-    @form_path = determine_form_path
   end
 
   private
@@ -21,14 +20,6 @@ class Users::PackingListsController < ApplicationController
       @schedule.packing_list
     else
       current_user.packing_list
-    end
-  end
-
-  def determine_form_path
-    if @packing_list.listable_type == "User"
-      packing_list_items_path
-    else
-      schedule_packing_list_items_path(@packing_list.listable)
     end
   end
 end
