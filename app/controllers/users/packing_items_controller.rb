@@ -26,4 +26,16 @@ class Users::PackingItemsController < ApplicationController
   def redirect_path
     packing_list_path
   end
+
+  def item_delete_path(item)
+    @schedule.present? ? schedule_packing_list_item_path(@schedule, item) : packing_list_item_path(item)
+  end
+
+  def form_url
+    @schedule.present? ? schedule_packing_list_items_path(@schedule) : packing_list_items_path
+  end
+
+  def input_class
+    ""
+  end
 end

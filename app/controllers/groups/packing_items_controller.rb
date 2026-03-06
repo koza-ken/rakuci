@@ -28,4 +28,16 @@ class Groups::PackingItemsController < ApplicationController
   def redirect_path
     group_schedule_packing_list_path(@group)
   end
+
+  def item_delete_path(item)
+    group_schedule_packing_list_item_path(@group, item)
+  end
+
+  def form_url
+    group_schedule_packing_list_items_path(@group)
+  end
+
+  def input_class
+    "flex-1"
+  end
 end

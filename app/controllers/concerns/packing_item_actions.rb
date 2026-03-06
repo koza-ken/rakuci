@@ -3,6 +3,10 @@
 module PackingItemActions
   extend ActiveSupport::Concern
 
+  included do
+    helper_method :item_delete_path, :form_url, :input_class
+  end
+
   def create
     @packing_item = @packing_list.packing_items.build(packing_item_params)
 
@@ -60,8 +64,20 @@ module PackingItemActions
     params.require(:packing_item).permit(:name, :checked, :position)
   end
 
-  # 各コントローラーで実装（想定していない処理の場合のエラーハンドリングだけ定義）
+  # 各コントローラーで実装
   def redirect_path
     raise NotImplementedError, "#{self.class}#redirect_path を実装してください"
+  end
+
+  def item_delete_path(_item)
+    raise NotImplementedError, "#{self.class}#item_delete_path を実装してください"
+  end
+
+  def form_url
+    raise NotImplementedError, "#{self.class}#form_url を実装してください"
+  end
+
+  def input_class
+    raise NotImplementedError, "#{self.class}#input_class を実装してください"
   end
 end
