@@ -29,7 +29,7 @@ class Groups::PackingItemsController < ApplicationController
     group_schedule_packing_list_path(@group)
   end
 
-  def item_delete_path(item)
+  def item_path(item)
     group_schedule_packing_list_item_path(@group, item)
   end
 

@@ -1,7 +1,7 @@
 <% if @saved_item.present? %>
   <%# 新規アイテムをリストに追加 %>
   <%= turbo_stream.append "packing-items-list" do %>
-    <%= render "shared/packing_items/packing_item", packing_item: @saved_item, item_delete_path: item_delete_path(@saved_item) %>
+    <%= render "shared/packing_items/packing_item", packing_item: @saved_item, item_path: item_path(@saved_item) %>
   <% end %>
 
   <%# 空状態メッセージを非表示（最初のアイテム追加時） %>

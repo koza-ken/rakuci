@@ -6,7 +6,7 @@ class Groups::PackingListsController < ApplicationController
   before_action :set_schedule
   before_action :set_packing_list, only: %i[show]
 
-  helper_method :item_delete_path, :form_url, :back_path, :input_class
+  helper_method :item_path, :form_url, :back_path, :input_class
 
   # GET /groups/:group_id/schedule/packing_list
   def show
@@ -29,7 +29,7 @@ class Groups::PackingListsController < ApplicationController
   end
 
   # ヘルパーメソッド
-  def item_delete_path(item)
+  def item_path(item)
     group_schedule_packing_list_item_path(@group, item)
   end
 

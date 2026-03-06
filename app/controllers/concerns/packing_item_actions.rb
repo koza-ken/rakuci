@@ -4,7 +4,7 @@ module PackingItemActions
   extend ActiveSupport::Concern
 
   included do
-    helper_method :item_delete_path, :form_url, :input_class
+    helper_method :item_path, :form_url, :input_class
   end
 
   def create
@@ -69,8 +69,9 @@ module PackingItemActions
     raise NotImplementedError, "#{self.class}#redirect_path を実装してください"
   end
 
-  def item_delete_path(_item)
-    raise NotImplementedError, "#{self.class}#item_delete_path を実装してください"
+  # URLは同じ、HTTPメソッドで更新（PATCH）と削除（DELETE）を区別
+  def item_path(_item)
+    raise NotImplementedError, "#{self.class}#item_path を実装してください"
   end
 
   def form_url

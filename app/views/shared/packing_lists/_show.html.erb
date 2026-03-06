@@ -12,7 +12,7 @@
     <div id="packing-items-list" class="space-y-2 mb-4">
       <% if @packing_items.any? %>
         <% @packing_items.each do |packing_item| %>
-          <%= render partial: "shared/packing_items/packing_item", locals: { packing_item: packing_item, item_delete_path: item_delete_path(packing_item) } %>
+          <%= render partial: "shared/packing_items/packing_item", locals: { packing_item: packing_item, item_path: item_path(packing_item) } %>
         <% end %>
       <% end %>
     </div>
