@@ -36,5 +36,4 @@ class Groups::PackingItemsController < ApplicationController
   def form_url
     group_schedule_packing_list_items_path(@group)
   end
-
 end

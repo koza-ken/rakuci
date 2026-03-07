@@ -77,5 +77,4 @@ module PackingItemActions
   def form_url
     raise NotImplementedError, "#{self.class}#form_url を実装してください"
   end
-
 end

@@ -34,5 +34,4 @@ class Users::PackingItemsController < ApplicationController
   def form_url
     @schedule.present? ? schedule_packing_list_items_path(@schedule) : packing_list_items_path
   end
-
 end

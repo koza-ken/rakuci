@@ -40,5 +40,4 @@ class Groups::PackingListsController < ApplicationController
   def back_path
     group_schedule_path(@group)
   end
-
 end

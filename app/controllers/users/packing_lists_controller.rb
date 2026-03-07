@@ -37,5 +37,4 @@ class Users::PackingListsController < ApplicationController
   def back_path
     @schedule.present? ? schedule_path(@schedule) : nil
   end
-
 end
