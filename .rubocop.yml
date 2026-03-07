@@ -336,3 +336,9 @@ RSpec/IndexedLet:
 
 RSpec/MultipleMemoizedHelpers:
   Max: 10  # デフォルト: 5、複雑なテストでは多めの let が必要
+
+# Concern経由でアクションを提供するコントローラはクラス内に直接定義がないため除外
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+    - "app/controllers/users/packing_items_controller.rb"
+    - "app/controllers/groups/packing_items_controller.rb"
