@@ -6,7 +6,7 @@ class Groups::PackingListsController < ApplicationController
   before_action :set_schedule
   before_action :set_packing_list, only: %i[show]
 
-  helper_method :item_path, :form_url, :back_path, :input_class
+  helper_method :item_path, :form_url, :back_path
 
   # GET /groups/:group_id/schedule/packing_list
   def show
@@ -39,10 +39,6 @@ class Groups::PackingListsController < ApplicationController
 
   def back_path
     group_schedule_path(@group)
-  end
-
-  def input_class
-    "flex-1"
   end
 
 end

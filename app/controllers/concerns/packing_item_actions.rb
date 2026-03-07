@@ -4,7 +4,7 @@ module PackingItemActions
   extend ActiveSupport::Concern
 
   included do
-    helper_method :item_path, :form_url, :input_class
+    helper_method :item_path, :form_url
   end
 
   def create
@@ -78,7 +78,4 @@ module PackingItemActions
     raise NotImplementedError, "#{self.class}#form_url を実装してください"
   end
 
-  def input_class
-    raise NotImplementedError, "#{self.class}#input_class を実装してください"
-  end
 end

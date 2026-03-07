@@ -37,7 +37,4 @@ class Groups::PackingItemsController < ApplicationController
     group_schedule_packing_list_items_path(@group)
   end
 
-  def input_class
-    "flex-1"
-  end
 end

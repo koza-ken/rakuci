@@ -3,7 +3,7 @@ class Users::PackingListsController < ApplicationController
   before_action :set_schedule, only: %i[show], if: -> { params[:schedule_id].present? }
   before_action :set_packing_list, only: %i[show]
 
-  helper_method :item_path, :form_url, :back_path, :input_class
+  helper_method :item_path, :form_url, :back_path
 
   # GET /packing_list または /schedules/:schedule_id/packing_list
   def show
@@ -38,7 +38,4 @@ class Users::PackingListsController < ApplicationController
     @schedule.present? ? schedule_path(@schedule) : nil
   end
 
-  def input_class
-    ""
-  end
 end
