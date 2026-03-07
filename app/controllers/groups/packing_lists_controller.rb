@@ -6,6 +6,8 @@ class Groups::PackingListsController < ApplicationController
   before_action :set_schedule
   before_action :set_packing_list, only: %i[show]
 
+  helper_method :item_path, :form_url, :back_path
+
   # GET /groups/:group_id/schedule/packing_list
   def show
     @packing_items = @packing_list.packing_items.order(:position)
@@ -24,5 +26,18 @@ class Groups::PackingListsController < ApplicationController
 
   def set_packing_list
     @packing_list = @schedule.packing_list
+  end
+
+  # ヘルパーメソッド
+  def item_path(item)
+    group_schedule_packing_list_item_path(@group, item)
+  end
+
+  def form_url
+    group_schedule_packing_list_items_path(@group)
+  end
+
+  def back_path
+    group_schedule_path(@group)
   end
 end

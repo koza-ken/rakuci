@@ -1,0 +1,19 @@
+<% if @saved_item.present? %>
+  <%# 新規アイテムをリストに追加 %>
+  <%= turbo_stream.append "packing-items-list" do %>
+    <%= render "shared/packing_items/packing_item", packing_item: @saved_item, item_path: item_path(@saved_item) %>
+  <% end %>
+
+  <%# 空状態メッセージを非表示（最初のアイテム追加時） %>
+  <%= turbo_stream.replace "empty-state" do %>
+    <%= render "shared/packing_lists/empty_state", hidden: true %>
+  <% end %>
+
+<% end %>
+
+<%# フォームを置き換え（成功時はhiddenで非表示、エラー時はhiddenなしで表示維持） %>
+<%= turbo_stream.replace "packing-item-form" do %>
+  <div id="packing-item-form" class="<%= 'hidden' if @saved_item.present? %> mb-6" data-packing-list-form-target="form">
+    <%= render "shared/packing_lists/packing_item_form", packing_list: @packing_list, packing_item: @packing_item, form_url: form_url %>
+  </div>
+<% end %>

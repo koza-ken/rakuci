@@ -1,0 +1,4 @@
+<%# 既存のアイテム要素を新しい HTML で置き換え（名前編集時） %>
+<%= turbo_stream.replace "packing_item_#{@packing_item.id}" do %>
+  <%= render "shared/packing_items/packing_item", packing_item: @packing_item, item_path: item_path(@packing_item) %>
+<% end %>

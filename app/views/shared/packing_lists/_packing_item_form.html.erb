@@ -1,7 +1,7 @@
 <%# 持ち物追加フォーム %>
 <%= form_with model: [packing_list, packing_item], url: form_url, data: { turbo: true } do |f| %>
   <div class="flex gap-2 items-end">
-    <%= f.text_field :name, placeholder: t('packing_lists.form.item_name_placeholder'), class: "form-text-field #{input_class}", autofocus: true, data: { packing_list_form_target: "nameInput" } %>
+    <%= f.text_field :name, placeholder: t('packing_lists.form.item_name_placeholder'), class: "form-text-field", autofocus: true, data: { packing_list_form_target: "nameInput" } %>
     <%= f.submit t('packing_lists.form.create_button'), class: "btn-main px-4 py-2 w-auto md:min-w-24" %>
   </div>
 

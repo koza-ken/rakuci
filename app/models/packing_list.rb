@@ -21,6 +21,5 @@ class PackingList < ApplicationRecord
   has_many :packing_items, dependent: :destroy
 
   # バリデーション
-  validates :listable_type, presence: true
   validates :name, length: { maximum: 100 }
 end

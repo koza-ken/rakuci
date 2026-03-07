@@ -1,0 +1,42 @@
+<main class="flex flex-col items-center justify-center px-8 md:px-6 lg:px-8 py-6" data-controller="packing-list-form sortable">
+  <div class="w-full max-w-[480px] md:max-w-xl lg:max-w-2xl">
+    <%# タイトル %>
+    <h1 class="text-xl md:text-2xl font-bold text-text mb-6"><%= t('packing_lists.show.title') %></h1>
+
+    <%# 空状態メッセージ %>
+    <%= render "shared/packing_lists/empty_state", hidden: @packing_items.any? %>
+
+    <%# アイテムリスト %>
+    <div id="packing-items-list" class="space-y-2 mb-4">
+      <% if @packing_items.any? %>
+        <% @packing_items.each do |packing_item| %>
+          <%= render "shared/packing_items/packing_item", packing_item: packing_item, item_path: item_path(packing_item) %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%# 追加フォーム（最初は非表示） %>
+    <div id="packing-item-form" class="hidden mb-6" data-packing-list-form-target="form">
+      <%= render "shared/packing_lists/packing_item_form", packing_list: @packing_list, packing_item: @packing_item, form_url: form_url %>
+    </div>
+
+    <%# ＋ボタン %>
+    <div class="flex justify-start mb-3">
+      <button
+        class="flex border border-dashed rounded-md px-4 py-2 w-full gap-4"
+        data-action="click->packing-list-form#toggleForm"
+        data-packing-list-form-target="addButton"
+      >
+        <%= render IconComponent.new(name: "group_card_icon_add", size: 6, color: "text-text") %>
+        <%= t('packing_lists.show.add_item_button') %>
+      </button>
+    </div>
+
+    <%# 戻るボタン %>
+    <% if back_path.present? %>
+      <div class="flex justify-center mt-20">
+        <%= link_to t('packing_lists.show.back_to_schedule'), back_path, class: "btn-sub w-full text-center" %>
+      </div>
+    <% end %>
+  </div>
+</main>

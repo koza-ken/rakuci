@@ -3,6 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 // 持ち物の編集・チェック機能を制御
 export default class extends Controller {
   static targets = ["display", "editForm", "checkbox", "nameInput", "itemRow"]
+  static values = { updateUrl: String }
 
   // 元の値を保存（キャンセル時に復元）
   saveOriginalValue() {
@@ -55,10 +56,7 @@ export default class extends Controller {
 
   // サーバーにcheckedステータスを送信
   updateCheckStatus(isChecked) {
-    const itemRow = this.itemRowTarget
-    const itemId = itemRow.id.replace("packing_item_", "")
-    // URL は packing_list_item_path(packing_list, packing_item) => /packing_list/items/:id
-    const url = `${window.location.pathname.replace(/\/packing_list.*/, "")}/packing_list/items/${itemId}`
+    const url = this.updateUrlValue
 
     const params = {
       packing_item: {
@@ -79,7 +77,6 @@ export default class extends Controller {
   // blur時にアイテムを保存
   saveItem(event) {
     const input = event.target
-    const itemId = this.itemRowTarget.id.replace("packing_item_", "")
     const newValue = input.value
     const originalValue = this.originalValue
 
@@ -91,7 +88,7 @@ export default class extends Controller {
     }
 
     // URL と params を構築
-    const url = `${window.location.pathname.replace(/\/packing_list.*/, "")}/packing_list/items/${itemId}`
+    const url = this.updateUrlValue
     const params = {
       packing_item: {
         name: newValue,
