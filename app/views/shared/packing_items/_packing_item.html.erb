@@ -1,50 +1,50 @@
 <%# 持ち物1個の表示フォーム %>
 <div id="packing_item_<%= packing_item.id %>" class="sortable-item" data-packing-item-id="<%= packing_item.id %>">
   <div class="flex items-center gap-2" data-controller="packing-item-edit" data-packing-item-edit-target="itemRow" data-packing-item-edit-update-url-value="<%= item_path %>">
-  <%# ドラッグハンドル（並び替え用） %>
-  <div class="drag-handle flex items-center justify-center w-8 text-text-light cursor-grab active:cursor-grabbing" data-sortable-handle>
-    <span class="text-xl md:text-2xl md:font-bold leading-none">⋮⋮</span>
-  </div>
+    <%# ドラッグハンドル（並び替え用） %>
+    <div class="drag-handle flex items-center justify-center w-8 text-text-light cursor-grab active:cursor-grabbing" data-sortable-handle>
+      <span class="text-xl md:text-2xl md:font-bold leading-none">⋮⋮</span>
+    </div>
 
-  <%# チェックボックス %>
-  <%# JavaScriptで処理するからinputタグ（form_withにするとturboが動く %>
-  <input
-    type="checkbox"
-    id="packing_item_<%= packing_item.id %>_checked"
-    <%= 'checked' if packing_item.checked %>
-    data-action="change->packing-item-edit#toggleCheck"
-    data-packing-item-edit-target="checkbox"
-    class="w-4 h-4 md:w-5 md:h-5 cursor-pointer"
-  />
-
-  <%# アイテム名（表示モード） %>
-  <div
-    id="packing_item_<%= packing_item.id %>_display"
-    class="flex-1 md:text-lg text-text cursor-pointer hover:bg-gray-100 px-2 py-1 rounded"
-    data-action="click->packing-item-edit#toggleEditForm"
-    data-packing-item-edit-target="display"
-  >
-    <span class="<%= 'line-through opacity-50' if packing_item.checked %>">
-      <%= packing_item.name %>
-    </span>
-  </div>
-
-  <%# アイテム名（編集モード） %>
-  <div id="packing_item_<%= packing_item.id %>_form" class="hidden flex-1" data-packing-item-edit-target="editForm">
+    <%# チェックボックス %>
     <%# JavaScriptで処理するからinputタグ（form_withにするとturboが動く %>
     <input
-      type="text"
-      value="<%= packing_item.name %>"
-      class="form-text-field flex-1 text-sm md:text-base py-1"
-      autofocus
-      data-action="blur->packing-item-edit#saveItem"
-      data-packing-item-edit-target="nameInput"
+      type="checkbox"
+      id="packing_item_<%= packing_item.id %>_checked"
+      <%= 'checked' if packing_item.checked %>
+      data-action="change->packing-item-edit#toggleCheck"
+      data-packing-item-edit-target="checkbox"
+      class="w-4 h-4 md:w-5 md:h-5 cursor-pointer"
     />
-  </div>
 
-  <%# 削除ボタン %>
-  <%= button_to item_path, method: :delete, form: { class: "inline" } do %>
-    <span class="text-xl md:text-3xl cursor-pointer pr-2">×</span>
-  <% end %>
+    <%# アイテム名（表示モード） %>
+    <div
+      id="packing_item_<%= packing_item.id %>_display"
+      class="flex-1 md:text-lg text-text cursor-pointer hover:bg-gray-100 px-2 py-1 rounded"
+      data-action="click->packing-item-edit#toggleEditForm"
+      data-packing-item-edit-target="display"
+    >
+      <span class="<%= 'line-through opacity-50' if packing_item.checked %>">
+        <%= packing_item.name %>
+      </span>
+    </div>
+
+    <%# アイテム名（編集モード） %>
+    <div id="packing_item_<%= packing_item.id %>_form" class="hidden flex-1" data-packing-item-edit-target="editForm">
+      <%# JavaScriptで処理するからinputタグ（form_withにするとturboが動く %>
+      <input
+        type="text"
+        value="<%= packing_item.name %>"
+        class="form-text-field flex-1 text-sm md:text-base py-1"
+        autofocus
+        data-action="blur->packing-item-edit#saveItem"
+        data-packing-item-edit-target="nameInput"
+      />
+    </div>
+
+    <%# 削除ボタン %>
+    <%= button_to item_path, method: :delete, form: { class: "inline" } do %>
+      <span class="text-xl md:text-3xl cursor-pointer pr-2">×</span>
+    <% end %>
   </div>
 </div>
