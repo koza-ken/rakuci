@@ -4,8 +4,6 @@
 <%# 全アイテムが削除された場合、空状態メッセージを表示 %>
 <% if @packing_list.packing_items.empty? %>
   <%= turbo_stream.replace "empty-state" do %>
-    <div id="empty-state" class="">
-      <p class="pl-2 text-text-light mb-4"><%= t('packing_lists.show.empty_message') %></p>
-    </div>
+    <%= render "shared/packing_lists/empty_state", hidden: false %>
   <% end %>
 <% end %>

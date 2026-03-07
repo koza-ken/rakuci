@@ -6,9 +6,7 @@
 
   <%# 空状態メッセージを非表示（最初のアイテム追加時） %>
   <%= turbo_stream.replace "empty-state" do %>
-    <div id="empty-state" class="hidden">
-      <p class="pl-2 text-text-light mb-4"><%= t('packing_lists.show.empty_message') %></p>
-    </div>
+    <%= render "shared/packing_lists/empty_state", hidden: true %>
   <% end %>
 
 <% end %>
