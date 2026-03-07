@@ -11,17 +11,11 @@
     </div>
   <% end %>
 
-  <%# フォームをリセット＆非表示化 %>
-  <%= turbo_stream.replace "packing-item-form" do %>
-    <div id="packing-item-form" class="hidden mb-6" data-packing-list-form-target="form">
-      <%= render "shared/packing_lists/packing_item_form", packing_list: @packing_list, packing_item: @packing_item, form_url: form_url, input_class: input_class %>
-    </div>
-  <% end %>
-<% else %>
-  <%# エラー時はフォームを表示してエラーメッセージを表示 %>
-  <%= turbo_stream.replace "packing-item-form" do %>
-    <div id="packing-item-form" class="mb-6" data-packing-list-form-target="form">
-      <%= render "shared/packing_lists/packing_item_form", packing_list: @packing_list, packing_item: @packing_item, form_url: form_url, input_class: input_class %>
-    </div>
-  <% end %>
+<% end %>
+
+<%# フォームを置き換え（成功時はhiddenで非表示、エラー時はhiddenなしで表示維持） %>
+<%= turbo_stream.replace "packing-item-form" do %>
+  <div id="packing-item-form" class="<%= 'hidden' if @saved_item.present? %> mb-6" data-packing-list-form-target="form">
+    <%= render "shared/packing_lists/packing_item_form", packing_list: @packing_list, packing_item: @packing_item, form_url: form_url, input_class: input_class %>
+  </div>
 <% end %>
