@@ -11,7 +11,7 @@
     "sortablejs": "^1.15.7"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.16",
+    "@tailwindcss/postcss": "^4.2.1",
     "esbuild": "^0.25.9",
     "postcss": "^8.4.0",
     "postcss-cli": "^11.0.0",
