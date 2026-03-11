@@ -145,7 +145,7 @@ mb-12">
       <% if @group.group_memberships.any? %>
         <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 space-y-2 md:space-y-0">
           <% @group.group_memberships.each do |membership| %>
-            <% settlement = @settlements[membership.id] || { paid: 0, participation: 0, settlement: 0 } %>
+            <% settlement = @settlements[membership.id] || { paid_amount: 0, share_amount: 0, settlement: 0 } %>
             <div class="p-4 bg-white rounded border border-gray-200">
               <div class="flex items-center justify-between mb-2">
                 <p class="text-text font-semibold"><%= membership.nickname %></p>
@@ -160,8 +160,8 @@ mb-12">
                 </p>
               </div>
               <div class="text-sm text-text-light space-y-1">
-                <p>支払額：<%= number_to_currency(settlement[:paid], unit: '¥', format: '%u%n', precision: 0) %></p>
-                <p>負担額：<%= number_to_currency(settlement[:participation], unit: '¥', format: '%u%n', precision: 1) %></p>
+                <p>支払額：<%= number_to_currency(settlement[:paid_amount], unit: '¥', format: '%u%n', precision: 0) %></p>
+                <p>負担額：<%= number_to_currency(settlement[:share_amount], unit: '¥', format: '%u%n', precision: 1) %></p>
               </div>
             </div>
           <% end %>

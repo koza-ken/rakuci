@@ -24,8 +24,8 @@ RSpec.describe SettlementCalculator, type: :service do
         result = calculator.calculate
 
         expect(result).to have_key(membership1.id)
-        expect(result[membership1.id][:paid]).to eq(0)
-        expect(result[membership1.id][:participation]).to eq(0)
+        expect(result[membership1.id][:paid_amount]).to eq(0)
+        expect(result[membership1.id][:share_amount]).to eq(0)
         expect(result[membership1.id][:settlement]).to eq(0)
       end
     end
@@ -41,18 +41,18 @@ RSpec.describe SettlementCalculator, type: :service do
         result = calculator.calculate
 
         # user1: 3000支払い - 1000負担 = 2000受け取る
-        expect(result[membership1.id][:paid]).to eq(3000)
-        expect(result[membership1.id][:participation]).to eq(1000.0)
+        expect(result[membership1.id][:paid_amount]).to eq(3000)
+        expect(result[membership1.id][:share_amount]).to eq(1000.0)
         expect(result[membership1.id][:settlement]).to eq(2000.0)
 
         # user2: 0支払い - 1000負担 = -1000支払う
-        expect(result[membership2.id][:paid]).to eq(0)
-        expect(result[membership2.id][:participation]).to eq(1000.0)
+        expect(result[membership2.id][:paid_amount]).to eq(0)
+        expect(result[membership2.id][:share_amount]).to eq(1000.0)
         expect(result[membership2.id][:settlement]).to eq(-1000.0)
 
         # user3: 0支払い - 1000負担 = -1000支払う
-        expect(result[membership3.id][:paid]).to eq(0)
-        expect(result[membership3.id][:participation]).to eq(1000.0)
+        expect(result[membership3.id][:paid_amount]).to eq(0)
+        expect(result[membership3.id][:share_amount]).to eq(1000.0)
         expect(result[membership3.id][:settlement]).to eq(-1000.0)
       end
     end
@@ -73,18 +73,18 @@ RSpec.describe SettlementCalculator, type: :service do
         result = calculator.calculate
 
         # user1: 3000支払い - 1000負担 = 2000受け取る
-        expect(result[membership1.id][:paid]).to eq(3000)
-        expect(result[membership1.id][:participation]).to eq(1000.0)
+        expect(result[membership1.id][:paid_amount]).to eq(3000)
+        expect(result[membership1.id][:share_amount]).to eq(1000.0)
         expect(result[membership1.id][:settlement]).to eq(2000.0)
 
         # user2: 2000支払い - (1000 + 1000負担) = 0
-        expect(result[membership2.id][:paid]).to eq(2000)
-        expect(result[membership2.id][:participation]).to eq(2000.0)
+        expect(result[membership2.id][:paid_amount]).to eq(2000)
+        expect(result[membership2.id][:share_amount]).to eq(2000.0)
         expect(result[membership2.id][:settlement]).to eq(0)
 
         # user3: 0支払い - (1000 + 1000負担) = -2000支払う
-        expect(result[membership3.id][:paid]).to eq(0)
-        expect(result[membership3.id][:participation]).to eq(2000.0)
+        expect(result[membership3.id][:paid_amount]).to eq(0)
+        expect(result[membership3.id][:share_amount]).to eq(2000.0)
         expect(result[membership3.id][:settlement]).to eq(-2000.0)
       end
     end
@@ -101,14 +101,14 @@ RSpec.describe SettlementCalculator, type: :service do
         result = calculator.calculate
 
         # 10000 / 3 = 3333.333... → 3333.3に切り捨て
-        expected_participation = 3333.3
+        expected_share = 3333.3
 
-        expect(result[membership1.id][:participation]).to eq(expected_participation)
-        expect(result[membership2.id][:participation]).to eq(expected_participation)
-        expect(result[membership3.id][:participation]).to eq(expected_participation)
+        expect(result[membership1.id][:share_amount]).to eq(expected_share)
+        expect(result[membership2.id][:share_amount]).to eq(expected_share)
+        expect(result[membership3.id][:share_amount]).to eq(expected_share)
 
         # user1: 10000 - 3333.3 = 6666.7
-        expect(result[membership1.id][:settlement]).to eq(10000 - expected_participation)
+        expect(result[membership1.id][:settlement]).to eq(10000 - expected_share)
       end
     end
 
@@ -123,12 +123,12 @@ RSpec.describe SettlementCalculator, type: :service do
         calculator = described_class.new(group)
         result = calculator.calculate
 
-        expect(result[membership1.id][:paid]).to eq(1000)
-        expect(result[membership1.id][:participation]).to eq(500.0)
+        expect(result[membership1.id][:paid_amount]).to eq(1000)
+        expect(result[membership1.id][:share_amount]).to eq(500.0)
         expect(result[membership1.id][:settlement]).to eq(500.0)
 
-        expect(result[membership2.id][:paid]).to eq(0)
-        expect(result[membership2.id][:participation]).to eq(500.0)
+        expect(result[membership2.id][:paid_amount]).to eq(0)
+        expect(result[membership2.id][:share_amount]).to eq(500.0)
         expect(result[membership2.id][:settlement]).to eq(-500.0)
       end
     end
@@ -149,13 +149,13 @@ RSpec.describe SettlementCalculator, type: :service do
         result = calculator.calculate
 
         # user1: (5000 + 0)支払い - (2500 + 1500)負担 = 1000
-        expect(result[membership1.id][:paid]).to eq(5000)
-        expect(result[membership1.id][:participation]).to eq(4000.0)
+        expect(result[membership1.id][:paid_amount]).to eq(5000)
+        expect(result[membership1.id][:share_amount]).to eq(4000.0)
         expect(result[membership1.id][:settlement]).to eq(1000.0)
 
         # user2: (0 + 3000)支払い - (2500 + 1500)負担 = -1000
-        expect(result[membership2.id][:paid]).to eq(3000)
-        expect(result[membership2.id][:participation]).to eq(4000.0)
+        expect(result[membership2.id][:paid_amount]).to eq(3000)
+        expect(result[membership2.id][:share_amount]).to eq(4000.0)
         expect(result[membership2.id][:settlement]).to eq(-1000.0)
       end
     end
@@ -175,8 +175,8 @@ RSpec.describe SettlementCalculator, type: :service do
         result = calculator.calculate
 
         # user3は参加していない
-        expect(result[membership3.id][:paid]).to eq(0)
-        expect(result[membership3.id][:participation]).to eq(0)
+        expect(result[membership3.id][:paid_amount]).to eq(0)
+        expect(result[membership3.id][:share_amount]).to eq(0)
         expect(result[membership3.id][:settlement]).to eq(0)
       end
     end

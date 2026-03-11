@@ -4,32 +4,32 @@ class SettlementCalculator
   end
 
   # グループメンバーごとの精算詳細を計算
-  # 戻り値: { group_membership_id => { paid: 支払額, participation: 負担額, settlement: 精算額 } } のハッシュ
-  # paid - participation = settlement
+  # 戻り値: { group_membership_id => { paid_amount: 支払額, share_amount: 負担額, settlement: 精算額 } } のハッシュ
+  # paid_amount - share_amount = settlement
   # 正数 = 受け取る、負数 = 支払う
   def calculate
-    result = {}
+    settlements = {}
 
     @group.group_memberships.each do |membership|
-      paid = paid_totals_by_membership[membership.id] || 0
-      participation = participation_total(membership)
-      settlement = paid - participation
+      paid_amount = total_paid_by_membership[membership.id] || 0
+      share_amount = total_share_by_membership[membership.id] || 0
+      settlement = paid_amount - share_amount
 
-      result[membership.id] = {
-        paid: paid,
-        participation: participation,
+      settlements[membership.id] = {
+        paid_amount: paid_amount,
+        share_amount: share_amount,
         settlement: settlement
       }
     end
 
-    result
+    settlements
   end
 
   private
 
   # メンバーごとの支払総額を取得
   # { membership_id => 支払額合計 } のハッシュを返す
-  def paid_totals_by_membership
+  def total_paid_by_membership
     @group.expenses.group(:paid_by_membership_id).sum(:amount)
   end
 
@@ -54,6 +54,6 @@ class SettlementCalculator
       share_amount_by_membership[record.group_membership_id] += (record.expense_amount.to_f / count).floor(1)
     end
 
-    total_participation
+    share_amount_by_membership
   end
 end
