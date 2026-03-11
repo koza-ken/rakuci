@@ -11,7 +11,7 @@ class SettlementCalculator
     result = {}
 
     @group.group_memberships.each do |membership|
-      paid = paid_total(membership)
+      paid = paid_totals[membership.id] || 0
       participation = participation_total(membership)
       settlement = paid - participation
 
@@ -27,9 +27,10 @@ class SettlementCalculator
 
   private
 
-  # メンバーが支払った総額
-  def paid_total(membership)
-    @group.expenses.where(paid_by_membership_id: membership.id).sum(:amount)
+  # メンバーごとの支払総額を取得
+  # { membership_id => 支払額合計 } のハッシュを返す
+  def paid_totals
+    @group.expenses.group(:paid_by_membership_id).sum(:amount)
   end
 
   # メンバーが参加した支出額の合計を、参加人数で割った一人分
