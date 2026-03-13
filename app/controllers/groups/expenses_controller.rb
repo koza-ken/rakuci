@@ -19,14 +19,11 @@ class Groups::ExpensesController < ApplicationController
   # POST /groups/:group_id/expenses
   # 支出を追加
   def create
-    # 参加者IDを取得
-    participant_ids = params[:expense][:participant_ids]&.reject(&:blank?) || []
-
     @expense = @group.expenses.build(expense_params)
     @expense.paid_at = Date.current if @expense.paid_at.blank?
 
-    # 先に expense_participants を build してから save
-    participant_ids.each do |participant_id|
+    # 先にexpense_participantsをbuildしてからsave
+    participant_ids_from_params.each do |participant_id|
       @expense.expense_participants.build(group_membership_id: participant_id)
     end
 
@@ -47,11 +44,9 @@ class Groups::ExpensesController < ApplicationController
   # PATCH/PUT /groups/:group_id/expenses/:id
   # 支出を更新
   def update
-    participant_ids = params[:expense][:participant_ids]&.reject(&:blank?) || []
-
     # 既存参加者を削除してから新しい参加者をbuild
     @expense.expense_participants.destroy_all
-    participant_ids.each do |participant_id|
+    participant_ids_from_params.each do |participant_id|
       @expense.expense_participants.build(group_membership_id: participant_id)
     end
 
@@ -60,7 +55,7 @@ class Groups::ExpensesController < ApplicationController
 
     if @expense.save
       # 参加者を永続化（既存は destroy_all で削除済み）
-      participant_ids.each do |participant_id|
+      participant_ids_from_params.each do |participant_id|
         @expense.expense_participants.create(group_membership_id: participant_id)
       end
       redirect_to group_expenses_path(@group), notice: t("notices.expenses.updated")
@@ -94,6 +89,11 @@ class Groups::ExpensesController < ApplicationController
     unless current_membership && current_membership.id == @expense.paid_by_membership_id
       redirect_to group_expenses_path(@group), alert: t("errors.expenses.unauthorized")
     end
+  end
+
+  # フォームから送信された参加者IDを取得（空文字を除外）
+  def participant_ids_from_params
+    params[:expense][:participant_ids]&.reject(&:blank?) || []
   end
 
   # Expense のパラメータをホワイトリスト化
