@@ -4,13 +4,10 @@ class Groups::ExpensesController < ApplicationController
   before_action :set_group
   before_action :check_group_member
   before_action :set_expense, only: %i[edit update destroy]
-  before_action :check_expense_owner, only: %i[edit update destroy]
 
   def index
     @expenses = @group.expenses.ordered_by_paid_at
     @expense = Expense.new
-    @current_membership = current_group_membership_for(@group.id)
-    # 精算額計算
     @settlements = SettlementCalculator.new(@group).calculate
   end
 
@@ -51,14 +48,6 @@ class Groups::ExpensesController < ApplicationController
 
   def set_expense
     @expense = @group.expenses.find(params[:id])
-  end
-
-  # 支出の作成者のみが編集・削除できるか確認
-  def check_expense_owner
-    current_membership = current_group_membership_for(@group.id)
-    unless current_membership && current_membership.id == @expense.paid_by_membership_id
-      redirect_to group_expenses_path(@group), alert: t("errors.expenses.unauthorized")
-    end
   end
 
   def expense_params

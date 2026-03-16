@@ -209,20 +209,12 @@ RSpec.describe 'Groups::Expenses', type: :request do
       end
     end
 
-    context '支出の作成者ではないメンバーがアクセスする場合' do
-      it 'expensesページにリダイレクトされること' do
-        get edit_group_expense_path(group, expense)
-        sign_in other_user
-        get edit_group_expense_path(group, expense)
-        expect(response).to redirect_to(group_expenses_path(group))
-      end
-
-      it 'エラーメッセージが表示されること' do
+    context '支出の作成者ではないグループメンバーがアクセスする場合' do
+      it '編集ページが表示されること' do
         sign_out user
         sign_in other_user
         get edit_group_expense_path(group, expense)
-        follow_redirect!
-        expect(response.body).to include('この支払いを編集する権限がありません')
+        expect(response).to have_http_status(:ok)
       end
     end
 
@@ -331,21 +323,13 @@ RSpec.describe 'Groups::Expenses', type: :request do
       end
     end
 
-    context '支出の作成者ではないメンバーが更新しようとする場合' do
-      it '支出が更新されないこと' do
-        original_name = expense.name
+    context '支出の作成者ではないグループメンバーが更新する場合' do
+      it '支出が更新されること' do
         sign_out user
         sign_in other_user
         patch group_expense_path(group, expense), params: valid_params
         expense.reload
-        expect(expense.name).to eq(original_name)
-      end
-
-      it 'expensesページにリダイレクトされること' do
-        sign_out user
-        sign_in other_user
-        patch group_expense_path(group, expense), params: valid_params
-        expect(response).to redirect_to(group_expenses_path(group))
+        expect(expense.name).to eq('更新されたタイトル')
       end
     end
 
@@ -415,20 +399,13 @@ RSpec.describe 'Groups::Expenses', type: :request do
       end
     end
 
-    context '支出の作成者ではないメンバーが削除しようとする場合' do
-      it '支出が削除されないこと' do
+    context '支出の作成者ではないグループメンバーが削除する場合' do
+      it '支出が削除されること' do
         sign_out user
         sign_in other_user
         expect {
           delete group_expense_path(group, expense)
-        }.not_to change(Expense, :count)
-      end
-
-      it 'expensesページにリダイレクトされること' do
-        sign_out user
-        sign_in other_user
-        delete group_expense_path(group, expense)
-        expect(response).to redirect_to(group_expenses_path(group))
+        }.to change(Expense, :count).by(-1)
       end
     end
 

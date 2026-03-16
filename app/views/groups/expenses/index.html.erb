@@ -120,12 +120,10 @@
                   <span class="shrink-0"><%= t('expenses.paid_at') %>：</span>
                   <span class="flex-1"><%= l(expense.paid_at, format: :expense_date) %></span>
                 </div>
-                <% if expense.paid_by?(@current_membership) %>
-                  <div class="flex gap-2 lg:gap-3 mt-2 lg:mt-4">
-                    <%= render EditButtonComponent.new(resource: expense, scope: @group, show_label: false) %>
-                    <%= render DeleteButtonComponent.new(resource: expense, scope: @group, confirm_message: t('expenses.delete_confirm'), show_label: false) %>
-                  </div>
-                <% end %>
+                <div class="flex gap-2 lg:gap-3 mt-2 lg:mt-4">
+                  <%= render EditButtonComponent.new(resource: expense, scope: @group, show_label: false) %>
+                  <%= render DeleteButtonComponent.new(resource: expense, scope: @group, confirm_message: t('expenses.delete_confirm'), show_label: false) %>
+                </div>
               </div>
             </div>
           <% end %>
