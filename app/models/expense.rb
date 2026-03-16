@@ -46,7 +46,7 @@ class Expense < ApplicationRecord
   # 参加者IDを受け取り、expense_participantsを組み立てる（セッターなので呼び出し不要）
   def participant_ids=(ids)
     expense_participants.destroy_all if persisted?  # persistedでcreate/updateの分岐
-    Array(ids).reject(&:blank?).each do |id|
+    Array(ids).compact_blank.each do |id|
       expense_participants.build(group_membership_id: id)
     end
   end
