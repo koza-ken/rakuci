@@ -31,9 +31,7 @@ class Groups::ExpensesController < ApplicationController
   end
 
   def update
-    @expense.attributes = expense_params
-
-    if @expense.save
+    if @expense.update(expense_params)
       redirect_to group_expenses_path(@group), notice: t("notices.expenses.updated")
     else
       render :edit, status: :unprocessable_entity
