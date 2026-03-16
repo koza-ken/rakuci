@@ -6,8 +6,6 @@ class Groups::ExpensesController < ApplicationController
   before_action :set_expense, only: %i[edit update destroy]
   before_action :check_expense_owner, only: %i[edit update destroy]
 
-  # GET /groups/:group_id/expenses
-  # グループの支出一覧・精算ページを表示
   def index
     @expenses = @group.expenses.ordered_by_paid_at
     @expense = Expense.new
@@ -16,11 +14,10 @@ class Groups::ExpensesController < ApplicationController
     @settlements = SettlementCalculator.new(@group).calculate
   end
 
-  # POST /groups/:group_id/expenses
-  # 支出を追加
   def create
     @expense = @group.expenses.build(expense_params)
 
+    # モデルのセッターメソッドでexpense_participantsも生成されている
     if @expense.save
       redirect_to group_expenses_path(@group), notice: t("notices.expenses.created")
     else
@@ -30,13 +27,9 @@ class Groups::ExpensesController < ApplicationController
     end
   end
 
-  # GET /groups/:group_id/expenses/:id/edit
-  # 支出を編集
   def edit
   end
 
-  # PATCH/PUT /groups/:group_id/expenses/:id
-  # 支出を更新
   def update
     @expense.attributes = expense_params
 
@@ -47,8 +40,6 @@ class Groups::ExpensesController < ApplicationController
     end
   end
 
-  # DELETE /groups/:group_id/expenses/:id
-  # 支出を削除
   def destroy
     @expense.destroy
     redirect_to group_expenses_path(@group), notice: t("notices.expenses.destroyed")
@@ -56,12 +47,10 @@ class Groups::ExpensesController < ApplicationController
 
   private
 
-  # グループを取得
   def set_group
     @group = Group.find(params[:group_id])
   end
 
-  # 支出を取得
   def set_expense
     @expense = @group.expenses.find(params[:id])
   end
@@ -74,7 +63,6 @@ class Groups::ExpensesController < ApplicationController
     end
   end
 
-  # Expense のパラメータをホワイトリスト化
   def expense_params
     params.require(:expense).permit(:name, :amount, :memo, :paid_at, :paid_by_membership_id, participant_ids: [])
   end
