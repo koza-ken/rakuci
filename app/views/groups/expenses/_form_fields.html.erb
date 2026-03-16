@@ -1,0 +1,75 @@
+<%# 支払った人 %>
+<div>
+  <div class="flex items-center justify-start gap-2 mb-2">
+    <%= f.label :paid_by_membership_id, t('expenses.paid_by'), class: "text-sm lg:text-base font-semibold text-text" %>
+    <% if @expense.errors[:paid_by_membership].any? %>
+      <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:paid_by_membership).first %></p>
+    <% end %>
+  </div>
+  <%= f.collection_select :paid_by_membership_id,
+      @group.group_memberships,
+      :id,
+      :nickname,
+      { prompt: t('expenses.select_payer') },
+      { class: "form-text-field w-full" } %>
+</div>
+
+<%# 対象者チェックボックス %>
+<div>
+  <div class="flex items-center justify-start gap-2 mb-2">
+    <p class="text-sm lg:text-base font-semibold text-text"><%= t('expenses.participants') %></p>
+    <% if @expense.errors[:base].any? %>
+      <p class="text-red-600 text-xs">※<%= @expense.errors[:base].first %></p>
+    <% end %>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 md:gap-2">
+    <% @group.group_memberships.each do |membership| %>
+      <%# チェックボックスの状態をindexとeditで変えるための処理 %>
+      <%# 空なら全員にチェックが入る（index）、空でないなら支払いの負担者にチェックが入る（edit） %>
+      <% participant_checked = @expense.participants.empty? || @expense.participants.map(&:id).include?(membership.id) %>
+      <label class="flex items-center gap-2">
+        <%= check_box_tag "expense[participant_ids][]", membership.id, participant_checked, { class: "form-checkbox" } %>
+        <span class="text-text"><%= membership.nickname %></span>
+      </label>
+    <% end %>
+  </div>
+</div>
+
+<%# 説明 %>
+<div>
+  <div class="flex items-center justify-start gap-2 mb-2">
+    <%= f.label :name, t('expenses.description'), class: "text-sm lg:text-base font-semibold text-text" %>
+    <% if @expense.errors[:name].any? %>
+      <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:name).first %></p>
+    <% end %>
+  </div>
+  <%= f.text_field :name, placeholder: t('expenses.name_placeholder'), class: "form-text-field w-full" %>
+</div>
+
+<%# 金額と支払日 %>
+<div class="flex flex-col md:flex-row md:gap-4">
+  <%# 金額 %>
+  <div class="flex-1 mb-4 md:mb-0">
+    <div class="flex items-center justify-start gap-2 mb-2">
+      <%= f.label :amount, t('expenses.amount'), class: "text-sm lg:text-base font-semibold text-text" %>
+      <% if @expense.errors[:amount].any? %>
+        <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:amount).first %></p>
+      <% end %>
+    </div>
+    <div class="flex items-center gap-2">
+      <%= f.number_field :amount, placeholder: "0", min: "1", class: "form-text-field flex-1 [&::-webkit-outer-spin-button]:hidden [&::-webkit-inner-spin-button]:hidden" %>
+      <span class="text-text">円</span>
+    </div>
+  </div>
+
+  <%# 支払日 %>
+  <div class="flex-1">
+    <div class="flex items-center justify-start gap-2 mb-2">
+      <%= f.label :paid_at, t('expenses.paid_at'), class: "text-sm lg:text-base font-semibold text-text" %>
+      <% if @expense.errors[:paid_at].any? %>
+        <p class="text-red-600 text-xs">※<%= @expense.errors.full_messages_for(:paid_at).first %></p>
+      <% end %>
+    </div>
+    <%= f.date_field :paid_at, value: @expense.paid_at || Date.current, class: "form-text-field w-full" %>
+  </div>
+</div>

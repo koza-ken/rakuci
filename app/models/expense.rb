@@ -26,22 +26,30 @@
 class Expense < ApplicationRecord
   # アソシエーション
   belongs_to :group
-  belongs_to :paid_by_membership, class_name: "GroupMembership"
+  belongs_to :paid_by_membership, class_name: "GroupMembership"  # 支払いを立替えた人
   has_many :expense_participants, dependent: :destroy
-  has_many :participants, through: :expense_participants, source: :group_membership
+  has_many :participants, through: :expense_participants, source: :group_membership  # 支払いを負担する人たち
 
   # バリデーション
   validates :name, presence: true, length: { maximum: 100 }
   validates :amount, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :paid_at, presence: true
-  validates :memo, length: { maximum: 1000 }, allow_blank: true
+  # validates :memo, length: { maximum: 1000 }, allow_blank: true  # 現在UIで未使用。機能追加時に有効化する
 
   # カスタムバリデーション
   validate :paid_by_membership_belongs_to_group
-  validate :participants_must_exist, on: [ :create, :update ]
+  validate :participants_must_exist
 
   # スコープ
   scope :ordered_by_paid_at, -> { order(paid_at: :desc) }
+
+  # 参加者IDを受け取り、expense_participantsを組み立てる（セッターなので呼び出し不要）
+  def participant_ids=(ids)
+    expense_participants.destroy_all if persisted?  # persistedでcreate/updateの分岐
+    Array(ids).compact_blank.each do |id|
+      expense_participants.build(group_membership_id: id)
+    end
+  end
 
   # 指定されたメンバーシップがこの支出を支払った人か判定
   def paid_by?(membership)
