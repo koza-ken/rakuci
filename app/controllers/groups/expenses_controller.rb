@@ -20,7 +20,6 @@ class Groups::ExpensesController < ApplicationController
   # 支出を追加
   def create
     @expense = @group.expenses.build(expense_params)
-    @expense.paid_at = Date.current if @expense.paid_at.blank?
 
     if @expense.save
       redirect_to group_expenses_path(@group), notice: t("notices.expenses.created")
