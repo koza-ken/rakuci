@@ -22,11 +22,6 @@ class Groups::ExpensesController < ApplicationController
     @expense = @group.expenses.build(expense_params)
     @expense.paid_at = Date.current if @expense.paid_at.blank?
 
-    # 先にexpense_participantsをbuildしてからsave
-    participant_ids_from_params.each do |participant_id|
-      @expense.expense_participants.build(group_membership_id: participant_id)
-    end
-
     if @expense.save
       redirect_to group_expenses_path(@group), notice: t("notices.expenses.created")
     else
@@ -44,20 +39,9 @@ class Groups::ExpensesController < ApplicationController
   # PATCH/PUT /groups/:group_id/expenses/:id
   # 支出を更新
   def update
-    # 既存参加者を削除してから新しい参加者をbuild
-    @expense.expense_participants.destroy_all
-    participant_ids_from_params.each do |participant_id|
-      @expense.expense_participants.build(group_membership_id: participant_id)
-    end
-
-    # 属性を割り当て
     @expense.attributes = expense_params
 
     if @expense.save
-      # 参加者を永続化（既存は destroy_all で削除済み）
-      participant_ids_from_params.each do |participant_id|
-        @expense.expense_participants.create(group_membership_id: participant_id)
-      end
       redirect_to group_expenses_path(@group), notice: t("notices.expenses.updated")
     else
       render :edit, status: :unprocessable_entity
@@ -91,13 +75,8 @@ class Groups::ExpensesController < ApplicationController
     end
   end
 
-  # フォームから送信された参加者IDを取得（空文字を除外）
-  def participant_ids_from_params
-    params[:expense][:participant_ids]&.reject(&:blank?) || []
-  end
-
   # Expense のパラメータをホワイトリスト化
   def expense_params
-    params.require(:expense).permit(:name, :amount, :memo, :paid_at, :paid_by_membership_id)
+    params.require(:expense).permit(:name, :amount, :memo, :paid_at, :paid_by_membership_id, participant_ids: [])
   end
 end

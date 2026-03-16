@@ -43,6 +43,14 @@ class Expense < ApplicationRecord
   # スコープ
   scope :ordered_by_paid_at, -> { order(paid_at: :desc) }
 
+  # 参加者IDを受け取り、expense_participantsを組み立てる（セッターなので呼び出し不要）
+  def participant_ids=(ids)
+    expense_participants.destroy_all if persisted?  # persistedでcreate/updateの分岐
+    Array(ids).reject(&:blank?).each do |id|
+      expense_participants.build(group_membership_id: id)
+    end
+  end
+
   # 指定されたメンバーシップがこの支出を支払った人か判定
   def paid_by?(membership)
     return false if membership.nil?
