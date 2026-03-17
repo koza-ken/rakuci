@@ -20,9 +20,11 @@ class Schedule < ApplicationRecord
   include Hashid::Rails
 
   # アソシエーション
-  has_many :schedule_spots, dependent: :destroy
-  has_one :packing_list, as: :listable, dependent: :destroy
   belongs_to :schedulable, polymorphic: true, touch: true
+
+  has_one :packing_list, as: :listable, dependent: :destroy
+
+  has_many :schedule_spots, dependent: :destroy
 
   # バリデーション
   validates :name, presence: true, length: { maximum:  50 }

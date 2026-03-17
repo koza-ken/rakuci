@@ -27,14 +27,15 @@
 class GroupMembership < ApplicationRecord
   attr_reader :raw_guest_token # 平文トークンの一時保持用（DBには保存しない、外部からの書き込み不可）
 
-  has_many :comments, dependent: :destroy
-  has_many :likes, dependent: :destroy
-  has_many :liked_cards, through: :likes, source: :card
-  has_many :expenses, foreign_key: "paid_by_membership_id", dependent: :nullify, inverse_of: :paid_by_membership
-  has_many :expense_participants, dependent: :destroy
-  has_many :joined_expenses, through: :expense_participants, source: :expense
   belongs_to :user, optional: true
   belongs_to :group, touch: true
+
+  has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :expenses, foreign_key: "paid_by_membership_id", dependent: :nullify, inverse_of: :paid_by_membership
+  has_many :expense_participants, dependent: :destroy
+  has_many :liked_cards, through: :likes, source: :card
+  has_many :joined_expenses, through: :expense_participants, source: :expense
   validates :group_nickname, presence: true, uniqueness: { scope: :group_id }, length: { maximum: 20 }
   validates :guest_token_digest, length: { maximum: 64 }, allow_blank: true
   # user_id または guest_token_digest のどちらかが必須

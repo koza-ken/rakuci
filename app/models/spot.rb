@@ -27,9 +27,10 @@
 class Spot < ApplicationRecord
   include Hashid::Rails
 
-  has_many :schedule_spots, dependent: :nullify
   belongs_to :card, touch: true
   belongs_to :category
+
+  has_many :schedule_spots, dependent: :nullify
 
   before_validation :normalize_google_place_id
 
