@@ -142,6 +142,7 @@ ja:
       guide_slide_4_description: 旅行のもちものを整理できます。あなたのもちものページに、いつも持っていくものを追加することで忘れ物を防ぐことができます。
       guide_slide_5_title: 費用を精算する
       guide_slide_5_description: 旅行中の費用を記録しておくことで、旅費の精算ができます。
+      sort_info: 更新日順で表示
       lets_create_card: 旅行先のカードをつくろう
       user_card_page: このページはあなた専用のカードをつくることができます
       title: あなたの旅のカード
@@ -483,6 +484,7 @@ ja:
         create_schedule_caption: 旅行先が決まったらしおりをつくろう
         new_schedule: 新規作成
         no_schedules: まだしおりがありません
+        sort_info: 旅行開始日順で表示
         title: 旅のしおり
       new:
         title: しおり作成
