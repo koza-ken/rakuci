@@ -193,12 +193,12 @@ RSpec.describe Group, type: :model do
   end
 
   describe "スコープ" do
-    describe ".recently_updated" do
+    describe ".ordered_by_recent" do
       it "updated_atの降順で取得されること" do
         group_old = travel_to(1.day.ago) { create(:group) }
         group_new = freeze_time { create(:group) }
 
-        result = described_class.recently_updated
+        result = described_class.ordered_by_recent
         expect(result.first).to eq(group_new)
         expect(result.last).to eq(group_old)
       end

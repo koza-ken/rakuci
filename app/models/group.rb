@@ -39,7 +39,7 @@ class Group < ApplicationRecord
   validates :invite_token, presence: true, length: { maximum: 64 }, uniqueness: true
 
   scope :with_memberships_and_schedule, -> { includes(:group_memberships, :schedule) }
-  scope :recently_updated, -> { order(updated_at: :desc) }
+  scope :ordered_by_recent, -> { order(updated_at: :desc) }
 
   # グループが指定されたユーザーによって作成されたかを判定
   def created_by?(user)
