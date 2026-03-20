@@ -69,7 +69,7 @@ class Users::ScheduleSpotsController < ApplicationController
   def set_schedule_spots
     @schedule_spots = @schedule.schedule_spots
                                .includes(:category, spot: :category)
-                               .order(:global_position)
+                               .ordered_by_position
   end
 
   def schedule_spot_params
