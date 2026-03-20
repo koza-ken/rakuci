@@ -52,8 +52,7 @@ class ScheduleSpot < ApplicationRecord
   acts_as_list column: :global_position, scope: [ :schedule_id, :day_number ]
 
   # スコープ
-  scope :ordered, -> { order(:global_position) }
-  scope :on_day, ->(day) { where(day_number: day) }
+  scope :ordered_by_position, -> { order(:global_position) }
 
   # 表示名を取得（登録名 > デフォルト）
   def display_name
