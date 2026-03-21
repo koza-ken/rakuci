@@ -43,7 +43,8 @@ class ScheduleSpot < ApplicationRecord
   validates :name, presence: true, length: { maximum: 50 }
   validates :address, length: { maximum: 255 }
   validates :phone_number, length: { maximum: 20 }
-  validates :website_url, format: { with: URI::DEFAULT_PARSER.make_regexp([ "http", "https" ]) }, length: { maximum: 500 }, allow_blank: true
+  # http_urlはvalidatorで定義（httpから始まっているか）
+  validates :website_url, http_url: true, length: { maximum: 500 }, allow_blank: true
 
   # カスタムバリデーション
   validate :end_time_after_start_time
