@@ -72,6 +72,7 @@ ja:
         blank: を入力してください
         greater_than: は%{count}より後に設定してください
         invalid: は無効です
+        invalid_url: にはhttpかhttpsで始まるURLを入力してください
         taken: は既に使用されています
         too_long: は%{count}文字以内で入力してください
       models:
