@@ -35,11 +35,11 @@ class Schedule < ApplicationRecord
   validate :end_date_after_start_date
 
   def user_schedule?
-    schedulable_type == "User"
+    schedule_type == :user
   end
 
   def group_schedule?
-    schedulable_type == "Group"
+    schedule_type == :group
   end
 
   # しおりの日数を返す
@@ -68,6 +68,11 @@ class Schedule < ApplicationRecord
 
   private
 
+  # しおりのタイプを返す（個人用 or グループ用）
+  def schedule_type
+    schedulable_type == "User" ? :user : :group
+  end
+
   # 終了日が開始日以降かをチェック
   def end_date_after_start_date
     return unless start_date.present? && end_date.present?
@@ -78,7 +83,7 @@ class Schedule < ApplicationRecord
 
   # グループは1つのスケジュールのみ持つことができる
   def only_one_schedule_per_group
-    return unless schedulable_type == "Group"
+    return unless schedule_type == :group
 
     # グループが既に別のしおりを持っていないか確認
     existing_schedule = Schedule.where(schedulable_type: "Group", schedulable_id: schedulable_id)
