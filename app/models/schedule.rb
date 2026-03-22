@@ -18,6 +18,7 @@
 #
 class Schedule < ApplicationRecord
   include Hashid::Rails
+  include CreatePackingList  # scheduleを生成したらpackinglistも生成する
 
   # アソシエーション
   belongs_to :schedulable, polymorphic: true, touch: true
@@ -32,9 +33,6 @@ class Schedule < ApplicationRecord
   # カスタムバリデーション
   validate :only_one_schedule_per_group
   validate :end_date_after_start_date
-
-  # しおりがつくられたらしおりに紐づくもちものリストが作られる
-  after_create :create_packing_list
 
   def user_schedule?
     schedulable_type == "User"
@@ -69,10 +67,6 @@ class Schedule < ApplicationRecord
   end
 
   private
-
-  def create_packing_list
-    PackingList.create(listable: self)
-  end
 
   # 終了日が開始日以降かをチェック
   def end_date_after_start_date

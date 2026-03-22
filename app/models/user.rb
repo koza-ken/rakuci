@@ -23,6 +23,7 @@
 class User < ApplicationRecord
   include Hashid::Rails
   include Cardable
+  include CreatePackingList  # userを生成したらpackinglistも生成する
 
   # Include default devise modules. \
   devise :database_authenticatable, :registerable,
@@ -41,9 +42,6 @@ class User < ApplicationRecord
   validates :provider, presence: true, if: -> { uid.present? }, length: { maximum: 64 }
   validates :uid, presence: true, if: -> { provider.present? }
 
-  # ユーザーがつくられたらユーザー用のもちものリストが作られる（ユーザー用のリスト）
-  after_create :create_packing_list
-
   # ユーザーが特定のグループのメンバーかどうかを確認
   def member_of?(group)
     group_memberships.exists?(group: group)
@@ -54,9 +52,4 @@ class User < ApplicationRecord
     provider.present? && uid.present?
   end
 
-  private
-
-  def create_packing_list
-    PackingList.create(listable: self)
-  end
 end
