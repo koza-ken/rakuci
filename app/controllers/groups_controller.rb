@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
 
   def show
     @schedule = @group.schedule
-    @categories = Category.order(:display_order).to_a
+    @categories = Category.ordered.to_a
     @cards_with_spots_by_category = @group.cards_with_spots_grouped
   end
 

@@ -86,7 +86,7 @@ class Groups::ScheduleSpotsController < ApplicationController
   end
 
   def set_categories
-    @categories = Category.order(display_order: :asc).to_a
+    @categories = Category.ordered.to_a
   end
 
   def schedule_spot_params

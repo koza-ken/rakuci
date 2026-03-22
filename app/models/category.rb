@@ -13,6 +13,8 @@
 #  index_categories_on_display_order  (display_order) UNIQUE
 #
 class Category < ApplicationRecord
+  scope :ordered, -> { order(:display_order) }
+
   # そのカテゴリに属するレコードがある場合、カテゴリの削除時にエラー
   has_many :spots, dependent: :restrict_with_error
   has_many :schedule_spots, dependent: :restrict_with_error
