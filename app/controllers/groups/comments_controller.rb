@@ -2,8 +2,8 @@ class Groups::CommentsController < ApplicationController
   include GroupMemberAuthorization  # グループメンバーのみアクセス許可
 
   before_action :set_group
-  before_action :set_card
   before_action :check_group_member
+  before_action :set_card
   before_action :check_card_in_group
   before_action :set_comment, only: %i[destroy]
   before_action :set_group_membership
