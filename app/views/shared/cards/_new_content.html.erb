@@ -1,6 +1,6 @@
 <%= render layout: "shared/modal_wrapper", locals: { frame_id: "card-create-modal" } do %>
   <div class="w-full max-w-md">
-    <h1 class="text-xl font-bold text-text mb-8"><%= t('cards.new.title') %></h1>
+    <h2 class="text-xl font-bold text-text mb-6"><%= t('cards.new.title') %></h2>
   </div>
 
   <%= form_with model: @card, url: (@group ? group_cards_path(@group) : cards_path), class: "w-full max-w-md" do |f| %>

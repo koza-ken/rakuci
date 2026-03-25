@@ -1,6 +1,6 @@
 <%= render layout: "shared/modal_wrapper", locals: { frame_id: "group-create-modal" } do %>
   <div class="w-full max-w-md">
-    <h1 class="text-xl font-bold text-text mb-8"><%= t('groups.new.title') %></h1>
+    <h2 class="text-xl font-bold text-text mb-6"><%= t('groups.new.title') %></h2>
   </div>
 
   <%= form_with model: @form, url: groups_path, class: "w-full max-w-md" do |f| %>
