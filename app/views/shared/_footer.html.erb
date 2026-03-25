@@ -3,23 +3,23 @@
     <nav class="flex justify-around items-center h-14 max-w-[480px] mx-auto">
       <%= link_to cards_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity scale-90" do %>
         <%= render IconComponent.new(name: "footer_icon_card", size: 8, color: "text-secondary") %>
-        <span class="text-[0.6rem] text-secondary font-bold">カード</span>
+        <span class="text-[0.6rem] text-secondary font-bold"><%= t("shared.nav.cards") %></span>
       <% end %>
 
       <%= link_to groups_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity scale-90" do %>
         <%= render IconComponent.new(name: "footer_icon_group", size: 8, color: "text-secondary") %>
-        <span class="text-[0.6rem] text-secondary font-bold">グループ</span>
+        <span class="text-[0.6rem] text-secondary font-bold"><%= t("shared.nav.groups") %></span>
       <% end %>
 
       <%= link_to schedules_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity scale-90" do %>
         <%= render IconComponent.new(name: "footer_icon_schedule", size: 8, color: "text-secondary") %>
-        <span class="text-[0.6rem] text-secondary font-bold">しおり</span>
+        <span class="text-[0.6rem] text-secondary font-bold"><%= t("shared.nav.schedules") %></span>
       <% end %>
 
       <%= link_to packing_list_path, class: "flex flex-col items-center justify-center w-1/4 h-full text-main hover:opacity-70 transition-opacity scale-90" do %>
         <%# もちもののアイコンが少し小さい気がするのでsize=9に %>
         <%= render IconComponent.new(name: "footer_icon_backpack", size: 9, color: "text-secondary") %>
-        <span class="text-[0.6rem] text-secondary font-bold">もちもの</span>
+        <span class="text-[0.6rem] text-secondary font-bold"><%= t("shared.nav.packing_list") %></span>
       <% end %>
     </nav>
   </footer>

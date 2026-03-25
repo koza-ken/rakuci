@@ -100,6 +100,27 @@ ja:
       schedule: しおり
       schedule_spot: スケジュール
       spot: スポット
+  shared:
+    nav:
+      cards: カード
+      groups: グループ
+      schedules: しおり
+      packing_list: もちもの
+      settings: 設定
+      login: ログイン
+      logout: ログアウト
+    hamburger:
+      welcome: ようこそ
+      welcome_user: "ようこそ、%{name}さん"
+      cards: カード一覧
+      groups: グループ一覧
+      schedules: しおり一覧
+      packing_list: もちもの
+      settings: ユーザー設定
+      guide: 使い方
+      terms: 利用規約
+      privacy: プライバシーポリシー
+      contact: お問い合わせ
   components:
     icon_buttons:
       edit: 編集
