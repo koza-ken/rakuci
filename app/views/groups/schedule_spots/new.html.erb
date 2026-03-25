@@ -1,4 +1,4 @@
-<turbo-frame id="spot-create-modal">
+<%= turbo_frame_tag "spot-create-modal", data: { controller: "modal" } do %>
   <%# モーダルのラッパー %>
   <div role="dialog" tabindex="-1" class="fixed inset-0 z-60 flex items-center justify-center w-full h-screen p-2">
     <%# 背景（クリックでモーダルを閉じる） %>
@@ -96,4 +96,4 @@
       </main>
     </div>
   </div>
-</turbo-frame>
+<% end %>

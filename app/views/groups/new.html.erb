@@ -1,8 +1,8 @@
-<turbo-frame id="group-create-modal" data-controller="modal">
+<%= turbo_frame_tag "group-create-modal", data: { controller: "modal" } do %>
   <%# モーダルのラッパー %>
   <div role="dialog" tabindex="-1" class="fixed inset-0 z-60 flex items-center justify-center w-full h-screen p-2">
     <%# 背景 %>
-    <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-default bg-gray-900/30"></div>
+    <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-pointer bg-gray-900/30"></div>
     <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
       <main class="flex flex-col items-center justify-center px-8 py-12">
         <div class="w-full max-w-md">
@@ -56,4 +56,4 @@
       </main>
     </div>
   </div>
-</turbo_frame>
+<% end %>

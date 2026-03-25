@@ -4,10 +4,12 @@
     <%# 背景（クリックでモーダルを閉じる） %>
     <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-pointer bg-gray-900/30"></div>
     <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
-      <main class="flex flex-col px-8 py-12 bg-main-bg">
-        <h2 class="text-xl font-bold text-text mb-6"><%= t('groups.schedules.new.title') %></h2>
+      <main class="flex flex-col items-center justify-center px-8 py-12">
+        <div class="w-full max-w-md">
+          <h2 class="text-xl font-bold text-text mb-6"><%= t('groups.schedules.new.title') %></h2>
+        </div>
 
-        <%= form_with model: [@group, @schedule], url: group_schedule_path(@group), local: true do |f| %>
+        <%= form_with model: [@group, @schedule], url: group_schedule_path(@group), local: true, class: "w-full max-w-md" do |f| %>
           <div class="mb-4">
             <%= f.label :name, class: "block text-sm font-bold text-text mb-2" do %>
               <%= t('users.schedules.form.name_label') %>
