@@ -1,59 +1,49 @@
-<%= turbo_frame_tag "group-create-modal", data: { controller: "modal" } do %>
-  <%# モーダルのラッパー %>
-  <div role="dialog" tabindex="-1" class="fixed inset-0 z-60 flex items-center justify-center w-full h-screen p-2">
-    <%# 背景 %>
-    <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-pointer bg-gray-900/30"></div>
-    <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
-      <main class="flex flex-col items-center justify-center px-8 py-12">
-        <div class="w-full max-w-md">
-          <h1 class="text-xl font-bold text-text mb-8"><%= t('groups.new.title') %></h1>
-        </div>
-
-        <%= form_with model: @form, url: groups_path, class: "w-full max-w-md" do |f| %>
-          <%# グループ名 %>
-          <div class="mb-6">
-            <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
-              <%= t('groups.form.name') %>
-              <span class="text-red-600 font-bold ml-1">*</span>
-            <% end %>
-            <%= f.text_field :name, placeholder: t('groups.form.name_placeholder'), autofocus: true, class: "form-text-field" %>
-
-            <%# refactor:エラーメッセージをコンポーネントに %>
-            <%# エラーメッセージ %>
-            <% if @form.errors.any? %>
-              <div class="ml-2">
-                <% @form.errors.messages[:name].each do |message| %>
-                  <p class="text-red-600 text-xs"><%= t('activerecord.attributes.group.name') %><%= message %></p>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-
-          <%# グループでの名前 %>
-          <div class="mb-6">
-            <%= f.label :group_nickname, class: "block text-sm font-medium text-text mb-2" do %>
-              <%= t('groups.form.group_nickname') %>
-              <span class="text-red-600 font-bold ml-1">*</span>
-            <% end %>
-            <%= f.text_field :group_nickname, placeholder: t('groups.form.group_nickname_placeholder'), class: "form-text-field" %>
-
-            <%# エラーメッセージ %>
-            <% if @form.errors.any? %>
-              <div class="ml-2">
-                <% @form.errors.messages[:group_nickname].each do |message| %>
-                  <p class="text-red-600 text-xs"><%= t('activerecord.attributes.group_membership.group_nickname') %><%= message %></p>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-
-          <%# ボタン %>
-          <div class="flex gap-3 mt-12">
-            <%= f.submit t('groups.form.submit'), class: "btn-main flex-1" %>
-            <%= link_to t('groups.form.cancel'), groups_path, data: { action: "click->modal#close" }, class: "btn-sub flex-1 text-center" %>
-          </div>
-        <% end %>
-      </main>
-    </div>
+<%= render layout: "shared/modal_wrapper", locals: { frame_id: "group-create-modal" } do %>
+  <div class="w-full max-w-md">
+    <h1 class="text-xl font-bold text-text mb-8"><%= t('groups.new.title') %></h1>
   </div>
+
+  <%= form_with model: @form, url: groups_path, class: "w-full max-w-md" do |f| %>
+    <%# グループ名 %>
+    <div class="mb-6">
+      <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
+        <%= t('groups.form.name') %>
+        <span class="text-red-600 font-bold ml-1">*</span>
+      <% end %>
+      <%= f.text_field :name, placeholder: t('groups.form.name_placeholder'), autofocus: true, class: "form-text-field" %>
+
+      <%# エラーメッセージ %>
+      <% if @form.errors.any? %>
+        <div class="ml-2">
+          <% @form.errors.messages[:name].each do |message| %>
+            <p class="text-red-600 text-xs"><%= t('activerecord.attributes.group.name') %><%= message %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%# グループでの名前 %>
+    <div class="mb-6">
+      <%= f.label :group_nickname, class: "block text-sm font-medium text-text mb-2" do %>
+        <%= t('groups.form.group_nickname') %>
+        <span class="text-red-600 font-bold ml-1">*</span>
+      <% end %>
+      <%= f.text_field :group_nickname, placeholder: t('groups.form.group_nickname_placeholder'), class: "form-text-field" %>
+
+      <%# エラーメッセージ %>
+      <% if @form.errors.any? %>
+        <div class="ml-2">
+          <% @form.errors.messages[:group_nickname].each do |message| %>
+            <p class="text-red-600 text-xs"><%= t('activerecord.attributes.group_membership.group_nickname') %><%= message %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%# ボタン %>
+    <div class="flex gap-3 mt-12">
+      <%= f.submit t('groups.form.submit'), class: "btn-main flex-1" %>
+      <%= link_to t('groups.form.cancel'), groups_path, data: { action: "click->modal#close" }, class: "btn-sub flex-1 text-center" %>
+    </div>
+  <% end %>
 <% end %>

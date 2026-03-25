@@ -1,55 +1,46 @@
-<%= turbo_frame_tag "card-create-modal", data: { controller: "modal" } do %>
-  <%# モーダルのラッパー %>
-  <div role="dialog" tabindex="-1" class="fixed inset-0 z-60 flex items-center justify-center w-full h-screen p-2">
-    <%# 背景（クリックでモーダルを閉じる） %>
-    <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-pointer bg-gray-900/30"></div>
-    <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
-      <main class="flex flex-col items-center justify-center px-8 py-12">
-        <div class="w-full max-w-md">
-          <h1 class="text-xl font-bold text-text mb-8"><%= t('cards.new.title') %></h1>
-        </div>
-
-        <%= form_with model: @card, url: (@group ? group_cards_path(@group) : cards_path), class: "w-full max-w-md" do |f| %>
-          <%# カード名 %>
-          <div class="mb-6">
-            <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
-              <%= t('cards.form.name') %>
-              <span class="text-red-600 font-bold ml-1">*</span>
-            <% end %>
-            <%= f.text_field :name,
-                placeholder: t('cards.form.name_placeholder'),
-                class: "form-text-field" %>
-            <% if @card.errors.any? %>
-              <div class="ml-2">
-                <% @card.errors.messages[:name].each do |message| %>
-                  <p class="text-red-600 text-xs"><%= t('activerecord.attributes.card.name') %><%= message %></p>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-
-          <%# メモ %>
-          <div class="mb-6">
-            <%= f.label :memo, t('cards.form.memo'), class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.text_area :memo,
-                rows: 5,
-                class: "form-text-field resize-vertical" %>
-            <% if @card.errors.any? %>
-              <div class="ml-2">
-                <% @card.errors.messages[:memo].each do |message| %>
-                  <p class="text-red-600 text-xs"><%= t('activerecord.attributes.card.memo') %><%= message %></p>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-
-          <%# ボタン %>
-          <div class="flex gap-3">
-            <%= f.submit t('cards.form.submit'), class: "btn-main flex-1" %>
-            <%= link_to t('cards.form.cancel'), :back, data: { action: "click->modal#close" }, class: "btn-sub flex-1 text-center" %>
-          </div>
-        <% end %>
-      </main>
-    </div>
+<%= render layout: "shared/modal_wrapper", locals: { frame_id: "card-create-modal" } do %>
+  <div class="w-full max-w-md">
+    <h1 class="text-xl font-bold text-text mb-8"><%= t('cards.new.title') %></h1>
   </div>
+
+  <%= form_with model: @card, url: (@group ? group_cards_path(@group) : cards_path), class: "w-full max-w-md" do |f| %>
+    <%# カード名 %>
+    <div class="mb-6">
+      <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
+        <%= t('cards.form.name') %>
+        <span class="text-red-600 font-bold ml-1">*</span>
+      <% end %>
+      <%= f.text_field :name,
+          placeholder: t('cards.form.name_placeholder'),
+          class: "form-text-field" %>
+      <% if @card.errors.any? %>
+        <div class="ml-2">
+          <% @card.errors.messages[:name].each do |message| %>
+            <p class="text-red-600 text-xs"><%= t('activerecord.attributes.card.name') %><%= message %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%# メモ %>
+    <div class="mb-6">
+      <%= f.label :memo, t('cards.form.memo'), class: "block text-sm font-medium text-text mb-2" %>
+      <%= f.text_area :memo,
+          rows: 5,
+          class: "form-text-field resize-vertical" %>
+      <% if @card.errors.any? %>
+        <div class="ml-2">
+          <% @card.errors.messages[:memo].each do |message| %>
+            <p class="text-red-600 text-xs"><%= t('activerecord.attributes.card.memo') %><%= message %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%# ボタン %>
+    <div class="flex gap-3">
+      <%= f.submit t('cards.form.submit'), class: "btn-main flex-1" %>
+      <%= link_to t('cards.form.cancel'), :back, data: { action: "click->modal#close" }, class: "btn-sub flex-1 text-center" %>
+    </div>
+  <% end %>
 <% end %>
