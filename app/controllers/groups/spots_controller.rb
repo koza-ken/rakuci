@@ -4,8 +4,8 @@ class Groups::SpotsController < ApplicationController
   before_action :set_spot, only: %i[show edit update destroy]
   before_action :set_group, only: %i[new create]
   before_action :set_group_from_spot, only: %i[show edit update destroy]
-  before_action :set_card, only: %i[new create]
   before_action :check_group_member
+  before_action :set_card, only: %i[new create]
   before_action :check_card_in_group
 
   def show
