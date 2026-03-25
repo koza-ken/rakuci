@@ -121,6 +121,10 @@ ja:
       terms: 利用規約
       privacy: プライバシーポリシー
       contact: お問い合わせ
+    confirm:
+      open_google_maps: Googleマップに移動します
+      open_external_site: 外部サイトに移動しますか？
+      delete_member: "%{name}を削除しますか？"
   components:
     icon_buttons:
       edit: 編集
@@ -248,7 +252,6 @@ ja:
   groups:
     details:
       delete_button: 削除
-      delete_confirm: を削除しますか
       delete_member_title: グループ作成者はメンバーを削除できます
     edit:
       title: グループ編集

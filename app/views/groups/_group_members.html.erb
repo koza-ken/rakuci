@@ -29,7 +29,7 @@
         <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
           <span class="text-sm lg:text-base text-text"><%= membership.group_nickname %></span>
           <% if membership.deletable_by?(current_user) %>
-            <%= button_to group_group_membership_path(group, membership), method: :delete, form_class: "inline", class: "btn-danger px-3 py-1 text-xs lg:text-sm", data: { turbo_confirm: "#{membership.group_nickname}#{t('groups.details.delete_confirm')}" } do %>
+            <%= button_to group_group_membership_path(group, membership), method: :delete, form_class: "inline", class: "btn-danger px-3 py-1 text-xs lg:text-sm", data: { turbo_confirm: t("shared.confirm.delete_member", name: membership.group_nickname) } do %>
               <%= t('groups.details.delete_button') %>
             <% end %>
           <% end %>
