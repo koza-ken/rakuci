@@ -61,7 +61,7 @@
     <div id="memo-form" data-memo-edit-target="form" class="<%= 'hidden' unless @card.errors.any? %> w-full">
       <%= form_with model: @card, url: (@card.group_card? ? group_card_path(@card.group, @card) : card_path(@card)), local: true, class: "w-full" do |f| %>
         <%= f.label :memo, t('cards.form.memo'), class: "block text-lg lg:text-xl font-bold text-text mb-2 lg:mb-3" %>
-        <%= f.text_area :memo, class: "form-text-field w-full resize-none min-h-[120px] text-sm lg:text-base", placeholder: "メモを入力してください" %>
+        <%= f.text_area :memo, class: "form-text-field w-full resize-none min-h-[120px] text-sm lg:text-base", placeholder: t('cards.memo_input_placeholder') %>
         <div class="flex gap-2 mt-2">
           <%= f.submit t('cards.form.update'), class: "btn-main px-4 lg:px-6 py-2 w-auto" %>
           <button type="button" class="btn-sub px-4 lg:px-6 py-2 w-auto" data-action="click->memo-edit#toggleForm">

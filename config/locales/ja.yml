@@ -125,6 +125,7 @@ ja:
       open_google_maps: Googleマップに移動します
       open_external_site: 外部サイトに移動しますか？
       delete_member: "%{name}を削除しますか？"
+    back: もどる
   components:
     icon_buttons:
       edit: 編集
@@ -133,6 +134,7 @@ ja:
   cards:
     add_spot: スポット追加
     add_spots_to_schedule: 選択したスポットをしおりに追加
+    select_spots_placeholder: スポットを選択してください
     back: もどる
     comments: コメント
     delete_button: カード削除

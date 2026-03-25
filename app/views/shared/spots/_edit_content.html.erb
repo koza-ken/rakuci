@@ -26,7 +26,7 @@
             <span class="text-red-600 font-bold ml-1">*</span>
           <% end %>
           <%= f.collection_select :category_id, @categories, :id, :name,
-              {include_blank: "--- 選択してください ---"},
+              {include_blank: t('schedule_spots.category_placeholder')},
               {class: "form-text-field text-sm lg:text-base"} %>
           <% if @spot.errors.any? %>
             <div class="ml-2 lg:ml-3">

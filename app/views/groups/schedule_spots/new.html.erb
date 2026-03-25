@@ -46,7 +46,7 @@
               <%= t('spots.form.category') %>
             <% end %>
             <%= f.collection_select :category_id, @categories, :id, :name,
-                {include_blank: "--- 選択してください ---"},
+                {include_blank: t('schedule_spots.category_placeholder')},
                 {class: "form-text-field"} %>
             <% if @schedule_spot.errors.any? %>
               <div class="ml-2">
