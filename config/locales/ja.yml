@@ -1,4 +1,9 @@
 ja:
+  activemodel:
+    attributes:
+      group_create_form:
+        name: グループ名
+        group_nickname: グループ内での名前
   activerecord:
     attributes:
       card:
@@ -40,9 +45,11 @@ ja:
         start_date: 旅行開始日
         updated_at: 更新日時
       schedule_spot:
+        category_id: カテゴリ
         created_at: 作成日時
         day: 日目
         end_time: 出発時刻
+        name: スポット名
         note: メモ
         schedule: しおり
         spot: スポット
