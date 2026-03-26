@@ -14,12 +14,8 @@
           data: { autocomplete_target: "nameField" },
           placeholder: t('spots.form.name_placeholder'),
           class: "form-text-field" %>
-      <% if @schedule_spot.errors.any? %>
-        <div class="ml-2">
-          <% @schedule_spot.errors.messages[:name].each do |message| %>
-            <p class="text-red-600 text-xs"><%= t('schedule_spots.form.spot_name') %><%= message %></p>
-          <% end %>
-        </div>
+      <% @schedule_spot.errors.full_messages_for(:name).each do |message| %>
+        <p class="text-red-600 text-xs ml-2"><%= message %></p>
       <% end %>
 
       <%# オートコンプリートは補助として表示 %>
@@ -42,12 +38,8 @@
       <%= f.collection_select :category_id, @categories, :id, :name,
           {include_blank: t('schedule_spots.category_placeholder')},
           {class: "form-text-field"} %>
-      <% if @schedule_spot.errors.any? %>
-        <div class="ml-2">
-          <% @schedule_spot.errors.messages[:category_id].each do |message| %>
-            <p class="text-red-600 text-xs"><%= t('schedule_spots.form.category') %><%= message %></p>
-          <% end %>
-        </div>
+      <% @schedule_spot.errors.full_messages_for(:category_id).each do |message| %>
+        <p class="text-red-600 text-xs ml-2"><%= message %></p>
       <% end %>
     </div>
 

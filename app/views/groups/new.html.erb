@@ -13,12 +13,8 @@
       <%= f.text_field :name, placeholder: t('groups.form.name_placeholder'), autofocus: true, class: "form-text-field" %>
 
       <%# エラーメッセージ %>
-      <% if @form.errors.any? %>
-        <div class="ml-2">
-          <% @form.errors.messages[:name].each do |message| %>
-            <p class="text-red-600 text-xs"><%= t('activerecord.attributes.group.name') %><%= message %></p>
-          <% end %>
-        </div>
+      <% @form.errors.full_messages_for(:name).each do |message| %>
+        <p class="text-red-600 text-xs ml-2"><%= message %></p>
       <% end %>
     </div>
 
@@ -31,12 +27,8 @@
       <%= f.text_field :group_nickname, placeholder: t('groups.form.group_nickname_placeholder'), class: "form-text-field" %>
 
       <%# エラーメッセージ %>
-      <% if @form.errors.any? %>
-        <div class="ml-2">
-          <% @form.errors.messages[:group_nickname].each do |message| %>
-            <p class="text-red-600 text-xs"><%= t('activerecord.attributes.group_membership.group_nickname') %><%= message %></p>
-          <% end %>
-        </div>
+      <% @form.errors.full_messages_for(:group_nickname).each do |message| %>
+        <p class="text-red-600 text-xs ml-2"><%= message %></p>
       <% end %>
     </div>
 

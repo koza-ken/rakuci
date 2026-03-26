@@ -38,15 +38,11 @@
           </div>
         </div>
         <%# エラーメッセージ表示 %>
-        <% if schedule.errors.any? %>
-          <div class="mt-2 lg:mt-3">
-            <% schedule.errors.messages[:start_date]&.each do |message| %>
-              <p class="text-red-600 text-xs lg:text-sm"><%= t('activerecord.attributes.schedule.start_date') %><%= message %></p>
-            <% end %>
-            <% schedule.errors.messages[:end_date]&.each do |message| %>
-              <p class="text-red-600 text-xs lg:text-sm"><%= t('activerecord.attributes.schedule.end_date') %><%= message %></p>
-            <% end %>
-          </div>
+        <% schedule.errors.full_messages_for(:start_date).each do |message| %>
+          <p class="text-red-600 text-xs lg:text-sm mt-2 lg:mt-3"><%= message %></p>
+        <% end %>
+        <% schedule.errors.full_messages_for(:end_date).each do |message| %>
+          <p class="text-red-600 text-xs lg:text-sm mt-2 lg:mt-3"><%= message %></p>
         <% end %>
         <%# ボタン %>
         <div class="flex gap-2 mt-3 lg:mt-4 mb-6 lg:mb-8 justify-end">

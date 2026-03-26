@@ -13,12 +13,8 @@
       <%= f.text_field :name,
           placeholder: t('cards.form.name_placeholder'),
           class: "form-text-field" %>
-      <% if @card.errors.any? %>
-        <div class="ml-2">
-          <% @card.errors.messages[:name].each do |message| %>
-            <p class="text-red-600 text-xs"><%= t('activerecord.attributes.card.name') %><%= message %></p>
-          <% end %>
-        </div>
+      <% @card.errors.full_messages_for(:name).each do |message| %>
+        <p class="text-red-600 text-xs ml-2"><%= message %></p>
       <% end %>
     </div>
 
@@ -28,12 +24,8 @@
       <%= f.text_area :memo,
           rows: 5,
           class: "form-text-field resize-vertical" %>
-      <% if @card.errors.any? %>
-        <div class="ml-2">
-          <% @card.errors.messages[:memo].each do |message| %>
-            <p class="text-red-600 text-xs"><%= t('activerecord.attributes.card.memo') %><%= message %></p>
-          <% end %>
-        </div>
+      <% @card.errors.full_messages_for(:memo).each do |message| %>
+        <p class="text-red-600 text-xs ml-2"><%= message %></p>
       <% end %>
     </div>
 

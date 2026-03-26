@@ -34,12 +34,8 @@
           </button>
         </div>
         <%# エラーメッセージ表示 %>
-        <% if @card.errors.any? %>
-          <div class="mt-2">
-            <% @card.errors.messages[:name].each do |message| %>
-              <p class="text-red-600 text-sm"><%= message %></p>
-            <% end %>
-          </div>
+        <% @card.errors.full_messages_for(:name).each do |message| %>
+          <p class="text-red-600 text-sm mt-2"><%= message %></p>
         <% end %>
       <% end %>
     </div>
@@ -69,12 +65,8 @@
           </button>
         </div>
         <%# エラーメッセージ表示 %>
-        <% if @card.errors.any? %>
-          <div class="mt-2">
-            <% @card.errors.messages[:memo].each do |message| %>
-              <p class="text-red-600 text-sm"><%= message %></p>
-            <% end %>
-          </div>
+        <% @card.errors.full_messages_for(:memo).each do |message| %>
+          <p class="text-red-600 text-sm mt-2"><%= message %></p>
         <% end %>
       <% end %>
     </div>

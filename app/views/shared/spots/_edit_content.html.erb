@@ -11,12 +11,8 @@
           <%= f.text_field :name,
               placeholder: t('spots.form.name_placeholder'),
               class: "form-text-field text-sm lg:text-base" %>
-          <% if @spot.errors.any? %>
-            <div class="ml-2 lg:ml-3">
-              <% @spot.errors.messages[:name].each do |message| %>
-                <p class="text-red-600 text-xs lg:text-sm"><%= t('activerecord.attributes.spot.name') %><%= message %></p>
-              <% end %>
-            </div>
+          <% @spot.errors.full_messages_for(:name).each do |message| %>
+            <p class="text-red-600 text-xs lg:text-sm ml-2 lg:ml-3"><%= message %></p>
           <% end %>
         </div>
 
@@ -28,12 +24,8 @@
           <%= f.collection_select :category_id, @categories, :id, :name,
               {include_blank: t('schedule_spots.category_placeholder')},
               {class: "form-text-field text-sm lg:text-base"} %>
-          <% if @spot.errors.any? %>
-            <div class="ml-2 lg:ml-3">
-              <% @spot.errors.messages[:category_id].each do |message| %>
-                <p class="text-red-600 text-xs lg:text-sm"><%= t('activerecord.attributes.spot.category_id') %><%= message %></p>
-              <% end %>
-            </div>
+          <% @spot.errors.full_messages_for(:category_id).each do |message| %>
+            <p class="text-red-600 text-xs lg:text-sm ml-2 lg:ml-3"><%= message %></p>
           <% end %>
         </div>
 

@@ -6,12 +6,8 @@
         <span class="text-red-600 font-bold ml-1">*</span>
       <% end %>
       <%= f.text_field :name, class: "form-text-field w-full", placeholder: t('schedule_spots.form.spot_name') %>
-      <% if @schedule_spot.errors.any? %>
-        <div class="ml-2">
-          <% @schedule_spot.errors.messages[:name].each do |message| %>
-            <p class="text-red-600 text-xs lg:text-sm"><%= t('schedule_spots.form.spot_name') %><%= message %></p>
-          <% end %>
-        </div>
+      <% @schedule_spot.errors.full_messages_for(:name).each do |message| %>
+        <p class="text-red-600 text-xs lg:text-sm ml-2"><%= message %></p>
       <% end %>
     </div>
 
@@ -21,12 +17,8 @@
         <span class="text-red-600 font-bold ml-1">*</span>
       <% end %>
       <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @schedule_spot.category_id), { include_blank: t('schedule_spots.category_placeholder') }, class: "form-text-field w-full" %>
-      <% if @schedule_spot.errors.any? %>
-        <div class="ml-2">
-          <% @schedule_spot.errors.messages[:category_id].each do |message| %>
-            <p class="text-red-600 text-xs lg:text-sm"><%= t('schedule_spots.form.category') %><%= message %></p>
-          <% end %>
-        </div>
+      <% @schedule_spot.errors.full_messages_for(:category_id).each do |message| %>
+        <p class="text-red-600 text-xs lg:text-sm ml-2"><%= message %></p>
       <% end %>
     </div>
 
@@ -63,12 +55,8 @@
       <div class="flex-1">
         <%= f.label :end_time, t('schedule_spots.edit.departure_time'), class: "block text-sm lg:text-base font-medium text-text mb-2" %>
         <%= f.time_field :end_time, class: "form-text-field w-full" %>
-        <% if @schedule_spot.errors.any? %>
-          <div class="ml-2">
-            <% @schedule_spot.errors.messages[:end_time].each do |message| %>
-              <p class="text-red-600 text-xs lg:text-sm"><%= t('schedule_spots.edit.departure_time') %><%= message %></p>
-            <% end %>
-          </div>
+        <% @schedule_spot.errors.full_messages_for(:end_time).each do |message| %>
+          <p class="text-red-600 text-xs lg:text-sm ml-2"><%= message %></p>
         <% end %>
       </div>
     </div>
