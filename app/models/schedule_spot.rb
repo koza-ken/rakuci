@@ -43,7 +43,8 @@ class ScheduleSpot < ApplicationRecord
   validates :name, presence: true, length: { maximum: 50 }
   validates :address, length: { maximum: 255 }
   validates :phone_number, length: { maximum: 20 }
-  validates :website_url, format: { with: URI::DEFAULT_PARSER.make_regexp([ "http", "https" ]) }, length: { maximum: 500 }, allow_blank: true
+  # http_urlはvalidatorで定義（httpから始まっているか）
+  validates :website_url, http_url: true, length: { maximum: 500 }, allow_blank: true
 
   # カスタムバリデーション
   validate :end_time_after_start_time
@@ -52,8 +53,7 @@ class ScheduleSpot < ApplicationRecord
   acts_as_list column: :global_position, scope: [ :schedule_id, :day_number ]
 
   # スコープ
-  scope :ordered, -> { order(:global_position) }
-  scope :on_day, ->(day) { where(day_number: day) }
+  scope :ordered_by_position, -> { order(:global_position) }
 
   # 表示名を取得（登録名 > デフォルト）
   def display_name

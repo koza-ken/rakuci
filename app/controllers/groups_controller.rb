@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
 
   def show
     @schedule = @group.schedule
-    @categories = Category.order(:display_order).to_a
+    @categories = Category.ordered.to_a
     @cards_with_spots_by_category = @group.cards_with_spots_grouped
   end
 
@@ -67,7 +67,7 @@ class GroupsController < ApplicationController
 
   # 現在のユーザーが参加しているグループ一覧を取得
   def set_joined_groups
-    @groups = current_user.groups.with_memberships_and_schedule.recently_updated
+    @groups = current_user.groups.with_memberships_and_schedule.ordered_by_recent
     @groups_joined = @groups.any?
   end
 

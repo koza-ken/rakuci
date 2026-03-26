@@ -1,4 +1,9 @@
 ja:
+  activemodel:
+    attributes:
+      group_create_form:
+        name: グループ名
+        group_nickname: グループ内での名前
   activerecord:
     attributes:
       card:
@@ -40,9 +45,11 @@ ja:
         start_date: 旅行開始日
         updated_at: 更新日時
       schedule_spot:
+        category_id: カテゴリ
         created_at: 作成日時
         day: 日目
         end_time: 出発時刻
+        name: スポット名
         note: メモ
         schedule: しおり
         spot: スポット
@@ -72,6 +79,7 @@ ja:
         blank: を入力してください
         greater_than: は%{count}より後に設定してください
         invalid: は無効です
+        invalid_url: にはhttpかhttpsで始まるURLを入力してください
         taken: は既に使用されています
         too_long: は%{count}文字以内で入力してください
       models:
@@ -99,6 +107,32 @@ ja:
       schedule: しおり
       schedule_spot: スケジュール
       spot: スポット
+  shared:
+    nav:
+      cards: カード
+      groups: グループ
+      schedules: しおり
+      packing_list: もちもの
+      settings: 設定
+      login: ログイン
+      logout: ログアウト
+    hamburger:
+      welcome: ようこそ
+      welcome_user: "ようこそ、%{name}さん"
+      cards: カード一覧
+      groups: グループ一覧
+      schedules: しおり一覧
+      packing_list: もちもの
+      settings: ユーザー設定
+      guide: 使い方
+      terms: 利用規約
+      privacy: プライバシーポリシー
+      contact: お問い合わせ
+    confirm:
+      open_google_maps: Googleマップに移動します
+      open_external_site: 外部サイトに移動しますか？
+      delete_member: "%{name}を削除しますか？"
+    back: もどる
   components:
     icon_buttons:
       edit: 編集
@@ -107,6 +141,7 @@ ja:
   cards:
     add_spot: スポット追加
     add_spots_to_schedule: 選択したスポットをしおりに追加
+    select_spots_placeholder: スポットを選択してください
     back: もどる
     comments: コメント
     delete_button: カード削除
@@ -142,6 +177,7 @@ ja:
       guide_slide_4_description: 旅行のもちものを整理できます。あなたのもちものページに、いつも持っていくものを追加することで忘れ物を防ぐことができます。
       guide_slide_5_title: 費用を精算する
       guide_slide_5_description: 旅行中の費用を記録しておくことで、旅費の精算ができます。
+      sort_info: 更新日順で表示
       lets_create_card: 旅行先のカードをつくろう
       user_card_page: このページはあなた専用のカードをつくることができます
       title: あなたの旅のカード
@@ -225,7 +261,6 @@ ja:
   groups:
     details:
       delete_button: 削除
-      delete_confirm: を削除しますか
       delete_member_title: グループ作成者はメンバーを削除できます
     edit:
       title: グループ編集
@@ -483,6 +518,7 @@ ja:
         create_schedule_caption: 旅行先が決まったらしおりをつくろう
         new_schedule: 新規作成
         no_schedules: まだしおりがありません
+        sort_info: 旅行開始日順で表示
         title: 旅のしおり
       new:
         title: しおり作成

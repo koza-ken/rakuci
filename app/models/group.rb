@@ -26,18 +26,20 @@ class Group < ApplicationRecord
   before_validation :generate_invite_token, on: :create
 
   belongs_to :creator, class_name: "User", foreign_key: "created_by_user_id", inverse_of: :created_groups
+
+  has_one :schedule, as: :schedulable, dependent: :destroy
+
   has_many :cards, as: :cardable, dependent: :destroy
   has_many :group_memberships, dependent: :destroy
-  has_many :members, through: :group_memberships, source: :user
-  has_one :schedule, as: :schedulable, dependent: :destroy
   has_many :expenses, dependent: :destroy
+  has_many :members, through: :group_memberships, source: :user
 
   validates :created_by_user_id, presence: true
   validates :name, presence: true, length: { maximum: 30 }
   validates :invite_token, presence: true, length: { maximum: 64 }, uniqueness: true
 
   scope :with_memberships_and_schedule, -> { includes(:group_memberships, :schedule) }
-  scope :recently_updated, -> { order(updated_at: :desc) }
+  scope :ordered_by_recent, -> { order(updated_at: :desc) }
 
   # グループが指定されたユーザーによって作成されたかを判定
   def created_by?(user)

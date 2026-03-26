@@ -1,99 +1,82 @@
-<turbo-frame id="spot-create-modal">
-  <%# モーダルのラッパー %>
-  <div role="dialog" tabindex="-1" class="fixed inset-0 z-60 flex items-center justify-center w-full h-screen p-2">
-    <%# 背景（クリックでモーダルを閉じる） %>
-    <div data-action="click->modal#close" class="fixed inset-0 block w-full h-screen cursor-pointer bg-gray-900/30"></div>
-    <div class="relative z-20 w-full max-w-2xl max-h-screen overflow-y-auto bg-main-bg rounded-md">
-      <main class="flex flex-col items-center justify-center px-8 py-12">
-        <div class="w-full max-w-md">
-          <h1 class="text-xl font-bold text-text mb-8"><%= t('spots.new.title') %></h1>
-        </div>
-
-        <%= form_with model: @schedule_spot, url: group_schedule_schedule_spots_path(@group), class: "w-full max-w-md", data: { controller: "autocomplete" } do |f| %>
-          <%# スポット名 %>
-          <div class="mb-6">
-            <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
-              <%= t('spots.form.name') %>
-              <span class="text-red-600 font-bold ml-1">*</span>
-            <% end %>
-            <%= f.text_field :name,
-                data: { autocomplete_target: "nameField" },
-                placeholder: t('spots.form.name_placeholder'),
-                class: "form-text-field" %>
-            <% if @schedule_spot.errors.any? %>
-              <div class="ml-2">
-                <% @schedule_spot.errors.messages[:name].each do |message| %>
-                  <p class="text-red-600 text-xs"><%= t('schedule_spots.form.spot_name') %><%= message %></p>
-                <% end %>
-              </div>
-            <% end %>
-
-            <%# オートコンプリートは補助として表示 %>
-            <div class="mt-2 text-xs text-gray-600">
-              または下からスポットを検索して選択：
-            </div>
-            <gmp-place-autocomplete
-              id="spot-auto-input"
-              data-autocomplete-target="autocomplete"
-              country="jp"
-              class="form-text-field p-0 mt-1">
-            </gmp-place-autocomplete>
-          </div>
-
-          <%# カテゴリ %>
-          <div class="mb-6">
-            <%= f.label :category_id, class: "block text-sm font-medium text-text mb-2" do %>
-              <%= t('spots.form.category') %>
-            <% end %>
-            <%= f.collection_select :category_id, @categories, :id, :name,
-                {include_blank: "--- 選択してください ---"},
-                {class: "form-text-field"} %>
-            <% if @schedule_spot.errors.any? %>
-              <div class="ml-2">
-                <% @schedule_spot.errors.messages[:category_id].each do |message| %>
-                  <p class="text-red-600 text-xs"><%= t('schedule_spots.form.category') %><%= message %></p>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-
-          <%# 住所 %>
-          <div class="mb-6">
-            <%= f.label :address, t('spots.form.address'), class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.text_field :address,
-                data: { autocomplete_target: "addressField" },
-                placeholder: t('spots.form.address_placeholder'),
-                class: "form-text-field resize-vertical" %>
-          </div>
-
-          <%# URL %>
-          <div class="mb-6">
-            <%= f.label :website_url, t('spots.form.website_url'), class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.text_field :website_url,
-                data: { autocomplete_target: "websiteField" },
-                placeholder: t('spots.form.web_site_url_placeholder'),
-                class: "form-text-field resize-vertical" %>
-          </div>
-
-          <%# 電話番号 %>
-          <div class="mb-6">
-            <%= f.label :phone_number, t('spots.form.phone_number'), class: "block text-sm font-medium text-text mb-2" %>
-            <%= f.text_field :phone_number,
-                data: { autocomplete_target: "phoneField" },
-                placeholder: t('spots.form.phone_number_placeholder'),
-                class: "form-text-field resize-vertical" %>
-          </div>
-
-          <%# place_id %>
-          <%= f.hidden_field :google_place_id, data: { autocomplete_target: "idField" } %>
-
-          <%# ボタン %>
-          <div class="flex gap-3">
-            <%= f.submit t('schedule_spots.form.submit'), class: "btn-main flex-1" %>
-            <%= link_to t('schedule_spots.form.cancel'), group_schedule_path(@group), class: "btn-sub flex-1 text-center" %>
-          </div>
-        <% end %>
-      </main>
-    </div>
+<%= render layout: "shared/modal_wrapper", locals: { frame_id: "spot-create-modal" } do %>
+  <div class="w-full max-w-md">
+    <h2 class="text-xl font-bold text-text mb-6"><%= t('spots.new.title') %></h2>
   </div>
-</turbo-frame>
+
+  <%= form_with model: @schedule_spot, url: group_schedule_schedule_spots_path(@group), class: "w-full max-w-md", data: { controller: "autocomplete" } do |f| %>
+    <%# スポット名 %>
+    <div class="mb-6">
+      <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
+        <%= t('spots.form.name') %>
+        <span class="text-red-600 font-bold ml-1">*</span>
+      <% end %>
+      <%= f.text_field :name,
+          data: { autocomplete_target: "nameField" },
+          placeholder: t('spots.form.name_placeholder'),
+          class: "form-text-field" %>
+      <% @schedule_spot.errors.full_messages_for(:name).each do |message| %>
+        <p class="text-red-600 text-xs ml-2"><%= message %></p>
+      <% end %>
+
+      <%# オートコンプリートは補助として表示 %>
+      <div class="mt-2 text-xs text-gray-600">
+        または下からスポットを検索して選択：
+      </div>
+      <gmp-place-autocomplete
+        id="spot-auto-input"
+        data-autocomplete-target="autocomplete"
+        country="jp"
+        class="form-text-field p-0 mt-1">
+      </gmp-place-autocomplete>
+    </div>
+
+    <%# カテゴリ %>
+    <div class="mb-6">
+      <%= f.label :category_id, class: "block text-sm font-medium text-text mb-2" do %>
+        <%= t('spots.form.category') %>
+      <% end %>
+      <%= f.collection_select :category_id, @categories, :id, :name,
+          {include_blank: t('schedule_spots.category_placeholder')},
+          {class: "form-text-field"} %>
+      <% @schedule_spot.errors.full_messages_for(:category_id).each do |message| %>
+        <p class="text-red-600 text-xs ml-2"><%= message %></p>
+      <% end %>
+    </div>
+
+    <%# 住所 %>
+    <div class="mb-6">
+      <%= f.label :address, t('spots.form.address'), class: "block text-sm font-medium text-text mb-2" %>
+      <%= f.text_field :address,
+          data: { autocomplete_target: "addressField" },
+          placeholder: t('spots.form.address_placeholder'),
+          class: "form-text-field resize-vertical" %>
+    </div>
+
+    <%# URL %>
+    <div class="mb-6">
+      <%= f.label :website_url, t('spots.form.website_url'), class: "block text-sm font-medium text-text mb-2" %>
+      <%= f.text_field :website_url,
+          data: { autocomplete_target: "websiteField" },
+          placeholder: t('spots.form.web_site_url_placeholder'),
+          class: "form-text-field resize-vertical" %>
+    </div>
+
+    <%# 電話番号 %>
+    <div class="mb-6">
+      <%= f.label :phone_number, t('spots.form.phone_number'), class: "block text-sm font-medium text-text mb-2" %>
+      <%= f.text_field :phone_number,
+          data: { autocomplete_target: "phoneField" },
+          placeholder: t('spots.form.phone_number_placeholder'),
+          class: "form-text-field resize-vertical" %>
+    </div>
+
+    <%# place_id %>
+    <%= f.hidden_field :google_place_id, data: { autocomplete_target: "idField" } %>
+
+    <%# ボタン %>
+    <div class="flex gap-3">
+      <%= f.submit t('schedule_spots.form.submit'), class: "btn-main flex-1" %>
+      <%= link_to t('schedule_spots.form.cancel'), group_schedule_path(@group), class: "btn-sub flex-1 text-center" %>
+    </div>
+  <% end %>
+<% end %>

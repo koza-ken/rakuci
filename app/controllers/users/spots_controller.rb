@@ -55,7 +55,7 @@ class Users::SpotsController < ApplicationController
   end
 
   def set_categories
-    @categories = Category.order(display_order: :asc).to_a
+    @categories = Category.ordered.to_a
   end
 
   def spot_params

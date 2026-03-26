@@ -18,11 +18,14 @@
 #
 class Schedule < ApplicationRecord
   include Hashid::Rails
+  include CreatePackingList  # scheduleを生成したらpackinglistも生成する
 
   # アソシエーション
-  has_many :schedule_spots, dependent: :destroy
-  has_one :packing_list, as: :listable, dependent: :destroy
   belongs_to :schedulable, polymorphic: true, touch: true
+
+  has_one :packing_list, as: :listable, dependent: :destroy
+
+  has_many :schedule_spots, dependent: :destroy
 
   # バリデーション
   validates :name, presence: true, length: { maximum:  50 }
@@ -31,15 +34,12 @@ class Schedule < ApplicationRecord
   validate :only_one_schedule_per_group
   validate :end_date_after_start_date
 
-  # しおりがつくられたらしおりに紐づくもちものリストが作られる
-  after_create :create_packing_list
-
   def user_schedule?
-    schedulable_type == "User"
+    schedule_type == :user
   end
 
   def group_schedule?
-    schedulable_type == "Group"
+    schedule_type == :group
   end
 
   # しおりの日数を返す
@@ -68,8 +68,9 @@ class Schedule < ApplicationRecord
 
   private
 
-  def create_packing_list
-    PackingList.create(listable: self)
+  # しおりのタイプを返す（個人用 or グループ用）
+  def schedule_type
+    schedulable_type == "User" ? :user : :group
   end
 
   # 終了日が開始日以降かをチェック
@@ -82,7 +83,7 @@ class Schedule < ApplicationRecord
 
   # グループは1つのスケジュールのみ持つことができる
   def only_one_schedule_per_group
-    return unless schedulable_type == "Group"
+    return unless schedule_type == :group
 
     # グループが既に別のしおりを持っていないか確認
     existing_schedule = Schedule.where(schedulable_type: "Group", schedulable_id: schedulable_id)

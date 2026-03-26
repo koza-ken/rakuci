@@ -29,12 +29,8 @@
           </button>
         </div>
         <%# バリデーションエラー表示 %>
-        <% if @group.errors.any? %>
-          <div class="mt-2">
-            <% @group.errors.messages[:name].each do |message| %>
-              <p class="text-red-600 text-xs lg:text-sm"><%= t('activerecord.attributes.group.name') %><%= message %></p>
-            <% end %>
-          </div>
+        <% @group.errors.full_messages_for(:name).each do |message| %>
+          <p class="text-red-600 text-xs lg:text-sm mt-2"><%= message %></p>
         <% end %>
       <% end %>
     </div>

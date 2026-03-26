@@ -69,7 +69,7 @@ class Users::ScheduleSpotsController < ApplicationController
   def set_schedule_spots
     @schedule_spots = @schedule.schedule_spots
                                .includes(:category, spot: :category)
-                               .order(:global_position)
+                               .ordered_by_position
   end
 
   def schedule_spot_params
@@ -77,7 +77,7 @@ class Users::ScheduleSpotsController < ApplicationController
   end
 
   def set_categories
-    @categories = Category.order(display_order: :asc).to_a
+    @categories = Category.ordered.to_a
   end
 
   def add_spot_from_card?

@@ -7,11 +7,11 @@
     <% if user_signed_in? %>
       <%# lg以上：ナビゲーションメニュー（タイトルの隣）、lg未満：非表示 %>
       <nav class="hidden lg:flex items-center ml-24 pt-1 gap-12">
-        <%= link_to "カード", cards_path, class: nav_link_class("cards") %>
-        <%= link_to "グループ", groups_path, class: nav_link_class("groups") %>
-        <%= link_to "しおり", schedules_path, class: nav_link_class("schedules") %>
-        <%= link_to "もちもの", packing_list_path, class: nav_link_class("packing_list") %>
-        <%= link_to "設定", profile_path, class: nav_link_class("profile") %>
+        <%= link_to t("shared.nav.cards"), cards_path, class: nav_link_class("cards") %>
+        <%= link_to t("shared.nav.groups"), groups_path, class: nav_link_class("groups") %>
+        <%= link_to t("shared.nav.schedules"), schedules_path, class: nav_link_class("schedules") %>
+        <%= link_to t("shared.nav.packing_list"), packing_list_path, class: nav_link_class("packing_list") %>
+        <%= link_to t("shared.nav.settings"), profile_path, class: nav_link_class("profile") %>
       </nav>
 
       <%# ハンバーガーボタン（ログイン時：常時表示） %>
@@ -23,7 +23,7 @@
     <% else %>
       <%# 未ログイン時：lg以上でログインボタン+ハンバーガー、lg未満でハンバーガーのみ %>
       <div class="ml-auto flex items-center gap-10">
-        <%= link_to "ログイン", new_user_session_path, class: "hidden lg:block px-4 py-2 bg-secondary text-white font-semibold rounded-lg hover:opacity-80 transition" %>
+        <%= link_to t("shared.nav.login"), new_user_session_path, class: "hidden lg:block px-4 py-2 bg-secondary text-white font-semibold rounded-lg hover:opacity-80 transition" %>
         <button class="relative w-8 h-6 flex flex-col justify-between items-center group" data-action="click->hamburger#toggle" data-hamburger-target="hamburger">
           <span class="hamburger-to-close group-[.open]:translate-y-[12px] group-[.open]:rotate-45"></span>
           <span class="hamburger-to-close group-[.open]:opacity-0"></span>

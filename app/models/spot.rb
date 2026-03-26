@@ -27,15 +27,17 @@
 class Spot < ApplicationRecord
   include Hashid::Rails
 
-  has_many :schedule_spots, dependent: :nullify
   belongs_to :card, touch: true
   belongs_to :category
+
+  has_many :schedule_spots, dependent: :nullify
 
   before_validation :normalize_google_place_id
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :phone_number, length: { maximum: 20 }, allow_blank: true
-  validates :website_url, format: { with: URI::DEFAULT_PARSER.make_regexp([ "http", "https" ]) }, allow_blank: true
+  # http_urlはvalidatorで定義（httpから始まっているか）
+  validates :website_url, http_url: true, length: { maximum: 500 }, allow_blank: true
   validates :google_place_id, uniqueness: { scope: :card_id }, allow_blank: true
 
   private

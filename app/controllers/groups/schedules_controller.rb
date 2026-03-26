@@ -8,7 +8,7 @@ class Groups::SchedulesController < ApplicationController
   def show
     @schedule_spots = @schedule.schedule_spots
                                .includes(:category, spot: :category)
-                               .order(:global_position)
+                               .ordered_by_position
   end
 
   def new

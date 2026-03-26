@@ -17,11 +17,12 @@
 class Card < ApplicationRecord
   include Hashid::Rails
 
+  belongs_to :cardable, polymorphic: true, touch: true
+
   has_many :spots, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_group_memberships, through: :likes, source: :group_membership
-  belongs_to :cardable, polymorphic: true, touch: true
   validates :name, presence: true, length: { maximum: 50 }
 
   # 引数にuserがあれば、accessible_by_user?でカードにアクセス可能か確認
