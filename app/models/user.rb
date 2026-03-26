@@ -51,5 +51,4 @@ class User < ApplicationRecord
   def oauth_user?
     provider.present? && uid.present?
   end
-
 end
