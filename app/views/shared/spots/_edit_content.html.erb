@@ -51,8 +51,8 @@
         </div>
 
         <div class="flex gap-3 lg:gap-4 mt-8 lg:mt-10">
-          <%= f.submit t('spots.form.update'), class: "btn-main flex-1 lg:px-8" %>
-          <%= link_to t('cards.form.cancel'), (@card.group_card? ? group_spot_path(@spot) : user_spot_path(@spot)), class: "btn-sub flex-1 text-center lg:px-8" %>
+          <%= f.submit t('spots.form.update'), class: "btn-main flex-1" %>
+          <%= link_to t('cards.form.cancel'), (@card.group_card? ? group_spot_path(@spot) : user_spot_path(@spot)), class: "btn-sub flex-1 text-center" %>
         </div>
       <% end %>
     </main>
