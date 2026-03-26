@@ -5,7 +5,7 @@
 
   <%= form_with model: [@group, @schedule], url: group_schedule_path(@group), local: true, class: "w-full max-w-md" do |f| %>
     <div class="mb-4">
-      <%= f.label :name, class: "block text-sm font-bold text-text mb-2" do %>
+      <%= f.label :name, class: "block text-sm font-medium text-text mb-2" do %>
         <%= t('users.schedules.form.name_label') %>
         <span class="text-red-600 font-bold ml-1">*</span>
       <% end %>
@@ -16,7 +16,7 @@
     </div>
 
     <div class="mb-4">
-      <%= f.label :start_date, class: "block text-sm font-bold text-text mb-2" %>
+      <%= f.label :start_date, class: "block text-sm font-medium text-text mb-2" %>
       <%= f.date_field :start_date, class: "form-text-field w-full" %>
       <% @schedule.errors.full_messages_for(:start_date).each do |message| %>
         <p class="text-red-600 text-xs ml-2"><%= message %></p>
@@ -24,7 +24,7 @@
     </div>
 
     <div class="mb-6">
-      <%= f.label :end_date, class: "block text-sm font-bold text-text mb-2" %>
+      <%= f.label :end_date, class: "block text-sm font-medium text-text mb-2" %>
       <%= f.date_field :end_date, class: "form-text-field w-full" %>
       <% @schedule.errors.full_messages_for(:end_date).each do |message| %>
         <p class="text-red-600 text-xs ml-2"><%= message %></p>
