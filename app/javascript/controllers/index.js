@@ -51,3 +51,6 @@ application.register("dropdown", DropdownController);
 
 import GuideController from "./guide_controller";
 application.register("guide", GuideController);
+
+import PasswordVisibilityController from "./password_visibility_controller";
+application.register("password-visibility", PasswordVisibilityController);
