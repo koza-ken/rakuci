@@ -54,3 +54,6 @@ application.register("guide", GuideController);
 
 import PasswordVisibilityController from "./password_visibility_controller";
 application.register("password-visibility", PasswordVisibilityController);
+
+import FabScrollController from "./fab_scroll_controller";
+application.register("fab-scroll", FabScrollController);
