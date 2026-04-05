@@ -1,4 +1,4 @@
-<div id="like_area_<%= card.id %>" class="flex gap-1 items-center mr-1">
+<div id="like_area_<%= card.id %>" class="flex gap-1 items-center">
   <% if card.liked_by?(current_membership) %>
     <%= button_to group_card_likes_path(card.group, card), method: :delete, title: t("likes.remove"), class: "flex items-center p-0 bg-transparent border-0 cursor-pointer hover:opacity-70", form: { onclick: "event.stopPropagation();" } do %>
       <%= render IconComponent.new(name: "card_liked_icon", size: 5, color: "text-[#fe6767]") %>
