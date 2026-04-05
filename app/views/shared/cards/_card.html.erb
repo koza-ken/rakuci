@@ -41,8 +41,15 @@
       </div>
     </div>
     <% if card.group_card? %>
-      <div class="flex justify-end mr-2" onclick="event.stopPropagation(); event.preventDefault();">
-        <%= render "likes/like_button", card: card, current_membership: current_membership %>
+      <div class="flex justify-between items-center px-2 relative z-10" onclick="event.stopPropagation(); event.preventDefault();">
+        <%= render IconComponent.new(name: "card_decided_icon", size: 5, color: "text-gray-300") %>
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-1">
+            <%= render IconComponent.new(name: "card_comment_icon", size: 5, color: "text-text-light") %>
+            <p class="text-sm text-text-light"><%= card.comments.size %></p>
+          </div>
+          <%= render "likes/like_button", card: card, current_membership: current_membership %>
+        </div>
       </div>
     <% end %>
   </div>
