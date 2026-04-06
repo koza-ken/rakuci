@@ -48,7 +48,9 @@
             <%= render IconComponent.new(name: "card_comment_icon", size: 5, color: "text-text-light") %>
             <p class="text-sm text-text-light"><%= card.comments.size %></p>
           </div>
-          <%= render "likes/like_button", card: card, current_membership: current_membership %>
+          <div onclick="event.stopPropagation(); event.preventDefault();">
+            <%= render "likes/like_button", card: card, current_membership: current_membership %>
+          </div>
         </div>
       </div>
     <% end %>
